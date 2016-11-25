@@ -1,7 +1,0 @@
-C:\Users\imdad\Documents\Visual Studio 2015\Projects\NotificationsClient\NotificationsClient\bin\Debug\NotificationsClient.dll
-C:\Users\imdad\Documents\Visual Studio 2015\Projects\NotificationsClient\NotificationsClient\bin\Debug\NotificationsClient.pdb
-C:\Users\imdad\Documents\Visual Studio 2015\Projects\NotificationsClient\NotificationsClient\bin\Debug\JWT.dll
-C:\Users\imdad\Documents\Visual Studio 2015\Projects\NotificationsClient\NotificationsClient\bin\Debug\Newtonsoft.Json.dll
-C:\Users\imdad\Documents\Visual Studio 2015\Projects\NotificationsClient\NotificationsClient\bin\Debug\Newtonsoft.Json.xml
-C:\Users\imdad\Documents\Visual Studio 2015\Projects\NotificationsClient\NotificationsClient\obj\Debug\NotificationsClient.dll
-C:\Users\imdad\Documents\Visual Studio 2015\Projects\NotificationsClient\NotificationsClient\obj\Debug\NotificationsClient.pdb
