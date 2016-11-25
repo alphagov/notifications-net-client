@@ -1,0 +1,20 @@
+C:\Users\Imdad\Developer\NotificationsClient\NotifyTests\bin\Debug\NotifyTests.dll
+C:\Users\Imdad\Developer\NotificationsClient\NotifyTests\bin\Debug\NotifyTests.pdb
+C:\Users\Imdad\Developer\NotificationsClient\NotifyTests\bin\Debug\NotificationsClient.dll
+C:\Users\Imdad\Developer\NotificationsClient\NotifyTests\bin\Debug\JWT.dll
+C:\Users\Imdad\Developer\NotificationsClient\NotifyTests\bin\Debug\NotificationsClient.pdb
+C:\Users\Imdad\Developer\NotificationsClient\NotifyTests\obj\Debug\NotifyTests.csprojResolveAssemblyReference.cache
+C:\Users\Imdad\Developer\NotificationsClient\NotifyTests\obj\Debug\NotifyTests.dll
+C:\Users\Imdad\Developer\NotificationsClient\NotifyTests\obj\Debug\NotifyTests.pdb
+C:\Users\Imdad\Developer\NotificationsClient\NotifyTests\bin\Debug\Newtonsoft.Json.dll
+C:\Users\Imdad\Developer\NotificationsClient\NotifyTests\bin\Debug\Newtonsoft.Json.xml
+C:\Users\imdad\Documents\Visual Studio 2015\Projects\NotificationsClient\NotifyTests\bin\Debug\NotifyTests.dll
+C:\Users\imdad\Documents\Visual Studio 2015\Projects\NotificationsClient\NotifyTests\bin\Debug\NotifyTests.pdb
+C:\Users\imdad\Documents\Visual Studio 2015\Projects\NotificationsClient\NotifyTests\bin\Debug\NotificationsClient.dll
+C:\Users\imdad\Documents\Visual Studio 2015\Projects\NotificationsClient\NotifyTests\bin\Debug\Newtonsoft.Json.dll
+C:\Users\imdad\Documents\Visual Studio 2015\Projects\NotificationsClient\NotifyTests\bin\Debug\JWT.dll
+C:\Users\imdad\Documents\Visual Studio 2015\Projects\NotificationsClient\NotifyTests\bin\Debug\NotificationsClient.pdb
+C:\Users\imdad\Documents\Visual Studio 2015\Projects\NotificationsClient\NotifyTests\bin\Debug\Newtonsoft.Json.xml
+C:\Users\imdad\Documents\Visual Studio 2015\Projects\NotificationsClient\NotifyTests\obj\Debug\NotifyTests.csprojResolveAssemblyReference.cache
+C:\Users\imdad\Documents\Visual Studio 2015\Projects\NotificationsClient\NotifyTests\obj\Debug\NotifyTests.dll
+C:\Users\imdad\Documents\Visual Studio 2015\Projects\NotificationsClient\NotifyTests\obj\Debug\NotifyTests.pdb
