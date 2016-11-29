@@ -21,15 +21,14 @@ namespace Notify.Client
         private String serviceId;
         private String apiKey;
 
-        public BaseClient(IHttpClient client, String apiKey)
+        public BaseClient(IHttpClient client, String apiKey, String baseUrl= "https://api.notifications.service.gov.uk/")
         {
             Tuple<String, String> serviceCredentials = ExtractServiceIdAndApiKey(apiKey);
             this.serviceId = serviceCredentials.Item1;
             this.apiKey = serviceCredentials.Item2;
-            this.baseUrl = "https://www.notifications.service.gov.uk/";
-
+            this.baseUrl = baseUrl;
             this.client = client;
-            this.client.BaseAddress = ValidateBaseUri(baseUrl);
+            this.client.BaseAddress = ValidateBaseUri(this.baseUrl);
             this.client.AddContentHeader("application/json");
 
             String productVersion = Assembly.GetExecutingAssembly().GetName().Version.ToString();

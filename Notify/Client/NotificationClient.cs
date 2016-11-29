@@ -27,6 +27,11 @@ namespace Notify.Client
 
         }
 
+        public NotificationClient(String baseUrl, String apiKey) : base(new HttpClientWrapper(new HttpClient()), apiKey, baseUrl)
+        {
+
+        }
+
         public NotificationClient(IHttpClient client, String apiKey) : base(client, apiKey)
         {
 
