@@ -11,16 +11,16 @@ namespace NotificationsClient.Models
     public class NotificationList
     {
         [JsonProperty("notifications")]
-        List<Notification> notifications;
+        public List<Notification> notifications;
         [JsonProperty("links")]
-        Link links;
+        public Link links;
     }
 
     public class Link
     {
         [JsonProperty("current")]
-        String current;
+        public String current;
         [JsonProperty("next")]
-        String next;
+        public String next;
     }
 }
