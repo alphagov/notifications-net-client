@@ -1,0 +1,23 @@
+environment:
+  NOTIFY_API_URL:
+    secure: r3hzR2wB0kt6MBndbgj77G7Ip/7RjCKfwAdZECWFeFs=
+  API_KEY:
+    secure: fclRZd/RxMM1/HPwZI+8G365q0dEMxMNPlVj4U/8NZjdJSkILLoTacpK75GhorW9HHJu63I/+9lO8TtT+VILpFohdWRARrO11jrOCFJuENwN+8pUz1ufib7DPGaB+5zX
+  FUNCTIONAL_TEST_EMAIL:
+    secure: N4n+WIwld7wbdt8ZRfhegQCjXEEBhG/lvRGRIthu2YoCxmIAaMRTFq/KbJJ/hGd+jXQ0/NhkVehWgI47INbQCcA33PSXELmUR3zCatf3HDw=
+  EMAIL_TEMPLATE_ID:
+    secure: XR/emaMjyzjTayIzQSUkL1S5XifMzpjRTZqkN7Hf129tyluZEcBvmmReJwiVibMm
+  SMS_TEMPLATE_ID:
+    secure: Dq0ZplOuwRX+TeRLNJoU+kMqsLln0w0pYZ3BFnrp9zoEX10DGRhoe6BAsaNkTRGv
+  FUNCTIONAL_TEST_NUMBER:
+    secure: lTRgI2vLKAhzdOitDZFmrg==
+before_build:
+- cmd: nuget restore
+build:
+  verbosity: minimal
+test:
+  categories:
+    only:
+    - Unit/AuthenticationTests
+    - Unit/NotificationClient
+    - Integration
