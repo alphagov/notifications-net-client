@@ -21,7 +21,6 @@ namespace NotifyUnitTests
         [ExpectedException(typeof(NotifyAuthException), "A token was generated with an invalid secret Id")]
         public void CreateTokenWithInvalidSecretThrowsAuthException()
         {
-            Assert.Fail();
             try
             {
                 Authenticator.CreateToken("invalidsecret", NOTIFY_SERVICE_ID);
@@ -38,7 +37,6 @@ namespace NotifyUnitTests
         [ExpectedException(typeof(NotifyAuthException), "A token was generated with an invalid service Id")]
         public void CreateTokenWithInvalidServiceIdThrowsAuthException()
         {
-            Assert.Fail();
             try
             {
                 Authenticator.CreateToken(NOTIFY_SECRET_ID, "invalid service id");
