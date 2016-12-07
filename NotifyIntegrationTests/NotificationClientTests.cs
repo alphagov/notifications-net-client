@@ -1,12 +1,10 @@
-﻿using Notify;
-using Notify.Client;
+﻿using Notify.Client;
 using Notify.Models;
 using Notify.Models.Responses;
 using Notify.Exceptions;
 using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Collections.Generic;
-using NotificationsClient.Models;
 
 namespace NotifyIntegrationTests
 {

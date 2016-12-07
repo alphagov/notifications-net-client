@@ -1,24 +1,20 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 using Moq.Protected;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
+using Notify.Client;
 using Notify.Exceptions;
 using Notify.Models;
-using Notify;
-using Notify.Client;
-using Notify.Interfaces;
+using Notify.Models.Responses;
+using NotifyTests;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Notify.Models.Responses;
-using Newtonsoft.Json.Linq;
 using System.Net.Http;
 using System.Net;
 using System.Threading;
-using Newtonsoft.Json;
-using NotifyTests;
-using System.Reflection;
+using System.Threading.Tasks;
+
 
 namespace NotifyUnitTests
 {

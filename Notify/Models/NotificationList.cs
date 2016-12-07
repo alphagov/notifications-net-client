@@ -1,12 +1,8 @@
 ﻿using Newtonsoft.Json;
-using Notify.Models;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace NotificationsClient.Models
+namespace Notify.Models
 {
     public class NotificationList
     {

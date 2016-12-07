@@ -1,12 +1,12 @@
-﻿using System;
-using System.Net.Http;
-using System.Text;
+﻿using Newtonsoft.Json;
 using Notify.Authentication;
 using Notify.Exceptions;
-using Newtonsoft.Json;
-using Notify.Models.Responses;
 using Notify.Interfaces;
+using Notify.Models.Responses;
+using System;
+using System.Net.Http;
 using System.Reflection;
+using System.Text;
 
 namespace Notify.Client
 {

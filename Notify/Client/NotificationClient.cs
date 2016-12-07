@@ -1,18 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Web;
-using Notify.Client;
-using Newtonsoft.Json;
+﻿using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using Notify.Exceptions;
 using Notify.Interfaces;
 using Notify.Models;
 using Notify.Models.Responses;
+using System;
+using System.Collections.Generic;
 using System.Net.Http;
-using Notify.Exceptions;
-using NotificationsClient.Models;
+using System.Web;
 
 namespace Notify.Client
 {

@@ -1,10 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Notify.Models;
+﻿using Notify.Models;
 using Notify.Models.Responses;
+using System;
+using System.Collections.Generic;
 
 namespace Notify.Interfaces
 {
