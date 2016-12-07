@@ -175,12 +175,6 @@ namespace NotifyUnitTests
                 {
                     { "name", "someone" }
                 };
-            JObject o = new JObject
-            {
-                { "phone_number", Constants.fakePhoneNumber },
-                { "template_id", Constants.fakeTemplateId },
-                { "personalisation", JObject.FromObject(personalisation) }
-            };
             SmsNotificationResponse expectedResponse = JsonConvert.DeserializeObject<SmsNotificationResponse>(Constants.fakeSmsNotificationResponseJson);
 
             handler.Protected()
@@ -216,7 +210,8 @@ namespace NotifyUnitTests
             {
                 { "email_address", Constants.fakeEmail },
                 { "template_id", Constants.fakeTemplateId },
-                { "personalisation", JObject.FromObject(personalisation) }
+                { "personalisation", JObject.FromObject(personalisation) },
+                { "reference", Constants.fakeNotificationReference }
             };
 
             String content = "";
@@ -237,7 +232,7 @@ namespace NotifyUnitTests
                     request = r;
                 });
 
-            EmailNotificationResponse response = n.SendEmail(Constants.fakeEmail, Constants.fakeTemplateId, personalisation);
+            EmailNotificationResponse response = n.SendEmail(Constants.fakeEmail, Constants.fakeTemplateId, personalisation, Constants.fakeNotificationReference);
 
             Assert.AreEqual(request.Method, HttpMethod.Post);
             Assert.AreEqual(request.RequestUri.ToString(), n.baseUrl + n.SEND_EMAIL_NOTIFICATION_URL);
@@ -263,12 +258,6 @@ namespace NotifyUnitTests
                 {
                     { "name", "someone" }
                 };
-            JObject o = new JObject
-            {
-                { "email_address", Constants.fakeEmail },
-                { "template_id", Constants.fakeTemplateId },
-                { "personalisation", JObject.FromObject(personalisation) }
-            };
             EmailNotificationResponse expectedResponse = JsonConvert.DeserializeObject<EmailNotificationResponse>(Constants.fakeEmailNotificationResponseJson);
 
             handler.Protected()
@@ -282,7 +271,7 @@ namespace NotifyUnitTests
                     };
                 }));
 
-            EmailNotificationResponse actualResponse = n.SendEmail(Constants.fakeEmail, Constants.fakeTemplateId, personalisation);
+            EmailNotificationResponse actualResponse = n.SendEmail(Constants.fakeEmail, Constants.fakeTemplateId, personalisation, Constants.fakeNotificationReference);
 
             Assert.IsTrue(expectedResponse.IsEqualTo(actualResponse));
 
