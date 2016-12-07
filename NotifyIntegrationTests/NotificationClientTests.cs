@@ -43,10 +43,13 @@ namespace NotifyIntegrationTests
             };
 
             SmsNotificationResponse response = 
-                this.client.SendSms(FUNCTIONAL_TEST_NUMBER, SMS_PERSONALISATION_TEMPLATE_ID, personalisation);
+                this.client.SendSms(FUNCTIONAL_TEST_NUMBER, SMS_PERSONALISATION_TEMPLATE_ID, personalisation, "sample-test-ref");
             this.smsNotificationId = response.id;
             Assert.IsNotNull(response);
             Assert.AreEqual(response.content.body, "Hello someone\n\nFunctional Tests make our world a better place");
+
+            Assert.IsNotNull(response.reference);
+            Assert.AreEqual(response.reference, "sample-test-ref");
         }
 
         [TestMethod()]
@@ -59,6 +62,9 @@ namespace NotifyIntegrationTests
             Assert.IsNotNull(notification);
             Assert.IsNotNull(notification.id);
             Assert.AreEqual(notification.id, this.smsNotificationId);
+
+            Assert.IsNotNull(notification.reference);
+            Assert.AreEqual(notification.reference, "sample-test-ref");
 
             AssertNotification(notification);
         }
