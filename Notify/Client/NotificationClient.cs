@@ -77,7 +77,7 @@ namespace Notify.Client
             return notifications;
         }
 
-        public SmsNotificationResponse SendSms(String mobileNumber, String templateId, Dictionary<String, dynamic> personalisation = null)
+        public SmsNotificationResponse SendSms(String mobileNumber, String templateId, Dictionary<String, dynamic> personalisation = null, String clientReference = null)
         {
 
             JObject personalisationJson = new JObject();
@@ -94,17 +94,22 @@ namespace Notify.Client
                 { "personalisation", personalisationJson }
             };
 
+            if (clientReference != null)
+            {
+                o.Add("reference", clientReference);
+            }
+
             String response = this.POST(SEND_SMS_NOTIFICATION_URL, o.ToString(Formatting.None));
 
             SmsNotificationResponse receipt = JsonConvert.DeserializeObject<SmsNotificationResponse>(response);
             return receipt;
         }
 
-        public EmailNotificationResponse SendEmail(String emailAddress, String templateId, Dictionary<String, dynamic> personalisation = null)
+        public EmailNotificationResponse SendEmail(String emailAddress, String templateId, Dictionary<String, dynamic> personalisation = null, String clientReference = null)
         {
             JObject personalisationJson = new JObject();
 
-            if (personalisation != null)
+            if(personalisation != null)
             {
                 personalisationJson = JObject.FromObject(personalisation);
             }
@@ -115,6 +120,11 @@ namespace Notify.Client
                 { "template_id", templateId },
                 { "personalisation", personalisationJson }
             };
+
+            if(clientReference != null)
+            {
+                o.Add("reference", clientReference);
+            }
 
             String response = this.POST(SEND_EMAIL_NOTIFICATION_URL, o.ToString(Formatting.None));
 
