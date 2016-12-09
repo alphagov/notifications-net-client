@@ -95,7 +95,7 @@ namespace Notify.Client
                     NotifyHTTPErrorResponse errorResponse = JsonConvert.DeserializeObject<NotifyHTTPErrorResponse>(responseContent);
                     throw new NotifyClientException("Status code {0}. The following errors occured {1}", errorResponse.getStatusCode(), errorResponse.getErrorsAsJson());
                 }
-                catch(Newtonsoft.Json.JsonReaderException e)
+                catch(Newtonsoft.Json.JsonReaderException)
                 {
                     throw new NotifyClientException("Status code {0}. Error: ", responseContent);
                 }
