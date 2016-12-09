@@ -3,11 +3,13 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
 VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Notify", "Notify\Notify.csproj", "{A5F982FE-7ACF-49AD-A2D2-3ECC96D010DB}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Notify", "src\Notify\Notify.csproj", "{A5F982FE-7ACF-49AD-A2D2-3ECC96D010DB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NotifyUnitTests", "NotifyTests\NotifyUnitTests.csproj", "{B90A7059-BB5F-41C2-8C65-9EA548B8A10A}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NotifyUnitTests", "test\NotifyTests\NotifyUnitTests.csproj", "{B90A7059-BB5F-41C2-8C65-9EA548B8A10A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NotifyIntegrationTests", "NotifyIntegrationTests\NotifyIntegrationTests.csproj", "{EF8FBF8E-A0BE-44EC-B269-B4BB3FC6C162}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NotifyIntegrationTests", "test\NotifyIntegrationTests\NotifyIntegrationTests.csproj", "{EF8FBF8E-A0BE-44EC-B269-B4BB3FC6C162}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{ED8DF9EA-AA43-4AAC-99C4-90F542457165}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -30,5 +32,9 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{B90A7059-BB5F-41C2-8C65-9EA548B8A10A} = {ED8DF9EA-AA43-4AAC-99C4-90F542457165}
+		{EF8FBF8E-A0BE-44EC-B269-B4BB3FC6C162} = {ED8DF9EA-AA43-4AAC-99C4-90F542457165}
 	EndGlobalSection
 EndGlobal
