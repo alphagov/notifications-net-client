@@ -56,7 +56,7 @@
     <Compile Include="NotificationClientTests.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Notify\Notify.csproj">
+    <ProjectReference Include="..\..\src\Notify\Notify.csproj">
       <Project>{a5f982fe-7acf-49ad-a2d2-3ecc96d010db}</Project>
       <Name>Notify</Name>
     </ProjectReference>

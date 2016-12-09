@@ -43,7 +43,7 @@ namespace Notify.Client
                 Notification notification = JsonConvert.DeserializeObject<Notification>(response);
                 return notification;
             }
-            catch (JsonReaderException)
+            catch (JsonReaderException e)
             {
                 throw new NotifyClientException("Could not create Notification object from response: {0}", response);
             }

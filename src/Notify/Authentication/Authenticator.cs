@@ -20,7 +20,7 @@ namespace Notify.Authentication
             return notifyToken;
         }
 
-        public static double GetCurrentTimeAsSeconds()
+        public static Double GetCurrentTimeAsSeconds()
         {
             var unixEpoch = new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc);
             return Math.Round((DateTime.UtcNow - unixEpoch).TotalSeconds);

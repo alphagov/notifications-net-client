@@ -73,7 +73,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Notify\Notify.csproj">
+    <ProjectReference Include="..\..\src\Notify\Notify.csproj">
       <Project>{A5F982FE-7ACF-49AD-A2D2-3ECC96D010DB}</Project>
       <Name>Notify</Name>
     </ProjectReference>
