@@ -9,7 +9,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("GOV.UK")]
 [assembly: AssemblyProduct("NotifyClient")]
-[assembly: AssemblyCopyright("Copyright GOV.UK 2016")]
+[assembly: AssemblyCopyright("Copyright GOV.UK Notify 2016")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
@@ -31,4 +31,4 @@ using System.Runtime.InteropServices;
 // You can specify all the values or you can default the Build and Revision Numbers 
 // by using the '*' as shown below:
 // [assembly: AssemblyVersion("1.0.*")]
-[assembly: AssemblyVersion("0.0.1")]
+[assembly: AssemblyVersion("0.0.2")]
