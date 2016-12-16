@@ -50,7 +50,7 @@ namespace Notify.Client
 
         }
 
-        public NotificationList GetNotifications(String templateType = "", String status = "", String reference = "", String olderThan = "")
+        public NotificationList GetNotifications(String templateType = "", String status = "", String reference = "", String olderThanId = "")
         {
             var query = HttpUtility.ParseQueryString("");
 
@@ -69,9 +69,9 @@ namespace Notify.Client
                 query.Add("reference", reference);
             }
 
-            if (!String.IsNullOrWhiteSpace(olderThan))
+            if (!String.IsNullOrWhiteSpace(olderThanId))
             {
-                query.Add("older_than", olderThan);
+                query.Add("older_than", olderThanId);
             }
 
             String finalUrl = "v2/notifications?" + query.ToString();
