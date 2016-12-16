@@ -12,6 +12,8 @@ namespace Notify.Models
         public String createdAt;
         [JsonProperty("email_address")]
         public String emailAddress;
+        public String body;
+        public String subject;
         public String line1;
         public String line2;
         public String line3;

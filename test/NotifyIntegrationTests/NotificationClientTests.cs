@@ -61,6 +61,9 @@ namespace NotifyIntegrationTests
             Assert.IsNotNull(notification.id);
             Assert.AreEqual(notification.id, this.smsNotificationId);
 
+            Assert.IsNotNull(notification.body);
+            Assert.AreEqual(notification.body, "Hello someone\n\nFunctional Tests make our world a better place");
+
             Assert.IsNotNull(notification.reference);
             Assert.AreEqual(notification.reference, "sample-test-ref");
 
@@ -95,6 +98,11 @@ namespace NotifyIntegrationTests
             Assert.IsNotNull(notification);
             Assert.IsNotNull(notification.id);
             Assert.AreEqual(notification.id, this.emailNotificationId);
+
+            Assert.IsNotNull(notification.body);
+            Assert.AreEqual(notification.body, "Hello someone\n\nFunctional test help make our world a better place");
+            Assert.IsNotNull(notification.subject);
+            Assert.AreEqual(notification.subject, "Functional Tests are good");
 
             AssertNotification(notification);
         }
@@ -146,8 +154,10 @@ namespace NotifyIntegrationTests
             else if (notificationType.Equals("email"))
             {
                 Assert.IsNotNull(notification.emailAddress);
+                Assert.IsNotNull(notification.subject);
             }
 
+            Assert.IsNotNull(notification.body);
             Assert.IsNotNull(notification.createdAt);
 
             Assert.IsNotNull(notification.status);
