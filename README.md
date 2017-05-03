@@ -76,6 +76,19 @@ Otherwise the client will raise a `Notify.Exceptions.NotifyClientException`:
 <td>
 <pre>
 [{
+    "error": "RateLimitError",
+    "message": "Exceeded rate limit for key type TEAM of 10 requests per 10 seconds"
+}]
+</pre>
+</td>
+</tr>
+<tr>
+<td>
+<pre>429</pre>
+</td>
+<td>
+<pre>
+[{
     "error": "TooManyRequestsError",
     "message": "Exceeded send limits (50) for today"
 }]
@@ -219,7 +232,7 @@ Otherwise the parameter can be omitted or `null` can be passed in its place.
 
 #### `reference`
 
-An optional identifier you generate if you don’t want to use Notify’s `id`. It can be used to identify a single  notification or a batch of notifications. Otherwise the parameter can be omitted or `null` can be passed in its place. 
+An optional identifier you generate if you donï¿½t want to use Notifyï¿½s `id`. It can be used to identify a single  notification or a batch of notifications. Otherwise the parameter can be omitted or `null` can be passed in its place.
 
 ## Get the status of one message
 ```csharp
@@ -312,7 +325,7 @@ public Link links;
 
 public class Link {
 	public String current;
-	public String next;	
+	public String next;
 }
 
 ```
