@@ -11,6 +11,7 @@
     <AssemblyName>Notify</AssemblyName>
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
+    <CscToolPath>$(MSBuildProgramFiles32)\MSBuild\14.0\Bin</CscToolPath>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -64,13 +65,17 @@
     <Compile Include="Interfaces\INotificationClient.cs" />
     <Compile Include="Models\NotificationList.cs" />
     <Compile Include="Models\Responses\EmailNotificationResponse.cs" />
+    <Compile Include="Models\Responses\TemplateList.cs" />
     <Compile Include="Models\Responses\NotificationResponse.cs" />
     <Compile Include="Models\NotifyHTTPError.cs" />
     <Compile Include="Models\Responses\NotifyHTTPErrorResponse.cs" />
     <Compile Include="Models\Notification.cs" />
     <Compile Include="Models\Responses\SmsNotificationResponse.cs" />
+    <Compile Include="Models\Responses\TemplatePreviewResponse.cs" />
+    <Compile Include="Models\Responses\TemplateResponse.cs" />
     <Compile Include="Models\Template.cs" />
     <Compile Include="Client\NotificationClient.cs" />
+    <Compile Include="Models\TemplatePreview.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

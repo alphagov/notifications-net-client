@@ -16,6 +16,10 @@ namespace Notify.Client
         public String GET_NOTIFICATION_URL = "v2/notifications/";
         public String SEND_SMS_NOTIFICATION_URL = "v2/notifications/sms";
         public String SEND_EMAIL_NOTIFICATION_URL = "v2/notifications/email";
+        public String GET_TEMPLATE_URL = "v2/template/";
+        public String GET_TEMPLATE_LIST_URL = "v2/templates";
+        public String TYPE_PARAM = "?type=";
+        public String VERSION_PARAM = "/version/";
 
         public NotificationClient(String apiKey) : base(new HttpClientWrapper(new HttpClient()), apiKey)
         {
@@ -82,6 +86,19 @@ namespace Notify.Client
             return notifications;
         }
 
+        public TemplateList GetTemplateList(String templateType = "")
+        {
+            String finalUrl = string.Format("{0}{1}", 
+        	                                GET_TEMPLATE_LIST_URL,
+                                            templateType == "" ? "" : TYPE_PARAM + templateType);
+        	
+            String response = this.GET(finalUrl);
+
+            TemplateList templateList = JsonConvert.DeserializeObject<TemplateList>(response);
+
+            return templateList;
+        }
+
         public SmsNotificationResponse SendSms(String mobileNumber, String templateId, Dictionary<String, dynamic> personalisation = null, String clientReference = null)
         {
 
@@ -137,5 +154,57 @@ namespace Notify.Client
             return receipt;
         }
 
+
+		public TemplateResponse GetTemplateById(String templateId)
+        {
+            String url = GET_TEMPLATE_URL + templateId;
+
+			return GetTemplateFromURL(url);
+        }
+
+		public TemplateResponse GetTemplateByIdAndVersion(String templateId, int version = 0)
+        {
+			String pattern = "{0}{1}" + (version > 0 ? VERSION_PARAM + "{2}" : "");
+			String url = string.Format(pattern, GET_TEMPLATE_URL, templateId, version);
+            
+			return GetTemplateFromURL(url);
+        }
+
+		public TemplatePreviewResponse GenerateTemplatePreview(String templateId, Dictionary<String, dynamic> personalisation = null)
+        {
+            String url = string.Format("{0}{1}/preview", GET_TEMPLATE_URL, templateId);
+
+            JObject o = new JObject
+            {
+            	{ "personalisation", JObject.FromObject(personalisation) }
+            };
+            
+            String response = this.POST(url, o.ToString(Formatting.None));
+
+            try
+            {
+                TemplatePreviewResponse template = JsonConvert.DeserializeObject<TemplatePreviewResponse>(response);
+                return template;
+            }
+            catch (JsonReaderException)
+            {
+                throw new NotifyClientException("Could not create Template object from response: {0}", response);
+            }
+		}
+		
+		TemplateResponse GetTemplateFromURL(String url)
+		{
+			String response = this.GET(url);
+
+            try
+            {
+                TemplateResponse template = JsonConvert.DeserializeObject<TemplateResponse>(response);
+                return template;
+            }
+            catch (JsonReaderException)
+            {
+                throw new NotifyClientException("Could not create Template object from response: {0}", response);
+            }
+		}
     }
 }
