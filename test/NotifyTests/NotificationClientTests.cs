@@ -1,5 +1,4 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Moq;
+﻿using Moq;
 using Moq.Protected;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
@@ -15,17 +14,18 @@ using System.Net;
 using System.Threading;
 using System.Threading.Tasks;
 
+using NUnit.Framework;
 
 namespace NotifyUnitTests
 {
-    [TestClass()]
+    [TestFixture()]
     public class NotificationClientTests
     {
     	Mock<HttpMessageHandler> handler;
         NotificationClient client;
 
-        [TestInitialize]
-        public void TestInitialize() 
+        [SetUp]
+        public void SetUp() 
         {
         	handler = new Mock<HttpMessageHandler>();
 
@@ -33,47 +33,31 @@ namespace NotifyUnitTests
 	        client = new NotificationClient(w, Constants.fakeApiKey);        	
         }
         
-        [TestCleanup]
-        public void TestCleanup() 
+        [TearDown]
+        public void TearDown() 
         {
         	handler = null;
         	client = null;
         }
         
-        [TestMethod()]
-        [TestCategory("Unit/NotificationClient")]
-        [ExpectedException(typeof(NotifyAuthException), "A client was instantiated with an invalid key")]
+
+        [Test, Category("Unit/NotificationClient")]
+        [ExpectedException(typeof(NotifyAuthException))]
         public void CreateNotificationClientWithInvalidApiKeyFails()
         {
-            try
-            {
-                client = new NotificationClient("someinvalidkey");
-            }
-            catch(Exception e)
-            {
-                Assert.AreEqual(e.Message, "The API Key provided is invalid. Please ensure you are using a v2 API Key that is not empty or null");
-                throw;
-            }
+        	client = new NotificationClient("someinvalidkey");
         }
 
-        [TestMethod()]
-        [TestCategory("Unit/NotificationClient")]
-        [ExpectedException(typeof(NotifyAuthException), "A client was instantiated with an invalid key")]
+
+        [Test, Category("Unit/NotificationClient")]
+        [ExpectedException(typeof(NotifyAuthException))]
         public void CreateNotificationClientWithEmptyApiKeyFails()
         {
-            try
-            {
-                client = new NotificationClient("");
-            }
-            catch (Exception e)
-            {
-                Assert.AreEqual(e.Message, "The API Key provided is invalid. Please ensure you are using a v2 API Key that is not empty or null");
-                throw;
-            }
+            client = new NotificationClient("");
         }
 
-        [TestMethod()]
-        [TestCategory("Unit/NotificationClient")]
+
+        [Test, Category("Unit/NotificationClient")]
         public void GetNotificationWithIdCreatesExpectedRequest()
         {
             mockRequest(Constants.fakeNotificationJson, 
@@ -83,8 +67,8 @@ namespace NotifyUnitTests
             client.GetNotificationById(Constants.fakeNotificationId);
         }
 
-        [TestMethod()]
-        [TestCategory("Unit/NotificationClient")]
+
+        [Test, Category("Unit/NotificationClient")]
         public void GetTemplateWithIdCreatesExpectedRequest()
         {
             mockRequest(Constants.fakeTemplateResponseJson, 
@@ -94,8 +78,8 @@ namespace NotifyUnitTests
             client.GetTemplateByIdAndVersion(Constants.fakeTemplateId);
         }
 
-        [TestMethod()]
-        [TestCategory("Unit/NotificationClient")]
+
+        [Test, Category("Unit/NotificationClient")]
         public void GetTemplateWithIdAndVersionCreatesExpectedRequest()
         {
             mockRequest(Constants.fakeTemplateResponseJson, 
@@ -105,8 +89,7 @@ namespace NotifyUnitTests
             client.GetTemplateByIdAndVersion(Constants.fakeTemplateId, 2);
         }
 
-        [TestMethod()]
-        [TestCategory("Unit/NotificationClient")]
+        [Test, Category("Unit/NotificationClient")]
         public void GetNotificationWithIdReceivesExpectedResponse()
         {
             Notification expectedResponse = JsonConvert.DeserializeObject<Notification>(Constants.fakeNotificationJson);
@@ -117,8 +100,7 @@ namespace NotifyUnitTests
             Assert.IsTrue(expectedResponse.EqualTo(responseNotification));
         }
 
-        [TestMethod()]
-        [TestCategory("Unit/NotificationClient")]
+        [Test, Category("Unit/NotificationClient")]
         public void GetTemplateWithIdReceivesExpectedResponse()
         {
             TemplateResponse expectedResponse = JsonConvert.DeserializeObject<TemplateResponse>(Constants.fakeTemplateResponseJson);
@@ -129,8 +111,7 @@ namespace NotifyUnitTests
             Assert.IsTrue(expectedResponse.EqualTo(responseTemplate));
         }
 
-        [TestMethod()]
-        [TestCategory("Unit/NotificationClient")]
+        [Test, Category("Unit/NotificationClient")]
         public void GetTemplateWithIdAndVersionReceivesExpectedResponse()
         {
             TemplateResponse expectedResponse = 
@@ -142,8 +123,7 @@ namespace NotifyUnitTests
             Assert.IsTrue(expectedResponse.EqualTo(responseTemplate));
         }
 
-        [TestMethod()]
-        [TestCategory("Unit/NotificationClient")]
+        [Test, Category("Unit/NotificationClient")]
         public void GenerateTemplatePreviewGeneratesExpectedRequest()
         {
             Dictionary<String, dynamic> personalisation = new Dictionary<String, dynamic> {
@@ -161,8 +141,7 @@ namespace NotifyUnitTests
             TemplatePreviewResponse response = client.GenerateTemplatePreview(Constants.fakeTemplateId, personalisation);
         }
 
-        [TestMethod()]
-        [TestCategory("Unit/NotificationClient")]
+        [Test, Category("Unit/NotificationClient")]
         public void GenerateTemplatePreviewReceivesExpectedResponse()
         {            
             Dictionary<String, dynamic> personalisation = new Dictionary<String, dynamic> {
@@ -183,8 +162,7 @@ namespace NotifyUnitTests
             client.GenerateTemplatePreview(Constants.fakeTemplateId, personalisation);
         }
 
-        [TestMethod()]
-        [TestCategory("Unit/NotificationClient")]
+        [Test, Category("Unit/NotificationClient")]
         public void GetTemplateListCreatesExpectedRequest()
         {
             mockRequest(Constants.fakeTemplateListResponseJson, 
@@ -193,8 +171,7 @@ namespace NotifyUnitTests
             client.GetTemplateList();
         }
 
-        [TestMethod()]
-        [TestCategory("Unit/NotificationClient")]
+        [Test, Category("Unit/NotificationClient")]
         public void GetTemplateListBySmsTypeCreatesExpectedRequest()
         {
         	const String type = "sms";
@@ -204,8 +181,7 @@ namespace NotifyUnitTests
             client.GetTemplateList(type);
         }
 
-        [TestMethod()]
-        [TestCategory("Unit/NotificationClient")]
+        [Test, Category("Unit/NotificationClient")]
         public void GetTemplateListByEmailTypeCreatesExpectedRequest()
         {
         	const String type = "email";
@@ -216,8 +192,7 @@ namespace NotifyUnitTests
             client.GetTemplateList(type);
         }
 
-        [TestMethod()]
-        [TestCategory("Unit/NotificationClient")]
+        [Test, Category("Unit/NotificationClient")]
         public void GetTemplateListReceivesExpectedResponse()
         {
             TemplateList expectedResponse = JsonConvert.DeserializeObject<TemplateList>(Constants.fakeTemplateListResponseJson);
@@ -234,8 +209,7 @@ namespace NotifyUnitTests
             }
         }
 
-        [TestMethod()]
-        [TestCategory("Unit/NotificationClient")]
+        [Test, Category("Unit/NotificationClient")]
         public void GetTemplateListBySmsTypeReceivesExpectedResponse()
         {
         	const String type = "sms";
@@ -256,8 +230,7 @@ namespace NotifyUnitTests
             }
         }
 
-        [TestMethod()]
-        [TestCategory("Unit/NotificationClient")]
+        [Test, Category("Unit/NotificationClient")]
         public void GetTemplateListByEmailTypeReceivesExpectedResponse()
         {
         	const String type = "email";
@@ -278,8 +251,7 @@ namespace NotifyUnitTests
             }
         }
 
-        [TestMethod()]
-        [TestCategory("Unit/NotificationClient")]
+        [Test, Category("Unit/NotificationClient")]
         public void SendSmsNotificationGeneratesExpectedRequest()
         {
             Dictionary<String, dynamic> personalisation = new Dictionary<String, dynamic>
@@ -302,8 +274,7 @@ namespace NotifyUnitTests
             SmsNotificationResponse response = client.SendSms(Constants.fakePhoneNumber, Constants.fakeTemplateId, personalisation);
         }
         
-        [TestMethod()]
-        [TestCategory("Unit/NotificationClient")]
+        [Test, Category("Unit/NotificationClient")]
         public void SendSmsNotificationGeneratesExpectedResponse()
         {
             Dictionary<String, dynamic> personalisation = new Dictionary<String, dynamic>
@@ -319,8 +290,7 @@ namespace NotifyUnitTests
             Assert.IsTrue(expectedResponse.IsEqualTo(actualResponse));
         }
 
-        [TestMethod()]
-        [TestCategory("Unit/NotificationClient")]
+        [Test, Category("Unit/NotificationClient")]
         public void SendEmailNotificationGeneratesExpectedRequest()
         {
             Dictionary<String, dynamic> personalisation = new Dictionary<String, dynamic>
@@ -344,8 +314,7 @@ namespace NotifyUnitTests
             EmailNotificationResponse response = client.SendEmail(Constants.fakeEmail, Constants.fakeTemplateId, personalisation, Constants.fakeNotificationReference);
         }
  
-        [TestMethod()]
-        [TestCategory("Unit/NotificationClient")]
+        [Test, Category("Unit/NotificationClient")]
         public void SendEmailNotificationGeneratesExpectedResponse()
         {
             Dictionary<String, dynamic> personalisation = new Dictionary<String, dynamic>

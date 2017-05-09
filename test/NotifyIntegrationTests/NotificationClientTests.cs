@@ -3,12 +3,13 @@ using Notify.Models;
 using Notify.Models.Responses;
 using Notify.Exceptions;
 using System;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Collections.Generic;
+
+using NUnit.Framework;
 
 namespace NotifyIntegrationTests
 {
-    [TestClass]
+    [TestFixture]
     public class NotificationClientTests
     {
         private NotificationClient client;
@@ -30,15 +31,14 @@ namespace NotifyIntegrationTests
         const String TEST_TEMPLATE_SMS_BODY = "Hello ((name))\n\nFunctional Tests make our world a better place";
         const String TEST_TEMPLATE_EMAIL_BODY = "Hello ((name))\n\nFunctional test help make our world a better place";
 
-        [TestInitialize]
-        [TestCategory("Integration")]
+        [SetUp]
+        [Test, Category("Integration")]
         public void TestInitialise()
         {
             this.client = new NotificationClient(NOTIFY_API_URL, API_KEY);
         }
-
-        [TestMethod()]
-        [TestCategory("Integration")]
+        
+        [Test, Category("Integration")]
         public void SendSmsTestWithPersonalisation()
         {
             Dictionary<String, dynamic> personalisation = new Dictionary<String, dynamic>
@@ -56,8 +56,8 @@ namespace NotifyIntegrationTests
             Assert.AreEqual(response.reference, "sample-test-ref");
         }
 
-        [TestMethod()]
-        [TestCategory("Integration")]
+        
+        [Test, Category("Integration")]
         public void GetSMSNotificationWithIdReturnsNotification()
         {
             SendSmsTestWithPersonalisation();
@@ -76,8 +76,8 @@ namespace NotifyIntegrationTests
             AssertNotification(notification);
         }
 
-        [TestMethod()]
-        [TestCategory("Integration")]
+        
+        [Test, Category("Integration")]
         public void SendEmailTestWithPersonalisation()
         {
             Dictionary<String, dynamic> personalisation = new Dictionary<String, dynamic>
@@ -94,8 +94,8 @@ namespace NotifyIntegrationTests
             Assert.AreEqual(response.content.subject, TEST_SUBJECT);
         }
 
-        [TestMethod()]
-        [TestCategory("Integration")]
+        
+        [Test, Category("Integration")]
         public void GetEmailNotificationWithIdReturnsNotification()
         {
             SendEmailTestWithPersonalisation();
@@ -113,8 +113,8 @@ namespace NotifyIntegrationTests
             AssertNotification(notification);
         }
 
-        [TestMethod()]
-        [TestCategory("Integration")]
+        
+        [Test, Category("Integration")]
         public void GetAllNotifications()
         {
             NotificationList notificationsResponse = this.client.GetNotifications();
@@ -130,40 +130,24 @@ namespace NotifyIntegrationTests
 
         }
 
-        [TestMethod()]
-        [TestCategory("Integration")]
-        [ExpectedException(typeof(NotifyClientException), "A client was instantiated with an invalid key")]
+        
+        [Test, Category("Integration")]
+        [ExpectedException(typeof(NotifyClientException))]
         public void GetNotificationWithInvalidIdRaisesClientException()
         {
-            try
-            {
-                this.client.GetNotificationById("fa5f0a6e-5293-49f1-b99f-3fade784382f");
-            }
-            catch (Exception e)
-            {
-                Assert.AreEqual(e.Message, "Status code 404. The following errors occured [\r\n  {\r\n    \"error\": \"NoResultFound\",\r\n    \"message\": \"No result found\"\r\n  }\r\n]");
-                throw;
-            }
+        	this.client.GetNotificationById("fa5f0a6e-5293-49f1-b99f-3fade784382f");
         }
 
-        [TestMethod()]
-        [TestCategory("Integration")]
-        [ExpectedException(typeof(NotifyClientException), "A client was instantiated with an invalid key")]
+        
+        [Test, Category("Integration")]
+        [ExpectedException(typeof(NotifyClientException))]
         public void GetTemplateWithInvalidIdRaisesClientException()
         {
-            try
-            {
-                this.client.GetTemplateById("fa5f0a6e-5293-49f1-b99f-3fade784382f");
-            }
-            catch (Exception e)
-            {
-                Assert.AreEqual(e.Message, "Status code 404. The following errors occured [\r\n  {\r\n    \"error\": \"NoResultFound\",\r\n    \"message\": \"No result found\"\r\n  }\r\n]");
-                throw;
-            }
+        	this.client.GetTemplateById("fa5f0a6e-5293-49f1-b99f-3fade784382f");
         }
 
-        [TestMethod()]
-        [TestCategory("Integration")]
+        
+        [Test, Category("Integration")]
         public void GetAllTemplates()
         {
             TemplateList templateList = this.client.GetTemplateList();
@@ -176,8 +160,8 @@ namespace NotifyIntegrationTests
             }
         }
 
-        [TestMethod()]
-        [TestCategory("Integration")]
+        
+        [Test, Category("Integration")]
         public void GetAllSMSTemplates()
         {
         	const String type = "sms";
@@ -191,8 +175,8 @@ namespace NotifyIntegrationTests
             }
         }
 
-        [TestMethod()]
-        [TestCategory("Integration")]
+        
+        [Test, Category("Integration")]
         public void GetAllEmailTemplates()
         {
         	const String type = "email";
@@ -206,24 +190,17 @@ namespace NotifyIntegrationTests
             }
         }
 
-        [TestMethod()]
-        [TestCategory("Integration")]
-        [ExpectedException(typeof(NotifyClientException), "type invalid is not one of [sms, email, letter]")]
+        
+        [Test, Category("Integration")]
+        [ExpectedException(typeof(NotifyClientException))]
         public void GetAllInvalidTemplatesRaisesError()
         {
-        	try {
-	        	const String type = "invalid";
-	            TemplateList templateList = this.client.GetTemplateList(type);
-        	}
-            catch (Exception e)
-            {
-                Assert.AreEqual(e.Message, "Status code 400. The following errors occured [\r\n  {\r\n    \"error\": \"ValidationError\",\r\n    \"message\": \"type invalid is not one of [sms, email, letter]\"\r\n  }\r\n]");
-                throw;
-            }
+        	const String type = "invalid";
+            TemplateList templateList = this.client.GetTemplateList(type);
         }
 
-        [TestMethod()]
-        [TestCategory("Integration")]
+        
+        [Test, Category("Integration")]
         public void GetSMSTemplateWithId()
         {
             TemplateResponse template = this.client.GetTemplateById(SMS_TEMPLATE_ID);
@@ -231,8 +208,8 @@ namespace NotifyIntegrationTests
             Assert.AreEqual(template.body, TEST_TEMPLATE_SMS_BODY);
         }
 
-        [TestMethod()]
-        [TestCategory("Integration")]
+        
+        [Test, Category("Integration")]
         public void GetEmailTemplateWithId()
         {
             TemplateResponse template = this.client.GetTemplateById(EMAIL_TEMPLATE_ID);
@@ -240,8 +217,8 @@ namespace NotifyIntegrationTests
             Assert.AreEqual(template.body, TEST_TEMPLATE_EMAIL_BODY);
         }
 
-        [TestMethod()]
-        [TestCategory("Integration")]
+        
+        [Test, Category("Integration")]
         public void GenerateSMSPreviewWithPersonalisation()
         {
             Dictionary<String, dynamic> personalisation = new Dictionary<String, dynamic>
@@ -257,8 +234,8 @@ namespace NotifyIntegrationTests
             Assert.AreEqual(response.subject, null);
         }
 
-        [TestMethod()]
-        [TestCategory("Integration")]
+        
+        [Test, Category("Integration")]
         public void GenerateEmailPreviewWithPersonalisation()
         {
             Dictionary<String, dynamic> personalisation = new Dictionary<String, dynamic>
