@@ -87,6 +87,36 @@ namespace NotifyUnitTests
 
         [TestMethod()]
         [TestCategory("Unit/NotificationClient")]
+        public void GetTemplateWithIdCreatesExpectedRequest()
+        {
+            var handler = new Mock<HttpMessageHandler>();
+            HttpClientWrapper w = new HttpClientWrapper(new HttpClient(handler.Object));
+
+            NotificationClient n = new NotificationClient(w, Constants.fakeApiKey);
+
+            mockResponse(handler, n, Constants.fakeTemplateResponseJson, 
+            	n.GET_TEMPLATE_URL + Constants.fakeTemplateId);
+
+            n.GetTemplateByIdAndVersion(Constants.fakeTemplateId);
+        }
+
+        [TestMethod()]
+        [TestCategory("Unit/NotificationClient")]
+        public void GetTemplateWithIdAndVersionCreatesExpectedRequest()
+        {
+            var handler = new Mock<HttpMessageHandler>();
+            HttpClientWrapper w = new HttpClientWrapper(new HttpClient(handler.Object));
+
+            NotificationClient n = new NotificationClient(w, Constants.fakeApiKey);
+
+            mockResponse(handler, n, Constants.fakeTemplateResponseJson, 
+            	n.GET_TEMPLATE_URL + Constants.fakeTemplateId + n.VERSION_PARAM + "2");
+
+            n.GetTemplateByIdAndVersion(Constants.fakeTemplateId, 2);
+        }
+
+        [TestMethod()]
+        [TestCategory("Unit/NotificationClient")]
         public void GetNotificationWithIdReceivesExpectedResponse()
         {
             var handler = new Mock<HttpMessageHandler>();
@@ -108,6 +138,217 @@ namespace NotifyUnitTests
 
             Notification responseNotification = n.GetNotificationById(Constants.fakeNotificationId);
             Assert.IsTrue(expectedResponse.EqualTo(responseNotification));
+        }
+
+        [TestMethod()]
+        [TestCategory("Unit/NotificationClient")]
+        public void GetTemplateWithIdReceivesExpectedResponse()
+        {
+            var handler = new Mock<HttpMessageHandler>();
+            HttpClientWrapper w = new HttpClientWrapper(new HttpClient(handler.Object));
+
+            NotificationClient n = new NotificationClient(w, Constants.fakeApiKey);
+            TemplateResponse expectedResponse = JsonConvert.DeserializeObject<TemplateResponse>(Constants.fakeTemplateResponseJson);
+
+            mockResponse(handler, n, Constants.fakeTemplateResponseJson);            
+            
+            TemplateResponse responseTemplate = n.GetTemplateById(Constants.fakeTemplateId);
+            Assert.IsTrue(expectedResponse.EqualTo(responseTemplate));
+        }
+
+        [TestMethod()]
+        [TestCategory("Unit/NotificationClient")]
+        public void GetTemplateWithIdAndVersionReceivesExpectedResponse()
+        {
+            var handler = new Mock<HttpMessageHandler>();
+            HttpClientWrapper w = new HttpClientWrapper(new HttpClient(handler.Object));
+
+            NotificationClient n = new NotificationClient(w, Constants.fakeApiKey);
+            TemplateResponse expectedResponse = 
+            	JsonConvert.DeserializeObject<TemplateResponse>(Constants.fakeTemplateResponseJson);
+
+            mockResponse(handler, n, Constants.fakeTemplateResponseJson);            
+
+            TemplateResponse responseTemplate = n.GetTemplateByIdAndVersion(Constants.fakeTemplateId, 2);
+            Assert.IsTrue(expectedResponse.EqualTo(responseTemplate));
+        }
+
+        [TestMethod()]
+        [TestCategory("Unit/NotificationClient")]
+        public void GenerateTemplatePreviewGeneratesExpectedRequest()
+        {
+            var handler = new Mock<HttpMessageHandler>();
+            HttpClientWrapper w = new HttpClientWrapper(new HttpClient(handler.Object));
+
+            NotificationClient n = new NotificationClient(w, Constants.fakeApiKey);
+            
+            Dictionary<String, dynamic> personalisation = new Dictionary<String, dynamic> {
+                    { "name", "someone" }            	
+            };
+            
+            JObject o = new JObject
+            {
+            	{ "personalisation", JObject.FromObject(personalisation) }
+            };
+            
+            mockResponse(handler, n, Constants.fakeTemplatePreviewResponseJson, 
+            	n.GET_TEMPLATE_URL + Constants.fakeTemplateId + "/preview", HttpMethod.Post);
+
+            TemplatePreviewResponse response = n.GenerateTemplatePreview(Constants.fakeTemplateId, personalisation);
+        }
+
+        [TestMethod()]
+        [TestCategory("Unit/NotificationClient")]
+        public void GenerateTemplatePreviewReceivesExpectedResponse()
+        {
+            var handler = new Mock<HttpMessageHandler>();
+            HttpClientWrapper w = new HttpClientWrapper(new HttpClient(handler.Object));
+
+            NotificationClient n = new NotificationClient(w, Constants.fakeApiKey);
+            
+            Dictionary<String, dynamic> personalisation = new Dictionary<String, dynamic> {
+                    { "name", "someone" }            	
+            };
+            
+            JObject expected = new JObject
+            {
+            	{ "personalisation", JObject.FromObject(personalisation) }
+            };
+
+            mockResponse(handler, n, Constants.fakeTemplatePreviewResponseJson, 
+            	n.GET_TEMPLATE_URL + Constants.fakeTemplateId + "/preview", 
+            	HttpMethod.Post, expected.ToString(Formatting.None), checkPreviewContent);
+            
+            n.GenerateTemplatePreview(Constants.fakeTemplateId, personalisation);
+        }
+
+        void checkPreviewContent(String expected, String content){
+            Assert.IsNotNull(content);
+            Assert.AreEqual(expected, content);
+        }        
+        
+        [TestMethod()]
+        [TestCategory("Unit/NotificationClient")]
+        public void GetTemplateListCreatesExpectedRequest()
+        {
+            var handler = new Mock<HttpMessageHandler>();
+            HttpClientWrapper w = new HttpClientWrapper(new HttpClient(handler.Object));
+
+            NotificationClient n = new NotificationClient(w, Constants.fakeApiKey);
+
+            mockResponse(handler, n, Constants.fakeTemplateListResponseJson, 
+            	 n.GET_TEMPLATE_LIST_URL);
+
+            n.GetTemplateList();
+        }
+
+        [TestMethod()]
+        [TestCategory("Unit/NotificationClient")]
+        public void GetTemplateListBySmsTypeCreatesExpectedRequest()
+        {
+        	const String type = "sms";
+            var handler = new Mock<HttpMessageHandler>();
+            HttpClientWrapper w = new HttpClientWrapper(new HttpClient(handler.Object));
+
+            NotificationClient n = new NotificationClient(w, Constants.fakeApiKey);
+
+            mockResponse(handler, n, Constants.fakeTemplateSmsListResponseJson, 
+                         n.GET_TEMPLATE_LIST_URL + n.TYPE_PARAM + type);
+
+            n.GetTemplateList(type);
+        }
+
+        [TestMethod()]
+        [TestCategory("Unit/NotificationClient")]
+        public void GetTemplateListByEmailTypeCreatesExpectedRequest()
+        {
+        	const String type = "email";
+            var handler = new Mock<HttpMessageHandler>();
+            HttpClientWrapper w = new HttpClientWrapper(new HttpClient(handler.Object));
+
+            NotificationClient n = new NotificationClient(w, Constants.fakeApiKey);
+
+            mockResponse(handler, n, Constants.fakeTemplateEmailListResponseJson, 
+                         n.GET_TEMPLATE_LIST_URL + n.TYPE_PARAM + type);
+
+            n.GetTemplateList(type);
+        }
+
+        [TestMethod()]
+        [TestCategory("Unit/NotificationClient")]
+        public void GetTemplateListReceivesExpectedResponse()
+        {
+            var handler = new Mock<HttpMessageHandler>();
+            HttpClientWrapper w = new HttpClientWrapper(new HttpClient(handler.Object));
+
+            NotificationClient n = new NotificationClient(w, Constants.fakeApiKey);
+
+            TemplateList expectedResponse = JsonConvert.DeserializeObject<TemplateList>(Constants.fakeTemplateListResponseJson);
+
+            mockResponse(handler, n, Constants.fakeTemplateListResponseJson);
+
+            TemplateList templateList = n.GetTemplateList();
+            
+            List<TemplateResponse> templates = templateList.templates;
+            
+            Assert.AreEqual(templates.Count, expectedResponse.templates.Count);
+            for(int i=0; i < templates.Count; i++) {
+            	Assert.IsTrue(expectedResponse.templates[i].EqualTo(templates[i]));
+            }
+        }
+
+        [TestMethod()]
+        [TestCategory("Unit/NotificationClient")]
+        public void GetTemplateListBySmsTypeReceivesExpectedResponse()
+        {
+        	const String type = "sms";
+        	
+            var handler = new Mock<HttpMessageHandler>();
+            HttpClientWrapper w = new HttpClientWrapper(new HttpClient(handler.Object));
+
+            NotificationClient n = new NotificationClient(w, Constants.fakeApiKey);
+
+            TemplateList expectedResponse = 
+            	JsonConvert.DeserializeObject<TemplateList>(Constants.fakeTemplateSmsListResponseJson);
+            
+            mockResponse(handler, n, Constants.fakeTemplateSmsListResponseJson, 
+                         n.GET_TEMPLATE_LIST_URL + n.TYPE_PARAM + type);
+
+            TemplateList templateList = n.GetTemplateList(type);
+            
+            List<TemplateResponse> templates = templateList.templates;
+            
+            Assert.AreEqual(templates.Count, expectedResponse.templates.Count);
+            for(int i=0; i < templates.Count; i++) {
+            	Assert.IsTrue(expectedResponse.templates[i].EqualTo(templates[i]));
+            }
+        }
+
+        [TestMethod()]
+        [TestCategory("Unit/NotificationClient")]
+        public void GetTemplateListByEmailTypeReceivesExpectedResponse()
+        {
+        	const String type = "email";
+
+            var handler = new Mock<HttpMessageHandler>();
+            HttpClientWrapper w = new HttpClientWrapper(new HttpClient(handler.Object));
+
+            NotificationClient n = new NotificationClient(w, Constants.fakeApiKey);
+
+            TemplateList expectedResponse = 
+            	JsonConvert.DeserializeObject<TemplateList>(Constants.fakeTemplateEmailListResponseJson);
+            
+            mockResponse(handler, n, Constants.fakeTemplateEmailListResponseJson, 
+                         n.GET_TEMPLATE_LIST_URL + n.TYPE_PARAM + type);
+
+            TemplateList templateList = n.GetTemplateList(type);
+            
+            List<TemplateResponse> templates = templateList.templates;
+            
+            Assert.AreEqual(templates.Count, expectedResponse.templates.Count);
+            for(int i=0; i < templates.Count; i++) {
+            	Assert.IsTrue(expectedResponse.templates[i].EqualTo(templates[i]));
+            }
         }
 
         [TestMethod()]
@@ -272,6 +513,51 @@ namespace NotifyUnitTests
             Assert.IsTrue(expectedResponse.IsEqualTo(actualResponse));
 
         }
-
+        
+        void mockResponse(Moq.Mock<System.Net.Http.HttpMessageHandler> handler, NotificationClient n, 
+                          String content, String uri, HttpMethod method = null, 
+                          String expected = null, Action<String, String> _checkContent = null) {
+        	if (method == null)
+        		method = HttpMethod.Get;
+        	String response = "";
+        	
+            handler.Protected()
+                .Setup<Task<HttpResponseMessage>>("SendAsync", ItExpr.IsAny<HttpRequestMessage>(), ItExpr.IsAny<CancellationToken>())
+                .Returns(Task<HttpResponseMessage>.Factory.StartNew(() =>
+                {
+                    return new HttpResponseMessage
+                    {
+                        StatusCode = HttpStatusCode.OK,
+                        Content = new StringContent(content)
+                    };
+                }))
+                .Callback<HttpRequestMessage, CancellationToken>((r, c) => 
+                {
+                    Assert.AreEqual(r.Method, method);
+                    Assert.AreEqual(r.RequestUri.ToString(), n.baseUrl + uri);
+                    Assert.IsNotNull(r.Headers.Authorization);
+                    Assert.IsNotNull(r.Headers.UserAgent);
+                    Assert.AreEqual(r.Headers.UserAgent.ToString(), Constants.userAgent);
+                    Assert.AreEqual(r.Headers.Accept.ToString(), "application/json");
+                    
+                    if (r.Content != null && _checkContent != null) {
+	                    response = r.Content.ReadAsStringAsync().Result;
+	                    _checkContent(expected, response);
+                    }
+                });
+        }
+        
+        void mockResponse(Moq.Mock<System.Net.Http.HttpMessageHandler> handler, NotificationClient n, String content) {
+            handler.Protected()
+                .Setup<Task<HttpResponseMessage>>("SendAsync", ItExpr.IsAny<HttpRequestMessage>(), ItExpr.IsAny<CancellationToken>())
+                .Returns(Task<HttpResponseMessage>.Factory.StartNew(() =>
+                {
+                    return new HttpResponseMessage
+                    {
+                        StatusCode = HttpStatusCode.OK,
+                        Content = new StringContent(content)
+                    };
+                }));
+        	}
     }
 }
