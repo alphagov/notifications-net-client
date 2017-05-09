@@ -13,22 +13,28 @@ namespace NotifyIntegrationTests
     {
         private NotificationClient client;
 
-        private String BASE_URL = Environment.GetEnvironmentVariable("NOTIFY_API_URL");
+        private String NOTIFY_API_URL = Environment.GetEnvironmentVariable("NOTIFY_API_URL");
         private String API_KEY = Environment.GetEnvironmentVariable("API_KEY");
         private String FUNCTIONAL_TEST_NUMBER = Environment.GetEnvironmentVariable("FUNCTIONAL_TEST_NUMBER");
-        private String FUNCTIONAL_TEST_EMAIL_ADDRESS = Environment.GetEnvironmentVariable("FUNCTIONAL_TEST_EMAIL");
+        private String FUNCTIONAL_TEST_EMAIL = Environment.GetEnvironmentVariable("FUNCTIONAL_TEST_EMAIL");
 
-        private String EMAIL_PERSONALISATION_TEMPLATE_ID = Environment.GetEnvironmentVariable("EMAIL_TEMPLATE_ID");
-        private String SMS_PERSONALISATION_TEMPLATE_ID = Environment.GetEnvironmentVariable("SMS_TEMPLATE_ID");
+        private String EMAIL_TEMPLATE_ID = Environment.GetEnvironmentVariable("EMAIL_TEMPLATE_ID");
+        private String SMS_TEMPLATE_ID = Environment.GetEnvironmentVariable("SMS_TEMPLATE_ID");
 
         private String smsNotificationId;
         private String emailNotificationId;
+        
+        const String TEST_SUBJECT = "Functional Tests are good";
+        const String TEST_EMAIL_BODY = "Hello someone\n\nFunctional test help make our world a better place";
+        const String TEST_SMS_BODY = "Hello someone\n\nFunctional Tests make our world a better place";
+        const String TEST_TEMPLATE_SMS_BODY = "Hello ((name))\n\nFunctional Tests make our world a better place";
+        const String TEST_TEMPLATE_EMAIL_BODY = "Hello ((name))\n\nFunctional test help make our world a better place";
 
         [TestInitialize]
         [TestCategory("Integration")]
         public void TestInitialise()
         {
-            this.client = new NotificationClient(BASE_URL, API_KEY);
+            this.client = new NotificationClient(NOTIFY_API_URL, API_KEY);
         }
 
         [TestMethod()]
@@ -41,10 +47,10 @@ namespace NotifyIntegrationTests
             };
 
             SmsNotificationResponse response = 
-                this.client.SendSms(FUNCTIONAL_TEST_NUMBER, SMS_PERSONALISATION_TEMPLATE_ID, personalisation, "sample-test-ref");
+                this.client.SendSms(FUNCTIONAL_TEST_NUMBER, SMS_TEMPLATE_ID, personalisation, "sample-test-ref");
             this.smsNotificationId = response.id;
             Assert.IsNotNull(response);
-            Assert.AreEqual(response.content.body, "Hello someone\n\nFunctional Tests make our world a better place");
+            Assert.AreEqual(response.content.body, TEST_SMS_BODY);
 
             Assert.IsNotNull(response.reference);
             Assert.AreEqual(response.reference, "sample-test-ref");
@@ -62,7 +68,7 @@ namespace NotifyIntegrationTests
             Assert.AreEqual(notification.id, this.smsNotificationId);
 
             Assert.IsNotNull(notification.body);
-            Assert.AreEqual(notification.body, "Hello someone\n\nFunctional Tests make our world a better place");
+            Assert.AreEqual(notification.body, TEST_SMS_BODY);
 
             Assert.IsNotNull(notification.reference);
             Assert.AreEqual(notification.reference, "sample-test-ref");
@@ -78,14 +84,14 @@ namespace NotifyIntegrationTests
             {
                 { "name", "someone" }
             };
-
+			
             EmailNotificationResponse response = 
-                this.client.SendEmail(FUNCTIONAL_TEST_EMAIL_ADDRESS, EMAIL_PERSONALISATION_TEMPLATE_ID, personalisation);
+                this.client.SendEmail(FUNCTIONAL_TEST_EMAIL, EMAIL_TEMPLATE_ID, personalisation);
             this.emailNotificationId = response.id;
 
             Assert.IsNotNull(response);
-            Assert.AreEqual(response.content.body, "Hello someone\n\nFunctional test help make our world a better place");
-            Assert.AreEqual(response.content.subject, "Functional Tests are good");
+            Assert.AreEqual(response.content.body, TEST_EMAIL_BODY);
+            Assert.AreEqual(response.content.subject, TEST_SUBJECT);
         }
 
         [TestMethod()]
@@ -100,7 +106,7 @@ namespace NotifyIntegrationTests
             Assert.AreEqual(notification.id, this.emailNotificationId);
 
             Assert.IsNotNull(notification.body);
-            Assert.AreEqual(notification.body, "Hello someone\n\nFunctional test help make our world a better place");
+            Assert.AreEqual(notification.body, TEST_EMAIL_BODY);
             Assert.IsNotNull(notification.subject);
             Assert.AreEqual(notification.subject, "Functional Tests are good");
 
@@ -138,7 +144,134 @@ namespace NotifyIntegrationTests
                 Assert.AreEqual(e.Message, "Status code 404. The following errors occured [\r\n  {\r\n    \"error\": \"NoResultFound\",\r\n    \"message\": \"No result found\"\r\n  }\r\n]");
                 throw;
             }
+        }
 
+        [TestMethod()]
+        [TestCategory("Integration")]
+        [ExpectedException(typeof(NotifyClientException), "A client was instantiated with an invalid key")]
+        public void GetTemplateWithInvalidIdRaisesClientException()
+        {
+            try
+            {
+                this.client.GetTemplateById("fa5f0a6e-5293-49f1-b99f-3fade784382f");
+            }
+            catch (Exception e)
+            {
+                Assert.AreEqual(e.Message, "Status code 404. The following errors occured [\r\n  {\r\n    \"error\": \"NoResultFound\",\r\n    \"message\": \"No result found\"\r\n  }\r\n]");
+                throw;
+            }
+        }
+
+        [TestMethod()]
+        [TestCategory("Integration")]
+        public void GetAllTemplates()
+        {
+            TemplateList templateList = this.client.GetTemplateList();
+            Assert.IsNotNull(templateList);
+            Assert.IsTrue(templateList.templates.Count > 0);
+
+            foreach (TemplateResponse template in templateList.templates)
+            {
+                AssertTemplateResponse(template);
+            }
+        }
+
+        [TestMethod()]
+        [TestCategory("Integration")]
+        public void GetAllSMSTemplates()
+        {
+        	const String type = "sms";
+            TemplateList templateList = this.client.GetTemplateList(type);
+            Assert.IsNotNull(templateList);
+            Assert.IsTrue(templateList.templates.Count > 0);
+
+            foreach (TemplateResponse template in templateList.templates)
+            {
+                AssertTemplateResponse(template, type);
+            }
+        }
+
+        [TestMethod()]
+        [TestCategory("Integration")]
+        public void GetAllEmailTemplates()
+        {
+        	const String type = "email";
+            TemplateList templateList = this.client.GetTemplateList(type);
+            Assert.IsNotNull(templateList);
+            Assert.IsTrue(templateList.templates.Count > 0);
+
+            foreach (TemplateResponse template in templateList.templates)
+            {
+                AssertTemplateResponse(template, type);
+            }
+        }
+
+        [TestMethod()]
+        [TestCategory("Integration")]
+        [ExpectedException(typeof(NotifyClientException), "type invalid is not one of [sms, email, letter]")]
+        public void GetAllInvalidTemplatesRaisesError()
+        {
+        	try {
+	        	const String type = "invalid";
+	            TemplateList templateList = this.client.GetTemplateList(type);
+        	}
+            catch (Exception e)
+            {
+                Assert.AreEqual(e.Message, "Status code 400. The following errors occured [\r\n  {\r\n    \"error\": \"ValidationError\",\r\n    \"message\": \"type invalid is not one of [sms, email, letter]\"\r\n  }\r\n]");
+                throw;
+            }
+        }
+
+        [TestMethod()]
+        [TestCategory("Integration")]
+        public void GetSMSTemplateWithId()
+        {
+            TemplateResponse template = this.client.GetTemplateById(SMS_TEMPLATE_ID);
+            Assert.AreEqual(template.id, SMS_TEMPLATE_ID);
+            Assert.AreEqual(template.body, TEST_TEMPLATE_SMS_BODY);
+        }
+
+        [TestMethod()]
+        [TestCategory("Integration")]
+        public void GetEmailTemplateWithId()
+        {
+            TemplateResponse template = this.client.GetTemplateById(EMAIL_TEMPLATE_ID);
+            Assert.AreEqual(template.id, EMAIL_TEMPLATE_ID);
+            Assert.AreEqual(template.body, TEST_TEMPLATE_EMAIL_BODY);
+        }
+
+        [TestMethod()]
+        [TestCategory("Integration")]
+        public void GenerateSMSPreviewWithPersonalisation()
+        {
+            Dictionary<String, dynamic> personalisation = new Dictionary<String, dynamic>
+            {
+                { "name", "someone" }
+            };
+			
+            TemplatePreviewResponse response = 
+                this.client.GenerateTemplatePreview(SMS_TEMPLATE_ID, personalisation);
+
+            Assert.IsNotNull(response);
+            Assert.AreEqual(response.body, TEST_SMS_BODY);
+            Assert.AreEqual(response.subject, null);
+        }
+
+        [TestMethod()]
+        [TestCategory("Integration")]
+        public void GenerateEmailPreviewWithPersonalisation()
+        {
+            Dictionary<String, dynamic> personalisation = new Dictionary<String, dynamic>
+            {
+                { "name", "someone" }
+            };
+			
+            TemplatePreviewResponse response = 
+                this.client.GenerateTemplatePreview(EMAIL_TEMPLATE_ID, personalisation);
+
+            Assert.IsNotNull(response);
+            Assert.AreEqual(response.body, TEST_EMAIL_BODY);
+            Assert.AreEqual(response.subject, TEST_SUBJECT);
         }
 
         public void AssertNotification(Notification notification)
@@ -179,6 +312,19 @@ namespace NotifyIntegrationTests
             Assert.IsNotNull(template.id);
             Assert.IsNotNull(template.uri);
             Assert.IsNotNull(template.version);
+        }
+        
+        public void AssertTemplateResponse(TemplateResponse template, String type=null) 
+        {
+        	Assert.IsNotNull(template);
+            Assert.IsNotNull(template.id);
+            Assert.IsNotNull(template.version);
+            Assert.IsNotNull(template.type);
+            if (template.type.Equals("email") || (!string.IsNullOrEmpty(type) && type.Equals("email")))
+            	Assert.IsNotNull(template.subject);
+            Assert.IsNotNull(template.created_at);
+            Assert.IsNotNull(template.created_by);
+            Assert.IsNotNull(template.body);
         }
 
     }
