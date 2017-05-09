@@ -7,10 +7,10 @@ using System.Collections.Generic;
 
 using NUnit.Framework;
 
-namespace NotifyIntegrationTests
+namespace Notify.IntegrationTests
 {
 	[TestFixture]
-	public class NotificationClientTests
+	public class NotificationIntegrationClientTests
 	{
 		private NotificationClient client;
 
@@ -56,7 +56,6 @@ namespace NotifyIntegrationTests
 			Assert.AreEqual(response.reference, "sample-test-ref");
 		}
 
-
 		[Test, Category("Integration")]
 		public void GetSMSNotificationWithIdReturnsNotification()
 		{
@@ -76,7 +75,6 @@ namespace NotifyIntegrationTests
 			AssertNotification(notification);
 		}
 
-
 		[Test, Category("Integration")]
 		public void SendEmailTestWithPersonalisation()
 		{
@@ -93,7 +91,6 @@ namespace NotifyIntegrationTests
 			Assert.AreEqual(response.content.body, TEST_EMAIL_BODY);
 			Assert.AreEqual(response.content.subject, TEST_SUBJECT);
 		}
-
 
 		[Test, Category("Integration")]
 		public void GetEmailNotificationWithIdReturnsNotification()
@@ -113,7 +110,6 @@ namespace NotifyIntegrationTests
 			AssertNotification(notification);
 		}
 
-
 		[Test, Category("Integration")]
 		public void GetAllNotifications()
 		{
@@ -130,28 +126,19 @@ namespace NotifyIntegrationTests
 
 		}
 
-
 		[Test, Category("Integration")]
-		//[ExpectedException(typeof(NotifyClientException))]
 		public void GetNotificationWithInvalidIdRaisesClientException()
 		{
-			//this.client.GetNotificationById("fa5f0a6e-5293-49f1-b99f-3fade784382f");
-
 			Assert.Throws<NotifyClientException>(() =>
 			                                     this.client.GetNotificationById("fa5f0a6e-5293-49f1-b99f-3fade784382f"));
 		}
 
-
 		[Test, Category("Integration")]
-		//[ExpectedException(typeof(NotifyClientException))]
 		public void GetTemplateWithInvalidIdRaisesClientException()
 		{
-			//this.client.GetTemplateById("fa5f0a6e-5293-49f1-b99f-3fade784382f");
-
-				Assert.Throws<NotifyClientException>(() =>
-			                                         this.client.GetTemplateById("fa5f0a6e-5293-49f1-b99f-3fade784382f"));
+			Assert.Throws<NotifyClientException>(() =>
+		                                         this.client.GetTemplateById("fa5f0a6e-5293-49f1-b99f-3fade784382f"));
 		}
-
 
 		[Test, Category("Integration")]
 		public void GetAllTemplates()
@@ -165,7 +152,6 @@ namespace NotifyIntegrationTests
 				AssertTemplateResponse(template);
 			}
 		}
-
 
 		[Test, Category("Integration")]
 		public void GetAllSMSTemplates()
@@ -181,7 +167,6 @@ namespace NotifyIntegrationTests
 			}
 		}
 
-
 		[Test, Category("Integration")]
 		public void GetAllEmailTemplates()
 		{
@@ -196,17 +181,13 @@ namespace NotifyIntegrationTests
 			}
 		}
 
-
 		[Test, Category("Integration")]
-		//[ExpectedException(typeof(NotifyClientException))]
 		public void GetAllInvalidTemplatesRaisesError()
 		{
 			const String type = "invalid";
-			//TemplateList templateList = this.client.GetTemplateList(type);
 
 			Assert.Throws<NotifyClientException>(() => this.client.GetTemplateList(type));
 		}
-
 
 		[Test, Category("Integration")]
 		public void GetSMSTemplateWithId()
@@ -216,7 +197,6 @@ namespace NotifyIntegrationTests
 			Assert.AreEqual(template.body, TEST_TEMPLATE_SMS_BODY);
 		}
 
-
 		[Test, Category("Integration")]
 		public void GetEmailTemplateWithId()
 		{
@@ -224,7 +204,6 @@ namespace NotifyIntegrationTests
 			Assert.AreEqual(template.id, EMAIL_TEMPLATE_ID);
 			Assert.AreEqual(template.body, TEST_TEMPLATE_EMAIL_BODY);
 		}
-
 
 		[Test, Category("Integration")]
 		public void GenerateSMSPreviewWithPersonalisation()
@@ -241,7 +220,6 @@ namespace NotifyIntegrationTests
 			Assert.AreEqual(response.body, TEST_SMS_BODY);
 			Assert.AreEqual(response.subject, null);
 		}
-
 
 		[Test, Category("Integration")]
 		public void GenerateEmailPreviewWithPersonalisation()
@@ -311,6 +289,5 @@ namespace NotifyIntegrationTests
 			Assert.IsNotNull(template.created_by);
 			Assert.IsNotNull(template.body);
 		}
-
 	}
 }

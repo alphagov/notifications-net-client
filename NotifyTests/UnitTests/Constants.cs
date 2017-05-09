@@ -1,18 +1,11 @@
 ﻿using System;
-using System.Reflection;
 
-namespace NotifyTests
+namespace Notify.UnitTests
 {
     public static class Constants
     {
         public static String fakeApiKey { get {
                 return @"FAKEKEY-fd29e561-24b6-4f32-be5c-e642a1d68641-57bdfd56-ac07-409b-8307-71419d85bb9c";
-            }
-        }
-
-        public static String userAgent { get {
-				//return "NOTIFY-API-NET-CLIENT/" + Assembly.LoadFrom("Notify.dll").GetName().Version;
-				return "NOTIFY-API-NET-CLIENT/";
             }
         }
 
