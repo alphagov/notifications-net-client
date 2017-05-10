@@ -129,18 +129,28 @@ namespace Notify.IntegrationTests
 		[Test, Category("Integration")]
 		public void GetNotificationWithInvalidIdRaisesClientException()
 		{
-			Assert.Throws<NotifyClientException>(() =>
+			var ex = Assert.Throws<NotifyClientException>(() =>
 			                                     this.client.GetNotificationById("fa5f0a6e-5293-49f1-b99f-3fade784382f"));
-		}
+            Assert.That(ex.Message, Does.Contain("No result found"));
+        }
 
 		[Test, Category("Integration")]
 		public void GetTemplateWithInvalidIdRaisesClientException()
 		{
-			Assert.Throws<NotifyClientException>(() =>
-		                                         this.client.GetTemplateById("fa5f0a6e-5293-49f1-b99f-3fade784382f"));
-		}
+			var ex = Assert.Throws<NotifyClientException>(() =>
+		                                         this.client.GetTemplateById("invalid_id"));
+            Assert.That(ex.Message, Does.Contain("id is not a valid UUID"));
+        }
 
-		[Test, Category("Integration")]
+        [Test, Category("Integration")]
+        public void GetTemplateWithIdWithoutResultRaisesClientException()
+        {
+        	var ex = Assert.Throws<NotifyClientException>(() =>
+        										 this.client.GetTemplateById("fa5f0a6e-5293-49f1-b99f-3fade784382f"));
+        	Assert.That(ex.Message, Does.Contain("No result found"));
+        }
+
+        [Test, Category("Integration")]
 		public void GetAllTemplates()
 		{
 			TemplateList templateList = this.client.GetTemplateList();
@@ -182,11 +192,12 @@ namespace Notify.IntegrationTests
 		}
 
 		[Test, Category("Integration")]
-		public void GetAllInvalidTemplatesRaisesError()
+		public void GetAllInvalidTemplatesRaisesClientException()
 		{
 			const String type = "invalid";
 
-			Assert.Throws<NotifyClientException>(() => this.client.GetTemplateList(type));
+            var ex = Assert.Throws<NotifyClientException>(() => this.client.GetTemplateList(type));
+            Assert.That(ex.Message, Does.Contain("type invalid is not one of [sms, email, letter]"));
 		}
 
 		[Test, Category("Integration")]
@@ -237,7 +248,20 @@ namespace Notify.IntegrationTests
 			Assert.AreEqual(response.subject, TEST_SUBJECT);
 		}
 
-		public void AssertNotification(Notification notification)
+        [Test, Category("Integration")]
+        public void GenerateEmailPreviewWithMissingPersonalisationRaisesClientException()
+        {
+        	Dictionary<String, dynamic> personalisation = new Dictionary<String, dynamic>
+        			{
+        				{ "invalid", "personalisation" }
+        			};
+
+            var ex = Assert.Throws<NotifyClientException>(() =>
+                                                          this.client.GenerateTemplatePreview(EMAIL_TEMPLATE_ID, personalisation));
+            Assert.That(ex.Message, Does.Contain("Missing personalisation: name"));
+        }
+
+        public void AssertNotification(Notification notification)
 		{
 			Assert.IsNotNull(notification.type);
 			String notificationType = notification.type;

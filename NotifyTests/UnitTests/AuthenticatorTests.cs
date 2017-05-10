@@ -17,13 +17,15 @@ namespace Notify.UnitTests
         [Test, Category("Unit/AuthenticationTests")]
         public void CreateTokenWithInvalidSecretThrowsAuthException()
         {
-			Assert.Throws<NotifyAuthException>(() => Authenticator.CreateToken("invalidsecret", NOTIFY_SERVICE_ID));
+			var ex = Assert.Throws<NotifyAuthException>(() => Authenticator.CreateToken("invalidsecret", NOTIFY_SERVICE_ID));
+            Assert.That(ex.Message, Does.Contain("Invalid secret or serviceId. Please check that your API Key is correct"));
         }
 
 		[Test, Category("Unit/AuthenticationTests")]
         public void CreateTokenWithInvalidServiceIdThrowsAuthException()
         {
-			Assert.Throws<NotifyAuthException>(() => Authenticator.CreateToken(NOTIFY_SECRET_ID, "invalid service id"));
+			var ex = Assert.Throws<NotifyAuthException>(() => Authenticator.CreateToken(NOTIFY_SECRET_ID, "invalid service id"));
+            Assert.That(ex.Message, Does.Contain("Invalid secret or serviceId. Please check that your API Key is correct"));
         }
 
 		[Test, Category("Unit/AuthenticationTests")]
@@ -55,13 +57,15 @@ namespace Notify.UnitTests
 		[Test, Category("Unit/AuthenticationTests")]
         public void DecodeInvalidTokenWithNoDotsShouldThrowAuthException()
         {
-					Assert.Throws<NotifyAuthException>(() => Authenticator.DecodeToken("tokenwithnodots", NOTIFY_SECRET_ID));
+			var ex = Assert.Throws<NotifyAuthException>(() => Authenticator.DecodeToken("tokenwithnodots", NOTIFY_SECRET_ID));
+            Assert.That(ex.Message, Does.Contain("Token must consist from 3 delimited by dot parts"));
         }
 
 		[Test, Category("Unit/AuthenticationTests")]
         public void DecodeInvalidTokenShouldThrowAuthException()
         {
-					Assert.Throws<NotifyAuthException>(() => Authenticator.DecodeToken(INVALID_TOKEN, NOTIFY_SECRET_ID));
+		    var ex = Assert.Throws<NotifyAuthException>(() => Authenticator.DecodeToken(INVALID_TOKEN, NOTIFY_SECRET_ID));
+            Assert.That(ex.Message, Does.Contain("Invalid signature"));
         }
     }
 }
