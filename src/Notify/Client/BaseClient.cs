@@ -15,7 +15,7 @@ namespace Notify.Client
         private const Int32 SERVICE_ID_START_POSITION = 73;
         private const Int32 SERVICE_API_KEY_START_POSITION = 36;
         private const Int32 GUID_LENGTH = 36;
-		private const String NOTIFY_CLIENT_NAME = "NOTIFY-API-NET-CLIENT/";
+        private const String NOTIFY_CLIENT_NAME = "NOTIFY-API-NET-CLIENT/";
 
         public String baseUrl;
         private IHttpClient client;
@@ -133,9 +133,9 @@ namespace Notify.Client
             }
         }
 
-		public String GetUserAgent()
-		{
-			return NOTIFY_CLIENT_NAME + Assembly.GetExecutingAssembly().GetName().Version.ToString();		
-		}
+        public String GetUserAgent()
+        {
+            return NOTIFY_CLIENT_NAME + Assembly.GetExecutingAssembly().GetName().Version.ToString();		
+        }
     }
 }
