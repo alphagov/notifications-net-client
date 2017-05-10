@@ -153,7 +153,7 @@ namespace Notify.IntegrationTests
         [Test, Category("Integration")]
 		public void GetAllTemplates()
 		{
-			TemplateList templateList = this.client.GetTemplateList();
+			TemplateList templateList = this.client.GetAllTemplates();
 			Assert.IsNotNull(templateList);
 			Assert.IsTrue(templateList.templates.Count > 0);
 
@@ -167,7 +167,7 @@ namespace Notify.IntegrationTests
 		public void GetAllSMSTemplates()
 		{
 			const String type = "sms";
-			TemplateList templateList = this.client.GetTemplateList(type);
+			TemplateList templateList = this.client.GetAllTemplates(type);
 			Assert.IsNotNull(templateList);
 			Assert.IsTrue(templateList.templates.Count > 0);
 
@@ -181,7 +181,7 @@ namespace Notify.IntegrationTests
 		public void GetAllEmailTemplates()
 		{
 			const String type = "email";
-			TemplateList templateList = this.client.GetTemplateList(type);
+			TemplateList templateList = this.client.GetAllTemplates(type);
 			Assert.IsNotNull(templateList);
 			Assert.IsTrue(templateList.templates.Count > 0);
 
@@ -196,7 +196,7 @@ namespace Notify.IntegrationTests
 		{
 			const String type = "invalid";
 
-            var ex = Assert.Throws<NotifyClientException>(() => this.client.GetTemplateList(type));
+            var ex = Assert.Throws<NotifyClientException>(() => this.client.GetAllTemplates(type));
             Assert.That(ex.Message, Does.Contain("type invalid is not one of [sms, email, letter]"));
 		}
 

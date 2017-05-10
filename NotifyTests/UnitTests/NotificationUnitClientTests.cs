@@ -1,4 +1,4 @@
-﻿using Moq;
+using Moq;
 using Moq.Protected;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
@@ -160,43 +160,43 @@ namespace Notify.UnitTests
 		}
 
 		[Test, Category("Unit/NotificationClient")]
-		public void GetTemplateListCreatesExpectedRequest()
+		public void GetAllTemplatesCreatesExpectedRequest()
 		{
 			mockRequest(Constants.fakeTemplateListResponseJson,
-				 client.GET_TEMPLATE_LIST_URL, AssertValidRequest);
+				 client.GET_ALL_TEMPLATES_URL, AssertValidRequest);
 
-			client.GetTemplateList();
+			client.GetAllTemplates();
 		}
 
 		[Test, Category("Unit/NotificationClient")]
-		public void GetTemplateListBySmsTypeCreatesExpectedRequest()
+		public void GetAllTemplatesBySmsTypeCreatesExpectedRequest()
 		{
 			const String type = "sms";
 			mockRequest(Constants.fakeTemplateSmsListResponseJson,
-						 client.GET_TEMPLATE_LIST_URL + client.TYPE_PARAM + type, AssertValidRequest);
+						 client.GET_ALL_TEMPLATES_URL+ client.TYPE_PARAM + type, AssertValidRequest);
 
-			client.GetTemplateList(type);
+			client.GetAllTemplates(type);
 		}
 
 		[Test, Category("Unit/NotificationClient")]
-		public void GetTemplateListByEmailTypeCreatesExpectedRequest()
+		public void GetAllTemplatesByEmailTypeCreatesExpectedRequest()
 		{
 			const String type = "email";
 
 			mockRequest(Constants.fakeTemplateEmailListResponseJson,
-						 client.GET_TEMPLATE_LIST_URL + client.TYPE_PARAM + type, AssertValidRequest);
+						 client.GET_ALL_TEMPLATES_URL+ client.TYPE_PARAM + type, AssertValidRequest);
 
-			client.GetTemplateList(type);
+			client.GetAllTemplates(type);
 		}
 
         [Test, Category("Unit/NotificationClient")]
-        public void GetTemplateListForEmptyListReceivesExpectedResponse()
+        public void GetAllTemplatesForEmptyListReceivesExpectedResponse()
         {
         	TemplateList expectedResponse = JsonConvert.DeserializeObject<TemplateList>(Constants.fakeTemplateEmptyListResponseJson);
 
            	mockRequest(Constants.fakeTemplateEmptyListResponseJson);
 
-        	TemplateList templateList = client.GetTemplateList();
+        	TemplateList templateList = client.GetAllTemplates();
 
         	List<TemplateResponse> templates = templateList.templates;
 
@@ -204,13 +204,13 @@ namespace Notify.UnitTests
         }
 
 		[Test, Category("Unit/NotificationClient")]
-		public void GetTemplateListReceivesExpectedResponse()
+		public void GetAllTemplatesReceivesExpectedResponse()
 		{
 			TemplateList expectedResponse = JsonConvert.DeserializeObject<TemplateList>(Constants.fakeTemplateListResponseJson);
 
 			mockRequest(Constants.fakeTemplateListResponseJson);
 
-			TemplateList templateList = client.GetTemplateList();
+			TemplateList templateList = client.GetAllTemplates();
 
 			List<TemplateResponse> templates = templateList.templates;
 
@@ -222,7 +222,7 @@ namespace Notify.UnitTests
 		}
 
 		[Test, Category("Unit/NotificationClient")]
-		public void GetTemplateListBySmsTypeReceivesExpectedResponse()
+		public void GetAllTemplatesBySmsTypeReceivesExpectedResponse()
 		{
 			const String type = "sms";
 
@@ -230,9 +230,9 @@ namespace Notify.UnitTests
 				JsonConvert.DeserializeObject<TemplateList>(Constants.fakeTemplateSmsListResponseJson);
 
 			mockRequest(Constants.fakeTemplateSmsListResponseJson,
-						 client.GET_TEMPLATE_LIST_URL + client.TYPE_PARAM + type, AssertValidRequest);
+						 client.GET_ALL_TEMPLATES_URL + client.TYPE_PARAM + type, AssertValidRequest);
 
-			TemplateList templateList = client.GetTemplateList(type);
+			TemplateList templateList = client.GetAllTemplates(type);
 
 			List<TemplateResponse> templates = templateList.templates;
 
@@ -244,7 +244,7 @@ namespace Notify.UnitTests
 		}
 
 		[Test, Category("Unit/NotificationClient")]
-		public void GetTemplateListByEmailTypeReceivesExpectedResponse()
+		public void GetAllTemplatesByEmailTypeReceivesExpectedResponse()
 		{
 			const String type = "email";
 
@@ -252,9 +252,9 @@ namespace Notify.UnitTests
 				JsonConvert.DeserializeObject<TemplateList>(Constants.fakeTemplateEmailListResponseJson);
 
 			mockRequest(Constants.fakeTemplateEmailListResponseJson,
-						 client.GET_TEMPLATE_LIST_URL + client.TYPE_PARAM + type, AssertValidRequest);
+						 client.GET_ALL_TEMPLATES_URL + client.TYPE_PARAM + type, AssertValidRequest);
 
-			TemplateList templateList = client.GetTemplateList(type);
+			TemplateList templateList = client.GetAllTemplates(type);
 
 			List<TemplateResponse> templates = templateList.templates;
 

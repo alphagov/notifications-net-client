@@ -590,7 +590,7 @@ The version number of the template
 ## Get all templates
 
 ```csharp
-TemplateList response = client.GetTemplateList(
+TemplateList response = client.GetAllTemplates(
     "sms" | "email" // optional
 )
 ```

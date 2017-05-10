@@ -1,4 +1,4 @@
-﻿using Newtonsoft.Json;
+using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using Notify.Exceptions;
 using Notify.Interfaces;
@@ -17,7 +17,7 @@ namespace Notify.Client
         public String SEND_SMS_NOTIFICATION_URL = "v2/notifications/sms";
         public String SEND_EMAIL_NOTIFICATION_URL = "v2/notifications/email";
         public String GET_TEMPLATE_URL = "v2/template/";
-        public String GET_TEMPLATE_LIST_URL = "v2/templates";
+        public String GET_ALL_TEMPLATES_URL = "v2/templates";
         public String TYPE_PARAM = "?type=";
         public String VERSION_PARAM = "/version/";
 
@@ -86,10 +86,10 @@ namespace Notify.Client
             return notifications;
         }
 
-        public TemplateList GetTemplateList(String templateType = "")
+        public TemplateList GetAllTemplates(String templateType = "")
         {
             String finalUrl = string.Format("{0}{1}", 
-        	                                GET_TEMPLATE_LIST_URL,
+        	                                GET_ALL_TEMPLATES_URL,
                                             templateType == "" ? "" : TYPE_PARAM + templateType);
         	
             String response = this.GET(finalUrl);
