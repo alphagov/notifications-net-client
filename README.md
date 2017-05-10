@@ -517,6 +517,12 @@ Otherwise the client will raise a `Notify.Exceptions.NotifyClientException`:
 </table>
 </details>
 
+### Arguments
+
+#### `templateId`
+
+Find by clicking **API info** for the template you want to send.
+
 ## Get a template by ID and version
 
 ```csharp
@@ -570,6 +576,17 @@ Otherwise the client will raise a `Notify.Exceptions.NotifyClientException`:
 </table>
 </details>
 
+### Arguments
+
+#### `templateId`
+
+Find by clicking **API info** for the template you want to send.
+
+#### `version`
+
+The version number of the template
+
+
 ## Get all templates
 
 ```csharp
@@ -600,14 +617,20 @@ List<TemplateResponse> templates; // empty list of templates
 
 </details>
 
+### Arguments
+
+
+#### `templateType`
+
+If omitted all messages are returned. Otherwise you can filter by:
+
+* `email`
+* `sms`
+* `letter`
+
 ## Generate a preview template
 
 ```csharp
-Dictionary<String, dynamic> personalisation = new Dictionary<String, dynamic>
-{
-    { "name", "someone" }
-};
-
 TemplatePreviewResponse response = client.GenerateTemplatePreview(
     'templateId', 
     personalisation
@@ -673,3 +696,21 @@ Otherwise the client will raise a `Notify.Exceptions.NotifyClientException`:
 </tbody>
 </table>
 </details>
+
+### Arguments
+
+
+#### `templateId`
+
+Find by clicking **API info** for the template you want to send.
+
+#### `personalisation`
+
+If a template has placeholders you need to provide their values. For example:
+
+```csharp
+Dictionary<String, dynamic> personalisation = new Dictionary<String, dynamic>
+{
+    { "name", "someone" }
+};
+```
