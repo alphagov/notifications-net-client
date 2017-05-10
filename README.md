@@ -291,7 +291,7 @@ Otherwise the parameter can be omitted or `null` can be passed in its place.
 
 #### `reference`
 
-An optional identifier you generate if you don�t want to use Notify�s `id`. It can be used to identify a single  notification or a batch of notifications. Otherwise the parameter can be omitted or `null` can be passed in its place.
+An optional identifier you generate if you don't want to use Notify's `id`. It can be used to identify a single  notification or a batch of notifications. Otherwise the parameter can be omitted or `null` can be passed in its place.
 
 ## Get the status of one message
 ```csharp
