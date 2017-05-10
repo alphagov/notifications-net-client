@@ -189,6 +189,20 @@ namespace Notify.UnitTests
 			client.GetTemplateList(type);
 		}
 
+        [Test, Category("Unit/NotificationClient")]
+        public void GetTemplateListForEmptyListReceivesExpectedResponse()
+        {
+        	TemplateList expectedResponse = JsonConvert.DeserializeObject<TemplateList>(Constants.fakeTemplateEmptyListResponseJson);
+
+           	mockRequest(Constants.fakeTemplateEmptyListResponseJson);
+
+        	TemplateList templateList = client.GetTemplateList();
+
+        	List<TemplateResponse> templates = templateList.templates;
+
+        	Assert.IsTrue(templates.Count == 0);
+        }
+
 		[Test, Category("Unit/NotificationClient")]
 		public void GetTemplateListReceivesExpectedResponse()
 		{

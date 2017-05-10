@@ -45,10 +45,10 @@ namespace Notify.UnitTests
                 return @"{ 
                             ""updated_at"": null,
                             ""created_at"": ""2016-11-22T11:21:13.133522Z"",
-                            ""email_address"": null,
+                            ""created_by"": ""someone@example.com"",
                             ""id"": ""902e4312-bc4a-4c87-8c3e-9f4144ca36fd"",
                             ""body"": ""test body"",
-                            ""subject"": ""test subject"",
+                            ""subject"": null,
                             ""type"": ""sms"",
                             ""version"": 2
                         }";
@@ -60,20 +60,20 @@ namespace Notify.UnitTests
 						{
                             ""updated_at"": null,
                             ""created_at"": ""2016-11-22T11:21:13.133522Z"",
-                            ""email_address"": null,
+                            ""created_by"": ""someone@example.com"",
                             ""id"": ""902e4312-bc4a-4c87-8c3e-9f4144ca36fd"",
                             ""body"": ""test body"",
-                            ""subject"": ""test subject"",
+                            ""subject"": null,
                             ""type"": ""sms"",
                             ""version"": 2
                         },
                         { 
                             ""updated_at"": ""2016-12-23T11:21:13.133522Z"",
                             ""created_at"": ""2016-12-22T11:21:13.133522Z"",
-                            ""email_address"": null,
+                            ""created_by"": ""someoneelse@example.com"",
                             ""id"": ""902e4312-bc4a-4c86-8c3e-9f4144ca36fd"",
                             ""body"": ""test body 2"",
-                            ""subject"": ""test subject 2"",
+                            ""subject"": ""test subject 1"",
                             ""type"": ""email"",
                             ""version"": 3
                         }
@@ -82,14 +82,22 @@ namespace Notify.UnitTests
             }
         }
 
+        public static String fakeTemplateEmptyListResponseJson
+        {
+        	get
+        	{
+        		return @"{ ""templates"": [] }";
+        	}
+        }
+
         public static String fakeTemplateSmsListResponseJson { get {
                 return @"{ ""templates"": [{ 
                             ""updated_at"": null,
                             ""created_at"": ""2016-11-22T11:21:13.133522Z"",
-                            ""email_address"": null,
+                            ""created_by"": ""someone@example.com"",
                             ""id"": ""902e4312-bc4a-4c87-8c3e-9f4144ca36fd"",
                             ""body"": ""test body"",
-                            ""subject"": ""test subject"",
+                            ""subject"": null,
                             ""type"": ""sms"",
                             ""version"": 2
                         }]}";
@@ -100,7 +108,7 @@ namespace Notify.UnitTests
                 return @"{ ""templates"": [{ 
                             ""updated_at"": ""2016-12-23T11:21:13.133522Z"",
                             ""created_at"": ""2016-12-22T11:21:13.133522Z"",
-                            ""email_address"": null,
+                            ""created_by"": ""someone@email.com"",
                             ""id"": ""902e4312-bc4a-4c86-8c3e-9f4144ca36fd"",
                             ""body"": ""test body 2"",
                             ""subject"": ""test subject 2"",
@@ -116,7 +124,7 @@ namespace Notify.UnitTests
                             ""type"": ""sms"",
                             ""version"": 2,
                             ""body"": ""test body"",
-                            ""subject"": ""test subject""
+                            ""subject"": null
                          }";
             }
         }        

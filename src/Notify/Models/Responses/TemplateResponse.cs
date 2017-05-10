@@ -1,6 +1,4 @@
 using System;
-using System.Text;
-using System.Reflection;
 
 namespace Notify.Models.Responses
 {
@@ -27,10 +25,6 @@ namespace Notify.Models.Responses
                 body == response.body &&
                 subject == response.subject
             );
-        }
-        
-        public override String ToString(){
-        	return string.Format("{0},{1},{2},{3},{4},{5},{6},{7}", id, type, created_at, updated_at, created_by, version, body, subject);
         }
     }
 }

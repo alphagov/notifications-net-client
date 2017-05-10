@@ -33,7 +33,7 @@ namespace Notify.IntegrationTests
 
 		[SetUp]
 		[Test, Category("Integration")]
-		public void TestInitialise()
+		public void SetUp()
 		{
 			this.client = new NotificationClient(NOTIFY_API_URL, API_KEY);
 		}
