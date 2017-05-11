@@ -14,9 +14,10 @@ Alternatively if you are using the Nuget Package Manager in Visual Studio, add t
 https://api.bintray.com/nuget/gov-uk-notify/nuget
 ```
 
+## Development
 ### Visual Studio
 
-To execute the NUnit tests you will need to install the `NUnit3 Test Adapter` extension to Visual Studio.
+To execute the NUnit tests you will need to install the [NUnit3 Test Adapter](https://marketplace.visualstudio.com/items?itemName=NUnitDevelopers.NUnit3TestAdapter) extension to Visual Studio.
 
 <details>
 <summary>Setting Windows Environment variables</summary>
