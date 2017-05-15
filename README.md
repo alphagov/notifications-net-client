@@ -14,6 +14,45 @@ Alternatively if you are using the Nuget Package Manager in Visual Studio, add t
 https://api.bintray.com/nuget/gov-uk-notify/nuget
 ```
 
+## Development
+### Visual Studio
+
+To execute the NUnit tests you will need to install the [NUnit3 Test Adapter](https://marketplace.visualstudio.com/items?itemName=NUnitDevelopers.NUnit3TestAdapter) extension to Visual Studio.
+
+<details>
+<summary>Setting Windows Environment variables</summary>
+
+```
+SETX NOTIFY_API_URL "https://example.notify-api.url"
+SETX API_KEY "example_API_test_key"
+SETX FUNCTIONAL_TEST_NUMBER "valid mobile number"
+SETX FUNCTIONAL_TEST_EMAIL "valid email address"
+SETX EMAIL_TEMPLATE_ID "valid email_template_id"
+SETX SMS_TEMPLATE_ID "valid sms_template_id"
+```
+</details>
+
+### [Xamarin Studio](https://www.xamarin.com/visual-studio-for-mac) - for Mac OS
+
+In order to get the .Net client running in Xamarin the target `.Net Framework` needs to be set to `4.5.2` and the application needs to be run from the terminal
+
+```
+open -n /Applications/"Xamarin Studio.app"
+```
+
+<details>
+<summary>Setting Mac OS Environment variables</summary>
+
+```
+export NOTIFY_API_URL=https://example.notify-api.url
+export API_KEY=example_API_test_key
+export FUNCTIONAL_TEST_NUMBER=valid mobile number
+export FUNCTIONAL_TEST_EMAIL=valid email address
+export EMAIL_TEMPLATE_ID=valid email_template_id
+export SMS_TEMPLATE_ID=valid sms_template_id
+```
+</details>
+
 ## Getting started
 
 
@@ -42,7 +81,7 @@ SmsNotificationResponse response = client.SendSms(mobileNumber, templateId, pers
 Response
 </summary>
 
-If the request is successful, `response` will be an `SmsNotificationResponse `:
+If the request is successful, `response` will be a `SmsNotificationResponse `:
 
 ```csharp
 public String fromNumber;
@@ -64,8 +103,12 @@ Otherwise the client will raise a `Notify.Exceptions.NotifyClientException`:
 <table>
 <thead>
 <tr>
-<th>`error["status_code"]`</th>
-<th>`error["message"]`</th>
+<th>
+
+`error["status_code"]`</th>
+<th>
+
+`error["message"]`</th>
 </tr>
 </thead>
 <tbody>
@@ -160,8 +203,12 @@ Otherwise the client will raise a `Notify.Exceptions.NotifyClientException`:
 <table>
 <thead>
 <tr>
-<th>`error["status_code"]`</th>
-<th>`error["message"]`</th>
+<th>
+
+`error["status_code"]`</th>
+<th>
+
+`error["message"]`</th>
 </tr>
 </thead>
 <tbody>
@@ -245,7 +292,7 @@ Otherwise the parameter can be omitted or `null` can be passed in its place.
 
 #### `reference`
 
-An optional identifier you generate if you don�t want to use Notify�s `id`. It can be used to identify a single  notification or a batch of notifications. Otherwise the parameter can be omitted or `null` can be passed in its place.
+An optional identifier you generate if you don't want to use Notify's `id`. It can be used to identify a single  notification or a batch of notifications. Otherwise the parameter can be omitted or `null` can be passed in its place.
 
 ## Get the status of one message
 ```csharp
@@ -330,7 +377,7 @@ NotificationList notifications = client.GetNotifications(templateType, status, r
 Response
 </summary>
 
-If the request is successful, `response` will be an `NotificationList`:
+If the request is successful, `response` will be a `NotificationList`:
 
 ```csharp
 public List<Notification> notifications;
@@ -412,3 +459,259 @@ This is the `reference` you gave at the time of sending the notification. This c
 #### `olderThanId`
 
 If omitted all messages are returned. Otherwise you can filter to retrieve all notifications older than the given notification `id`.
+
+## Get a template by ID
+
+_This will return the latest version of the template. Use [get_template_version](#get-a-template-by-id-and-version) to retrieve a specific template version_
+
+```csharp
+TemplateResponse response = client.GetTemplateById(
+    "templateId"
+)
+```
+
+<details>
+<summary>
+Response
+</summary>
+
+If the request is successful, `response` will be a `TemplateResponse`:
+
+```csharp
+public String id; 
+public String type;
+public DateTime created_at;
+public DateTime? updated_at;
+public String created_by;
+public int version;
+public String body;
+public String subject; // null if an sms message
+```
+
+Otherwise the client will raise a `Notify.Exceptions.NotifyClientException`:
+<table>
+<thead>
+<tr>
+<th>
+
+`error["status_code"]`</th>
+<th>
+
+`error["message"]`</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<pre>404</pre>
+</td>
+<td>
+<pre>
+[{
+    "error": "NoResultFound",
+    "message": "No result found"
+}]
+</pre>
+</td>
+</tr>
+</tbody>
+</table>
+</details>
+
+### Arguments
+
+#### `templateId`
+
+Find by clicking **API info** for the template you want to send.
+
+## Get a template by ID and version
+
+```csharp
+TemplateResponse response = client.GetTemplateByIdAndVersion(
+    'templateId',
+    1   // integer required for version number
+)
+```
+
+<details>
+<summary>
+Response
+</summary>
+
+If the request is successful, `response` will be a `TemplateResponse`:
+
+```csharp
+public String id; 
+public String type;
+public DateTime created_at;
+public DateTime? updated_at;
+public String created_by;
+public int version;
+public String body;
+public String subject; // null if an sms message
+```
+
+Otherwise the client will raise a `Notify.Exceptions.NotifyClientException`:
+<table>
+<thead>
+<tr>
+<th>`error["status_code"]`</th>
+<th>`error["message"]`</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<pre>404</pre>
+</td>
+<td>
+<pre>
+[{
+    "error": "NoResultFound",
+    "message": "No result found"
+}]
+</pre>
+</td>
+</tr>
+</tbody>
+</table>
+</details>
+
+### Arguments
+
+#### `templateId`
+
+Find by clicking **API info** for the template you want to send.
+
+#### `version`
+
+The version number of the template
+
+
+## Get all templates
+
+```csharp
+TemplateList response = client.GetAllTemplates(
+    "sms" | "email" // optional
+)
+```
+_This will return the latest version for each template_
+
+[See available template types](#templatetype)
+
+<details>
+<summary>
+Response
+</summary>
+
+If the request is successful, `response` will be a `TemplateList`:
+
+```csharp
+List<TemplateResponse> templates;
+```
+
+If no templates exist for a template type or there no templates for a service, the `response` will be a `TemplateList` with an empty `templates` list element:
+
+```csharp
+List<TemplateResponse> templates; // empty list of templates
+```
+
+</details>
+
+### Arguments
+
+
+#### `templateType`
+
+If omitted all messages are returned. Otherwise you can filter by:
+
+* `email`
+* `sms`
+* `letter`
+
+## Generate a preview template
+
+```csharp
+TemplatePreviewResponse response = client.GenerateTemplatePreview(
+    'templateId', 
+    personalisation
+)
+```
+
+<details>
+<summary>
+Response
+</summary>
+
+If the request is successful, `response` will be a `TemplatePreviewResponse`:
+
+```csharp
+public String id;
+public String type;
+public int version;
+public String body;
+public String subject; // null if a sms message
+```
+
+Otherwise the client will raise a `Notify.Exceptions.NotifyClientException`:
+<table>
+<thead>
+<tr>
+<th>
+
+`error["status_code"]`
+</th>
+<th>
+
+`error["message"]`
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<pre>400</pre>
+</td>
+<td>
+<pre>
+[{
+    "error": "BadRequestError",
+    "message": "Missing personalisation: [name]"
+}]
+</pre>
+</td>
+</tr>
+<tr>
+<td>
+<pre>404</pre>
+</td>
+<td>
+<pre>
+[{
+    "error": "NoResultFound",
+    "message": "No result found"
+]}
+</pre>
+</td>
+</tr>
+</tbody>
+</table>
+</details>
+
+### Arguments
+
+
+#### `templateId`
+
+Find by clicking **API info** for the template you want to send.
+
+#### `personalisation`
+
+If a template has placeholders you need to provide their values. For example:
+
+```csharp
+Dictionary<String, dynamic> personalisation = new Dictionary<String, dynamic>
+{
+    { "name", "someone" }
+};
+```

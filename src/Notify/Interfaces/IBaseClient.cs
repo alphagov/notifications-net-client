@@ -14,5 +14,7 @@ namespace Notify.Interfaces
         Tuple<String, String> ExtractServiceIdAndApiKey(String fromApiKey);
 
         Uri ValidateBaseUri(String baseUrl);
+
+		String GetUserAgent();
     }
 }

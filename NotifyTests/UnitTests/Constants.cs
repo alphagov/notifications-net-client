@@ -1,17 +1,11 @@
 ﻿using System;
-using System.Reflection;
 
-namespace NotifyTests
+namespace Notify.UnitTests
 {
     public static class Constants
     {
         public static String fakeApiKey { get {
                 return @"FAKEKEY-fd29e561-24b6-4f32-be5c-e642a1d68641-57bdfd56-ac07-409b-8307-71419d85bb9c";
-            }
-        }
-
-        public static String userAgent { get {
-                return "NOTIFY-API-NET-CLIENT/" + Assembly.LoadFrom("Notify.dll").GetName().Version;
             }
         }
 
@@ -47,6 +41,94 @@ namespace NotifyTests
             }
         }
 
+        public static String fakeTemplateResponseJson { get {
+                return @"{ 
+                            ""updated_at"": null,
+                            ""created_at"": ""2016-11-22T11:21:13.133522Z"",
+                            ""created_by"": ""someone@example.com"",
+                            ""id"": ""902e4312-bc4a-4c87-8c3e-9f4144ca36fd"",
+                            ""body"": ""test body"",
+                            ""subject"": null,
+                            ""type"": ""sms"",
+                            ""version"": 2
+                        }";
+            }
+        }
+
+        public static String fakeTemplateListResponseJson { get {
+                return @"{ ""templates"": [
+						{
+                            ""updated_at"": null,
+                            ""created_at"": ""2016-11-22T11:21:13.133522Z"",
+                            ""created_by"": ""someone@example.com"",
+                            ""id"": ""902e4312-bc4a-4c87-8c3e-9f4144ca36fd"",
+                            ""body"": ""test body"",
+                            ""subject"": null,
+                            ""type"": ""sms"",
+                            ""version"": 2
+                        },
+                        { 
+                            ""updated_at"": ""2016-12-23T11:21:13.133522Z"",
+                            ""created_at"": ""2016-12-22T11:21:13.133522Z"",
+                            ""created_by"": ""someoneelse@example.com"",
+                            ""id"": ""902e4312-bc4a-4c86-8c3e-9f4144ca36fd"",
+                            ""body"": ""test body 2"",
+                            ""subject"": ""test subject 1"",
+                            ""type"": ""email"",
+                            ""version"": 3
+                        }
+					]
+				}";
+            }
+        }
+
+        public static String fakeTemplateEmptyListResponseJson
+        {
+        	get
+        	{
+        		return @"{ ""templates"": [] }";
+        	}
+        }
+
+        public static String fakeTemplateSmsListResponseJson { get {
+                return @"{ ""templates"": [{ 
+                            ""updated_at"": null,
+                            ""created_at"": ""2016-11-22T11:21:13.133522Z"",
+                            ""created_by"": ""someone@example.com"",
+                            ""id"": ""902e4312-bc4a-4c87-8c3e-9f4144ca36fd"",
+                            ""body"": ""test body"",
+                            ""subject"": null,
+                            ""type"": ""sms"",
+                            ""version"": 2
+                        }]}";
+            }
+        }
+
+        public static String fakeTemplateEmailListResponseJson { get {
+                return @"{ ""templates"": [{ 
+                            ""updated_at"": ""2016-12-23T11:21:13.133522Z"",
+                            ""created_at"": ""2016-12-22T11:21:13.133522Z"",
+                            ""created_by"": ""someone@email.com"",
+                            ""id"": ""902e4312-bc4a-4c86-8c3e-9f4144ca36fd"",
+                            ""body"": ""test body 2"",
+                            ""subject"": ""test subject 2"",
+                            ""type"": ""email"",
+                            ""version"": 3
+                        }]}";
+            }
+        }
+
+        public static String fakeTemplatePreviewResponseJson { get {
+                return @"{  
+                            ""id"": ""d683f7f9-df04-4b9c-8019-15092c4674fd"",
+                            ""type"": ""sms"",
+                            ""version"": 2,
+                            ""body"": ""test body"",
+                            ""subject"": null
+                         }";
+            }
+        }        
+        
         public static String fakeSmsNotificationResponseJson { get {
                 return @"{  
                             ""content"": {

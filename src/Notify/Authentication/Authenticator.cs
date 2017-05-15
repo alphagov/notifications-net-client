@@ -36,7 +36,7 @@ namespace Notify.Authentication
             catch (Exception e) when (e is JWT.SignatureVerificationException || e is ArgumentException)
             {
                 throw new NotifyAuthException(e.Message);
-            }
+            } 
             catch(Exception e)
             {
                 throw e;
