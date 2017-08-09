@@ -1,3 +1,8 @@
+## [1.3.0] - 2017-08-09
+## Changed
+
+* Update integration tests to support letter templates:
+
 ## [1.2.0] - 2017-05-11
 ## Changed
 
