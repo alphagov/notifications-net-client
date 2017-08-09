@@ -265,17 +265,21 @@ namespace Notify.IntegrationTests
 		{
 			Assert.IsNotNull(notification.type);
 			String notificationType = notification.type;
-			String[] allowedNotificationTypes = { "email", "sms" };
+			String[] allowedNotificationTypes = { "email", "sms", "letter" };
 			CollectionAssert.Contains(allowedNotificationTypes, notificationType);
-			if (notificationType.Equals("sms"))
-			{
-				Assert.IsNotNull(notification.phoneNumber);
-			}
-			else if (notificationType.Equals("email"))
-			{
-				Assert.IsNotNull(notification.emailAddress);
-				Assert.IsNotNull(notification.subject);
-			}
+            if (notificationType.Equals("sms"))
+            {
+                Assert.IsNotNull(notification.phoneNumber);
+            }
+            else if (notificationType.Equals("email"))
+            {
+                Assert.IsNotNull(notification.emailAddress);
+                Assert.IsNotNull(notification.subject);
+            }
+            else if (notificationType.Equals("letter"))
+            {
+                Assert.IsNotNull(notification.subject);
+            }
 
 			Assert.IsNotNull(notification.body);
 			Assert.IsNotNull(notification.createdAt);
