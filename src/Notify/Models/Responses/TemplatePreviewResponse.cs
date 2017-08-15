@@ -5,6 +5,7 @@ namespace Notify.Models.Responses
     public class TemplatePreviewResponse
     {
         public String id;
+        public String name;
         public String type;
         public int version;
         public String body;
@@ -14,6 +15,7 @@ namespace Notify.Models.Responses
         {
             return (
                 id == response.id &&
+                name == response.name &&
                 type == response.type &&
                 version == response.version &&
                 body == response.body &&
