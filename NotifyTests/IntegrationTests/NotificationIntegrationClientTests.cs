@@ -309,6 +309,7 @@ namespace Notify.IntegrationTests
 		{
 			Assert.IsNotNull(template);
 			Assert.IsNotNull(template.id);
+            Assert.IsNotNull(template.name);
 			Assert.IsNotNull(template.version);
 			Assert.IsNotNull(template.type);
 			if (template.type.Equals("email") || (!string.IsNullOrEmpty(type) && type.Equals("email")))
