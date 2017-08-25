@@ -11,7 +11,7 @@ nuget install Notify -Source https://api.bintray.com/nuget/gov-uk-notify/notific
 
 Alternatively if you are using the Nuget Package Manager in Visual Studio, add the source below to install.
 ```
-https://api.bintray.com/nuget/gov-uk-notify/nuget
+https://api.bintray.com/nuget/gov-uk-notify/nuget   
 ```
 
 ## Development
