@@ -709,7 +709,7 @@ Find by clicking **API info** for the template you want to send.
 
 #### `personalisation`
 
-If a template has placeholders you need to provide their values. For example:
+If a template has placeholders you need to provide their values. For example: 
 
 ```csharp
 Dictionary<String, dynamic> personalisation = new Dictionary<String, dynamic>
