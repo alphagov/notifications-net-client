@@ -5,6 +5,7 @@ namespace Notify.Models.Responses
     public class TemplateResponse
     {
         public String id;
+        public String name;
         public String type;
         public DateTime created_at;
         public DateTime? updated_at;
@@ -17,6 +18,7 @@ namespace Notify.Models.Responses
         {
             return (
                 id == response.id &&
+                name == response.name &&
                 type == response.type &&
                 created_at == response.created_at &&
                 updated_at == response.updated_at &&

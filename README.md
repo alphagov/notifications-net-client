@@ -479,6 +479,7 @@ If the request is successful, `response` will be a `TemplateResponse`:
 
 ```csharp
 public String id; 
+public String name;
 public String type;
 public DateTime created_at;
 public DateTime? updated_at;
@@ -542,6 +543,7 @@ If the request is successful, `response` will be a `TemplateResponse`:
 
 ```csharp
 public String id; 
+public String name;
 public String type;
 public DateTime created_at;
 public DateTime? updated_at;

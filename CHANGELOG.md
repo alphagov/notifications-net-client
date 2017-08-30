@@ -1,3 +1,8 @@
+## [1.4.0] - 2017-08-30
+## Changed
+
+* Add template name to `TemplateResponse` model
+
 ## [1.3.0] - 2017-08-09
 ## Changed
 
