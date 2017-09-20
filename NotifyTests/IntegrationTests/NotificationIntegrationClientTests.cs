@@ -286,7 +286,7 @@ namespace Notify.IntegrationTests
 
 			Assert.IsNotNull(notification.status);
 			String notificationStatus = notification.status;
-			String[] allowedStatusTypes = { "created", "sending", "delivered", "permanent-failure", "temporary-failure", "technical-failure" };
+			String[] allowedStatusTypes = { "created", "sending", "delivered", "permanent-failure", "temporary-failure", "technical-failure", "accepted" };
 			CollectionAssert.Contains(allowedStatusTypes, notificationStatus);
 
 			if (notificationStatus.Equals("delivered"))
