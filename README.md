@@ -294,6 +294,139 @@ Otherwise the parameter can be omitted or `null` can be passed in its place.
 
 An optional identifier you generate if you don't want to use Notify's `id`. It can be used to identify a single  notification or a batch of notifications. Otherwise the parameter can be omitted or `null` can be passed in its place.
 
+### Letter
+
+```csharp
+Dictionary<String, dynamic> personalisation = new Dictionary<String, dynamic>
+{
+    { "address_line_1", "23 Foo Road" },  # required
+    { "address_line_2", "Bar Town" }, # required
+    { "address_line_3", "London" },
+    { "postcode", "BAX S1P" } # required
+      ... # any other optional address lines, or personalisation fields found in your template
+};
+
+LetterNotificationResponse response = client.SendLetter(templateId, personalisation, reference);
+```
+
+<details>
+<summary>
+Response
+</summary>
+
+If the request is successful, `response` will be an `LetterNotificationResponse `:
+
+```csharp
+public String id;
+public String body;
+public String subject;
+public String reference;
+public String uri;
+public Template template;
+
+public class Template
+{
+    public String id;
+    public String uri;
+    public Int32 version;
+}
+```
+
+Otherwise the client will raise a `Notify.Exceptions.NotifyClientException`:
+<table>
+<thead>
+<tr>
+<th>
+
+`error["status_code"]`</th>
+<th>
+
+`error["message"]`</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<pre>429</pre>
+</td>
+<td>
+<pre>
+[{
+    "error": "RateLimitError",
+    "message": "Exceeded rate limit for key type TEAM of 10 requests per 10 seconds"
+}]
+</pre>
+</td>
+</tr>
+<tr>
+<td>
+<pre>429</pre>
+</td>
+<td>
+<pre>
+[{
+    "error": "TooManyRequestsError",
+    "message": "Exceeded send limits (50) for today"
+}]
+</pre>
+</td>
+</tr>
+<tr>
+<td>
+<pre>400</pre>
+</td>
+<td>
+<pre>
+[{
+    "error": "BadRequestError",
+    "message": "Can"t send to this recipient using a team-only API key"
+]}
+</pre>
+</td>
+</tr>
+<tr>
+<td>
+<pre>400</pre>
+</td>
+<td>
+<pre>
+[{
+    "error": "BadRequestError",
+    "message": "Can"t send to this recipient when service is in trial mode
+                - see https://www.notifications.service.gov.uk/trial-mode"
+}]
+</pre>
+</td>
+</tr>
+</tbody>
+</table>
+</details>
+
+
+### Arguments
+
+
+#### `templateId`
+
+Find by clicking **API info** for the template you want to send.
+
+#### `personalisation`
+	
+If a template has placeholders you need to provide their values. For example:
+
+```csharp
+Dictionary<String, dynamic> personalisation = new Dictionary<String, dynamic>
+{
+    { "name", "Foo" }
+};
+```
+
+Otherwise the parameter can be omitted or `null` can be passed in its place.
+
+#### `reference`
+
+An optional identifier you generate if you don't want to use Notify's `id`. It can be used to identify a single  notification or a batch of notifications. Otherwise the parameter can be omitted or `null` can be passed in its place.
+
 ## Get the status of one message
 ```csharp
 Notification notification = client.GetNotificationById(notificationId);
