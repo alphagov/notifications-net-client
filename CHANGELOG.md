@@ -1,3 +1,8 @@
+## [1.5.1] - 2017-09-22
+## Changed
+
+* Make personalisation non-null in SendLetter
+
 ## [1.5.0] - 2017-09-22
 ## Changed
 

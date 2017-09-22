@@ -124,7 +124,7 @@ namespace Notify.Client
             return receipt;
         }
 
-        public LetterNotificationResponse SendLetter(String templateId, Dictionary<String, dynamic> personalisation = null, String clientReference = null)
+        public LetterNotificationResponse SendLetter(String templateId, Dictionary<String, dynamic> personalisation, String clientReference = null)
         {
             JObject o = CreateRequestParams(templateId, personalisation, clientReference);
 
