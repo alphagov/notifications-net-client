@@ -14,6 +14,8 @@ environment:
     secure: XR/emaMjyzjTayIzQSUkL1S5XifMzpjRTZqkN7Hf129tyluZEcBvmmReJwiVibMm
   SMS_TEMPLATE_ID:
     secure: Dq0ZplOuwRX+TeRLNJoU+kMqsLln0w0pYZ3BFnrp9zoEX10DGRhoe6BAsaNkTRGv
+  LETTER_TEMPLATE_ID:
+    secure: BtaUcD2Fh3Lsb9NxEerO/tsnFdgO7E+KXkYHKTbEuYLh6Sc1b1PlrnBnTGJHVr2H
   FUNCTIONAL_TEST_NUMBER:
     secure: lTRgI2vLKAhzdOitDZFmrg==
   pullId: 0
