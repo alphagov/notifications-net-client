@@ -15,7 +15,7 @@ https://api.bintray.com/nuget/gov-uk-notify/nuget
 ```
 
 ## Development
-### Visual Studio
+### Visual Studio (Windows)
 
 To execute the NUnit tests you will need to install the [NUnit3 Test Adapter](https://marketplace.visualstudio.com/items?itemName=NUnitDevelopers.NUnit3TestAdapter) extension to Visual Studio.
 
@@ -29,19 +29,20 @@ SETX FUNCTIONAL_TEST_NUMBER "valid mobile number"
 SETX FUNCTIONAL_TEST_EMAIL "valid email address"
 SETX EMAIL_TEMPLATE_ID "valid email_template_id"
 SETX SMS_TEMPLATE_ID "valid sms_template_id"
+SETX LETTER_TEMPLATE_ID "valid letter_template_id"
 ```
 </details>
 
-### [Xamarin Studio](https://www.xamarin.com/visual-studio-for-mac) - for Mac OS
+### [Visual Studio](https://www.visualstudio.com/vs/visual-studio-mac/) (Mac OS)
 
 In order to get the .Net client running in Xamarin the target `.Net Framework` needs to be set to `4.5.2` and the application needs to be run from the terminal
 
 ```
-open -n /Applications/"Xamarin Studio.app"
+open -n /Applications/"Visual Studio.app"
 ```
 
 <details>
-<summary>Setting Mac OS Environment variables</summary>
+<summary>Setting Mac OS Environment variables (these must be sourced before opening the Visual Application using the command above)</summary>
 
 ```
 export NOTIFY_API_URL=https://example.notify-api.url
@@ -50,6 +51,7 @@ export FUNCTIONAL_TEST_NUMBER=valid mobile number
 export FUNCTIONAL_TEST_EMAIL=valid email address
 export EMAIL_TEMPLATE_ID=valid email_template_id
 export SMS_TEMPLATE_ID=valid sms_template_id
+export LETTER_TEMPLATE_ID=valid letter_template_id
 ```
 </details>
 

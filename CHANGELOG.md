@@ -1,3 +1,9 @@
+## [1.5.0] - 2017-09-22
+## Changed
+
+* Add new method for sending letters:
+    * `SendLetter` - send a letter
+
 ## [1.4.0] - 2017-08-30
 ## Changed
 
