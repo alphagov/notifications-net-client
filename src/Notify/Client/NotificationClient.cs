@@ -16,6 +16,7 @@ namespace Notify.Client
         public String GET_NOTIFICATION_URL = "v2/notifications/";
         public String SEND_SMS_NOTIFICATION_URL = "v2/notifications/sms";
         public String SEND_EMAIL_NOTIFICATION_URL = "v2/notifications/email";
+        public String SEND_LETTER_NOTIFICATION_URL = "v2/notifications/letter";
         public String GET_TEMPLATE_URL = "v2/template/";
         public String GET_ALL_TEMPLATES_URL = "v2/templates";
         public String TYPE_PARAM = "?type=";
@@ -88,10 +89,12 @@ namespace Notify.Client
 
         public TemplateList GetAllTemplates(String templateType = "")
         {
-            String finalUrl = string.Format("{0}{1}", 
-        	                                GET_ALL_TEMPLATES_URL,
-                                            templateType == "" ? "" : TYPE_PARAM + templateType);
-        	
+            String finalUrl = string.Format(
+                "{0}{1}",
+                GET_ALL_TEMPLATES_URL,
+                templateType == "" ? "" : TYPE_PARAM + templateType
+            );
+
             String response = this.GET(finalUrl);
 
             TemplateList templateList = JsonConvert.DeserializeObject<TemplateList>(response);
@@ -101,25 +104,8 @@ namespace Notify.Client
 
         public SmsNotificationResponse SendSms(String mobileNumber, String templateId, Dictionary<String, dynamic> personalisation = null, String clientReference = null)
         {
-
-            JObject personalisationJson = new JObject();
-
-            if(personalisation != null)
-            {
-                personalisationJson = JObject.FromObject(personalisation);
-            }
-
-            JObject o = new JObject
-            {
-                { "phone_number", mobileNumber },
-                { "template_id", templateId },
-                { "personalisation", personalisationJson }
-            };
-
-            if (clientReference != null)
-            {
-                o.Add("reference", clientReference);
-            }
+            JObject o = CreateRequestParams(templateId, personalisation, clientReference);
+            o.AddFirst(new JProperty("phone_number", mobileNumber));
 
             String response = this.POST(SEND_SMS_NOTIFICATION_URL, o.ToString(Formatting.None));
 
@@ -129,24 +115,8 @@ namespace Notify.Client
 
         public EmailNotificationResponse SendEmail(String emailAddress, String templateId, Dictionary<String, dynamic> personalisation = null, String clientReference = null)
         {
-            JObject personalisationJson = new JObject();
-
-            if(personalisation != null)
-            {
-                personalisationJson = JObject.FromObject(personalisation);
-            }
-
-            JObject o = new JObject
-            {
-                { "email_address", emailAddress },
-                { "template_id", templateId },
-                { "personalisation", personalisationJson }
-            };
-
-            if(clientReference != null)
-            {
-                o.Add("reference", clientReference);
-            }
+            JObject o = CreateRequestParams(templateId, personalisation, clientReference);
+            o.AddFirst(new JProperty("email_address", emailAddress));
 
             String response = this.POST(SEND_EMAIL_NOTIFICATION_URL, o.ToString(Formatting.None));
 
@@ -154,31 +124,40 @@ namespace Notify.Client
             return receipt;
         }
 
+        public LetterNotificationResponse SendLetter(String templateId, Dictionary<String, dynamic> personalisation = null, String clientReference = null)
+        {
+            JObject o = CreateRequestParams(templateId, personalisation, clientReference);
 
-		public TemplateResponse GetTemplateById(String templateId)
+            String response = this.POST(SEND_LETTER_NOTIFICATION_URL, o.ToString(Formatting.None));
+
+            LetterNotificationResponse receipt = JsonConvert.DeserializeObject<LetterNotificationResponse>(response);
+            return receipt;
+        }
+
+        public TemplateResponse GetTemplateById(String templateId)
         {
             String url = GET_TEMPLATE_URL + templateId;
 
-			return GetTemplateFromURL(url);
+            return GetTemplateFromURL(url);
         }
 
-		public TemplateResponse GetTemplateByIdAndVersion(String templateId, int version = 0)
+        public TemplateResponse GetTemplateByIdAndVersion(String templateId, int version = 0)
         {
-			String pattern = "{0}{1}" + (version > 0 ? VERSION_PARAM + "{2}" : "");
-			String url = string.Format(pattern, GET_TEMPLATE_URL, templateId, version);
-            
-			return GetTemplateFromURL(url);
+            String pattern = "{0}{1}" + (version > 0 ? VERSION_PARAM + "{2}" : "");
+            String url = string.Format(pattern, GET_TEMPLATE_URL, templateId, version);
+
+            return GetTemplateFromURL(url);
         }
 
-		public TemplatePreviewResponse GenerateTemplatePreview(String templateId, Dictionary<String, dynamic> personalisation = null)
+        public TemplatePreviewResponse GenerateTemplatePreview(String templateId, Dictionary<String, dynamic> personalisation = null)
         {
             String url = string.Format("{0}{1}/preview", GET_TEMPLATE_URL, templateId);
 
             JObject o = new JObject
             {
-            	{ "personalisation", JObject.FromObject(personalisation) }
+                { "personalisation", JObject.FromObject(personalisation) }
             };
-            
+
             String response = this.POST(url, o.ToString(Formatting.None));
 
             try
@@ -190,11 +169,11 @@ namespace Notify.Client
             {
                 throw new NotifyClientException("Could not create Template object from response: {0}", response);
             }
-		}
-		
-		TemplateResponse GetTemplateFromURL(String url)
-		{
-			String response = this.GET(url);
+        }
+
+        TemplateResponse GetTemplateFromURL(String url)
+        {
+            String response = this.GET(url);
 
             try
             {
@@ -205,6 +184,29 @@ namespace Notify.Client
             {
                 throw new NotifyClientException("Could not create Template object from response: {0}", response);
             }
-		}
+        }
+
+        JObject CreateRequestParams(String templateId, Dictionary<String, dynamic> personalisation = null, String clientReference = null)
+        {
+            JObject personalisationJson = new JObject();
+
+            if (personalisation != null)
+            {
+                personalisationJson = JObject.FromObject(personalisation);
+            }
+
+            JObject o = new JObject
+            {
+                { "template_id", templateId },
+                { "personalisation", personalisationJson }
+            };
+
+            if (clientReference != null)
+            {
+                o.Add("reference", clientReference);
+            }
+
+            return o;
+        }
     }
 }
