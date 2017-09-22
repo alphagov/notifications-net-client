@@ -16,7 +16,7 @@ namespace Notify.UnitTests
         public static String fakeNotificationReference { get { return "some-client-ref"; } }
         public static String fakeTemplateId { get { return "913e9fa6-9cbb-44ad-8f58-38487dccfd82"; } }
         public static String fakeNotificationJson { get {
-                return @"{ 
+                return @"{
                             ""completed_at"": null,
                             ""created_at"": ""2016-11-22T11:21:13.133522Z"",
                             ""email_address"": null,
@@ -42,7 +42,7 @@ namespace Notify.UnitTests
         }
 
         public static String fakeTemplateResponseJson { get {
-                return @"{ 
+                return @"{
                             ""updated_at"": null,
                             ""created_at"": ""2016-11-22T11:21:13.133522Z"",
                             ""created_by"": ""someone@example.com"",
@@ -67,7 +67,7 @@ namespace Notify.UnitTests
                             ""type"": ""sms"",
                             ""version"": 2
                         },
-                        { 
+                        {
                             ""updated_at"": ""2016-12-23T11:21:13.133522Z"",
                             ""created_at"": ""2016-12-22T11:21:13.133522Z"",
                             ""created_by"": ""someoneelse@example.com"",
@@ -91,7 +91,7 @@ namespace Notify.UnitTests
         }
 
         public static String fakeTemplateSmsListResponseJson { get {
-                return @"{ ""templates"": [{ 
+                return @"{ ""templates"": [{
                             ""updated_at"": null,
                             ""created_at"": ""2016-11-22T11:21:13.133522Z"",
                             ""created_by"": ""someone@example.com"",
@@ -105,7 +105,7 @@ namespace Notify.UnitTests
         }
 
         public static String fakeTemplateEmailListResponseJson { get {
-                return @"{ ""templates"": [{ 
+                return @"{ ""templates"": [{
                             ""updated_at"": ""2016-12-23T11:21:13.133522Z"",
                             ""created_at"": ""2016-12-22T11:21:13.133522Z"",
                             ""created_by"": ""someone@email.com"",
@@ -119,7 +119,7 @@ namespace Notify.UnitTests
         }
 
         public static String fakeTemplatePreviewResponseJson { get {
-                return @"{  
+                return @"{
                             ""id"": ""d683f7f9-df04-4b9c-8019-15092c4674fd"",
                             ""type"": ""sms"",
                             ""version"": 2,
@@ -127,16 +127,16 @@ namespace Notify.UnitTests
                             ""subject"": null
                          }";
             }
-        }        
-        
+        }
+
         public static String fakeSmsNotificationResponseJson { get {
-                return @"{  
+                return @"{
                             ""content"": {
                                 ""body"": ""test"",
                                 ""from_number"": null },
                             ""id"": ""d683f7f9-df04-4b9c-8019-15092c4674fd"",
                             ""reference"": null,
-                            ""template"": { 
+                            ""template"": {
                                 ""id"": ""be35a391-e912-42e9-82e6-3f4953f6cbb0"",
                                 ""uri"": ""http://someurl/v2/templates/be35a391-e912-42e9-82e6-3f4953f6cbb0"",
                                 ""version"": 1 },
@@ -146,23 +146,44 @@ namespace Notify.UnitTests
         }
 
         public static String fakeEmailNotificationResponseJson { get {
-                return @"{ 
+                return @"{
                             ""content"": {
                                 ""body"": ""Hello someone\n\nFake"",
                                 ""from_email"": ""someone@mail.com"",
-                                ""subject"": ""Test"" 
+                                ""subject"": ""Test""
                             },
                             ""id"": ""731b9c83-563f-4b59-afc5-87e9ca717833"",
                             ""reference"":  ""some-client-ref"",
                             ""template"": {
                                 ""id"": ""f0bb62f7-5ddb-4bf8-aac7-7ey6aefd1524"",
                                 ""uri"": ""https://someurl/v2/templates/c0bs62f7-4ddb-6bf8-cac7-c1e6aefd1524"",
-                                ""version"": 5 
+                                ""version"": 5
                             },
                             ""uri"": ""https://someurl//v2/notifications/321b9c43-563f-4c59-sac5-87e9ca325833""
                         }";
             }
         }
+
+		public static String fakeLetterNotificationResponseJson
+		{
+			get
+			{
+				return @"{
+                            ""content"": {
+                                ""body"": ""Hello someone\n\nFake"",
+                                ""subject"": ""Test""
+                            },
+                            ""id"": ""731b9c83-563f-4b59-afc5-87e9ca717833"",
+                            ""reference"":  ""some-client-ref"",
+                            ""template"": {
+                                ""id"": ""f0bb62f7-5ddb-4bf8-aac7-7ey6aefd1524"",
+                                ""uri"": ""https://someurl/v2/templates/c0bs62f7-4ddb-6bf8-cac7-c1e6aefd1524"",
+                                ""version"": 5
+                            },
+                            ""uri"": ""https://someurl//v2/notifications/321b9c43-563f-4c59-sac5-87e9ca325833""
+                        }";
+			}
+		}
 
     }
 }

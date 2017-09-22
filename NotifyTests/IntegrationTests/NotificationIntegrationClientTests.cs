@@ -21,15 +21,21 @@ namespace Notify.IntegrationTests
 
 		private String EMAIL_TEMPLATE_ID = Environment.GetEnvironmentVariable("EMAIL_TEMPLATE_ID");
 		private String SMS_TEMPLATE_ID = Environment.GetEnvironmentVariable("SMS_TEMPLATE_ID");
+		private String LETTER_TEMPLATE_ID = Environment.GetEnvironmentVariable("LETTER_TEMPLATE_ID");
 
 		private String smsNotificationId;
 		private String emailNotificationId;
+		private String letterNotificationId;
 
-		const String TEST_SUBJECT = "Functional Tests are good";
-		const String TEST_EMAIL_BODY = "Hello someone\n\nFunctional test help make our world a better place";
-		const String TEST_SMS_BODY = "Hello someone\n\nFunctional Tests make our world a better place";
 		const String TEST_TEMPLATE_SMS_BODY = "Hello ((name))\n\nFunctional Tests make our world a better place";
+		const String TEST_SMS_BODY = "Hello someone\n\nFunctional Tests make our world a better place";
+
 		const String TEST_TEMPLATE_EMAIL_BODY = "Hello ((name))\n\nFunctional test help make our world a better place";
+		const String TEST_EMAIL_BODY = "Hello someone\n\nFunctional test help make our world a better place";
+		const String TEST_EMAIL_SUBJECT = "Functional Tests are good";
+
+		const String TEST_LETTER_BODY = "Hello Foo";
+		const String TEST_LETTER_SUBJECT = "Main heading";
 
 		[SetUp]
 		[Test, Category("Integration")]
@@ -89,7 +95,7 @@ namespace Notify.IntegrationTests
 
 			Assert.IsNotNull(response);
 			Assert.AreEqual(response.content.body, TEST_EMAIL_BODY);
-			Assert.AreEqual(response.content.subject, TEST_SUBJECT);
+			Assert.AreEqual(response.content.subject, TEST_EMAIL_SUBJECT);
 		}
 
 		[Test, Category("Integration")]
@@ -105,10 +111,52 @@ namespace Notify.IntegrationTests
 			Assert.IsNotNull(notification.body);
 			Assert.AreEqual(notification.body, TEST_EMAIL_BODY);
 			Assert.IsNotNull(notification.subject);
-			Assert.AreEqual(notification.subject, "Functional Tests are good");
+			Assert.AreEqual(notification.subject, TEST_EMAIL_SUBJECT);
 
 			AssertNotification(notification);
 		}
+
+		[Test, Category("Integration")]
+		public void SendLetterTestWithPersonalisation()
+		{
+			Dictionary<String, dynamic> personalisation = new Dictionary<String, dynamic>
+			{
+				{ "address_line_1", "Foo" },
+				{ "address_line_2", "Bar" },
+				{ "postcode", "Baz" }
+			};
+
+			LetterNotificationResponse response =
+				this.client.SendLetter(LETTER_TEMPLATE_ID, personalisation);
+
+			this.letterNotificationId = response.id;
+
+			Assert.IsNotNull(response);
+
+			Assert.AreEqual(response.content.body, TEST_LETTER_BODY);
+			Assert.AreEqual(response.content.subject, TEST_LETTER_SUBJECT);
+
+		}
+
+		[Test, Category("Integration")]
+		public void GetLetterNotificationWithIdReturnsNotification()
+		{
+			SendLetterTestWithPersonalisation();
+			Notification notification = this.client.GetNotificationById(this.letterNotificationId);
+
+			Assert.IsNotNull(notification);
+			Assert.IsNotNull(notification.id);
+			Assert.AreEqual(notification.id, this.letterNotificationId);
+
+			Assert.IsNotNull(notification.body);
+			Assert.AreEqual(notification.body, TEST_LETTER_BODY);
+
+			Assert.IsNotNull(notification.subject);
+			Assert.AreEqual(notification.subject, TEST_LETTER_SUBJECT);
+
+			AssertNotification(notification);
+		}
+
 
 		[Test, Category("Integration")]
 		public void GetAllNotifications()
@@ -130,27 +178,30 @@ namespace Notify.IntegrationTests
 		public void GetNotificationWithInvalidIdRaisesClientException()
 		{
 			var ex = Assert.Throws<NotifyClientException>(() =>
-			                                     this.client.GetNotificationById("fa5f0a6e-5293-49f1-b99f-3fade784382f"));
-            Assert.That(ex.Message, Does.Contain("No result found"));
-        }
+				this.client.GetNotificationById("fa5f0a6e-5293-49f1-b99f-3fade784382f")
+			);
+			Assert.That(ex.Message, Does.Contain("No result found"));
+		}
 
 		[Test, Category("Integration")]
 		public void GetTemplateWithInvalidIdRaisesClientException()
 		{
 			var ex = Assert.Throws<NotifyClientException>(() =>
-		                                         this.client.GetTemplateById("invalid_id"));
-            Assert.That(ex.Message, Does.Contain("id is not a valid UUID"));
-        }
+				this.client.GetTemplateById("invalid_id")
+			);
+			Assert.That(ex.Message, Does.Contain("id is not a valid UUID"));
+		}
 
-        [Test, Category("Integration")]
-        public void GetTemplateWithIdWithoutResultRaisesClientException()
-        {
-        	var ex = Assert.Throws<NotifyClientException>(() =>
-        										 this.client.GetTemplateById("fa5f0a6e-5293-49f1-b99f-3fade784382f"));
-        	Assert.That(ex.Message, Does.Contain("No result found"));
-        }
+		[Test, Category("Integration")]
+		public void GetTemplateWithIdWithoutResultRaisesClientException()
+		{
+			var ex = Assert.Throws<NotifyClientException>(() =>
+				this.client.GetTemplateById("fa5f0a6e-5293-49f1-b99f-3fade784382f")
+			);
+			Assert.That(ex.Message, Does.Contain("No result found"));
+		}
 
-        [Test, Category("Integration")]
+		[Test, Category("Integration")]
 		public void GetAllTemplates()
 		{
 			TemplateList templateList = this.client.GetAllTemplates();
@@ -196,8 +247,8 @@ namespace Notify.IntegrationTests
 		{
 			const String type = "invalid";
 
-            var ex = Assert.Throws<NotifyClientException>(() => this.client.GetAllTemplates(type));
-            Assert.That(ex.Message, Does.Contain("type invalid is not one of [sms, email, letter]"));
+			var ex = Assert.Throws<NotifyClientException>(() => this.client.GetAllTemplates(type));
+			Assert.That(ex.Message, Does.Contain("type invalid is not one of [sms, email, letter]"));
 		}
 
 		[Test, Category("Integration")]
@@ -245,48 +296,57 @@ namespace Notify.IntegrationTests
 
 			Assert.IsNotNull(response);
 			Assert.AreEqual(response.body, TEST_EMAIL_BODY);
-			Assert.AreEqual(response.subject, TEST_SUBJECT);
+			Assert.AreEqual(response.subject, TEST_EMAIL_SUBJECT);
 		}
 
-        [Test, Category("Integration")]
-        public void GenerateEmailPreviewWithMissingPersonalisationRaisesClientException()
-        {
-        	Dictionary<String, dynamic> personalisation = new Dictionary<String, dynamic>
-        			{
-        				{ "invalid", "personalisation" }
-        			};
+		[Test, Category("Integration")]
+		public void GenerateEmailPreviewWithMissingPersonalisationRaisesClientException()
+		{
+			Dictionary<String, dynamic> personalisation = new Dictionary<String, dynamic>
+					{
+						{ "invalid", "personalisation" }
+					};
 
-            var ex = Assert.Throws<NotifyClientException>(() =>
-                                                          this.client.GenerateTemplatePreview(EMAIL_TEMPLATE_ID, personalisation));
-            Assert.That(ex.Message, Does.Contain("Missing personalisation: name"));
-        }
+			var ex = Assert.Throws<NotifyClientException>(() =>
+				this.client.GenerateTemplatePreview(EMAIL_TEMPLATE_ID, personalisation)
+			);
+			Assert.That(ex.Message, Does.Contain("Missing personalisation: name"));
+		}
 
-        public void AssertNotification(Notification notification)
+		public void AssertNotification(Notification notification)
 		{
 			Assert.IsNotNull(notification.type);
 			String notificationType = notification.type;
 			String[] allowedNotificationTypes = { "email", "sms", "letter" };
 			CollectionAssert.Contains(allowedNotificationTypes, notificationType);
-            if (notificationType.Equals("sms"))
-            {
-                Assert.IsNotNull(notification.phoneNumber);
-            }
-            else if (notificationType.Equals("email"))
-            {
-                Assert.IsNotNull(notification.emailAddress);
-                Assert.IsNotNull(notification.subject);
-            }
-            else if (notificationType.Equals("letter"))
-            {
-                Assert.IsNotNull(notification.subject);
-            }
+			if (notificationType.Equals("sms"))
+			{
+				Assert.IsNotNull(notification.phoneNumber);
+			}
+			else if (notificationType.Equals("email"))
+			{
+				Assert.IsNotNull(notification.emailAddress);
+				Assert.IsNotNull(notification.subject);
+			}
+			else if (notificationType.Equals("letter"))
+			{
+				Assert.IsNotNull(notification.subject);
+			}
 
 			Assert.IsNotNull(notification.body);
 			Assert.IsNotNull(notification.createdAt);
 
 			Assert.IsNotNull(notification.status);
 			String notificationStatus = notification.status;
-			String[] allowedStatusTypes = { "created", "sending", "delivered", "permanent-failure", "temporary-failure", "technical-failure", "accepted" };
+			String[] allowedStatusTypes = {
+				"created",
+				"sending",
+				"delivered",
+				"permanent-failure",
+				"temporary-failure",
+				"technical-failure",
+				"accepted"
+			};
 			CollectionAssert.Contains(allowedStatusTypes, notificationStatus);
 
 			if (notificationStatus.Equals("delivered"))
