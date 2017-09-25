@@ -355,7 +355,7 @@ Otherwise the client will raise a `Notify.Exceptions.NotifyClientException`:
 <pre>
 [{
     "error": "RateLimitError",
-    "message": "Exceeded rate limit for key type TEAM of 10 requests per 10 seconds"
+    "message": "Exceeded rate limit for key type live of 10 requests per 20 seconds"
 }]
 </pre>
 </td>
@@ -381,7 +381,7 @@ Otherwise the client will raise a `Notify.Exceptions.NotifyClientException`:
 <pre>
 [{
     "error": "BadRequestError",
-    "message": "Can"t send to this recipient using a team-only API key"
+    "message": "Cannot send letters with a team api key"
 ]}
 </pre>
 </td>
@@ -394,8 +394,20 @@ Otherwise the client will raise a `Notify.Exceptions.NotifyClientException`:
 <pre>
 [{
     "error": "BadRequestError",
-    "message": "Can"t send to this recipient when service is in trial mode
-                - see https://www.notifications.service.gov.uk/trial-mode"
+    "message": "Cannot send letters when service is in trial mode"
+}]
+</pre>
+</td>
+</tr>
+<tr>
+<td>
+<pre>400</pre>
+</td>
+<td>
+<pre>
+[{
+    "error": "ValidationError",
+    "message": "personalisation address_line_1 is a required property"
 }]
 </pre>
 </td>
@@ -757,7 +769,7 @@ The version number of the template
 
 ```csharp
 TemplateList response = client.GetAllTemplates(
-    "sms" | "email" // optional
+    "sms" | "email" | "letter" // optional
 )
 ```
 _This will return the latest version for each template_
