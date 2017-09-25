@@ -35,7 +35,7 @@ SETX LETTER_TEMPLATE_ID "valid letter_template_id"
 
 ### [Visual Studio](https://www.visualstudio.com/vs/visual-studio-mac/) (Mac OS)
 
-In order to get the .Net client running in Xamarin the target `.Net Framework` needs to be set to `4.5.2` and the application needs to be run from the terminal
+In order to get the .Net client running in Visual Studio the target `.Net Framework` needs to be set to `4.5.2` and the application needs to be run from the terminal
 
 ```
 open -n /Applications/"Visual Studio.app"
