@@ -448,5 +448,46 @@ namespace Notify.UnitTests
                     };
                 }));
         }
+
+		[Test, Category("Unit/NotificationClient")]
+		public void SendEmailNotificationWithReplyToIdGeneratesExpectedRequest()
+		{
+			Dictionary<String, dynamic> personalisation = new Dictionary<String, dynamic>
+				{
+					{ "name", "someone" }
+				};
+			JObject expected = new JObject
+			{
+				{ "email_address", Constants.fakeEmail },
+				{ "template_id", Constants.fakeTemplateId },
+				{ "personalisation", JObject.FromObject(personalisation) },
+				{ "reference", Constants.fakeNotificationReference },
+                { "email_reply_to_id", Constants.fakeReplyToId}
+			};
+
+            mockRequest(Constants.fakeTemplateEmailListResponseJson,
+				client.SEND_EMAIL_NOTIFICATION_URL,
+				AssertValidRequest,
+				HttpMethod.Post,
+				AssertGetExpectedContent, expected.ToString(Formatting.None));
+
+			EmailNotificationResponse response = client.SendEmail(Constants.fakeEmail, Constants.fakeTemplateId, personalisation, Constants.fakeNotificationReference, Constants.fakeReplyToId);
+		}
+
+		[Test, Category("Unit/NotificationClient")]
+		public void SendEmailNotificationWithReplyToIdGeneratesExpectedResponse()
+		{
+			Dictionary<String, dynamic> personalisation = new Dictionary<String, dynamic>
+				{
+					{ "name", "someone" }
+				};
+			EmailNotificationResponse expectedResponse = JsonConvert.DeserializeObject<EmailNotificationResponse>(Constants.fakeEmailNotificationResponseJson);
+
+			mockRequest(Constants.fakeEmailNotificationResponseJson);
+
+            EmailNotificationResponse actualResponse = client.SendEmail(Constants.fakeEmail, Constants.fakeTemplateId, personalisation, Constants.fakeNotificationReference, Constants.fakeReplyToId);
+
+			Assert.IsTrue(expectedResponse.IsEqualTo(actualResponse));
+		}
     }
 }

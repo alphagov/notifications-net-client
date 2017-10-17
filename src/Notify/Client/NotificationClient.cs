@@ -113,10 +113,15 @@ namespace Notify.Client
             return receipt;
         }
 
-        public EmailNotificationResponse SendEmail(String emailAddress, String templateId, Dictionary<String, dynamic> personalisation = null, String clientReference = null)
+        public EmailNotificationResponse SendEmail(String emailAddress, String templateId, Dictionary<String, dynamic> personalisation = null, String clientReference = null, String emailReplyToId = null)
         {
             JObject o = CreateRequestParams(templateId, personalisation, clientReference);
             o.AddFirst(new JProperty("email_address", emailAddress));
+
+            if (emailReplyToId != null)
+            {
+                o.Add(new JProperty("email_reply_to_id", emailReplyToId));
+            }
 
             String response = this.POST(SEND_EMAIL_NOTIFICATION_URL, o.ToString(Formatting.None));
 
