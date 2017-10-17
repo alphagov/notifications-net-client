@@ -174,7 +174,7 @@ Otherwise the client will raise a `Notify.Exceptions.NotifyClientException`:
 ### Email
 
 ```csharp
-EmailNotificationResponse response = client.SendEmail(emailAddress, templateId, personalisation, reference, replyToId);
+EmailNotificationResponse response = client.SendEmail(emailAddress, templateId, personalisation, reference, emailReplyToId);
 ```
 
 <details>

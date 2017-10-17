@@ -465,7 +465,7 @@ namespace Notify.UnitTests
                 { "email_reply_to_id", Constants.fakeReplyToId}
 			};
 
-			mockRequest(Constants.fakeTemplatePreviewResponseJson,
+            mockRequest(Constants.fakeTemplateEmailListResponseJson,
 				client.SEND_EMAIL_NOTIFICATION_URL,
 				AssertValidRequest,
 				HttpMethod.Post,
