@@ -6,3 +6,7 @@
 **/packages/*
 bin/
 obj/
+.DS_Store
+Notify.userprefs
+NotifyTests/.DS_Store
+environment.sh

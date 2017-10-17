@@ -1,3 +1,9 @@
+## [1.5.2] - 2017-10-11
+## Changed
+
+* Update to `NotificationsAPIClient.send_email_notification()`
+    * added `email_reply_to_id`: an optional email_reply_to_id specified when adding Email reply to addresses under service settings, if this is not provided the reply to email will be the service default reply to email. `email_reply_to_id` can be omitted.
+
 ## [1.5.1] - 2017-09-22
 ## Changed
 
