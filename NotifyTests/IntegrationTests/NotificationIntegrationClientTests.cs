@@ -379,8 +379,8 @@ namespace Notify.IntegrationTests
 			Assert.IsNotNull(template.created_by);
 			Assert.IsNotNull(template.body);
 		}
-
-        [Test, Category("Integration")]
+		
+		[Test, Category("Integration")]
 		public void SendEmailTestServiceDefaultEmailReplyTo()
 		{
 			Dictionary<String, dynamic> personalisation = new Dictionary<String, dynamic>
