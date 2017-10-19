@@ -474,7 +474,7 @@ namespace Notify.UnitTests
                 expected.ToString(Formatting.None));
 
             EmailNotificationResponse response = client.SendEmail(Constants.fakeEmail, Constants.fakeTemplateId, personalisation, Constants.fakeNotificationReference, Constants.fakeReplyToId);
-}
+        }
 
         [Test, Category("Unit/NotificationClient")]
         public void SendEmailNotificationWithReplyToIdGeneratesExpectedResponse()
