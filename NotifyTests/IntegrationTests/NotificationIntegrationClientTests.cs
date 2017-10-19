@@ -22,7 +22,7 @@ namespace Notify.IntegrationTests
 		private String EMAIL_TEMPLATE_ID = Environment.GetEnvironmentVariable("EMAIL_TEMPLATE_ID");
 		private String SMS_TEMPLATE_ID = Environment.GetEnvironmentVariable("SMS_TEMPLATE_ID");
 		private String LETTER_TEMPLATE_ID = Environment.GetEnvironmentVariable("LETTER_TEMPLATE_ID");
-        private String EMAIL_REPLY_TO_ID = Environment.GetEnvironmentVariable("EMAIL_REPLY_TO_ID");
+		private String EMAIL_REPLY_TO_ID = Environment.GetEnvironmentVariable("EMAIL_REPLY_TO_ID");
 
 		private String smsNotificationId;
 		private String emailNotificationId;
@@ -418,7 +418,7 @@ namespace Notify.IntegrationTests
 			};
 			
 			var ex = Assert.Throws<NotifyClientException>(() => this.client.SendEmail(FUNCTIONAL_TEST_EMAIL, EMAIL_TEMPLATE_ID, personalisation, emailReplyToId: fakeReplayToId));
-            Assert.That(ex.Message, Does.Contain("email_reply_to_id " + fakeReplayToId));
+			Assert.That(ex.Message, Does.Contain("email_reply_to_id " + fakeReplayToId));
 		}
 	}
 }
