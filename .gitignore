@@ -2,7 +2,6 @@
 .vs/
 .DS_Store
 Notify.userprefs
-NotifyTests/.DS_Store
 
 # NuGet Packages
 *.nupkg
@@ -11,5 +10,5 @@ NotifyTests/.DS_Store
 bin/
 obj/
 
-# Dev Environment
+# Linux and Mac Dev Environment
 environment.sh
