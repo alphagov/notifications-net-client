@@ -422,5 +422,20 @@ namespace Notify.IntegrationTests
 			var ex = Assert.Throws<NotifyClientException>(() => this.client.SendEmail(FUNCTIONAL_TEST_EMAIL, EMAIL_TEMPLATE_ID, personalisation, emailReplyToId: fakeReplayToId));
 			Assert.That(ex.Message, Does.Contain("email_reply_to_id " + fakeReplayToId));
 		}
+
+		[Test, Category("Integration")]
+		public void SendEmailTestAllArgumenetds()
+		{
+			Dictionary<String, dynamic> personalisation = new Dictionary<String, dynamic>
+			{    
+				{ "name", "someone" }
+			};
+			
+			EmailNotificationResponse response = this.client.SendEmail(FUNCTIONAL_TEST_EMAIL, EMAIL_TEMPLATE_ID, personalisation, clientReference: "TestReference", emailReplyToId: EMAIL_REPLY_TO_ID);
+			this.emailNotificationId = response.id;
+			Assert.IsNotNull(response);
+			Assert.AreEqual(response.content.body, TEST_EMAIL_BODY);
+			Assert.AreEqual(response.content.subject, TEST_EMAIL_SUBJECT);
+		}
 	}
 }

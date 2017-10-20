@@ -1,6 +1,5 @@
 # Visual Studio
 .vs/
-.DS_Store
 Notify.userprefs
 
 # NuGet Packages
@@ -12,3 +11,4 @@ obj/
 
 # Linux and Mac Dev Environment
 environment.sh
+.DS_Store
