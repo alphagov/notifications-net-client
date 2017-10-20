@@ -15,6 +15,7 @@ namespace Notify.UnitTests
         public static String fakeNotificationId { get { return "902e6534-bc4a-4c87-8c3e-9f4144ca36fd"; } }
         public static String fakeNotificationReference { get { return "some-client-ref"; } }
         public static String fakeTemplateId { get { return "913e9fa6-9cbb-44ad-8f58-38487dccfd82"; } }
+        public static String fakeReplyToId { get { return "78ded4ad-e915-4a89-a314-2940ed141d40"; } }
         public static String fakeNotificationJson { get {
                 return @"{
                             ""completed_at"": null,

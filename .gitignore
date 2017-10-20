@@ -1,8 +1,14 @@
 # Visual Studio
 .vs/
+Notify.userprefs
+
 # NuGet Packages
 *.nupkg
 # The packages folder can be ignored because of Package Restore
 **/packages/*
 bin/
 obj/
+
+# Linux and Mac Dev Environment
+environment.sh
+.DS_Store
