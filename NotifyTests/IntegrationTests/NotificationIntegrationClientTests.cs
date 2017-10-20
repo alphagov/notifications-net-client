@@ -390,7 +390,9 @@ namespace Notify.IntegrationTests
 			
 			EmailNotificationResponse response = this.client.SendEmail(FUNCTIONAL_TEST_EMAIL, EMAIL_TEMPLATE_ID, personalisation);
 			this.emailNotificationId = response.id;
-			Assert.IsNotNull(response);Assert.AreEqual(response.content.body, TEST_EMAIL_BODY);Assert.AreEqual(response.content.subject, TEST_EMAIL_SUBJECT);
+			Assert.IsNotNull(response);
+			Assert.AreEqual(response.content.body, TEST_EMAIL_BODY);
+			Assert.AreEqual(response.content.subject, TEST_EMAIL_SUBJECT);
 		}
 		
 		[Test, Category("Integration")]
