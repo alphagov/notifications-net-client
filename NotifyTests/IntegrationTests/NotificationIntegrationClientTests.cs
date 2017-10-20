@@ -424,7 +424,7 @@ namespace Notify.IntegrationTests
 		}
 
 		[Test, Category("Integration")]
-		public void SendEmailTestAllArgumenetds()
+		public void SendEmailTestAllArguments()
 		{
 			Dictionary<String, dynamic> personalisation = new Dictionary<String, dynamic>
 			{    
