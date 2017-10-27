@@ -21,13 +21,14 @@ using System.Runtime.InteropServices;
 // The following GUID is for the ID of the typelib if this project is exposed to COM
 [assembly: Guid("a5f982fe-7acf-49ad-a2d2-3ecc96d010db")]
 
-// Version information for an assembly consists of the following four values:
+// Version numbering follows Semantic Versionning:
 //
-//      Major Version
-//      Minor Version
-//      Build Number
-//      Revision
+// Given a version number MAJOR.MINOR.PATCH, increment the:
+// - MAJOR version when you make incompatible API changes,
+// - MINOR version when you add functionality in a backwards-compatible manner, and
+// - PATCH version when you make backwards-compatible bug fixes.
 //
+// -- http://semver.org/
 // You can specify all the values or you can default the Build and Revision Numbers
 // by using the '*' as shown below:
 // [assembly: AssemblyVersion("1.0.*")]
