@@ -11,12 +11,4 @@ namespace Notify.Models
         [JsonProperty("links")]
         public Link links;
     }
-
-    public class Link
-    {
-        [JsonProperty("current")]
-        public String current;
-        [JsonProperty("next")]
-        public String next;
-    }
 }
