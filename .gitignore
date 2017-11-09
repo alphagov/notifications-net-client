@@ -9,6 +9,9 @@ Notify.userprefs
 bin/
 obj/
 
+# Test results
+TestResult.xml
+
 # Linux and Mac Dev Environment
 environment.sh
 .DS_Store
