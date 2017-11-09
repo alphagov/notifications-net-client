@@ -53,26 +53,29 @@
     <Compile Include="Authentication\Authenticator.cs" />
     <Compile Include="Client\BaseClient.cs" />
     <Compile Include="Client\HttpClientWrapper.cs" />
+    <Compile Include="Client\NotificationClient.cs" />
     <Compile Include="Exceptions\NotifyAuthException.cs" />
     <Compile Include="Exceptions\NotifyClientException.cs" />
     <Compile Include="Interfaces\IBaseClient.cs" />
     <Compile Include="Interfaces\IHttpClient.cs" />
     <Compile Include="Interfaces\INotificationClient.cs" />
+    <Compile Include="Models\Responses\Link.cs" />
     <Compile Include="Models\NotificationList.cs" />
+    <Compile Include="Models\Notification.cs" />
+    <Compile Include="Models\NotifyHTTPError.cs" />
     <Compile Include="Models\Responses\EmailNotificationResponse.cs" />
     <Compile Include="Models\Responses\TemplateList.cs" />
     <Compile Include="Models\Responses\NotificationResponse.cs" />
-    <Compile Include="Models\NotifyHTTPError.cs" />
     <Compile Include="Models\Responses\NotifyHTTPErrorResponse.cs" />
-    <Compile Include="Models\Notification.cs" />
     <Compile Include="Models\Responses\SmsNotificationResponse.cs" />
     <Compile Include="Models\Responses\TemplatePreviewResponse.cs" />
     <Compile Include="Models\Responses\TemplateResponse.cs" />
+    <Compile Include="Models\Responses\LetterNotificationResponse.cs" />
+    <Compile Include="Models\Responses\ReceivedTextResponse.cs" />
+    <Compile Include="Models\Responses\ReceivedTextListResponse.cs" />
     <Compile Include="Models\Template.cs" />
-    <Compile Include="Client\NotificationClient.cs" />
     <Compile Include="Models\TemplatePreview.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Models\Responses\LetterNotificationResponse.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

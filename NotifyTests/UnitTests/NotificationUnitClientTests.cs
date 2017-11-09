@@ -266,6 +266,40 @@ namespace Notify.UnitTests
         }
 
         [Test, Category("Unit/NotificationClient")]
+        public void GetAllReceivedTextsCreatesExpectedRequest()
+        {
+            mockRequest(Constants.fakeReceivedTextListResponseJson,
+                 client.GET_RECEIVED_TEXTS_URL, AssertValidRequest);
+
+            client.GetReceivedTexts();
+        }
+
+        [Test, Category("Unit/NotificationClient")]
+        public void GetAllReceivedTextsReceivesExpectedResponse()
+        {
+            mockRequest(Constants.fakeReceivedTextListResponseJson,
+                 client.GET_RECEIVED_TEXTS_URL, AssertValidRequest);
+
+            ReceivedTextListResponse expectedResponse =
+                JsonConvert.DeserializeObject<ReceivedTextListResponse>(Constants.fakeReceivedTextListResponseJson);
+
+            mockRequest(Constants.fakeReceivedTextListResponseJson,
+                         client.GET_RECEIVED_TEXTS_URL, AssertValidRequest);
+
+            ReceivedTextListResponse receivedTextList = client.GetReceivedTexts();
+
+            List<ReceivedTextResponse> receivedTexts = receivedTextList.receivedTexts;
+
+            Assert.AreEqual(receivedTexts.Count, expectedResponse.receivedTexts.Count);
+            for (int i = 0; i < receivedTexts.Count; i++)
+            {
+                Assert.IsTrue(expectedResponse.receivedTexts[i].EqualTo(receivedTexts[i]));
+            }
+
+            client.GetReceivedTexts();
+        }
+
+        [Test, Category("Unit/NotificationClient")]
         public void SendSmsNotificationGeneratesExpectedRequest()
         {
             Dictionary<String, dynamic> personalisation = new Dictionary<String, dynamic>

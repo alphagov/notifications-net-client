@@ -13,7 +13,8 @@ namespace Notify.Client
 {
     public class NotificationClient : BaseClient
     {
-        public String GET_NOTIFICATION_URL = "v2/notifications/";
+        public String GET_RECEIVED_TEXTS_URL = "v2/received-text-messages";
+        public String GET_NOTIFICATION_URL = "v2/notifications";
         public String SEND_SMS_NOTIFICATION_URL = "v2/notifications/sms";
         public String SEND_EMAIL_NOTIFICATION_URL = "v2/notifications/email";
         public String SEND_LETTER_NOTIFICATION_URL = "v2/notifications/letter";
@@ -100,6 +101,20 @@ namespace Notify.Client
             TemplateList templateList = JsonConvert.DeserializeObject<TemplateList>(response);
 
             return templateList;
+        }
+
+        public ReceivedTextListResponse GetReceivedTexts(String olderThanId = "")
+        {
+            String finalUrl = String.Format(
+                "{0}{1}",
+                GET_RECEIVED_TEXTS_URL,
+                String.IsNullOrWhiteSpace(olderThanId) ? "" : "?older_than=" + olderThanId
+            );
+
+            String response = this.GET(finalUrl);
+
+            ReceivedTextListResponse receivedTexts = JsonConvert.DeserializeObject<ReceivedTextListResponse>(response);
+            return receivedTexts;
         }
 
         public SmsNotificationResponse SendSms(String mobileNumber, String templateId, Dictionary<String, dynamic> personalisation = null, String clientReference = null)
