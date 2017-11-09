@@ -20,6 +20,10 @@ build: dependencies ## Build project
 test: ## Run unit tests
 	nunit-console NotifyTests/bin/Debug/NotifyTests.dll -include=Unit/NotificationClient -labels
 
+.PHONY: integration-test
+integration-test: ## Run integration tests
+	nunit-console NotifyTests/bin/Debug/NotifyTests.dll -include=Integration -labels
+
 .PHONY: build-test
 build-test: dependencies ## build and test
 	make test
