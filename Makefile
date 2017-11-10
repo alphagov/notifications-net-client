@@ -1,8 +1,4 @@
 .DEFAULT_GOAL := help
-SHELL := /bin/bash
-DATE = $(shell date +%Y-%m-%d:%H:%M:%S)
-
-APP_VERSION_FILE = src/Notify/Properties/AssemblyInfo.cs
 
 .PHONY: help
 help:
@@ -11,19 +7,40 @@ help:
 .PHONY: dependencies
 dependencies: ## Install build dependencies
 	nuget restore
-	msbuild
 
 .PHONY: build
 build: dependencies ## Build project
+	msbuild
 
 .PHONY: test
 test: ## Run unit tests
 	nunit-console NotifyTests/bin/Debug/NotifyTests.dll -include=Unit/NotificationClient -labels
 
+.PHONY: authentication-test
+authentication-test: ## Run integration tests
+	nunit-console NotifyTests/bin/Debug/NotifyTests.dll -include=Unit/AuthenticationTests -labels
+
 .PHONY: integration-test
 integration-test: ## Run integration tests
 	nunit-console NotifyTests/bin/Debug/NotifyTests.dll -include=Integration -labels
 
+.PHONY: single-test
+single-test: ## Run a single test: make single-test test=[fully qualified test with namespace]
+	nunit-console NotifyTests/bin/Debug/NotifyTests.dll -nologo -nodots -run=$(test)
+
 .PHONY: build-test
 build-test: dependencies ## build and test
 	make test
+
+.PHONY: build-test_all
+build-test_all: dependencies ## build and test all
+	make test
+	make integration-test
+
+.PHONY: build-release
+build-release: dependencies ## build release version
+	msbuild src/Notify/Notify.csproj /property:Configuration=Release
+\
+.PHONY: build-package
+build-package: build-release ## build nuget package
+	nuget pack src/Notify/Notify.csproj -Properties Configuration=Release
