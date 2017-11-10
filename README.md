@@ -538,7 +538,9 @@ You can omit this argument to ignore this filter.
 
 ##### `reference`
 
-This is the `reference` you gave at the time of sending the notification. This can be omitted to ignore the filter.
+An optional identifier you generate. The reference can be used as a unique reference for the notification. Because Notify does not require this reference to be unique you could also use this reference to identify a batch or group of notifications.
+
+You can omit this argument if you do not require a reference for the notification.
 
 ##### `olderThanId`
 
