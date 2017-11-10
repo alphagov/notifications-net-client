@@ -171,10 +171,10 @@ You can omit this argument if you do not require a reference for the notificatio
 If a template has placeholders, you need to provide their values, for example:
 
 ```net
-personalisation={
-    'first_name': 'Amala',
-    'reference_number': '300241',
-}
+Dictionary<String, dynamic> personalisation = new Dictionary<String, dynamic>
+{
+    { "name", "Foo" }
+};
 ```
 
 </details>
