@@ -355,7 +355,11 @@ If a template has placeholders you need to provide their values. For example:
 ```csharp
 Dictionary<String, dynamic> personalisation = new Dictionary<String, dynamic>
 {
-    { "name", "Foo" }
+{ "address_line_1", "23 Foo Road" }, # required
+{ "address_line_2", "Bar Town" }, # required
+{ "address_line_3", "London" },
+{ "postcode", "BAX S1P" } # required
+... # any other optional address lines, or personalisation fields found in your template
 };
 ```
 Otherwise the parameter can be omitted or `null` can be passed in its place.
