@@ -263,7 +263,9 @@ Otherwise the parameter can be omitted or `null` can be passed in its place.
 
 ##### `reference`
 
-An optional identifier you generate if you don't want to use Notify's `id`. It can be used to identify a single  notification or a batch of notifications. Otherwise the parameter can be omitted or `null` can be passed in its place.
+An optional identifier you generate. The reference can be used as a unique reference for the notification. Because Notify does not require this reference to be unique you could also use this reference to identify a batch or group of notifications.
+
+You can omit this argument if you do not require a reference for the notification.
 
 ##### `emailReplyToId`
 
@@ -360,7 +362,9 @@ Otherwise the parameter can be omitted or `null` can be passed in its place.
 
 ##### `reference`
 
-An optional identifier you generate if you don't want to use Notify's `id`. It can be used to identify a single  notification or a batch of notifications. Otherwise the parameter can be omitted or `null` can be passed in its place.
+An optional identifier you generate. The reference can be used as a unique reference for the notification. Because Notify does not require this reference to be unique you could also use this reference to identify a batch or group of notifications.
+
+You can omit this argument if you do not require a reference for the notification.
 
 </details>
 
