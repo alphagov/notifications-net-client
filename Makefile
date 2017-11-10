@@ -40,7 +40,7 @@ build-test_all: dependencies ## build and test all
 .PHONY: build-release
 build-release: dependencies ## build release version
 	msbuild src/Notify/Notify.csproj /property:Configuration=Release
-\
+
 .PHONY: build-package
 build-package: build-release ## build nuget package
 	nuget pack src/Notify/Notify.csproj -Properties Configuration=Release
