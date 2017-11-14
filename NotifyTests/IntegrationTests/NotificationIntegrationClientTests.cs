@@ -14,8 +14,6 @@ namespace Notify.IntegrationTests
 	public class NotificationIntegrationClientTests
 	{
 		private NotificationClient client;
-		private NotificationClient client_sending;
-		private NotificationClient client_inbound;
 
 		private String NOTIFY_API_URL = Environment.GetEnvironmentVariable("NOTIFY_API_URL");
 		private String API_KEY = Environment.GetEnvironmentVariable("API_KEY");
@@ -50,8 +48,6 @@ namespace Notify.IntegrationTests
 		public void SetUp()
 		{
 			this.client = new NotificationClient(NOTIFY_API_URL, API_KEY);
-			this.client_sending = new NotificationClient(NOTIFY_API_URL, API_SENDING_KEY);
-			this.client_inbound = new NotificationClient(NOTIFY_API_URL, INBOUND_SMS_QUERY_KEY);
 		}
 
 		[Test, Category("Integration")]
@@ -185,7 +181,8 @@ namespace Notify.IntegrationTests
 		[Test, Category("Integration")]
 		public void GetReceivedTexts()
 		{
-			ReceivedTextListResponse receivedTextListResponse = this.client_inbound.GetReceivedTexts();
+			NotificationClient client_inbound = new NotificationClient(NOTIFY_API_URL, INBOUND_SMS_QUERY_KEY);
+			ReceivedTextListResponse receivedTextListResponse = client_inbound.GetReceivedTexts();
 			Assert.IsNotNull(receivedTextListResponse);
 			Assert.IsNotNull(receivedTextListResponse.receivedTexts);
 			Assert.IsTrue(receivedTextListResponse.receivedTexts.Count > 0);
@@ -395,7 +392,7 @@ namespace Notify.IntegrationTests
 			Assert.AreEqual(response.content.subject, TEST_EMAIL_SUBJECT);
 		}
 
-				[Test, Category("Integration")]
+		[Test, Category("Integration")]
 		public void SendSmsTestWithPersonalisationAndSmsSenderId()
 		{
 			Dictionary<String, dynamic> personalisation = new Dictionary<String, dynamic>
@@ -403,8 +400,10 @@ namespace Notify.IntegrationTests
 				{ "name", "someone" }
 			};
 
+			NotificationClient client_sending = new NotificationClient(NOTIFY_API_URL, API_SENDING_KEY);
+
 			SmsNotificationResponse response =
-				this.client_sending.SendSms(FUNCTIONAL_TEST_NUMBER, SMS_TEMPLATE_ID, personalisation, "sample-test-ref", SMS_SENDER_ID);
+				client_sending.SendSms(FUNCTIONAL_TEST_NUMBER, SMS_TEMPLATE_ID, personalisation, "sample-test-ref", SMS_SENDER_ID);
 			this.smsNotificationId = response.id;
 			Assert.IsNotNull(response);
 			Assert.AreEqual(response.content.body, TEST_SMS_BODY);
