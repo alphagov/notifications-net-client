@@ -60,7 +60,6 @@ namespace Notify.IntegrationTests.Assertions
 			Assert.IsNotNull(receivedTextResponse);
 			Assert.IsNotNull(receivedTextResponse.id);
 			Assert.IsNotNull(receivedTextResponse.content);
-			// Assert.IsNotNull(template.version);
 		}
 
 		static public void AssertTemplate(Template template)

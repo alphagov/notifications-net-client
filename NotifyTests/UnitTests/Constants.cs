@@ -170,13 +170,13 @@ namespace Notify.UnitTests
             }
         }
 
-        public static String fakeSmsNotificationWIthSMSSenderIdResponseJson { get {
+        public static String fakeSmsNotificationWithSMSSenderIdResponseJson { get {
                 return @"{
                             ""content"": {
                                 ""body"": ""test"",
                                 ""from_number"": ""GOV.UK"" },
                             ""id"": ""d683f7f9-df04-4b9c-8019-15092c4674fd"",
-                            ""reference"":  ""some-client-ref"",
+                            ""reference"":  null,
                             ""template"": {
                                 ""id"": ""be35a391-e912-42e9-82e6-3f4953f6cbb0"",
                                 ""uri"": ""http://someurl/v2/templates/be35a391-e912-42e9-82e6-3f4953f6cbb0"",

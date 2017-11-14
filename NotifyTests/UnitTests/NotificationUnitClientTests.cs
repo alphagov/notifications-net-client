@@ -526,5 +526,30 @@ namespace Notify.UnitTests
 
             Assert.IsTrue(expectedResponse.IsEqualTo(actualResponse));
         }
+
+        [Test, Category("Unit/NotificationClient")]
+        public void SendSmsNotificationWithSmsSenderIdGeneratesExpectedRequest()
+        {
+            Dictionary<String, dynamic> personalisation = new Dictionary<String, dynamic>
+                {
+                    { "name", "someone" }
+                };
+            JObject expected = new JObject
+            {
+                { "phone_number", Constants.fakePhoneNumber },
+                { "template_id", Constants.fakeTemplateId },
+                { "personalisation", JObject.FromObject(personalisation) },
+                { "sms_sender_id", Constants.fakeSMSSenderId }
+            };
+
+            mockRequest(Constants.fakeSmsNotificationWithSMSSenderIdResponseJson,
+                client.SEND_SMS_NOTIFICATION_URL,
+                AssertValidRequest,
+                HttpMethod.Post,
+                AssertGetExpectedContent, expected.ToString(Formatting.None));
+
+            SmsNotificationResponse response = client.SendSms(
+                Constants.fakePhoneNumber, Constants.fakeTemplateId, personalisation: personalisation, smsSenderId: Constants.fakeSMSSenderId);
+        }
     }
 }

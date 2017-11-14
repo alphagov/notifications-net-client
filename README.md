@@ -30,6 +30,9 @@ SETX FUNCTIONAL_TEST_EMAIL "valid email address"
 SETX EMAIL_TEMPLATE_ID "valid email_template_id"
 SETX SMS_TEMPLATE_ID "valid sms_template_id"
 SETX LETTER_TEMPLATE_ID "valid letter_template_id"
+SETX SMS_SENDER_ID "valid sms_sender_id - to test sending to a receiving number, so needs to be a real number"
+SETX API_SENDING_KEY "API_whitelist_key for sending an SMS to a receiving number"
+SETX INBOUND_SMS_QUERY_KEY "API_test_key to get received text messages"
 ```
 </details>
 
@@ -41,8 +44,11 @@ In order to get the .Net client running in Visual Studio the target `.Net Framew
 open -n /Applications/"Visual Studio.app"
 ```
 
+If you prefer to run commands from a terminal, a `Makefile` is provided to allow building, testing and nuget packaging.
+- Run `make` on the terminal to give you a list of possible commands
+
 <details>
-<summary>Setting Mac OS Environment variables (these must be sourced before opening the Visual Application using the command above)</summary>
+<summary>Setting Mac OS Environment variables (these must be sourced before opening Visual Studio or running `Makefile` commands using the command above)</summary>
 
 ```
 export NOTIFY_API_URL=https://example.notify-api.url
@@ -52,6 +58,9 @@ export FUNCTIONAL_TEST_EMAIL=valid email address
 export EMAIL_TEMPLATE_ID=valid email_template_id
 export SMS_TEMPLATE_ID=valid sms_template_id
 export LETTER_TEMPLATE_ID=valid letter_template_id
+export SMS_SENDER_ID=valid sms_sender_id - to test sending to a receiving number, so needs to be a real number
+export API_SENDING_KEY=API_whitelist_key for sending an SMS to a receiving number
+export INBOUND_SMS_QUERY_KEY=API_test_key to get received text messages
 ```
 </details>
 
@@ -75,7 +84,7 @@ the **API integration** page.
 ### Text message
 
 ```csharp
-SmsNotificationResponse response = client.SendSms(mobileNumber, templateId, personalisation, reference);
+SmsNotificationResponse response = client.SendSms(mobileNumber, templateId, personalisation, reference, smsSenderId);
 ```
 
 <details>
@@ -83,7 +92,7 @@ SmsNotificationResponse response = client.SendSms(mobileNumber, templateId, pers
 Response
 </summary>
 
-If the request is successful, `response` will be a `SmsNotificationResponse `:
+If the request is successful, `response` will be a `SmsNotificationResponse`:
 
 ```csharp
 public String fromNumber;
@@ -107,10 +116,10 @@ Otherwise the client will raise a `Notify.Exceptions.NotifyClientException`:
 <tr>
 <th>
 
-`error["status_code"]`</th>
+`status_code`</th>
 <th>
 
-`error["message"]`</th>
+`error`</th>
 </tr>
 </thead>
 <tbody>
@@ -207,10 +216,10 @@ Otherwise the client will raise a `Notify.Exceptions.NotifyClientException`:
 <tr>
 <th>
 
-`error["status_code"]`</th>
+`status_code`</th>
 <th>
 
-`error["message"]`</th>
+`error`</th>
 </tr>
 </thead>
 <tbody>
@@ -346,10 +355,10 @@ Otherwise the client will raise a `Notify.Exceptions.NotifyClientException`:
 <tr>
 <th>
 
-`error["status_code"]`</th>
+`status_code`</th>
 <th>
 
-`error["message"]`</th>
+`error`</th>
 </tr>
 </thead>
 <tbody>
@@ -485,8 +494,8 @@ Otherwise the client will raise a `Notify.Exceptions.NotifyClientException`:
 <table>
 <thead>
 <tr>
-<th>`error["status_code"]`</th>
-<th>`error["message"]`</th>
+<th>`status_code`</th>
+<th>`message`</th>
 </tr>
 </thead>
 <tbody>
@@ -676,10 +685,10 @@ Otherwise the client will raise a `Notify.Exceptions.NotifyClientException`:
 <tr>
 <th>
 
-`error["status_code"]`</th>
+`status_code`</th>
 <th>
 
-`error["message"]`</th>
+`error`</th>
 </tr>
 </thead>
 <tbody>
@@ -842,11 +851,11 @@ Otherwise the client will raise a `Notify.Exceptions.NotifyClientException`:
 <tr>
 <th>
 
-`error["status_code"]`
+`status_code`
 </th>
 <th>
 
-`error["message"]`
+`error`
 </th>
 </tr>
 </thead>
@@ -897,4 +906,42 @@ Dictionary<String, dynamic> personalisation = new Dictionary<String, dynamic>
 {
     { "name", "someone" }
 };
+```
+
+## Send messages
+
+### Text message
+
+```csharp
+ReceivedTextListResponse response = client.GetReceivedTexts();
+```
+
+<details>
+<summary>
+Response
+</summary>
+
+If the request is successful, `response` will be a `ReceivedTextListResponse`:
+
+```csharp
+public List<ReceivedText> receivedTextList;
+public Link links;
+
+public class Link {
+	public String current;
+	public String next;
+}
+
+```
+
+A `ReceivedText` will have the following properties -
+
+```csharp
+public String id;
+public String userNumber;
+public String createdAt;
+public String serviceId;
+public String notifyNumber;
+public String content;
+
 ```
