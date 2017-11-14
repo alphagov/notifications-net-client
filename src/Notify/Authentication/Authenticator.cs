@@ -1,6 +1,8 @@
-﻿using Notify.Exceptions;
-using System;
+﻿using System;
 using System.Collections.Generic;
+
+using JWT;
+using Notify.Exceptions;
 
 namespace Notify.Authentication
 {
