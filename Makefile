@@ -32,9 +32,14 @@ single-test: ## Run a single test: make single-test test=[fully qualified test w
 build-test: dependencies ## build and test
 	make test
 
+.PHONY: build-integration-test
+build-integration-test: dependencies ## build and test
+	make integration-test
+
 .PHONY: build-test_all
 build-test_all: dependencies ## build and test all
 	make test
+	make authentication-test
 	make integration-test
 
 .PHONY: build-release
