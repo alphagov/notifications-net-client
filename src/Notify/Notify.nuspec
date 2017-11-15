@@ -12,8 +12,8 @@
     <copyright>Copyright 2016</copyright>
     <tags>Notify .NET-Client</tags>
     <dependencies>
-      <dependency id="Newtonsoft.Json" version="9.0.1" />
-      <dependency id="JWT" version="1.3.4" />
+      <dependency id="Newtonsoft.Json" version="[9,10.0.4)" />
+      <dependency id="JWT" version="[2.4.2,2.4.3)" />
     </dependencies>
   </metadata>
 </package>

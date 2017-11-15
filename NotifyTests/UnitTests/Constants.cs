@@ -16,6 +16,7 @@ namespace Notify.UnitTests
         public static String fakeNotificationReference { get { return "some-client-ref"; } }
         public static String fakeTemplateId { get { return "913e9fa6-9cbb-44ad-8f58-38487dccfd82"; } }
         public static String fakeReplyToId { get { return "78ded4ad-e915-4a89-a314-2940ed141d40"; } }
+        public static String fakeSMSSenderId { get { return "88ded4ad-e915-4a89-a314-2940ed141d41"; } }
         public static String fakeNotificationJson { get {
                 return @"{
                             ""completed_at"": null,
@@ -83,6 +84,29 @@ namespace Notify.UnitTests
             }
         }
 
+        public static String fakeReceivedTextListResponseJson { get {
+                return @"{ ""received_text_messages"": [
+                        { 
+                            ""user_number"": ""447700900111"",
+                            ""created_at"": ""2017-11-02T15:07:57.197546Z"",
+                            ""service_id"": ""a5149c32-f03b-4711-af49-ad6993797d45"",
+                            ""id"": ""342786aa-23ce-4695-9aad-7f79e68ee29a"",
+                            ""notify_number"": ""testing"",
+                            ""content"": ""Hello""
+                        },
+                        { 
+                            ""user_number"": ""447700900111"",
+                            ""created_at"": ""2017-11-02T15:07:57.197546Z"",
+                            ""service_id"": ""a5149c32-f03b-4711-af49-ad6993797d45"",
+                            ""id"": ""342786aa-23ce-4695-9aad-7f79e68ee29a"",
+                            ""notify_number"": ""testing"",
+                            ""content"": ""Hello again""
+                        }
+					]
+				}";
+            }
+        }
+
         public static String fakeTemplateEmptyListResponseJson
         {
         	get
@@ -137,6 +161,22 @@ namespace Notify.UnitTests
                                 ""from_number"": null },
                             ""id"": ""d683f7f9-df04-4b9c-8019-15092c4674fd"",
                             ""reference"": null,
+                            ""template"": {
+                                ""id"": ""be35a391-e912-42e9-82e6-3f4953f6cbb0"",
+                                ""uri"": ""http://someurl/v2/templates/be35a391-e912-42e9-82e6-3f4953f6cbb0"",
+                                ""version"": 1 },
+                            ""uri"": ""http://some_url//v2/notifications/d683f7f9-df04-4b9c-8019-15092c4674fd""
+                         }";
+            }
+        }
+
+        public static String fakeSmsNotificationWithSMSSenderIdResponseJson { get {
+                return @"{
+                            ""content"": {
+                                ""body"": ""test"",
+                                ""from_number"": ""GOV.UK"" },
+                            ""id"": ""d683f7f9-df04-4b9c-8019-15092c4674fd"",
+                            ""reference"":  null,
                             ""template"": {
                                 ""id"": ""be35a391-e912-42e9-82e6-3f4953f6cbb0"",
                                 ""uri"": ""http://someurl/v2/templates/be35a391-e912-42e9-82e6-3f4953f6cbb0"",

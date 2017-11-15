@@ -266,6 +266,38 @@ namespace Notify.UnitTests
         }
 
         [Test, Category("Unit/NotificationClient")]
+        public void GetAllReceivedTextsCreatesExpectedRequest()
+        {
+            mockRequest(Constants.fakeReceivedTextListResponseJson,
+                 client.GET_RECEIVED_TEXTS_URL, AssertValidRequest);
+
+            client.GetReceivedTexts();
+        }
+
+        [Test, Category("Unit/NotificationClient")]
+        public void GetAllReceivedTextsReceivesExpectedResponse()
+        {
+            mockRequest(Constants.fakeReceivedTextListResponseJson,
+                 client.GET_RECEIVED_TEXTS_URL, AssertValidRequest);
+
+            ReceivedTextListResponse expectedResponse =
+                JsonConvert.DeserializeObject<ReceivedTextListResponse>(Constants.fakeReceivedTextListResponseJson);
+
+            mockRequest(Constants.fakeReceivedTextListResponseJson,
+                         client.GET_RECEIVED_TEXTS_URL, AssertValidRequest);
+
+            ReceivedTextListResponse receivedTextList = client.GetReceivedTexts();
+
+            List<ReceivedTextResponse> receivedTexts = receivedTextList.receivedTexts;
+
+            Assert.AreEqual(receivedTexts.Count, expectedResponse.receivedTexts.Count);
+            for (int i = 0; i < receivedTexts.Count; i++)
+            {
+                Assert.IsTrue(expectedResponse.receivedTexts[i].EqualTo(receivedTexts[i]));
+            }
+        }
+
+        [Test, Category("Unit/NotificationClient")]
         public void SendSmsNotificationGeneratesExpectedRequest()
         {
             Dictionary<String, dynamic> personalisation = new Dictionary<String, dynamic>
@@ -491,6 +523,31 @@ namespace Notify.UnitTests
             EmailNotificationResponse actualResponse = client.SendEmail(Constants.fakeEmail, Constants.fakeTemplateId, personalisation, Constants.fakeNotificationReference, Constants.fakeReplyToId);
 
             Assert.IsTrue(expectedResponse.IsEqualTo(actualResponse));
+        }
+
+        [Test, Category("Unit/NotificationClient")]
+        public void SendSmsNotificationWithSmsSenderIdGeneratesExpectedRequest()
+        {
+            Dictionary<String, dynamic> personalisation = new Dictionary<String, dynamic>
+                {
+                    { "name", "someone" }
+                };
+            JObject expected = new JObject
+            {
+                { "phone_number", Constants.fakePhoneNumber },
+                { "template_id", Constants.fakeTemplateId },
+                { "personalisation", JObject.FromObject(personalisation) },
+                { "sms_sender_id", Constants.fakeSMSSenderId }
+            };
+
+            mockRequest(Constants.fakeSmsNotificationWithSMSSenderIdResponseJson,
+                client.SEND_SMS_NOTIFICATION_URL,
+                AssertValidRequest,
+                HttpMethod.Post,
+                AssertGetExpectedContent, expected.ToString(Formatting.None));
+
+            SmsNotificationResponse response = client.SendSms(
+                Constants.fakePhoneNumber, Constants.fakeTemplateId, personalisation: personalisation, smsSenderId: Constants.fakeSMSSenderId);
         }
     }
 }

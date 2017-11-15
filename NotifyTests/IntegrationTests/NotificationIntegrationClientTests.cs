@@ -2,6 +2,7 @@
 using Notify.Models;
 using Notify.Models.Responses;
 using Notify.Exceptions;
+using Notify.IntegrationTests.Assertions;
 using System;
 using System.Collections.Generic;
 
@@ -16,6 +17,8 @@ namespace Notify.IntegrationTests
 
 		private String NOTIFY_API_URL = Environment.GetEnvironmentVariable("NOTIFY_API_URL");
 		private String API_KEY = Environment.GetEnvironmentVariable("API_KEY");
+		private String API_SENDING_KEY = Environment.GetEnvironmentVariable("API_SENDING_KEY");
+
 		private String FUNCTIONAL_TEST_NUMBER = Environment.GetEnvironmentVariable("FUNCTIONAL_TEST_NUMBER");
 		private String FUNCTIONAL_TEST_EMAIL = Environment.GetEnvironmentVariable("FUNCTIONAL_TEST_EMAIL");
 
@@ -23,16 +26,18 @@ namespace Notify.IntegrationTests
 		private String SMS_TEMPLATE_ID = Environment.GetEnvironmentVariable("SMS_TEMPLATE_ID");
 		private String LETTER_TEMPLATE_ID = Environment.GetEnvironmentVariable("LETTER_TEMPLATE_ID");
 		private String EMAIL_REPLY_TO_ID = Environment.GetEnvironmentVariable("EMAIL_REPLY_TO_ID");
+		private String SMS_SENDER_ID = Environment.GetEnvironmentVariable("SMS_SENDER_ID");
+		private String INBOUND_SMS_QUERY_KEY = Environment.GetEnvironmentVariable("INBOUND_SMS_QUERY_KEY");
 
 		private String smsNotificationId;
 		private String emailNotificationId;
 		private String letterNotificationId;
 
-		const String TEST_TEMPLATE_SMS_BODY = "Hello ((name))\n\nFunctional Tests make our world a better place";
-		const String TEST_SMS_BODY = "Hello someone\n\nFunctional Tests make our world a better place";
+		const String TEST_TEMPLATE_SMS_BODY = "Hello ((name))\r\n\r\nFunctional Tests make our world a better place";
+		const String TEST_SMS_BODY = "Hello someone\r\n\r\nFunctional Tests make our world a better place";
 
-		const String TEST_TEMPLATE_EMAIL_BODY = "Hello ((name))\n\nFunctional test help make our world a better place";
-		const String TEST_EMAIL_BODY = "Hello someone\n\nFunctional test help make our world a better place";
+		const String TEST_TEMPLATE_EMAIL_BODY = "Hello ((name))\r\n\r\nFunctional test help make our world a better place";
+		const String TEST_EMAIL_BODY = "Hello someone\r\n\r\nFunctional test help make our world a better place";
 		const String TEST_EMAIL_SUBJECT = "Functional Tests are good";
 
 		const String TEST_LETTER_BODY = "Hello Foo";
@@ -79,7 +84,7 @@ namespace Notify.IntegrationTests
 			Assert.IsNotNull(notification.reference);
 			Assert.AreEqual(notification.reference, "sample-test-ref");
 
-			AssertNotification(notification);
+			NotifyAssertions.AssertNotification(notification);
 		}
 
 		[Test, Category("Integration")]
@@ -104,7 +109,6 @@ namespace Notify.IntegrationTests
 		{
 			SendEmailTestWithPersonalisation();
 			Notification notification = this.client.GetNotificationById(this.emailNotificationId);
-
 			Assert.IsNotNull(notification);
 			Assert.IsNotNull(notification.id);
 			Assert.AreEqual(notification.id, this.emailNotificationId);
@@ -114,7 +118,7 @@ namespace Notify.IntegrationTests
 			Assert.IsNotNull(notification.subject);
 			Assert.AreEqual(notification.subject, TEST_EMAIL_SUBJECT);
 
-			AssertNotification(notification);
+			NotifyAssertions.AssertNotification(notification);
 		}
 
 		[Test, Category("Integration")]
@@ -155,9 +159,8 @@ namespace Notify.IntegrationTests
 			Assert.IsNotNull(notification.subject);
 			Assert.AreEqual(notification.subject, TEST_LETTER_SUBJECT);
 
-			AssertNotification(notification);
+			NotifyAssertions.AssertNotification(notification);
 		}
-
 
 		[Test, Category("Integration")]
 		public void GetAllNotifications()
@@ -170,9 +173,26 @@ namespace Notify.IntegrationTests
 
 			foreach (Notification notification in notifications)
 			{
-				AssertNotification(notification);
+				NotifyAssertions.AssertNotification(notification);
 			}
 
+		}
+
+		[Test, Category("Integration")]
+		public void GetReceivedTexts()
+		{
+			NotificationClient client_inbound = new NotificationClient(NOTIFY_API_URL, INBOUND_SMS_QUERY_KEY);
+			ReceivedTextListResponse receivedTextListResponse = client_inbound.GetReceivedTexts();
+			Assert.IsNotNull(receivedTextListResponse);
+			Assert.IsNotNull(receivedTextListResponse.receivedTexts);
+			Assert.IsTrue(receivedTextListResponse.receivedTexts.Count > 0);
+
+			List<ReceivedTextResponse> receivedTexts = receivedTextListResponse.receivedTexts;
+
+			foreach (ReceivedTextResponse receivedText in receivedTexts)
+			{
+				NotifyAssertions.AssertReceivedTextResponse(receivedText);
+			}
 		}
 
 		[Test, Category("Integration")]
@@ -211,7 +231,7 @@ namespace Notify.IntegrationTests
 
 			foreach (TemplateResponse template in templateList.templates)
 			{
-				AssertTemplateResponse(template);
+				NotifyAssertions.AssertTemplateResponse(template);
 			}
 		}
 
@@ -225,7 +245,7 @@ namespace Notify.IntegrationTests
 
 			foreach (TemplateResponse template in templateList.templates)
 			{
-				AssertTemplateResponse(template, type);
+				NotifyAssertions.AssertTemplateResponse(template, type);
 			}
 		}
 
@@ -239,7 +259,7 @@ namespace Notify.IntegrationTests
 
 			foreach (TemplateResponse template in templateList.templates)
 			{
-				AssertTemplateResponse(template, type);
+				NotifyAssertions.AssertTemplateResponse(template, type);
 			}
 		}
 
@@ -314,72 +334,6 @@ namespace Notify.IntegrationTests
 			Assert.That(ex.Message, Does.Contain("Missing personalisation: name"));
 		}
 
-		public void AssertNotification(Notification notification)
-		{
-			Assert.IsNotNull(notification.type);
-			String notificationType = notification.type;
-			String[] allowedNotificationTypes = { "email", "sms", "letter" };
-			CollectionAssert.Contains(allowedNotificationTypes, notificationType);
-			if (notificationType.Equals("sms"))
-			{
-				Assert.IsNotNull(notification.phoneNumber);
-			}
-			else if (notificationType.Equals("email"))
-			{
-				Assert.IsNotNull(notification.emailAddress);
-				Assert.IsNotNull(notification.subject);
-			}
-			else if (notificationType.Equals("letter"))
-			{
-				Assert.IsNotNull(notification.subject);
-			}
-
-			Assert.IsNotNull(notification.body);
-			Assert.IsNotNull(notification.createdAt);
-
-			Assert.IsNotNull(notification.status);
-			String notificationStatus = notification.status;
-			String[] allowedStatusTypes = {
-				"created",
-				"sending",
-				"delivered",
-				"permanent-failure",
-				"temporary-failure",
-				"technical-failure",
-				"accepted"
-			};
-			CollectionAssert.Contains(allowedStatusTypes, notificationStatus);
-
-			if (notificationStatus.Equals("delivered"))
-			{
-				Assert.IsNotNull(notification.completedAt);
-			}
-
-			AssertTemplate(notification.template);
-		}
-
-		public void AssertTemplate(Template template)
-		{
-			Assert.IsNotNull(template);
-			Assert.IsNotNull(template.id);
-			Assert.IsNotNull(template.uri);
-			Assert.IsNotNull(template.version);
-		}
-
-		public void AssertTemplateResponse(TemplateResponse template, String type = null)
-		{
-			Assert.IsNotNull(template);
-			Assert.IsNotNull(template.id);
-			Assert.IsNotNull(template.name);
-			Assert.IsNotNull(template.version);
-			Assert.IsNotNull(template.type);
-			if (template.type.Equals("email") || (!string.IsNullOrEmpty(type) && type.Equals("email")))
-				Assert.IsNotNull(template.subject);
-			Assert.IsNotNull(template.created_at);
-			Assert.IsNotNull(template.created_by);
-			Assert.IsNotNull(template.body);
-		}
-		
 		[Test, Category("Integration")]
 		public void SendEmailTestServiceDefaultEmailReplyTo()
 		{
@@ -437,5 +391,27 @@ namespace Notify.IntegrationTests
 			Assert.AreEqual(response.content.body, TEST_EMAIL_BODY);
 			Assert.AreEqual(response.content.subject, TEST_EMAIL_SUBJECT);
 		}
+
+		[Test, Category("Integration")]
+		public void SendSmsTestWithPersonalisationAndSmsSenderId()
+		{
+			Dictionary<String, dynamic> personalisation = new Dictionary<String, dynamic>
+			{
+				{ "name", "someone" }
+			};
+
+			NotificationClient client_sending = new NotificationClient(NOTIFY_API_URL, API_SENDING_KEY);
+
+			SmsNotificationResponse response =
+				client_sending.SendSms(FUNCTIONAL_TEST_NUMBER, SMS_TEMPLATE_ID, personalisation, "sample-test-ref", SMS_SENDER_ID);
+			this.smsNotificationId = response.id;
+			Assert.IsNotNull(response);
+			Assert.AreEqual(response.content.body, TEST_SMS_BODY);
+
+			Assert.IsNotNull(response.reference);
+			Assert.AreEqual(response.reference, "sample-test-ref");
+		}
+
+
 	}
 }

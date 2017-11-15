@@ -1,8 +1,22 @@
+## [1.6.0] - 2017-11-15
+## Changed
+
+* Update to `NotificationsClient.SendSms`
+    * added `smsSenderId`: an optional smsSenderId specified when adding a text message sender under service settings, if this is not provided it will default to the service name.
+* Added `GetReceivedTexts` - retrieves all received text messages, links provided with page size of 250
+* Added `Makefile` in order to run build, tests and nuget package from the terminal.
+
+## [1.5.3] - 2017-11-15
+## Changed
+
+* Pin dependencies for JWT and Newtonsoft.json
+    * Pinned to no higher than JWT 2.4.2 and Newtonsoft.json 10.
+
 ## [1.5.2] - 2017-10-11
 ## Changed
 
-* Update to `NotificationsAPIClient.send_email_notification()`
-    * added `email_reply_to_id`: an optional email_reply_to_id specified when adding Email reply to addresses under service settings, if this is not provided the reply to email will be the service default reply to email. `email_reply_to_id` can be omitted.
+* Update to `NotificationsClient.send_email_notification`
+    * added `emailReplyToId`: an optional emailReplyToId specified when adding Email reply to addresses under service settings, if this is not provided the reply to email will be the service default reply to email. `email_reply_to_id` can be omitted.
 
 ## [1.5.1] - 2017-09-22
 ## Changed
