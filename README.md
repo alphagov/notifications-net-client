@@ -60,7 +60,7 @@ SETX INBOUND_SMS_QUERY_KEY "API_test_key to get received text messages"
 
 ### [Visual Studio](https://www.visualstudio.com/vs/visual-studio-mac/) (Mac OS)
 
-In order to get the .Net client running in Visual Studio the target `.Net Framework` needs to be set to `4.5.2` and the application needs to be run from the terminal.
+In order to get the .Net client running in Visual Studio the target `.Net Framework` needs to be set to `4.6.2` and the application needs to be run from the terminal.
 
 <details>
 <summary>Click here to expand for more information.</summary>
@@ -179,6 +179,12 @@ Dictionary<String, dynamic> personalisation = new Dictionary<String, dynamic>
     { "name", "Foo" }
 };
 ```
+
+### `sms_sender_id`
+
+Optional. Specifies the identifier of the sms sender to set for the notification. The identifiers are found in your service Settings, when you 'Manage' your 'Text message sender'.
+
+If you omit this argument your default sms sender will be set for the notification.
 
 </details>
 
@@ -333,7 +339,7 @@ Otherwise the client will raise a `Notify.Exceptions.NotifyClientException`.
 |:---|:---|
 |`429`|`[{`<br>`"error": "RateLimitError",`<br>`"message": "Exceeded rate limit for key type TEAM of 10 requests per 20 seconds"`<br>`}]`|
 |`429`|`[{`<br>`"error": "TooManyRequestsError",`<br>`"message": "Exceeded send limits (50) for today"`<br>`}]`|
-|`400`|`[{`<br>`"error": "BadRequestError",`<br>`"message": "Cannot send letters with a team api key"`<br>`]}`|
+|`400`|`[{`<br>`"error": "BadRequestError",`<br>`"message": "Cannot send letters with a team api key"`<br>`}]`|
 |`400`|`[{`<br>`"error": "BadRequestError",`<br>`"message": "Cannot send letters when service is in trial mode"`<br>`}]`|
 |`400`|`[{`<br>`"error": "ValidationError",`<br>`"message": "personalisation address_line_1 is a required property"`<br>`}]`|
 
