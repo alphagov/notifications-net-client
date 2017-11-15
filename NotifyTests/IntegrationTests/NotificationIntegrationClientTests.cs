@@ -33,11 +33,11 @@ namespace Notify.IntegrationTests
 		private String emailNotificationId;
 		private String letterNotificationId;
 
-		const String TEST_TEMPLATE_SMS_BODY = "Hello ((name))\n\nFunctional Tests make our world a better place";
-		const String TEST_SMS_BODY = "Hello someone\n\nFunctional Tests make our world a better place";
+		const String TEST_TEMPLATE_SMS_BODY = "Hello ((name))\r\n\r\nFunctional Tests make our world a better place";
+		const String TEST_SMS_BODY = "Hello someone\r\n\r\nFunctional Tests make our world a better place";
 
-		const String TEST_TEMPLATE_EMAIL_BODY = "Hello ((name))\n\nFunctional test help make our world a better place";
-		const String TEST_EMAIL_BODY = "Hello someone\n\nFunctional test help make our world a better place";
+		const String TEST_TEMPLATE_EMAIL_BODY = "Hello ((name))\r\n\r\nFunctional test help make our world a better place";
+		const String TEST_EMAIL_BODY = "Hello someone\r\n\r\nFunctional test help make our world a better place";
 		const String TEST_EMAIL_SUBJECT = "Functional Tests are good";
 
 		const String TEST_LETTER_BODY = "Hello Foo";
