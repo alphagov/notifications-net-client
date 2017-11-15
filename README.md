@@ -908,9 +908,7 @@ Dictionary<String, dynamic> personalisation = new Dictionary<String, dynamic>
 };
 ```
 
-## Send messages
-
-### Text message
+## Get all received text messages
 
 ```csharp
 ReceivedTextListResponse response = client.GetReceivedTexts();
