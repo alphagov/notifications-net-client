@@ -13,6 +13,7 @@ This documentation is for developers interested in using this .NET client to int
 * [Get a template by ID and version](#get-a-template-by-id-and-version)
 * [Get all templates](#get-all-templates)
 * [Generate a preview template](#generate-a-preview-template)
+* [Get all received text messages](#get-all-received-text-messages)
 
 ## Installation
 
