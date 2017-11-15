@@ -17,7 +17,7 @@ test: ## Run unit tests
 	nunit-console NotifyTests/bin/Debug/NotifyTests.dll -include=Unit/NotificationClient -labels
 
 .PHONY: authentication-test
-authentication-test: ## Run integration tests
+authentication-test: ## Run authentication tests
 	nunit-console NotifyTests/bin/Debug/NotifyTests.dll -include=Unit/AuthenticationTests -labels
 
 .PHONY: integration-test
@@ -29,23 +29,23 @@ single-test: ## Run a single test: make single-test test=[fully qualified test w
 	nunit-console NotifyTests/bin/Debug/NotifyTests.dll -nologo -nodots -run=$(test)
 
 .PHONY: build-test
-build-test: dependencies ## build and test
+build-test: dependencies ## Build and test
 	make test
 
 .PHONY: build-integration-test
-build-integration-test: dependencies ## build and test
+build-integration-test: dependencies ## Build and integration test
 	make integration-test
 
 .PHONY: build-test_all
-build-test_all: dependencies ## build and test all
+build-test_all: dependencies ## Build and test all
 	make test
 	make authentication-test
 	make integration-test
 
 .PHONY: build-release
-build-release: dependencies ## build release version
+build-release: dependencies ## Build release version
 	msbuild src/Notify/Notify.csproj /property:Configuration=Release
 
 .PHONY: build-package
-build-package: build-release ## build nuget package
+build-package: build-release ## Build and package NuGet
 	nuget pack src/Notify/Notify.csproj -Properties Configuration=Release
