@@ -1,3 +1,8 @@
+## [1.5.3] - 2017-11-10
+## Changed
+
+* Upgraded both projects to .NET 4.7 and upgraded the dependencies to their latest version. The method with use in JWT has been deprecated so has stayed the same version.
+
 ## [1.5.2] - 2017-10-11
 ## Changed
 
