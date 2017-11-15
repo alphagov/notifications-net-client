@@ -9,7 +9,7 @@ The notifications-net-client is deployed to [Bintray](https://bintray.com/gov-uk
 nuget install Notify -Source https://api.bintray.com/nuget/gov-uk-notify/notifications-net-client
 ```
 
-Alternatively if you are using the Nuget Package Manager in Visual Studio, add the source below to install.
+Alternatively if you are using the NuGet Package Manager in Visual Studio, add the source below to install.
 ```
 https://api.bintray.com/nuget/gov-uk-notify/nuget
 ```
@@ -44,7 +44,7 @@ In order to get the .Net client running in Visual Studio the target `.Net Framew
 open -n /Applications/"Visual Studio.app"
 ```
 
-If you prefer to run commands from a terminal, a `Makefile` is provided to allow building, testing and nuget packaging.
+If you prefer to run commands from a terminal, a `Makefile` is provided to allow building, testing and NuGet packaging.
 - Run `make` on the terminal to give you a list of possible commands
 
 <details>

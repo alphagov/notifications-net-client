@@ -295,8 +295,6 @@ namespace Notify.UnitTests
             {
                 Assert.IsTrue(expectedResponse.receivedTexts[i].EqualTo(receivedTexts[i]));
             }
-
-            client.GetReceivedTexts();
         }
 
         [Test, Category("Unit/NotificationClient")]
