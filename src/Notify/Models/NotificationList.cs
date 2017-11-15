@@ -1,6 +1,7 @@
 ﻿using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using Notify.Models.Responses;
 
 namespace Notify.Models
 {
@@ -10,13 +11,5 @@ namespace Notify.Models
         public List<Notification> notifications;
         [JsonProperty("links")]
         public Link links;
-    }
-
-    public class Link
-    {
-        [JsonProperty("current")]
-        public String current;
-        [JsonProperty("next")]
-        public String next;
     }
 }

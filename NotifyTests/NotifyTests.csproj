@@ -46,6 +46,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="IntegrationTests\NotificationIntegrationClientTests.cs" />
+    <Compile Include="IntegrationTests\Assertions.cs" />
     <Compile Include="UnitTests\NotificationUnitClientTests.cs" />
     <Compile Include="UnitTests\AuthenticatorTests.cs" />
     <Compile Include="UnitTests\Constants.cs" />

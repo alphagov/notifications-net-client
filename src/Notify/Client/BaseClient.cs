@@ -34,7 +34,6 @@ namespace Notify.Client
 
             String productVersion = Assembly.GetExecutingAssembly().GetName().Version.ToString();
             this.client.AddUserAgent(NOTIFY_CLIENT_NAME + productVersion);
-
         }
 
         public String GET(String url)
