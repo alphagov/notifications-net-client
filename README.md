@@ -826,9 +826,11 @@ Dictionary<String, dynamic> personalisation = new Dictionary<String, dynamic>
 ReceivedTextListResponse response = client.GetReceivedTexts(olderThanId);
 ```
 
+#### Response
+
 <details>
 <summary>
-Response
+Click here to expand for more information.
 </summary>
 
 If the request is successful, `response` will be a `ReceivedTextListResponse`:
@@ -855,10 +857,12 @@ public String notifyNumber;
 public String content;
 
 ```
+</details>
 
+#### Arguments
 <details>
 <summary>
-Arguments
+Click here to expand for more information.
 </summary>
 	
 ##### `olderThanId`
