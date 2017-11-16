@@ -823,7 +823,7 @@ Dictionary<String, dynamic> personalisation = new Dictionary<String, dynamic>
 ## Get all received text messages
 
 ```csharp
-ReceivedTextListResponse response = client.GetReceivedTexts();
+ReceivedTextListResponse response = client.GetReceivedTexts(olderThanId);
 ```
 
 <details>
@@ -855,3 +855,14 @@ public String notifyNumber;
 public String content;
 
 ```
+
+<details>
+<summary>
+Arguments
+</summary>
+	
+##### `olderThanId`
+
+If omitted all messages are returned. Otherwise you can filter to retrieve all received text messages older than the given id.
+
+</details>
