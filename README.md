@@ -53,7 +53,7 @@ SETX FUNCTIONAL_TEST_EMAIL "valid email address"
 SETX EMAIL_TEMPLATE_ID "valid email_template_id"
 SETX SMS_TEMPLATE_ID "valid sms_template_id"
 SETX LETTER_TEMPLATE_ID "valid letter_template_id"
-SETX SMS_SENDER_ID "valid sms_sender_id - to test sending to a receiving number, so needs to be a real number"
+SETX SMS_SENDER_ID "valid sms_sender_id - to test sending to a receiving number, so needs to be a valid number"
 SETX API_SENDING_KEY "API_whitelist_key for sending an SMS to a receiving number"
 SETX INBOUND_SMS_QUERY_KEY "API_test_key to get received text messages"
 ```
@@ -80,6 +80,9 @@ export FUNCTIONAL_TEST_EMAIL=valid email address
 export EMAIL_TEMPLATE_ID=valid email_template_id
 export SMS_TEMPLATE_ID=valid sms_template_id
 export LETTER_TEMPLATE_ID=valid letter_template_id
+export SMS_SENDER_ID=valid sms_sender_id  # to test sending to a receiving number, so needs to be a valid number
+export API_SENDING_KEY=API_whitelist_key  # for sending an SMS to a receiving number
+export INBOUND_SMS_QUERY_KEY=API_test_key  # to get received text messages
 ```
 </details>
 
@@ -181,7 +184,7 @@ Dictionary<String, dynamic> personalisation = new Dictionary<String, dynamic>
 };
 ```
 
-### `sms_sender_id`
+### `smsSenderId`
 
 Optional. Specifies the identifier of the sms sender to set for the notification. The identifiers are found in your service Settings, when you 'Manage' your 'Text message sender'.
 
