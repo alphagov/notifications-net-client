@@ -1,3 +1,9 @@
+## [1.6.1] - 2017-11-16
+## Changed
+
+* Updated `Notify.nuspec, Notify.csproj, packages.config` dependencies for JWT and Newtonsoft.json
+    * Change lower dependency set for JWT set to 1.3.4 and Newtonsoft.json to 9.0.1.
+
 ## [1.6.0] - 2017-11-15
 ## Changed
 
