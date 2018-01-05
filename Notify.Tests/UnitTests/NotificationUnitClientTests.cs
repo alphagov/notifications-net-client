@@ -1,3 +1,9 @@
+using System;
+using System.Collections.Generic;
+using System.Net;
+using System.Net.Http;
+using System.Threading;
+using System.Threading.Tasks;
 using Moq;
 using Moq.Protected;
 using Newtonsoft.Json;
@@ -6,18 +12,12 @@ using Notify.Client;
 using Notify.Exceptions;
 using Notify.Models;
 using Notify.Models.Responses;
-using System;
-using System.Collections.Generic;
-using System.Net.Http;
-using System.Net;
-using System.Threading;
-using System.Threading.Tasks;
-
+using Notify.UnitTests;
 using NUnit.Framework;
 
-namespace Notify.UnitTests
+namespace Notify.Tests.UnitTests
 {
-    [TestFixture()]
+    [TestFixture]
     public class NotificationUnitClientTests
     {
         Mock<HttpMessageHandler> handler;
@@ -28,7 +28,7 @@ namespace Notify.UnitTests
         {
             handler = new Mock<HttpMessageHandler>();
 
-            HttpClientWrapper w = new HttpClientWrapper(new HttpClient(handler.Object));
+            var w = new HttpClientWrapper(new HttpClient(handler.Object));
             client = new NotificationClient(w, Constants.fakeApiKey);
         }
 
@@ -89,34 +89,34 @@ namespace Notify.UnitTests
         [Test, Category("Unit/NotificationClient")]
         public void GetNotificationWithIdReceivesExpectedResponse()
         {
-            Notification expectedResponse = JsonConvert.DeserializeObject<Notification>(Constants.fakeNotificationJson);
+            var expectedResponse = JsonConvert.DeserializeObject<Notification>(Constants.fakeNotificationJson);
 
             mockRequest(Constants.fakeNotificationJson);
 
-            Notification responseNotification = client.GetNotificationById(Constants.fakeNotificationId);
+            var responseNotification = client.GetNotificationById(Constants.fakeNotificationId);
             Assert.IsTrue(expectedResponse.EqualTo(responseNotification));
         }
 
         [Test, Category("Unit/NotificationClient")]
         public void GetTemplateWithIdReceivesExpectedResponse()
         {
-            TemplateResponse expectedResponse = JsonConvert.DeserializeObject<TemplateResponse>(Constants.fakeTemplateResponseJson);
+            var expectedResponse = JsonConvert.DeserializeObject<TemplateResponse>(Constants.fakeTemplateResponseJson);
 
             mockRequest(Constants.fakeTemplateResponseJson);
 
-            TemplateResponse responseTemplate = client.GetTemplateById(Constants.fakeTemplateId);
+            var responseTemplate = client.GetTemplateById(Constants.fakeTemplateId);
             Assert.IsTrue(expectedResponse.EqualTo(responseTemplate));
         }
 
         [Test, Category("Unit/NotificationClient")]
         public void GetTemplateWithIdAndVersionReceivesExpectedResponse()
         {
-            TemplateResponse expectedResponse =
+            var expectedResponse =
                 JsonConvert.DeserializeObject<TemplateResponse>(Constants.fakeTemplateResponseJson);
 
             mockRequest(Constants.fakeTemplateResponseJson);
 
-            TemplateResponse responseTemplate = client.GetTemplateByIdAndVersion(Constants.fakeTemplateId, 2);
+            var responseTemplate = client.GetTemplateByIdAndVersion(Constants.fakeTemplateId, 2);
             Assert.IsTrue(expectedResponse.EqualTo(responseTemplate));
         }
 
@@ -127,7 +127,7 @@ namespace Notify.UnitTests
                     { "name", "someone" }
             };
 
-            JObject o = new JObject
+            var o = new JObject
             {
                 { "personalisation", JObject.FromObject(personalisation) }
             };
@@ -135,7 +135,7 @@ namespace Notify.UnitTests
             mockRequest(Constants.fakeTemplatePreviewResponseJson,
                 client.GET_TEMPLATE_URL + Constants.fakeTemplateId + "/preview", AssertValidRequest, HttpMethod.Post);
 
-            TemplatePreviewResponse response = client.GenerateTemplatePreview(Constants.fakeTemplateId, personalisation);
+            var response = client.GenerateTemplatePreview(Constants.fakeTemplateId, personalisation);
         }
 
         [Test, Category("Unit/NotificationClient")]
@@ -145,7 +145,7 @@ namespace Notify.UnitTests
                     { "name", "someone" }
             };
 
-            JObject expected = new JObject
+            var expected = new JObject
             {
                 { "personalisation", JObject.FromObject(personalisation) }
             };
@@ -192,7 +192,7 @@ namespace Notify.UnitTests
         [Test, Category("Unit/NotificationClient")]
         public void GetAllTemplatesForEmptyListReceivesExpectedResponse()
         {
-            TemplateList expectedResponse = JsonConvert.DeserializeObject<TemplateList>(Constants.fakeTemplateEmptyListResponseJson);
+            var expectedResponse = JsonConvert.DeserializeObject<TemplateList>(Constants.fakeTemplateEmptyListResponseJson);
 
                mockRequest(Constants.fakeTemplateEmptyListResponseJson);
 

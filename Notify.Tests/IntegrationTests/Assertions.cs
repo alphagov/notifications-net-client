@@ -1,17 +1,13 @@
-using Notify.Client;
+using System;
 using Notify.Models;
 using Notify.Models.Responses;
-using Notify.Exceptions;
-using System;
-using System.Collections.Generic;
-
 using NUnit.Framework;
 
-namespace Notify.IntegrationTests.Assertions
+namespace Notify.Tests.IntegrationTests
 {
 	public class NotifyAssertions
 	{
-		static public void AssertNotification(Notification notification)
+		public static void AssertNotification(Notification notification)
 		{
 			Assert.IsNotNull(notification.type);
 			String notificationType = notification.type;
@@ -55,14 +51,14 @@ namespace Notify.IntegrationTests.Assertions
 			AssertTemplate(notification.template);
 		}
 
-		static public void AssertReceivedTextResponse(ReceivedTextResponse receivedTextResponse)
+		public static void AssertReceivedTextResponse(ReceivedTextResponse receivedTextResponse)
 		{
 			Assert.IsNotNull(receivedTextResponse);
 			Assert.IsNotNull(receivedTextResponse.id);
 			Assert.IsNotNull(receivedTextResponse.content);
 		}
 
-		static public void AssertTemplate(Template template)
+		public static void AssertTemplate(Template template)
 		{
 			Assert.IsNotNull(template);
 			Assert.IsNotNull(template.id);
@@ -70,7 +66,7 @@ namespace Notify.IntegrationTests.Assertions
 			Assert.IsNotNull(template.version);
 		}
 
-		static public void AssertTemplateResponse(TemplateResponse template, String type = null)
+		public static void AssertTemplateResponse(TemplateResponse template, String type = null)
 		{
 			Assert.IsNotNull(template);
 			Assert.IsNotNull(template.id);
