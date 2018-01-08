@@ -6,8 +6,8 @@ using Notify.Models;
 using Notify.Models.Responses;
 using System;
 using System.Collections.Generic;
+using System.Collections.Specialized;
 using System.Net.Http;
-using System.Web;
 
 namespace Notify.Client
 {
@@ -58,7 +58,7 @@ namespace Notify.Client
 
         public NotificationList GetNotifications(String templateType = "", String status = "", String reference = "", String olderThanId = "")
         {
-            var query = HttpUtility.ParseQueryString("");
+            var query = new NameValueCollection();
 
             if (!String.IsNullOrWhiteSpace(templateType))
             {

@@ -32,7 +32,7 @@ namespace Notify.Client
             this.client.BaseAddress = ValidateBaseUri(this.baseUrl);
             this.client.AddContentHeader("application/json");
 
-            String productVersion = Assembly.GetExecutingAssembly().GetName().Version.ToString();
+            var productVersion = typeof(BaseClient).GetTypeInfo().Assembly.GetName().Version.ToString();
             this.client.AddUserAgent(NOTIFY_CLIENT_NAME + productVersion);
         }
 
@@ -118,9 +118,8 @@ namespace Notify.Client
 
         public Uri ValidateBaseUri(String baseUrl)
         {
-            Uri uriResult;
-            bool result = Uri.TryCreate(baseUrl, UriKind.Absolute, out uriResult)
-                && (uriResult.Scheme == Uri.UriSchemeHttp || uriResult.Scheme == Uri.UriSchemeHttps);
+            bool result = Uri.TryCreate(baseUrl, UriKind.Absolute, out var uriResult)
+                && (uriResult.Scheme == "http" || uriResult.Scheme == "https");
 
             if(!result)
             {
@@ -134,7 +133,7 @@ namespace Notify.Client
 
         public String GetUserAgent()
         {
-            return NOTIFY_CLIENT_NAME + Assembly.GetExecutingAssembly().GetName().Version.ToString();		
+            return NOTIFY_CLIENT_NAME + typeof(BaseClient).GetTypeInfo().Assembly.GetName().Version;		
         }
     }
 }
