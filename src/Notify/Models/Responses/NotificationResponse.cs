@@ -4,22 +4,30 @@ namespace Notify.Models.Responses
 {
     public class NotificationResponse
     {
-        public String id;
-        public String reference;
-        public String uri;
+        public string id;
+        public string reference;
+        public string uri;
         public Template template;
 
-        public bool EqualTo(NotificationResponse response)
+        public override bool Equals(object response)
         {
-            return (
-                id == response.id &&
-                reference == response.reference &&
-                uri == response.uri &&
-                template.id == response.template.id &&
-                template.uri == response.template.uri &&
-                template.version == response.template.version
-                );
+            if (!(response is NotificationResponse resp))
+            {
+                return false;
+            }
+
+            return 
+                id == resp.id &&
+                reference == resp.reference &&
+                uri == resp.uri &&
+                template.id == resp.template.id &&
+                template.uri == resp.template.uri &&
+                template.version == resp.template.version;
         }
 
+        public override int GetHashCode()
+        {
+            return base.GetHashCode();
+        }
     }
 }

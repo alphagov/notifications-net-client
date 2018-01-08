@@ -12,7 +12,7 @@ namespace Notify.Client
 
         public Uri BaseAddress
         {
-            get { return _baseAddress; }
+            get => _baseAddress;
             set
             {
                 _baseAddress = value;
@@ -40,13 +40,13 @@ namespace Notify.Client
             _client.BaseAddress = _baseAddress;
         }
 
-        public void AddContentHeader(String header)
+        public void AddContentHeader(string header)
         {
             _client.DefaultRequestHeaders.Accept
                 .Add(new MediaTypeWithQualityHeaderValue(header));
         }
 
-        public void AddUserAgent(String userAgent)
+        public void AddUserAgent(string userAgent)
         {
             _client.DefaultRequestHeaders.Add("User-Agent", userAgent);
         }

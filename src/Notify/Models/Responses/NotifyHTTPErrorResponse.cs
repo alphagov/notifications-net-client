@@ -1,5 +1,4 @@
 ﻿using Newtonsoft.Json;
-using System;
 using System.Collections.Generic;
 
 namespace Notify.Models.Responses
@@ -7,19 +6,19 @@ namespace Notify.Models.Responses
     public class NotifyHTTPErrorResponse
     {
         [JsonProperty("status_code")]
-        private String statusCode;
+        private string statusCode;
 
         [JsonProperty("errors")]
         private List<NotifyHTTPError> errors;
 
-        public String getStatusCode()
+        public string getStatusCode()
         {
             return statusCode;
         }
 
-        public String getErrorsAsJson()
+        public string getErrorsAsJson()
         {
-            return JsonConvert.SerializeObject(this.errors, Formatting.Indented); ;
+            return JsonConvert.SerializeObject(errors, Formatting.Indented);
         }
     }
 }

@@ -4,29 +4,38 @@ namespace Notify.Models.Responses
 {
     public class TemplateResponse
     {
-        public String id;
-        public String name;
-        public String type;
+        public string id;
+        public string name;
+        public string type;
         public DateTime created_at;
         public DateTime? updated_at;
-        public String created_by;
+        public string created_by;
         public int version;
-        public String body;
-        public String subject;
+        public string body;
+        public string subject;
 
-        public bool EqualTo(TemplateResponse response)
+        public override bool Equals(object response)
         {
-            return (
-                id == response.id &&
-                name == response.name &&
-                type == response.type &&
-                created_at == response.created_at &&
-                updated_at == response.updated_at &&
-                created_by == response.created_by &&
-                version == response.version &&
-                body == response.body &&
-                subject == response.subject
-            );
+            if (!(response is TemplateResponse resp))
+            {
+                return false;
+            }
+
+            return 
+                id == resp.id &&
+                name == resp.name &&
+                type == resp.type &&
+                created_at == resp.created_at &&
+                updated_at == resp.updated_at &&
+                created_by == resp.created_by &&
+                version == resp.version &&
+                body == resp.body &&
+                subject == resp.subject;
+        }
+
+        public override int GetHashCode()
+        {
+            return base.GetHashCode();
         }
     }
 }

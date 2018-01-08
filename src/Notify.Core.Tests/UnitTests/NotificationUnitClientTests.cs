@@ -19,8 +19,8 @@ namespace Notify.Core.Tests.UnitTests
     [TestFixture]
     public class NotificationUnitClientTests
     {
-        Mock<HttpMessageHandler> handler;
-        NotificationClient client;
+        private Mock<HttpMessageHandler> handler;
+        private NotificationClient client;
 
         [SetUp]
         public void SetUp()
@@ -56,7 +56,7 @@ namespace Notify.Core.Tests.UnitTests
         [Test, Category("Unit/NotificationClient")]
         public void GetNotificationWithIdCreatesExpectedRequest()
         {
-            mockRequest(Constants.fakeNotificationJson,
+            MockRequest(Constants.fakeNotificationJson,
                 client.GET_NOTIFICATION_URL + Constants.fakeNotificationId,
                 AssertValidRequest);
 
@@ -67,7 +67,7 @@ namespace Notify.Core.Tests.UnitTests
         [Test, Category("Unit/NotificationClient")]
         public void GetTemplateWithIdCreatesExpectedRequest()
         {
-            mockRequest(Constants.fakeTemplateResponseJson,
+            MockRequest(Constants.fakeTemplateResponseJson,
                 client.GET_TEMPLATE_URL + Constants.fakeTemplateId,
                 AssertValidRequest);
 
@@ -78,7 +78,7 @@ namespace Notify.Core.Tests.UnitTests
         [Test, Category("Unit/NotificationClient")]
         public void GetTemplateWithIdAndVersionCreatesExpectedRequest()
         {
-            mockRequest(Constants.fakeTemplateResponseJson,
+            MockRequest(Constants.fakeTemplateResponseJson,
                 client.GET_TEMPLATE_URL + Constants.fakeTemplateId + client.VERSION_PARAM + "2",
                 AssertValidRequest);
 
@@ -90,10 +90,10 @@ namespace Notify.Core.Tests.UnitTests
         {
             var expectedResponse = JsonConvert.DeserializeObject<Notification>(Constants.fakeNotificationJson);
 
-            mockRequest(Constants.fakeNotificationJson);
+            MockRequest(Constants.fakeNotificationJson);
 
             var responseNotification = client.GetNotificationById(Constants.fakeNotificationId);
-            Assert.IsTrue(expectedResponse.EqualTo(responseNotification));
+            Assert.IsTrue(expectedResponse.Equals(responseNotification));
         }
 
         [Test, Category("Unit/NotificationClient")]
@@ -101,7 +101,7 @@ namespace Notify.Core.Tests.UnitTests
         {
             var expectedResponse = JsonConvert.DeserializeObject<TemplateResponse>(Constants.fakeTemplateResponseJson);
 
-            mockRequest(Constants.fakeTemplateResponseJson);
+            MockRequest(Constants.fakeTemplateResponseJson);
 
             var responseTemplate = client.GetTemplateById(Constants.fakeTemplateId);
             Assert.IsTrue(expectedResponse.EqualTo(responseTemplate));
@@ -113,7 +113,7 @@ namespace Notify.Core.Tests.UnitTests
             var expectedResponse =
                 JsonConvert.DeserializeObject<TemplateResponse>(Constants.fakeTemplateResponseJson);
 
-            mockRequest(Constants.fakeTemplateResponseJson);
+            MockRequest(Constants.fakeTemplateResponseJson);
 
             var responseTemplate = client.GetTemplateByIdAndVersion(Constants.fakeTemplateId, 2);
             Assert.IsTrue(expectedResponse.EqualTo(responseTemplate));
@@ -122,7 +122,7 @@ namespace Notify.Core.Tests.UnitTests
         [Test, Category("Unit/NotificationClient")]
         public void GenerateTemplatePreviewGeneratesExpectedRequest()
         {
-            Dictionary<String, dynamic> personalisation = new Dictionary<String, dynamic> {
+            Dictionary<string, dynamic> personalisation = new Dictionary<string, dynamic> {
                     { "name", "someone" }
             };
 
@@ -131,7 +131,7 @@ namespace Notify.Core.Tests.UnitTests
                 { "personalisation", JObject.FromObject(personalisation) }
             };
 
-            mockRequest(Constants.fakeTemplatePreviewResponseJson,
+            MockRequest(Constants.fakeTemplatePreviewResponseJson,
                 client.GET_TEMPLATE_URL + Constants.fakeTemplateId + "/preview", AssertValidRequest, HttpMethod.Post);
 
             var response = client.GenerateTemplatePreview(Constants.fakeTemplateId, personalisation);
@@ -140,7 +140,7 @@ namespace Notify.Core.Tests.UnitTests
         [Test, Category("Unit/NotificationClient")]
         public void GenerateTemplatePreviewReceivesExpectedResponse()
         {
-            Dictionary<String, dynamic> personalisation = new Dictionary<String, dynamic> {
+            Dictionary<string, dynamic> personalisation = new Dictionary<string, dynamic> {
                     { "name", "someone" }
             };
 
@@ -149,7 +149,7 @@ namespace Notify.Core.Tests.UnitTests
                 { "personalisation", JObject.FromObject(personalisation) }
             };
 
-            mockRequest(Constants.fakeTemplatePreviewResponseJson,
+            MockRequest(Constants.fakeTemplatePreviewResponseJson,
                 client.GET_TEMPLATE_URL + Constants.fakeTemplateId + "/preview",
                 AssertValidRequest,
                 HttpMethod.Post,
@@ -161,7 +161,7 @@ namespace Notify.Core.Tests.UnitTests
         [Test, Category("Unit/NotificationClient")]
         public void GetAllTemplatesCreatesExpectedRequest()
         {
-            mockRequest(Constants.fakeTemplateListResponseJson,
+            MockRequest(Constants.fakeTemplateListResponseJson,
                  client.GET_ALL_TEMPLATES_URL, AssertValidRequest);
 
             client.GetAllTemplates();
@@ -170,8 +170,8 @@ namespace Notify.Core.Tests.UnitTests
         [Test, Category("Unit/NotificationClient")]
         public void GetAllTemplatesBySmsTypeCreatesExpectedRequest()
         {
-            const String type = "sms";
-            mockRequest(Constants.fakeTemplateSmsListResponseJson,
+            const string type = "sms";
+            MockRequest(Constants.fakeTemplateSmsListResponseJson,
                          client.GET_ALL_TEMPLATES_URL+ client.TYPE_PARAM + type, AssertValidRequest);
 
             client.GetAllTemplates(type);
@@ -180,9 +180,9 @@ namespace Notify.Core.Tests.UnitTests
         [Test, Category("Unit/NotificationClient")]
         public void GetAllTemplatesByEmailTypeCreatesExpectedRequest()
         {
-            const String type = "email";
+            const string type = "email";
 
-            mockRequest(Constants.fakeTemplateEmailListResponseJson,
+            MockRequest(Constants.fakeTemplateEmailListResponseJson,
                          client.GET_ALL_TEMPLATES_URL+ client.TYPE_PARAM + type, AssertValidRequest);
 
             client.GetAllTemplates(type);
@@ -193,7 +193,7 @@ namespace Notify.Core.Tests.UnitTests
         {
             var expectedResponse = JsonConvert.DeserializeObject<TemplateList>(Constants.fakeTemplateEmptyListResponseJson);
 
-               mockRequest(Constants.fakeTemplateEmptyListResponseJson);
+               MockRequest(Constants.fakeTemplateEmptyListResponseJson);
 
             TemplateList templateList = client.GetAllTemplates();
 
@@ -207,7 +207,7 @@ namespace Notify.Core.Tests.UnitTests
         {
             TemplateList expectedResponse = JsonConvert.DeserializeObject<TemplateList>(Constants.fakeTemplateListResponseJson);
 
-            mockRequest(Constants.fakeTemplateListResponseJson);
+            MockRequest(Constants.fakeTemplateListResponseJson);
 
             TemplateList templateList = client.GetAllTemplates();
 
@@ -223,12 +223,12 @@ namespace Notify.Core.Tests.UnitTests
         [Test, Category("Unit/NotificationClient")]
         public void GetAllTemplatesBySmsTypeReceivesExpectedResponse()
         {
-            const String type = "sms";
+            const string type = "sms";
 
             TemplateList expectedResponse =
                 JsonConvert.DeserializeObject<TemplateList>(Constants.fakeTemplateSmsListResponseJson);
 
-            mockRequest(Constants.fakeTemplateSmsListResponseJson,
+            MockRequest(Constants.fakeTemplateSmsListResponseJson,
                          client.GET_ALL_TEMPLATES_URL + client.TYPE_PARAM + type, AssertValidRequest);
 
             TemplateList templateList = client.GetAllTemplates(type);
@@ -245,12 +245,12 @@ namespace Notify.Core.Tests.UnitTests
         [Test, Category("Unit/NotificationClient")]
         public void GetAllTemplatesByEmailTypeReceivesExpectedResponse()
         {
-            const String type = "email";
+            const string type = "email";
 
             TemplateList expectedResponse =
                 JsonConvert.DeserializeObject<TemplateList>(Constants.fakeTemplateEmailListResponseJson);
 
-            mockRequest(Constants.fakeTemplateEmailListResponseJson,
+            MockRequest(Constants.fakeTemplateEmailListResponseJson,
                          client.GET_ALL_TEMPLATES_URL + client.TYPE_PARAM + type, AssertValidRequest);
 
             TemplateList templateList = client.GetAllTemplates(type);
@@ -267,7 +267,7 @@ namespace Notify.Core.Tests.UnitTests
         [Test, Category("Unit/NotificationClient")]
         public void GetAllReceivedTextsCreatesExpectedRequest()
         {
-            mockRequest(Constants.fakeReceivedTextListResponseJson,
+            MockRequest(Constants.fakeReceivedTextListResponseJson,
                  client.GET_RECEIVED_TEXTS_URL, AssertValidRequest);
 
             client.GetReceivedTexts();
@@ -276,13 +276,13 @@ namespace Notify.Core.Tests.UnitTests
         [Test, Category("Unit/NotificationClient")]
         public void GetAllReceivedTextsReceivesExpectedResponse()
         {
-            mockRequest(Constants.fakeReceivedTextListResponseJson,
+            MockRequest(Constants.fakeReceivedTextListResponseJson,
                  client.GET_RECEIVED_TEXTS_URL, AssertValidRequest);
 
             ReceivedTextListResponse expectedResponse =
                 JsonConvert.DeserializeObject<ReceivedTextListResponse>(Constants.fakeReceivedTextListResponseJson);
 
-            mockRequest(Constants.fakeReceivedTextListResponseJson,
+            MockRequest(Constants.fakeReceivedTextListResponseJson,
                          client.GET_RECEIVED_TEXTS_URL, AssertValidRequest);
 
             ReceivedTextListResponse receivedTextList = client.GetReceivedTexts();
@@ -299,7 +299,7 @@ namespace Notify.Core.Tests.UnitTests
         [Test, Category("Unit/NotificationClient")]
         public void SendSmsNotificationGeneratesExpectedRequest()
         {
-            Dictionary<String, dynamic> personalisation = new Dictionary<String, dynamic>
+            Dictionary<string, dynamic> personalisation = new Dictionary<string, dynamic>
                 {
                     { "name", "someone" }
                 };
@@ -310,7 +310,7 @@ namespace Notify.Core.Tests.UnitTests
                 { "personalisation", JObject.FromObject(personalisation) }
             };
 
-            mockRequest(Constants.fakeSmsNotificationResponseJson,
+            MockRequest(Constants.fakeSmsNotificationResponseJson,
                 client.SEND_SMS_NOTIFICATION_URL,
                 AssertValidRequest,
                 HttpMethod.Post,
@@ -322,13 +322,13 @@ namespace Notify.Core.Tests.UnitTests
         [Test, Category("Unit/NotificationClient")]
         public void SendSmsNotificationGeneratesExpectedResponse()
         {
-            Dictionary<String, dynamic> personalisation = new Dictionary<String, dynamic>
+            Dictionary<string, dynamic> personalisation = new Dictionary<string, dynamic>
                 {
                     { "name", "someone" }
                 };
             SmsNotificationResponse expectedResponse = JsonConvert.DeserializeObject<SmsNotificationResponse>(Constants.fakeSmsNotificationResponseJson);
 
-            mockRequest(Constants.fakeSmsNotificationResponseJson);
+            MockRequest(Constants.fakeSmsNotificationResponseJson);
 
             SmsNotificationResponse actualResponse = client.SendSms(Constants.fakePhoneNumber, Constants.fakeTemplateId, personalisation);
 
@@ -338,7 +338,7 @@ namespace Notify.Core.Tests.UnitTests
         [Test, Category("Unit/NotificationClient")]
         public void SendEmailNotificationGeneratesExpectedRequest()
         {
-            Dictionary<String, dynamic> personalisation = new Dictionary<String, dynamic>
+            Dictionary<string, dynamic> personalisation = new Dictionary<string, dynamic>
                 {
                     { "name", "someone" }
                 };
@@ -350,7 +350,7 @@ namespace Notify.Core.Tests.UnitTests
                 { "reference", Constants.fakeNotificationReference }
             };
 
-            mockRequest(Constants.fakeTemplatePreviewResponseJson,
+            MockRequest(Constants.fakeTemplatePreviewResponseJson,
                 client.SEND_EMAIL_NOTIFICATION_URL,
                 AssertValidRequest,
                 HttpMethod.Post,
@@ -362,24 +362,24 @@ namespace Notify.Core.Tests.UnitTests
         [Test, Category("Unit/NotificationClient")]
         public void SendEmailNotificationGeneratesExpectedResponse()
         {
-            Dictionary<String, dynamic> personalisation = new Dictionary<String, dynamic>
+            Dictionary<string, dynamic> personalisation = new Dictionary<string, dynamic>
                 {
                     { "name", "someone" }
                 };
             EmailNotificationResponse expectedResponse = JsonConvert.DeserializeObject<EmailNotificationResponse>(Constants.fakeEmailNotificationResponseJson);
 
-            mockRequest(Constants.fakeEmailNotificationResponseJson);
+            MockRequest(Constants.fakeEmailNotificationResponseJson);
 
             EmailNotificationResponse actualResponse = client.SendEmail(Constants.fakeEmail, Constants.fakeTemplateId, personalisation, Constants.fakeNotificationReference);
 
-            Assert.IsTrue(expectedResponse.IsEqualTo(actualResponse));
+            Assert.IsTrue(expectedResponse.Equals(actualResponse));
 
         }
 
         [Test, Category("Unit/NotificationClient")]
         public void SendLetterNotificationGeneratesExpectedRequest()
         {
-            Dictionary<String, dynamic> personalisation = new Dictionary<String, dynamic>
+            Dictionary<string, dynamic> personalisation = new Dictionary<string, dynamic>
                 {
                     { "address_line_1", "Foo" },
                     { "address_line_2", "Bar" },
@@ -392,7 +392,7 @@ namespace Notify.Core.Tests.UnitTests
                 { "reference", Constants.fakeNotificationReference }
             };
 
-            mockRequest(Constants.fakeTemplatePreviewResponseJson,
+            MockRequest(Constants.fakeTemplatePreviewResponseJson,
                 client.SEND_LETTER_NOTIFICATION_URL,
                 AssertValidRequest,
                 HttpMethod.Post,
@@ -404,7 +404,7 @@ namespace Notify.Core.Tests.UnitTests
         [Test, Category("Unit/NotificationClient")]
         public void SendLetterNotificationGeneratesExpectedResponse()
         {
-            Dictionary<String, dynamic> personalisation = new Dictionary<String, dynamic>
+            Dictionary<string, dynamic> personalisation = new Dictionary<string, dynamic>
                 {
                     { "address_line_1", "Foo" },
                     { "address_line_2", "Bar" },
@@ -412,7 +412,7 @@ namespace Notify.Core.Tests.UnitTests
                 };
             LetterNotificationResponse expectedResponse = JsonConvert.DeserializeObject<LetterNotificationResponse>(Constants.fakeLetterNotificationResponseJson);
 
-            mockRequest(Constants.fakeLetterNotificationResponseJson);
+            MockRequest(Constants.fakeLetterNotificationResponseJson);
 
             LetterNotificationResponse actualResponse = client.SendLetter(Constants.fakeTemplateId, personalisation, Constants.fakeNotificationReference);
 
@@ -420,75 +420,71 @@ namespace Notify.Core.Tests.UnitTests
 
         }
 
-        void AssertGetExpectedContent(String expected, String content)
+        private static void AssertGetExpectedContent(string expected, string content)
         {
             Assert.IsNotNull(content);
             Assert.AreEqual(expected, content);
         }
 
-        void AssertValidRequest(String uri, HttpRequestMessage r, HttpMethod method = null)
+        private void AssertValidRequest(string uri, HttpRequestMessage r, HttpMethod method = null)
         {
             if (method == null)
+            {
                 method = HttpMethod.Get;
+            }
+                
             Assert.AreEqual(r.Method, method);
-            Assert.AreEqual(r.RequestUri.ToString(), client.baseUrl + uri);
+            Assert.AreEqual(r.RequestUri.ToString(), client.BaseUrl + uri);
             Assert.IsNotNull(r.Headers.Authorization);
             Assert.IsNotNull(r.Headers.UserAgent);
             Assert.AreEqual(r.Headers.UserAgent.ToString(), client.GetUserAgent());
             Assert.AreEqual(r.Headers.Accept.ToString(), "application/json");
         }
 
-        void mockRequest(String content, String uri,
-                          Action<String, HttpRequestMessage, HttpMethod> _assertValidRequest = null,
+        private void MockRequest(string content, string uri,
+                          Action<string, HttpRequestMessage, HttpMethod> _assertValidRequest = null,
                           HttpMethod method = null,
-                          Action<String, String> _assertGetExpectedContent = null, String expected = null)
+                          Action<string, string> _assertGetExpectedContent = null, string expected = null)
         {
             handler.Protected()
                 .Setup<Task<HttpResponseMessage>>("SendAsync", ItExpr.IsAny<HttpRequestMessage>(), ItExpr.IsAny<CancellationToken>())
-                .Returns(Task<HttpResponseMessage>.Factory.StartNew(() =>
+                .Returns(Task<HttpResponseMessage>.Factory.StartNew(() => new HttpResponseMessage
                 {
-                    return new HttpResponseMessage
-                    {
-                        StatusCode = HttpStatusCode.OK,
-                        Content = new StringContent(content)
-                    };
+                    StatusCode = HttpStatusCode.OK,
+                    Content = new StringContent(content)
                 }))
                 .Callback<HttpRequestMessage, CancellationToken>((r, c) =>
                 {
                     _assertValidRequest(uri, r, method);
 
-                    if (r.Content != null && _assertGetExpectedContent != null)
-                    {
-                        String response = r.Content.ReadAsStringAsync().Result;
-                        _assertGetExpectedContent(expected, response);
-                    }
+                    if (r.Content == null || _assertGetExpectedContent == null) return;
+
+                    var response = r.Content.ReadAsStringAsync().Result;
+                    _assertGetExpectedContent(expected, response);
                 });
         }
 
-        void mockRequest(String content)
+        private void MockRequest(string content)
         {
 
             handler.Protected()
                 .Setup<Task<HttpResponseMessage>>("SendAsync", ItExpr.IsAny<HttpRequestMessage>(), ItExpr.IsAny<CancellationToken>())
-                .Returns(Task<HttpResponseMessage>.Factory.StartNew(() =>
+                .Returns(Task<HttpResponseMessage>.Factory.StartNew(() => new HttpResponseMessage
                 {
-                    return new HttpResponseMessage
-                    {
-                        StatusCode = HttpStatusCode.OK,
-                        Content = new StringContent(content)
-                    };
+                    StatusCode = HttpStatusCode.OK,
+                    Content = new StringContent(content)
                 }));
         }
 
         [Test, Category("Unit/NotificationClient")]
         public void SendEmailNotificationWithReplyToIdGeneratesExpectedRequest()
         {
-            Dictionary<String, dynamic> personalisation = new Dictionary<String, dynamic>
+            var personalisation = new Dictionary<string, dynamic>
             {
                 { "name", "someone" }
             };
 
-            JObject expected = new JObject
+            var expected = new JObject
             {
                 { "email_address", Constants.fakeEmail },
                 { "template_id", Constants.fakeTemplateId },
@@ -497,41 +493,41 @@ namespace Notify.Core.Tests.UnitTests
                 { "email_reply_to_id", Constants.fakeReplyToId}
             };
 
-            mockRequest(Constants.fakeTemplateEmailListResponseJson,
+            MockRequest(Constants.fakeTemplateEmailListResponseJson,
                 client.SEND_EMAIL_NOTIFICATION_URL,
                 AssertValidRequest,
                 HttpMethod.Post,
                 AssertGetExpectedContent,
                 expected.ToString(Formatting.None));
 
-            EmailNotificationResponse response = client.SendEmail(Constants.fakeEmail, Constants.fakeTemplateId, personalisation, Constants.fakeNotificationReference, Constants.fakeReplyToId);
+            var response = client.SendEmail(Constants.fakeEmail, Constants.fakeTemplateId, personalisation, Constants.fakeNotificationReference, Constants.fakeReplyToId);
         }
 
         [Test, Category("Unit/NotificationClient")]
         public void SendEmailNotificationWithReplyToIdGeneratesExpectedResponse()
         {
-            Dictionary<String, dynamic> personalisation = new Dictionary<String, dynamic>
+            var personalisation = new Dictionary<string, dynamic>
             {
                 { "name", "someone" }
             };
 
-            EmailNotificationResponse expectedResponse = JsonConvert.DeserializeObject<EmailNotificationResponse>(Constants.fakeEmailNotificationResponseJson);
+            var expectedResponse = JsonConvert.DeserializeObject<EmailNotificationResponse>(Constants.fakeEmailNotificationResponseJson);
 
-            mockRequest(Constants.fakeEmailNotificationResponseJson);
+            MockRequest(Constants.fakeEmailNotificationResponseJson);
             
-            EmailNotificationResponse actualResponse = client.SendEmail(Constants.fakeEmail, Constants.fakeTemplateId, personalisation, Constants.fakeNotificationReference, Constants.fakeReplyToId);
+            var actualResponse = client.SendEmail(Constants.fakeEmail, Constants.fakeTemplateId, personalisation, Constants.fakeNotificationReference, Constants.fakeReplyToId);
 
-            Assert.IsTrue(expectedResponse.IsEqualTo(actualResponse));
+            Assert.IsTrue(expectedResponse.Equals(actualResponse));
         }
 
         [Test, Category("Unit/NotificationClient")]
         public void SendSmsNotificationWithSmsSenderIdGeneratesExpectedRequest()
         {
-            Dictionary<String, dynamic> personalisation = new Dictionary<String, dynamic>
+            var personalisation = new Dictionary<string, dynamic>
                 {
                     { "name", "someone" }
                 };
-            JObject expected = new JObject
+            var expected = new JObject
             {
                 { "phone_number", Constants.fakePhoneNumber },
                 { "template_id", Constants.fakeTemplateId },
@@ -539,13 +535,13 @@ namespace Notify.Core.Tests.UnitTests
                 { "sms_sender_id", Constants.fakeSMSSenderId }
             };
 
-            mockRequest(Constants.fakeSmsNotificationWithSMSSenderIdResponseJson,
+            MockRequest(Constants.fakeSmsNotificationWithSMSSenderIdResponseJson,
                 client.SEND_SMS_NOTIFICATION_URL,
                 AssertValidRequest,
                 HttpMethod.Post,
                 AssertGetExpectedContent, expected.ToString(Formatting.None));
 
-            SmsNotificationResponse response = client.SendSms(
+            var response = client.SendSms(
                 Constants.fakePhoneNumber, Constants.fakeTemplateId, personalisation: personalisation, smsSenderId: Constants.fakeSMSSenderId);
         }
     }

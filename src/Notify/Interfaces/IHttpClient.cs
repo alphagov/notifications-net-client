@@ -11,8 +11,8 @@ namespace Notify.Interfaces
 
         void SetClientBaseAddress();
 
-        void AddContentHeader(String header);
+        void AddContentHeader(string header);
 
-        void AddUserAgent(String userAgent);
+        void AddUserAgent(string userAgent);
 	}
 }

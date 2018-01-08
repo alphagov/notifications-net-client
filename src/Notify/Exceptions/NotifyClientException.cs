@@ -4,10 +4,10 @@ namespace Notify.Exceptions
 {
     public class NotifyClientException : Exception
     {
-        public NotifyClientException() : base() { }
+        public NotifyClientException() { }
 
-        public NotifyClientException(String message) : base(message) { }
+        public NotifyClientException(string message) : base(message) { }
 
-        public NotifyClientException(String format, params object[] args) : base(String.Format(format, args)) { }
+        public NotifyClientException(string format, params object[] args) : base(string.Format(format, args)) { }
     }
 }

@@ -1,14 +1,13 @@
 ﻿using Newtonsoft.Json;
-using System;
 
 namespace Notify.Models
 {
     public class NotifyHTTPError
     {
         [JsonProperty("error")]
-        private String error;
+        private string error;
 
         [JsonProperty("message")]
-        private String message;
+        private string message;
     }
 }

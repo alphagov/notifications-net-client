@@ -373,7 +373,7 @@ namespace Notify.Tests.UnitTests
 
             EmailNotificationResponse actualResponse = client.SendEmail(Constants.fakeEmail, Constants.fakeTemplateId, personalisation, Constants.fakeNotificationReference);
 
-            Assert.IsTrue(expectedResponse.IsEqualTo(actualResponse));
+            Assert.IsTrue(expectedResponse.Equals(actualResponse));
 
         }
 
@@ -522,7 +522,7 @@ namespace Notify.Tests.UnitTests
             
             EmailNotificationResponse actualResponse = client.SendEmail(Constants.fakeEmail, Constants.fakeTemplateId, personalisation, Constants.fakeNotificationReference, Constants.fakeReplyToId);
 
-            Assert.IsTrue(expectedResponse.IsEqualTo(actualResponse));
+            Assert.IsTrue(expectedResponse.Equals(actualResponse));
         }
 
         [Test, Category("Unit/NotificationClient")]

@@ -1,11 +1,9 @@
-﻿using System;
-
-namespace Notify.Models
+﻿namespace Notify.Models
 {
     public class Template
     {
-        public String id;
-        public String uri;
-        public Int32 version;
+        public string id;
+        public string uri;
+        public int version;
     }
 }

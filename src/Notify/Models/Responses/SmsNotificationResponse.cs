@@ -1,5 +1,4 @@
 ﻿using Newtonsoft.Json;
-using System;
 
 namespace Notify.Models.Responses
 {
@@ -7,21 +6,29 @@ namespace Notify.Models.Responses
     {
         public SmsResponseContent content;
 
-        public bool IsEqualTo(SmsNotificationResponse response)
+        public override bool Equals(object response)
         {
-            return (
-                content.body == response.content.body &&
-                content.fromNumber == response.content.fromNumber &&
-                base.EqualTo(response)
-                );
+            if (!(response is SmsNotificationResponse resp))
+            {
+                return false;
+            }
+
+            return 
+                content.body == resp.content.body &&
+                content.fromNumber == resp.content.fromNumber &&
+                base.Equals(response);
         }
 
+        public override int GetHashCode()
+        {
+            return base.GetHashCode();
+        }
     }
 
     public class SmsResponseContent
     {
-        public String body;
+        public string body;
         [JsonProperty("from_number")]
-        public String fromNumber;
+        public string fromNumber;
     }
 }

@@ -1,18 +1,17 @@
 ﻿using Notify.Models;
 using Notify.Models.Responses;
-using System;
 using System.Collections.Generic;
 
 namespace Notify.Interfaces
 {
     public interface INotificationClient : IBaseClient
     {
-        Notification GetNotificationById(String notificationId);
+        Notification GetNotificationById(string notificationId);
 
-        List<Notification> GetNotifications(String templateType = "", String status = "");
+        List<Notification> GetNotifications(string templateType = "", string status = "");
 
-        SmsNotificationResponse SendSms(String mobileNumber, String templateId, Dictionary<String, dynamic> personalisation = null);
+        SmsNotificationResponse SendSms(string mobileNumber, string templateId, Dictionary<string, dynamic> personalisation = null);
 
-        EmailNotificationResponse SendEmail(String emailAddress, String templateId, Dictionary<String, dynamic> personalisation = null);
+        EmailNotificationResponse SendEmail(string emailAddress, string templateId, Dictionary<string, dynamic> personalisation = null);
     }
 }

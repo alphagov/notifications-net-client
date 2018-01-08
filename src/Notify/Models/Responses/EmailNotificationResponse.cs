@@ -1,5 +1,4 @@
 ﻿using Newtonsoft.Json;
-using System;
 
 namespace Notify.Models.Responses
 {
@@ -7,14 +6,24 @@ namespace Notify.Models.Responses
     {
         public EmailResponseContent content;
 
-        public bool IsEqualTo(EmailNotificationResponse response)
+        public override bool Equals(object response)
         {
-            return (
-                content.fromEmail == response.content.fromEmail &&
-                content.body == response.content.body &&
-                content.subject == response.content.subject &&
-                base.EqualTo(response)
-                );
+            if (!(response is EmailNotificationResponse resp))
+            {
+                return false;
+            }
+
+            return
+                content.fromEmail == resp.content.fromEmail &&
+                content.body == resp.content.body &&
+                content.subject == resp.content.subject &&
+                base.Equals(resp);
+
+        }
+
+        public override int GetHashCode()
+        {
+            return base.GetHashCode();
         }
 
     }
@@ -22,9 +31,9 @@ namespace Notify.Models.Responses
     public class EmailResponseContent
     {
         [JsonProperty("from_email")]
-        public String fromEmail;
-        public String body;
-        public String subject;
+        public string fromEmail;
+        public string body;
+        public string subject;
     }
 
 }
