@@ -94,7 +94,7 @@ namespace Notify.Tests.UnitTests
             mockRequest(Constants.fakeNotificationJson);
 
             var responseNotification = client.GetNotificationById(Constants.fakeNotificationId);
-            Assert.IsTrue(expectedResponse.EqualTo(responseNotification));
+            Assert.IsTrue(expectedResponse.Equals(responseNotification));
         }
 
         [Test, Category("Unit/NotificationClient")]
@@ -105,7 +105,7 @@ namespace Notify.Tests.UnitTests
             mockRequest(Constants.fakeTemplateResponseJson);
 
             var responseTemplate = client.GetTemplateById(Constants.fakeTemplateId);
-            Assert.IsTrue(expectedResponse.EqualTo(responseTemplate));
+            Assert.IsTrue(expectedResponse.Equals(responseTemplate));
         }
 
         [Test, Category("Unit/NotificationClient")]
@@ -117,7 +117,7 @@ namespace Notify.Tests.UnitTests
             mockRequest(Constants.fakeTemplateResponseJson);
 
             var responseTemplate = client.GetTemplateByIdAndVersion(Constants.fakeTemplateId, 2);
-            Assert.IsTrue(expectedResponse.EqualTo(responseTemplate));
+            Assert.IsTrue(expectedResponse.Equals(responseTemplate));
         }
 
         [Test, Category("Unit/NotificationClient")]
@@ -217,7 +217,7 @@ namespace Notify.Tests.UnitTests
             Assert.AreEqual(templates.Count, expectedResponse.templates.Count);
             for (int i = 0; i < templates.Count; i++)
             {
-                Assert.IsTrue(expectedResponse.templates[i].EqualTo(templates[i]));
+                Assert.IsTrue(expectedResponse.templates[i].Equals(templates[i]));
             }
         }
 
@@ -239,7 +239,7 @@ namespace Notify.Tests.UnitTests
             Assert.AreEqual(templates.Count, expectedResponse.templates.Count);
             for (int i = 0; i < templates.Count; i++)
             {
-                Assert.IsTrue(expectedResponse.templates[i].EqualTo(templates[i]));
+                Assert.IsTrue(expectedResponse.templates[i].Equals(templates[i]));
             }
         }
 
@@ -261,7 +261,7 @@ namespace Notify.Tests.UnitTests
             Assert.AreEqual(templates.Count, expectedResponse.templates.Count);
             for (int i = 0; i < templates.Count; i++)
             {
-                Assert.IsTrue(expectedResponse.templates[i].EqualTo(templates[i]));
+                Assert.IsTrue(expectedResponse.templates[i].Equals(templates[i]));
             }
         }
 
@@ -293,7 +293,7 @@ namespace Notify.Tests.UnitTests
             Assert.AreEqual(receivedTexts.Count, expectedResponse.receivedTexts.Count);
             for (int i = 0; i < receivedTexts.Count; i++)
             {
-                Assert.IsTrue(expectedResponse.receivedTexts[i].EqualTo(receivedTexts[i]));
+                Assert.IsTrue(expectedResponse.receivedTexts[i].Equals(receivedTexts[i]));
             }
         }
 
@@ -333,7 +333,7 @@ namespace Notify.Tests.UnitTests
 
             SmsNotificationResponse actualResponse = client.SendSms(Constants.fakePhoneNumber, Constants.fakeTemplateId, personalisation);
 
-            Assert.IsTrue(expectedResponse.IsEqualTo(actualResponse));
+            Assert.IsTrue(expectedResponse.Equals(actualResponse));
         }
 
         [Test, Category("Unit/NotificationClient")]
@@ -381,11 +381,12 @@ namespace Notify.Tests.UnitTests
         public void SendLetterNotificationGeneratesExpectedRequest()
         {
             Dictionary<String, dynamic> personalisation = new Dictionary<String, dynamic>
-                {
-                    { "address_line_1", "Foo" },
-                    { "address_line_2", "Bar" },
-                    { "postcode", "Baz" }
-                };
+            {
+                { "address_line_1", "Foo" },
+                { "address_line_2", "Bar" },
+                { "postcode", "Baz" }
+            };
+
             JObject expected = new JObject
             {
                 { "template_id", Constants.fakeTemplateId },
@@ -406,18 +407,19 @@ namespace Notify.Tests.UnitTests
         public void SendLetterNotificationGeneratesExpectedResponse()
         {
             Dictionary<String, dynamic> personalisation = new Dictionary<String, dynamic>
-                {
-                    { "address_line_1", "Foo" },
-                    { "address_line_2", "Bar" },
-                    { "postcode", "Baz" }
-                };
+            {
+                { "address_line_1", "Foo" },
+                { "address_line_2", "Bar" },
+                { "postcode", "Baz" }
+            };
+
             LetterNotificationResponse expectedResponse = JsonConvert.DeserializeObject<LetterNotificationResponse>(Constants.fakeLetterNotificationResponseJson);
 
             mockRequest(Constants.fakeLetterNotificationResponseJson);
 
             LetterNotificationResponse actualResponse = client.SendLetter(Constants.fakeTemplateId, personalisation, Constants.fakeNotificationReference);
 
-            Assert.IsTrue(expectedResponse.IsEqualTo(actualResponse));
+            Assert.IsTrue(expectedResponse.Equals(actualResponse));
 
         }
 
@@ -432,7 +434,7 @@ namespace Notify.Tests.UnitTests
             if (method == null)
                 method = HttpMethod.Get;
             Assert.AreEqual(r.Method, method);
-            Assert.AreEqual(r.RequestUri.ToString(), client.baseUrl + uri);
+            Assert.AreEqual(r.RequestUri.ToString(), client.BaseUrl + uri);
             Assert.IsNotNull(r.Headers.Authorization);
             Assert.IsNotNull(r.Headers.UserAgent);
             Assert.AreEqual(r.Headers.UserAgent.ToString(), client.GetUserAgent());

@@ -104,7 +104,7 @@ namespace Notify.Core.Tests.UnitTests
             MockRequest(Constants.fakeTemplateResponseJson);
 
             var responseTemplate = client.GetTemplateById(Constants.fakeTemplateId);
-            Assert.IsTrue(expectedResponse.EqualTo(responseTemplate));
+            Assert.IsTrue(expectedResponse.Equals(responseTemplate));
         }
 
         [Test, Category("Unit/NotificationClient")]
@@ -116,7 +116,7 @@ namespace Notify.Core.Tests.UnitTests
             MockRequest(Constants.fakeTemplateResponseJson);
 
             var responseTemplate = client.GetTemplateByIdAndVersion(Constants.fakeTemplateId, 2);
-            Assert.IsTrue(expectedResponse.EqualTo(responseTemplate));
+            Assert.IsTrue(expectedResponse.Equals(responseTemplate));
         }
 
         [Test, Category("Unit/NotificationClient")]
@@ -216,7 +216,7 @@ namespace Notify.Core.Tests.UnitTests
             Assert.AreEqual(templates.Count, expectedResponse.templates.Count);
             for (int i = 0; i < templates.Count; i++)
             {
-                Assert.IsTrue(expectedResponse.templates[i].EqualTo(templates[i]));
+                Assert.IsTrue(expectedResponse.templates[i].Equals(templates[i]));
             }
         }
 
@@ -238,7 +238,7 @@ namespace Notify.Core.Tests.UnitTests
             Assert.AreEqual(templates.Count, expectedResponse.templates.Count);
             for (int i = 0; i < templates.Count; i++)
             {
-                Assert.IsTrue(expectedResponse.templates[i].EqualTo(templates[i]));
+                Assert.IsTrue(expectedResponse.templates[i].Equals(templates[i]));
             }
         }
 
@@ -260,7 +260,7 @@ namespace Notify.Core.Tests.UnitTests
             Assert.AreEqual(templates.Count, expectedResponse.templates.Count);
             for (int i = 0; i < templates.Count; i++)
             {
-                Assert.IsTrue(expectedResponse.templates[i].EqualTo(templates[i]));
+                Assert.IsTrue(expectedResponse.templates[i].Equals(templates[i]));
             }
         }
 
@@ -292,7 +292,7 @@ namespace Notify.Core.Tests.UnitTests
             Assert.AreEqual(receivedTexts.Count, expectedResponse.receivedTexts.Count);
             for (int i = 0; i < receivedTexts.Count; i++)
             {
-                Assert.IsTrue(expectedResponse.receivedTexts[i].EqualTo(receivedTexts[i]));
+                Assert.IsTrue(expectedResponse.receivedTexts[i].Equals(receivedTexts[i]));
             }
         }
 
@@ -332,7 +332,7 @@ namespace Notify.Core.Tests.UnitTests
 
             SmsNotificationResponse actualResponse = client.SendSms(Constants.fakePhoneNumber, Constants.fakeTemplateId, personalisation);
 
-            Assert.IsTrue(expectedResponse.IsEqualTo(actualResponse));
+            Assert.IsTrue(expectedResponse.Equals(actualResponse));
         }
 
         [Test, Category("Unit/NotificationClient")]
@@ -416,7 +416,7 @@ namespace Notify.Core.Tests.UnitTests
 
             LetterNotificationResponse actualResponse = client.SendLetter(Constants.fakeTemplateId, personalisation, Constants.fakeNotificationReference);
 
-            Assert.IsTrue(expectedResponse.IsEqualTo(actualResponse));
+            Assert.IsTrue(expectedResponse.Equals(actualResponse));
 
         }
 
