@@ -27,13 +27,6 @@ environment:
   SMS_SENDER_ID:
     secure: /e26eqAWnfu9m/ysZdTsYaP3ySpsuLaoABQXHHB+M+0Q39OkOxWp7UJ1T5+OAwFP
   pullId: 0
-before_build:
-- cmd: nuget restore
-build:
-  verbosity: minimal
-test:
-  categories:
-    only:
-    - Unit/AuthenticationTests
-    - Unit/NotificationClient
-    - Integration
+build: off
+test_script:
+- test.cmd
