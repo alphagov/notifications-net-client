@@ -5,9 +5,7 @@ VisualStudioVersion = 15.0.27004.2009
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Notify", "src\Notify\Notify.csproj", "{DE367F9A-28B6-45A3-9A98-D179086D2F80}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Notify.Core.Tests", "src\Notify.Core.Tests\Notify.Core.Tests.csproj", "{C2884731-C59D-4837-82A6-8284EE1C1E4E}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Notify.Tests", "src\Notify.Tests\Notify.Tests.csproj", "{89D4B5F4-DD96-43EA-85AE-2DBF586D34ED}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Notify.Tests", "src\Notify.Tests\Notify.Tests.csproj", "{C2884731-C59D-4837-82A6-8284EE1C1E4E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

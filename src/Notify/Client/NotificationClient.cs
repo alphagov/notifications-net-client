@@ -6,6 +6,8 @@ using Notify.Models;
 using Notify.Models.Responses;
 using System.Collections.Generic;
 using System.Collections.Specialized;
+using System.Linq;
+using System.Net;
 using System.Net.Http;
 
 namespace Notify.Client
@@ -18,6 +20,7 @@ namespace Notify.Client
         public string SEND_EMAIL_NOTIFICATION_URL = "v2/notifications/email";
         public string SEND_LETTER_NOTIFICATION_URL = "v2/notifications/letter";
         public string GET_TEMPLATE_URL = "v2/template/";
+        public string GET_ALL_NOTIFICATIONS_URL = "v2/notifications";
         public string GET_ALL_TEMPLATES_URL = "v2/templates";
         public string TYPE_PARAM = "?type=";
         public string VERSION_PARAM = "/version/";
@@ -52,11 +55,22 @@ namespace Notify.Client
             }
         }
 
+        public static string ToQueryString(NameValueCollection nvc)
+        {
+            if (nvc.Count == 0) return "";
+
+            IEnumerable<string> segments = from key in nvc.AllKeys
+                                           from value in nvc.GetValues(key)
+                                           select string.Format("{0}={1}",
+                                           WebUtility.UrlEncode(key),
+                                           WebUtility.UrlEncode(value));
+            return "?" + string.Join("&", segments);
+        }
+
         public NotificationList GetNotifications(string templateType = "", string status = "", string reference = "",
             string olderThanId = "")
         {
             var query = new NameValueCollection();
-
             if (!string.IsNullOrWhiteSpace(templateType))
             {
                 query.Add("template_type", templateType);
@@ -77,8 +91,7 @@ namespace Notify.Client
                 query.Add("older_than", olderThanId);
             }
 
-            var finalUrl = "v2/notifications?" + query;
-
+            var finalUrl = GET_ALL_NOTIFICATIONS_URL + ToQueryString(query);
             var response = GET(finalUrl);
 
             var notifications = JsonConvert.DeserializeObject<NotificationList>(response);
