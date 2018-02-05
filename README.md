@@ -15,6 +15,11 @@ This documentation is for developers interested in using this .NET client to int
 * [Generate a preview template](#generate-a-preview-template)
 * [Get all received text messages](#get-all-received-text-messages)
 
+## Dependency
+
+Since version 2.0.0 the .Net frameworks supported will be 4.6, 4.6.1 and .Net Core 2.0, non windows OS only support .Net Core.
+It is recommended that you upgrade your .Net Framework in order to fix some security vulnerabilities.
+
 ## Installation
 
 ### Nuget Package Manager
@@ -61,7 +66,7 @@ SETX INBOUND_SMS_QUERY_KEY "API_test_key to get received text messages"
 
 ### [Visual Studio](https://www.visualstudio.com/vs/visual-studio-mac/) (Mac OS)
 
-In order to get the .Net client running in Visual Studio the target `.Net Framework` needs to be set to `4.6.2` and the application needs to be run from the terminal.
+In order to get the .Net client running in Visual Studio the target framework needs to be set to `.Net standard 2.0` and the application needs to be run from the terminal.
 
 <details>
 <summary>Click here to expand for more information.</summary>
