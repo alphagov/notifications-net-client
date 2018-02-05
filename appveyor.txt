@@ -26,7 +26,10 @@ environment:
     secure: RZKDTRG5V8O7G2l8mbgOX14H7FrFAO0boDQfvUiGZU9J0kBacKiul40FBATZOm04/QxgPjiKQes42dSoNsAcv+hqZq//zb7+tacQ8Ncs6mu8XzESNjnsLtQ0mkmb5cf8
   SMS_SENDER_ID:
     secure: /e26eqAWnfu9m/ysZdTsYaP3ySpsuLaoABQXHHB+M+0Q39OkOxWp7UJ1T5+OAwFP
+  BINTRAY_API_KEY:
+    secure: KGEhHJcNoRlFXpb9CjrmDwiHK7CdAD3Md50k14/KNueHROXZiQdDQ9K47DKkAT+z4+914AB/o6ZF6X4r6oTSsw==
   pullId: 0
 build: off
-test_script:
-- test.cmd
+test_script: dotnet test C:\projects\notifications-net-client\src\Notify.Tests -c=Release
+on_success:
+- publish.cmd
