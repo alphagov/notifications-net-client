@@ -91,12 +91,10 @@ namespace Notify.Client
                 var errorResponse = JsonConvert.DeserializeObject<NotifyHTTPErrorResponse>(responseContent);
                 throw new NotifyClientException("Status code {0}. The following errors occured {1}", errorResponse.getStatusCode(), errorResponse.getErrorsAsJson());
             }
-            catch (JsonReaderException)
+            catch (Exception ex)
             {
-                throw new NotifyClientException("Status code {0}. Error: ", responseContent);
+                throw new NotifyClientException("Status code {0}. Error: {1}, Exception: {2}", response.StatusCode.GetHashCode(), responseContent, ex.Message);
             }
-
-
         }
 
         public Tuple<string, string> ExtractServiceIdAndApiKey(string fromApiKey)

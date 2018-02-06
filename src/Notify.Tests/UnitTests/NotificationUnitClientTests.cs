@@ -51,6 +51,17 @@ namespace Notify.Tests.UnitTests
         }
 
         [Test, Category("Unit/NotificationClient")]
+        public void GetNonJsonResponseHandlesException()
+        {
+            MockRequest("non json response",
+                client.GET_ALL_NOTIFICATIONS_URL,
+                AssertValidRequest, status: HttpStatusCode.NotFound);
+
+            var ex = Assert.Throws<NotifyClientException>(() => client.GetNotifications());
+            Assert.That(ex.Message, Does.Contain("Status code 404. Error: non json response"));
+        }
+
+        [Test, Category("Unit/NotificationClient")]
         public void GetNotificationWithIdCreatesExpectedRequest()
         {
             MockRequest(Constants.fakeNotificationJson,
@@ -509,13 +520,15 @@ namespace Notify.Tests.UnitTests
         private void MockRequest(string content, string uri,
                           Action<string, HttpRequestMessage, HttpMethod> _assertValidRequest = null,
                           HttpMethod method = null,
-                          Action<string, string> _assertGetExpectedContent = null, string expected = null)
+                          Action<string, string> _assertGetExpectedContent = null, 
+                          string expected = null,
+                          HttpStatusCode status = HttpStatusCode.OK)
         {
             handler.Protected()
                 .Setup<Task<HttpResponseMessage>>("SendAsync", ItExpr.IsAny<HttpRequestMessage>(), ItExpr.IsAny<CancellationToken>())
                 .Returns(Task<HttpResponseMessage>.Factory.StartNew(() => new HttpResponseMessage
                 {
-                    StatusCode = HttpStatusCode.OK,
+                    StatusCode = status,
                     Content = new StringContent(content)
                 }))
                 .Callback<HttpRequestMessage, CancellationToken>((r, c) =>
