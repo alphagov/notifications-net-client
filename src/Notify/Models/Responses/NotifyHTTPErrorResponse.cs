@@ -5,6 +5,7 @@ namespace Notify.Models.Responses
 {
     public class NotifyHTTPErrorResponse
     {
+        #pragma warning disable 169, 649
         [JsonProperty("status_code")]
         private string statusCode;
 
