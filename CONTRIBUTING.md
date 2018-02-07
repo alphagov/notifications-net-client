@@ -4,7 +4,7 @@ Pull requests are welcome.
 
 ## Working on the client locally
 
-You will need to ensure that you have .Net 4.6, 4.6.1 Framework or .Net core 2.0 installed on your machine.
+You will need to ensure that you have .Net 4.6.2 Framework or .Net core 2.0 installed on your machine.
 If you are not working on a windows OS, .Net Frameworks are not supported but you can use the Makefile to build and run tests, run `make` on your terminal to see the available options.
 
 ## Tests

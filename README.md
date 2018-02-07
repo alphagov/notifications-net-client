@@ -17,7 +17,7 @@ This documentation is for developers interested in using this .NET client to int
 
 ## Dependency
 
-Since version 2.0.0 the .Net frameworks supported will be 4.6, 4.6.1 and .Net Core 2.0, non windows OS only support .Net Core.
+Since version 2.0.0 the .Net frameworks supported will be 4.6.2 and .Net Core 2.0, non windows OS only support .Net Core.
 It is recommended that you upgrade your .Net Framework in order to fix some security vulnerabilities.
 
 ## Installation
