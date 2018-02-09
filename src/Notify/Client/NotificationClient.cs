@@ -4,122 +4,135 @@ using Notify.Exceptions;
 using Notify.Interfaces;
 using Notify.Models;
 using Notify.Models.Responses;
-using System;
 using System.Collections.Generic;
+using System.Collections.Specialized;
+using System.Linq;
+using System.Net;
 using System.Net.Http;
-using System.Web;
 
 namespace Notify.Client
 {
     public class NotificationClient : BaseClient
     {
-        public String GET_RECEIVED_TEXTS_URL = "v2/received-text-messages";
-        public String GET_NOTIFICATION_URL = "v2/notifications/";
-        public String SEND_SMS_NOTIFICATION_URL = "v2/notifications/sms";
-        public String SEND_EMAIL_NOTIFICATION_URL = "v2/notifications/email";
-        public String SEND_LETTER_NOTIFICATION_URL = "v2/notifications/letter";
-        public String GET_TEMPLATE_URL = "v2/template/";
-        public String GET_ALL_TEMPLATES_URL = "v2/templates";
-        public String TYPE_PARAM = "?type=";
-        public String VERSION_PARAM = "/version/";
+        public string GET_RECEIVED_TEXTS_URL = "v2/received-text-messages";
+        public string GET_NOTIFICATION_URL = "v2/notifications/";
+        public string SEND_SMS_NOTIFICATION_URL = "v2/notifications/sms";
+        public string SEND_EMAIL_NOTIFICATION_URL = "v2/notifications/email";
+        public string SEND_LETTER_NOTIFICATION_URL = "v2/notifications/letter";
+        public string GET_TEMPLATE_URL = "v2/template/";
+        public string GET_ALL_NOTIFICATIONS_URL = "v2/notifications";
+        public string GET_ALL_TEMPLATES_URL = "v2/templates";
+        public string TYPE_PARAM = "?type=";
+        public string VERSION_PARAM = "/version/";
 
-        public NotificationClient(String apiKey) : base(new HttpClientWrapper(new HttpClient()), apiKey)
+        public NotificationClient(string apiKey) : base(new HttpClientWrapper(new HttpClient()), apiKey)
         {
-
         }
 
-        public NotificationClient(String baseUrl, String apiKey) : base(new HttpClientWrapper(new HttpClient()), apiKey, baseUrl)
+        public NotificationClient(string baseUrl, string apiKey) : base(new HttpClientWrapper(new HttpClient()), apiKey,
+            baseUrl)
         {
-
         }
 
-        public NotificationClient(IHttpClient client, String apiKey) : base(client, apiKey)
+        public NotificationClient(IHttpClient client, string apiKey) : base(client, apiKey)
         {
-
         }
 
-        public Notification GetNotificationById(String notificationId)
+        public Notification GetNotificationById(string notificationId)
         {
-            String url = GET_NOTIFICATION_URL + notificationId;
+            var url = GET_NOTIFICATION_URL + notificationId;
 
-            String response = this.GET(url);
+            var response = this.GET(url);
 
             try
             {
-                Notification notification = JsonConvert.DeserializeObject<Notification>(response);
+                var notification = JsonConvert.DeserializeObject<Notification>(response);
                 return notification;
             }
             catch (JsonReaderException)
             {
                 throw new NotifyClientException("Could not create Notification object from response: {0}", response);
             }
-
         }
 
-        public NotificationList GetNotifications(String templateType = "", String status = "", String reference = "", String olderThanId = "")
+        public static string ToQueryString(NameValueCollection nvc)
         {
-            var query = HttpUtility.ParseQueryString("");
+            if (nvc.Count == 0) return "";
 
-            if (!String.IsNullOrWhiteSpace(templateType))
+            IEnumerable<string> segments = from key in nvc.AllKeys
+                                           from value in nvc.GetValues(key)
+                                           select string.Format("{0}={1}",
+                                           WebUtility.UrlEncode(key),
+                                           WebUtility.UrlEncode(value));
+            return "?" + string.Join("&", segments);
+        }
+
+        public NotificationList GetNotifications(string templateType = "", string status = "", string reference = "",
+            string olderThanId = "")
+        {
+            var query = new NameValueCollection();
+            if (!string.IsNullOrWhiteSpace(templateType))
             {
                 query.Add("template_type", templateType);
             }
 
-            if (!String.IsNullOrWhiteSpace(status))
+            if (!string.IsNullOrWhiteSpace(status))
             {
                 query.Add("status", status);
             }
 
-            if (!String.IsNullOrWhiteSpace(reference))
+            if (!string.IsNullOrWhiteSpace(reference))
             {
                 query.Add("reference", reference);
             }
 
-            if (!String.IsNullOrWhiteSpace(olderThanId))
+            if (!string.IsNullOrWhiteSpace(olderThanId))
             {
                 query.Add("older_than", olderThanId);
             }
 
-            String finalUrl = "v2/notifications?" + query.ToString();
+            var finalUrl = GET_ALL_NOTIFICATIONS_URL + ToQueryString(query);
+            var response = GET(finalUrl);
 
-            String response = this.GET(finalUrl);
-
-            NotificationList notifications = JsonConvert.DeserializeObject<NotificationList>(response);
+            var notifications = JsonConvert.DeserializeObject<NotificationList>(response);
             return notifications;
         }
 
-        public TemplateList GetAllTemplates(String templateType = "")
+        public TemplateList GetAllTemplates(string templateType = "")
         {
-            String finalUrl = string.Format(
+            var finalUrl = string.Format(
                 "{0}{1}",
                 GET_ALL_TEMPLATES_URL,
-                templateType == "" ? "" : TYPE_PARAM + templateType
+                templateType == string.Empty ? string.Empty : TYPE_PARAM + templateType
             );
 
-            String response = this.GET(finalUrl);
+            var response = GET(finalUrl);
 
-            TemplateList templateList = JsonConvert.DeserializeObject<TemplateList>(response);
+            var templateList = JsonConvert.DeserializeObject<TemplateList>(response);
 
             return templateList;
         }
 
-        public ReceivedTextListResponse GetReceivedTexts(String olderThanId = "")
+        public ReceivedTextListResponse GetReceivedTexts(string olderThanId = "")
         {
-            String finalUrl = String.Format(
+            var finalUrl = string.Format(
                 "{0}{1}",
                 GET_RECEIVED_TEXTS_URL,
-                String.IsNullOrWhiteSpace(olderThanId) ? "" : "?older_than=" + olderThanId
+                string.IsNullOrWhiteSpace(olderThanId) ? "" : "?older_than=" + olderThanId
             );
 
-            String response = this.GET(finalUrl);
+            var response = this.GET(finalUrl);
 
-            ReceivedTextListResponse receivedTexts = JsonConvert.DeserializeObject<ReceivedTextListResponse>(response);
+            var receivedTexts = JsonConvert.DeserializeObject<ReceivedTextListResponse>(response);
+
             return receivedTexts;
         }
 
-        public SmsNotificationResponse SendSms(String mobileNumber, String templateId, Dictionary<String, dynamic> personalisation = null, String clientReference = null, String smsSenderId = null)
+        public SmsNotificationResponse SendSms(string mobileNumber, string templateId,
+            Dictionary<string, dynamic> personalisation = null, string clientReference = null,
+            string smsSenderId = null)
         {
-            JObject o = CreateRequestParams(templateId, personalisation, clientReference);
+            var o = CreateRequestParams(templateId, personalisation, clientReference);
             o.AddFirst(new JProperty("phone_number", mobileNumber));
 
             if (smsSenderId != null)
@@ -127,15 +140,16 @@ namespace Notify.Client
                 o.Add(new JProperty("sms_sender_id", smsSenderId));
             }
 
-            String response = this.POST(SEND_SMS_NOTIFICATION_URL, o.ToString(Formatting.None));
+            var response = POST(SEND_SMS_NOTIFICATION_URL, o.ToString(Formatting.None));
 
-            SmsNotificationResponse receipt = JsonConvert.DeserializeObject<SmsNotificationResponse>(response);
-            return receipt;
+            return JsonConvert.DeserializeObject<SmsNotificationResponse>(response);            
         }
 
-        public EmailNotificationResponse SendEmail(String emailAddress, String templateId, Dictionary<String, dynamic> personalisation = null, String clientReference = null, String emailReplyToId = null)
+        public EmailNotificationResponse SendEmail(string emailAddress, string templateId,
+            Dictionary<string, dynamic> personalisation = null, string clientReference = null,
+            string emailReplyToId = null)
         {
-            JObject o = CreateRequestParams(templateId, personalisation, clientReference);
+            var o = CreateRequestParams(templateId, personalisation, clientReference);
             o.AddFirst(new JProperty("email_address", emailAddress));
 
             if (emailReplyToId != null)
@@ -143,51 +157,51 @@ namespace Notify.Client
                 o.Add(new JProperty("email_reply_to_id", emailReplyToId));
             }
 
-            String response = this.POST(SEND_EMAIL_NOTIFICATION_URL, o.ToString(Formatting.None));
+            var response = POST(SEND_EMAIL_NOTIFICATION_URL, o.ToString(Formatting.None));
 
-            EmailNotificationResponse receipt = JsonConvert.DeserializeObject<EmailNotificationResponse>(response);
-            return receipt;
+            return JsonConvert.DeserializeObject<EmailNotificationResponse>(response);
         }
 
-        public LetterNotificationResponse SendLetter(String templateId, Dictionary<String, dynamic> personalisation, String clientReference = null)
+        public LetterNotificationResponse SendLetter(string templateId, Dictionary<string, dynamic> personalisation,
+            string clientReference = null)
         {
-            JObject o = CreateRequestParams(templateId, personalisation, clientReference);
+            var o = CreateRequestParams(templateId, personalisation, clientReference);
 
-            String response = this.POST(SEND_LETTER_NOTIFICATION_URL, o.ToString(Formatting.None));
+            var response = this.POST(SEND_LETTER_NOTIFICATION_URL, o.ToString(Formatting.None));
 
-            LetterNotificationResponse receipt = JsonConvert.DeserializeObject<LetterNotificationResponse>(response);
-            return receipt;
+            return JsonConvert.DeserializeObject<LetterNotificationResponse>(response);            
         }
 
-        public TemplateResponse GetTemplateById(String templateId)
+        public TemplateResponse GetTemplateById(string templateId)
         {
-            String url = GET_TEMPLATE_URL + templateId;
+            var url = GET_TEMPLATE_URL + templateId;
 
             return GetTemplateFromURL(url);
         }
 
-        public TemplateResponse GetTemplateByIdAndVersion(String templateId, int version = 0)
+        public TemplateResponse GetTemplateByIdAndVersion(string templateId, int version = 0)
         {
-            String pattern = "{0}{1}" + (version > 0 ? VERSION_PARAM + "{2}" : "");
-            String url = string.Format(pattern, GET_TEMPLATE_URL, templateId, version);
+            var pattern = "{0}{1}" + (version > 0 ? VERSION_PARAM + "{2}" : "");
+            var url = string.Format(pattern, GET_TEMPLATE_URL, templateId, version);
 
             return GetTemplateFromURL(url);
         }
 
-        public TemplatePreviewResponse GenerateTemplatePreview(String templateId, Dictionary<String, dynamic> personalisation = null)
+        public TemplatePreviewResponse GenerateTemplatePreview(string templateId,
+            Dictionary<string, dynamic> personalisation = null)
         {
-            String url = string.Format("{0}{1}/preview", GET_TEMPLATE_URL, templateId);
+            var url = string.Format("{0}{1}/preview", GET_TEMPLATE_URL, templateId);
 
-            JObject o = new JObject
+            var o = new JObject
             {
-                { "personalisation", JObject.FromObject(personalisation) }
+                {"personalisation", JObject.FromObject(personalisation)}
             };
 
-            String response = this.POST(url, o.ToString(Formatting.None));
+            var response = this.POST(url, o.ToString(Formatting.None));
 
             try
             {
-                TemplatePreviewResponse template = JsonConvert.DeserializeObject<TemplatePreviewResponse>(response);
+                var template = JsonConvert.DeserializeObject<TemplatePreviewResponse>(response);
                 return template;
             }
             catch (JsonReaderException)
@@ -196,13 +210,13 @@ namespace Notify.Client
             }
         }
 
-        TemplateResponse GetTemplateFromURL(String url)
+        private TemplateResponse GetTemplateFromURL(string url)
         {
-            String response = this.GET(url);
+            var response = this.GET(url);
 
             try
             {
-                TemplateResponse template = JsonConvert.DeserializeObject<TemplateResponse>(response);
+                var template = JsonConvert.DeserializeObject<TemplateResponse>(response);
                 return template;
             }
             catch (JsonReaderException)
@@ -211,19 +225,20 @@ namespace Notify.Client
             }
         }
 
-        JObject CreateRequestParams(String templateId, Dictionary<String, dynamic> personalisation = null, String clientReference = null)
+        private static JObject CreateRequestParams(string templateId, Dictionary<string, dynamic> personalisation = null,
+            string clientReference = null)
         {
-            JObject personalisationJson = new JObject();
+            var personalisationJson = new JObject();
 
             if (personalisation != null)
             {
                 personalisationJson = JObject.FromObject(personalisation);
             }
 
-            JObject o = new JObject
+            var o = new JObject
             {
-                { "template_id", templateId },
-                { "personalisation", personalisationJson }
+                {"template_id", templateId},
+                {"personalisation", personalisationJson}
             };
 
             if (clientReference != null)

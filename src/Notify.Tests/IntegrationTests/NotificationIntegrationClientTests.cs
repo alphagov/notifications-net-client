@@ -1,14 +1,12 @@
-﻿using Notify.Client;
+﻿using System;
+using System.Collections.Generic;
+using Notify.Client;
+using Notify.Exceptions;
 using Notify.Models;
 using Notify.Models.Responses;
-using Notify.Exceptions;
-using Notify.IntegrationTests.Assertions;
-using System;
-using System.Collections.Generic;
-
 using NUnit.Framework;
 
-namespace Notify.IntegrationTests
+namespace Notify.Tests.IntegrationTests
 {
 	[TestFixture]
 	public class NotificationIntegrationClientTests

@@ -15,6 +15,11 @@ This documentation is for developers interested in using this .NET client to int
 * [Generate a preview template](#generate-a-preview-template)
 * [Get all received text messages](#get-all-received-text-messages)
 
+## Dependency
+
+Since Notify version 2.0.0 the .Net frameworks supported will be 4.6.2 and .Net Core 2.0, non windows OS only support .Net Core.
+It is recommended that you upgrade your .Net Framework in order to fix security vulnerabilities.
+
 ## Installation
 
 ### Nuget Package Manager
@@ -34,17 +39,18 @@ Alternatively if you are using the Nuget Package Manager in Visual Studio, add t
 ```
 https://api.bintray.com/nuget/gov-uk-notify/nuget
 ```
+To add a new source to the Nuget Package Manager in Visual Studio - https://docs.microsoft.com/en-us/nuget/tools/package-manager-ui#package-sources
+
 </details>
 
 ### [Visual Studio](https://www.visualstudio.com/) (Windows)
 
-To execute the NUnit tests you will need to install the [NUnit3 Test Adapter](https://marketplace.visualstudio.com/items?itemName=NUnitDevelopers.NUnit3TestAdapter) extension to Visual Studio.
+To execute the NUnit tests you will need to install the [NUnit3 Test Adapter](https://marketplace.visualstudio.com/items?itemName=NUnitDevelopers.NUnit3TestAdapter) extension to Visual Studio or via the [NUnit3TestAdapter](https://www.nuget.org/packages/NUnit3TestAdapter/) nuget package
 
 <details>
 <summary>Click here to expand for more information.</summary>
 
-Setting Windows Environment variables
-
+Setting Windows Environment variables (these must be executed before opening Visual Studio)
 ```
 SETX NOTIFY_API_URL "https://example.notify-api.url"
 SETX API_KEY "example_API_test_key"
@@ -61,7 +67,7 @@ SETX INBOUND_SMS_QUERY_KEY "API_test_key to get received text messages"
 
 ### [Visual Studio](https://www.visualstudio.com/vs/visual-studio-mac/) (Mac OS)
 
-In order to get the .Net client running in Visual Studio the target `.Net Framework` needs to be set to `4.6.2` and the application needs to be run from the terminal.
+In order to get the .Net client running in Visual Studio the target framework needs to be set to `.Net standard 2.0` and the application needs to be run from the terminal.
 
 <details>
 <summary>Click here to expand for more information.</summary>
@@ -70,7 +76,7 @@ In order to get the .Net client running in Visual Studio the target `.Net Framew
 open -n /Applications/"Visual Studio.app"
 ```
 
-Setting Mac OS Environment variables (these must be sourced before opening the Visual Application using the command above)
+Setting Mac OS Environment variables (these must be sourced before opening Visual Studio using the command above)
 
 ```
 export NOTIFY_API_URL=https://example.notify-api.url

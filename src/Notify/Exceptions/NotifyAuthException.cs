@@ -4,10 +4,10 @@ namespace Notify.Exceptions
 {
     public class NotifyAuthException : Exception
     {
-        public NotifyAuthException() : base() { }
+        public NotifyAuthException() { }
 
-        public NotifyAuthException(String message) : base(message) { }
+        public NotifyAuthException(string message) : base(message) { }
 
-        public NotifyAuthException(String format, params object[] args) : base(String.Format(format, args)) { }
+        public NotifyAuthException(string format, params object[] args) : base(string.Format(format, args)) { }
     }
 }

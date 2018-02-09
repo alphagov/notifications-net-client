@@ -5,16 +5,16 @@ namespace Notify.Interfaces
 {
     public interface IBaseClient
     {
-        String GET(String url);
+        string GET(string url);
 
-        String POST(String url, String json);
+        string POST(string url, string json);
 
-        String MakeRequest(String url, HttpMethod method, HttpContent content = null);
+        string MakeRequest(string url, HttpMethod method, HttpContent content = null);
 
-        Tuple<String, String> ExtractServiceIdAndApiKey(String fromApiKey);
+        Tuple<string, string> ExtractServiceIdAndApiKey(string fromApiKey);
 
-        Uri ValidateBaseUri(String baseUrl);
+        Uri ValidateBaseUri(string baseUrl);
 
-		String GetUserAgent();
+		string GetUserAgent();
     }
 }

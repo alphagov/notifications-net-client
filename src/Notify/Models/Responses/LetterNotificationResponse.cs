@@ -1,25 +1,31 @@
-﻿using System;
-using Newtonsoft.Json;
-
-namespace Notify.Models.Responses
+﻿namespace Notify.Models.Responses
 {
     public class LetterNotificationResponse : NotificationResponse
     {
         public LetterResponseContent content;
 
-        public bool IsEqualTo(LetterNotificationResponse response)
+        public override bool Equals(object response)
         {
-            return (
-                content.body == response.content.body &&
-                content.subject == response.content.subject &&
-                base.EqualTo(response)
-            );
+            if (!(response is LetterNotificationResponse resp))
+            {
+                return false;
+            }
+
+            return 
+                content.body == resp.content.body &&
+                content.subject == resp.content.subject &&
+                base.Equals(resp);
+        }
+
+        public override int GetHashCode()
+        {
+            return base.GetHashCode();
         }
     }
 
     public class LetterResponseContent
     {
-        public String body;
-        public String subject;
+        public string body;
+        public string subject;
     }
 }

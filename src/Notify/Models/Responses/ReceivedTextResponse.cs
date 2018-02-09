@@ -1,31 +1,41 @@
 using Newtonsoft.Json;
 using System;
+using System.Collections.Generic;
 
 namespace Notify.Models.Responses
 {
     public class ReceivedTextResponse
     {
-        public String id;
+        public string id;
         [JsonProperty("created_at")]
-        public String createdAt;
+        public string createdAt;
         [JsonProperty("notify_number")]
-        public String notifyNumber;
+        public string notifyNumber;
         [JsonProperty("user_number")]
-        public String userNumber;
+        public string userNumber;
         [JsonProperty("service_id")]
-        public String serviceId;
-        public String content;
+        public string serviceId;
+        public string content;
 
-        public bool EqualTo(ReceivedTextResponse receivedText)
+        public override bool Equals(object receivedText)
         {
-            return (
-                id == receivedText.id &&
-                createdAt == receivedText.createdAt &&
-                notifyNumber == receivedText.notifyNumber &&
-                userNumber == receivedText.userNumber &&
-                serviceId == receivedText.serviceId &&
-                content == receivedText.content
-            );
+            if (!(receivedText is ReceivedTextResponse text))
+            {
+                return false;
+            }
+
+            return
+                id == text.id &&
+                createdAt == text.createdAt &&
+                notifyNumber == text.notifyNumber &&
+                userNumber == text.userNumber &&
+                serviceId == text.serviceId &&
+                content == text.content;
+        }
+
+        public override int GetHashCode()
+        {
+            return base.GetHashCode();
         }
     }
 }

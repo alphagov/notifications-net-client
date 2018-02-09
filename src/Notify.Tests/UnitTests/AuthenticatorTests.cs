@@ -1,13 +1,12 @@
-﻿using Notify.Authentication;
-using Notify.Exceptions;
-using System;
+﻿using System;
 using System.Collections.Generic;
-
+using Notify.Authentication;
+using Notify.Exceptions;
 using NUnit.Framework;
 
-namespace Notify.UnitTests
+namespace Notify.Tests.UnitTests
 {
-    [TestFixture()]
+    [TestFixture]
     public class AuthenticatorTests
     {
         private const String NOTIFY_SECRET_ID = "d2d425c1-d1d7-4af2-b727-fbd7b612aae1";
@@ -58,7 +57,7 @@ namespace Notify.UnitTests
         public void DecodeInvalidTokenWithNoDotsShouldThrowAuthException()
         {
 			var ex = Assert.Throws<NotifyAuthException>(() => Authenticator.DecodeToken("tokenwithnodots", NOTIFY_SECRET_ID));
-            Assert.That(ex.Message, Does.Contain("Token must consist from 3 delimited by dot parts"));
+            Assert.That(ex.Message, Does.Contain("Token must consist of 3 delimited by dot parts"));
         }
 
 		[Test, Category("Unit/AuthenticationTests")]

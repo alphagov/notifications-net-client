@@ -4,13 +4,21 @@ namespace Notify.Models
 {
     public class TemplatePreview
     {
-        public String personalisation;
+        public string personalisation;
         
-        public bool EqualTo(TemplatePreview template)
+        public override bool Equals(object template)
         {
-            return (
-                personalisation == template.personalisation
-            );
+            if (!(template is TemplatePreview temp))
+            {
+                return false;
+            }
+
+            return personalisation == temp.personalisation;
+        }
+
+        public override int GetHashCode()
+        {
+            return base.GetHashCode();
         }
     }
 }
