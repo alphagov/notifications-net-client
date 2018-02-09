@@ -6,10 +6,10 @@ IF %publish% NEQ true (
    EXIT /B
 )
 
-dotnet pack -c=Release C:\projects\notifications-net-client\src\Notify\Notify.csproj -o=publish
+dotnet pack -c=Release %APPVEYOR_BUILD_FOLDER%\src\Notify\Notify.csproj -o=publish
 
-FOR %%i IN ("C:/projects/notifications-net-client/src/Notify/publish/*.nupkg") DO (
+FOR %%i IN ("%APPVEYOR_BUILD_FOLDER%/src/Notify/publish/*.nupkg") DO (
     set filename=%%~nxi
 )
 
-nuget push "C:/projects/notifications-net-client/src/Notify/publish/%filename%" -Source https://api.bintray.com/nuget/gov-uk-notify/nuget -apikey %BINTRAY_API_KEY%
+nuget push "%APPVEYOR_BUILD_FOLDER%/src/Notify/publish/%filename%" -Source https://api.bintray.com/nuget/gov-uk-notify/nuget -apikey %BINTRAY_API_KEY%
