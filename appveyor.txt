@@ -1,6 +1,6 @@
 clone_script:
 - cmd: >-
-    git clone -q --branch=migrate-to-dotnet-core https://github.com/alphagov/notifications-net-client.git C:\projects\notifications-net-client
+    git clone -q --branch=master https://github.com/alphagov/notifications-net-client.git C:\projects\notifications-net-client
 
     IF NOT %pullId% == 0 git fetch origin pull/%pullid%/head:BRANCHNAME && git checkout BRANCHNAME
 environment:
