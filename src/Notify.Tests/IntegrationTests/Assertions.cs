@@ -39,7 +39,8 @@ namespace Notify.Tests.IntegrationTests
 				"permanent-failure",
 				"temporary-failure",
 				"technical-failure",
-				"accepted"
+				"accepted",
+				"received"
 			};
 			CollectionAssert.Contains(allowedStatusTypes, notificationStatus);
 
