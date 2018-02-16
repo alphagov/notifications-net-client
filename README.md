@@ -41,6 +41,21 @@ https://api.bintray.com/nuget/gov-uk-notify/nuget
 ```
 To add a new source to the Nuget Package Manager in Visual Studio - https://docs.microsoft.com/en-us/nuget/tools/package-manager-ui#package-sources
 
+If you are referencing this package from a CI tool you may need to add the bintray package source to your nuget configuration. The easiest way to achieve this is by adding a `nuget.config` file in the same folder as your `.sln` with the following content:
+
+```
+<?xml version="1.0" encoding="utf-8"?>
+<configuration>
+  <config>
+    <add key="repositoryPath" value="$\..\packages" />
+  </config>
+  <packageSources>
+    <add key="nuget.org" value="https://api.nuget.org/v3/index.json" protocolVersion="3" />
+    <add key="bintray" value="https://api.bintray.com/nuget/gov-uk-notify/nuget" />
+  </packageSources>
+</configuration>
+```
+
 </details>
 
 ### [Visual Studio](https://www.visualstudio.com/) (Windows)
@@ -870,7 +885,7 @@ public String content;
 <summary>
 Click here to expand for more information.
 </summary>
-	
+
 ##### `olderThanId`
 
 If omitted all messages are returned. Otherwise you can filter to retrieve all received text messages older than the given id.
