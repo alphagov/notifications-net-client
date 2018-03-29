@@ -40,7 +40,9 @@ namespace Notify.Tests.IntegrationTests
 				"temporary-failure",
 				"technical-failure",
 				"accepted",
-				"received"
+				"received",
+				"pending-virus-check",
+				"virus-scan-failed"
 			};
 			CollectionAssert.Contains(allowedStatusTypes, notificationStatus);
 
