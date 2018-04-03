@@ -1,3 +1,11 @@
+## [2.0.1] - 2018-03-29
+
+* Add `pending-virus-check` and `virus-scan-failed` to statuses
+
+## [2.0.0] - 2018-02-09
+
+* Migrate to .Net core 2.0.0 and .Net framework 4.6.2
+
 ## [1.6.0] - 2017-11-15
 ## Changed
 
