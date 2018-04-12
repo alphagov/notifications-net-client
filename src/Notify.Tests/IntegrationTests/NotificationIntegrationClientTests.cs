@@ -32,7 +32,7 @@ namespace Notify.Tests.IntegrationTests
 		private String letterNotificationId;
 
 		const String TEST_TEMPLATE_SMS_BODY = "Hello ((name))\r\n\r\nFunctional Tests make our world a better place";
-		const String TEST_SMS_BODY = "Hello someone\r\n\r\nFunctional Tests make our world a better place";
+		const String TEST_SMS_BODY = "Hello someone\n\nFunctional Tests make our world a better place";
 
 		const String TEST_TEMPLATE_EMAIL_BODY = "Hello ((name))\r\n\r\nFunctional test help make our world a better place";
 		const String TEST_EMAIL_BODY = "Hello someone\r\n\r\nFunctional test help make our world a better place";
@@ -339,38 +339,38 @@ namespace Notify.Tests.IntegrationTests
 			{
 				{ "name", "someone" }
 			};
-			
+
 			EmailNotificationResponse response = this.client.SendEmail(FUNCTIONAL_TEST_EMAIL, EMAIL_TEMPLATE_ID, personalisation);
 			this.emailNotificationId = response.id;
 			Assert.IsNotNull(response);
 			Assert.AreEqual(response.content.body, TEST_EMAIL_BODY);
 			Assert.AreEqual(response.content.subject, TEST_EMAIL_SUBJECT);
 		}
-		
+
 		[Test, Category("Integration")]
 		public void SendEmailTestSpecificEmailReplyTo()
 		{
 			Dictionary<String, dynamic> personalisation = new Dictionary<String, dynamic>
-			{    
+			{
 				{ "name", "someone" }
 			};
-			
+
 			EmailNotificationResponse response = this.client.SendEmail(FUNCTIONAL_TEST_EMAIL, EMAIL_TEMPLATE_ID, personalisation, emailReplyToId: EMAIL_REPLY_TO_ID);
 			this.emailNotificationId = response.id;
 			Assert.IsNotNull(response);
 			Assert.AreEqual(response.content.body, TEST_EMAIL_BODY);
 			Assert.AreEqual(response.content.subject, TEST_EMAIL_SUBJECT);
 		}
-		
+
 		[Test, Category("Integration")]
 		public void SendEmailTestEmailReplyToNotPresent()
 		{
 			String fakeReplayToId = System.Guid.NewGuid().ToString();
 			Dictionary<String, dynamic> personalisation = new Dictionary<String, dynamic>
-			{    
+			{
 				{ "name", "someone" }
 			};
-			
+
 			var ex = Assert.Throws<NotifyClientException>(() => this.client.SendEmail(FUNCTIONAL_TEST_EMAIL, EMAIL_TEMPLATE_ID, personalisation, emailReplyToId: fakeReplayToId));
 			Assert.That(ex.Message, Does.Contain("email_reply_to_id " + fakeReplayToId));
 		}
@@ -379,10 +379,10 @@ namespace Notify.Tests.IntegrationTests
 		public void SendEmailTestAllArguments()
 		{
 			Dictionary<String, dynamic> personalisation = new Dictionary<String, dynamic>
-			{    
+			{
 				{ "name", "someone" }
 			};
-			
+
 			EmailNotificationResponse response = this.client.SendEmail(FUNCTIONAL_TEST_EMAIL, EMAIL_TEMPLATE_ID, personalisation, clientReference: "TestReference", emailReplyToId: EMAIL_REPLY_TO_ID);
 			this.emailNotificationId = response.id;
 			Assert.IsNotNull(response);
