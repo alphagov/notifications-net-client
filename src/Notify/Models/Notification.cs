@@ -13,20 +13,30 @@ namespace Notify.Models
         public string emailAddress;
         public string body;
         public string subject;
+        [JsonProperty("line_1")]
         public string line1;
+        [JsonProperty("line_2")]
         public string line2;
+        [JsonProperty("line_3")]
         public string line3;
+        [JsonProperty("line_4")]
         public string line4;
+        [JsonProperty("line_5")]
         public string line5;
+        [JsonProperty("line_6")]
         public string line6;
         [JsonProperty("phone_number")]
         public string phoneNumber;
         public string postcode;
         public string reference;
+        [JsonProperty("sent_at")]
         public string sentAt;
         public string status;
         public Template template;
         public string type;
+        [JsonProperty("created_by_name")]
+        public string createdByName;
+
 
         public override bool Equals(object notification)
         {
@@ -54,7 +64,8 @@ namespace Notify.Models
                 template.id == note.template.id &&
                 template.uri == note.template.uri &&
                 template.version == note.template.version &&
-                type == note.type;
+                type == note.type &&
+                createdByName == note.createdByName;
         }
 
         public override int GetHashCode()
