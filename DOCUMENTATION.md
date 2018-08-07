@@ -448,6 +448,7 @@ public String sentAt;
 public String status;
 public Template template;
 public String type;
+public String createdByName;
 ```
 
 Otherwise the client will raise a `Notify.Exceptions.NotifyClientException`.
