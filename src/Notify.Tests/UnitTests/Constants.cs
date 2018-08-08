@@ -38,7 +38,8 @@ namespace Notify.Tests.UnitTests
                                 ""id"": ""913e9fa6-9cbb-44ad-8f58-38487dccfd82"",
                                 ""uri"": ""/service/fd29e421-24b6-4f45-ac5c-e642a1d68641/template/323e9fa6-9cbb-44ad-8f64-38487dccfd43"",
                                 ""version"": 2  },
-                            ""type"": ""sms""
+                            ""type"": ""sms"",
+                            ""created_by_name"": ""A. Sender""
                         }";
             }
         }
@@ -69,7 +70,8 @@ namespace Notify.Tests.UnitTests
                                 ""id"": ""913e9fa6-9cbb-44ad-8f58-38487dccfd82"",
                                 ""uri"": ""/service/fd29e421-24b6-4f45-ac5c-e642a1d68641/template/323e9fa6-9cbb-44ad-8f64-38487dccfd43"",
                                 ""version"": 2  },
-                            ""type"": ""sms""
+                            ""type"": ""sms"",
+                            ""created_by_name"": null
                         },
                         {
                             ""completed_at"": null,
@@ -91,7 +93,8 @@ namespace Notify.Tests.UnitTests
                                 ""id"": ""913e9fa6-9cbb-44ad-8f58-38487dccfd84"",
                                 ""uri"": ""/service/fd29e421-24b6-4f45-ac5c-e642a1d68641/template/323e9fa6-9cbb-44ad-8f64-38487dccfd43"",
                                 ""version"": 2  },
-                            ""type"": ""email""
+                            ""type"": ""email"",
+                            ""created_by_name"": null
                         }
                     ]
                 }";
@@ -123,7 +126,8 @@ namespace Notify.Tests.UnitTests
                                 ""id"": ""913e9fa6-9cbb-44ad-8f58-38487dccfd82"",
                                 ""uri"": ""/service/fd29e421-24b6-4f45-ac5c-e642a1d68641/template/323e9fa6-9cbb-44ad-8f64-38487dccfd43"",
                                 ""version"": 2  },
-                            ""type"": ""sms""
+                            ""type"": ""sms"",
+                            ""created_by_name"": null
                         },
                         {
                             ""completed_at"": null,
@@ -145,7 +149,8 @@ namespace Notify.Tests.UnitTests
                                 ""id"": ""913e9fa6-9cbb-44ad-8f58-38487dccfd84"",
                                 ""uri"": ""/service/fd29e421-24b6-4f45-ac5c-e642a1d68641/template/323e9fa6-9cbb-44ad-8f64-38487dccfd43"",
                                 ""version"": 2  },
-                            ""type"": ""sms""
+                            ""type"": ""sms"",
+                            ""created_by_name"": null
                         }
                     ]
                 }";
@@ -178,7 +183,8 @@ namespace Notify.Tests.UnitTests
                                 ""id"": ""913e9fa6-9cbb-44ad-8f58-38487dccfd82"",
                                 ""uri"": ""/service/fd29e421-24b6-4f45-ac5c-e642a1d68641/template/323e9fa6-9cbb-44ad-8f64-38487dccfd43"",
                                 ""version"": 2  },
-                            ""type"": ""email""
+                            ""type"": ""email"",
+                            ""thing"": null
                         },
                         {
                             ""completed_at"": null,
@@ -200,7 +206,8 @@ namespace Notify.Tests.UnitTests
                                 ""id"": ""913e9fa6-9cbb-44ad-8f58-38487dccfd84"",
                                 ""uri"": ""/service/fd29e421-24b6-4f45-ac5c-e642a1d68641/template/323e9fa6-9cbb-44ad-8f64-38487dccfd43"",
                                 ""version"": 2  },
-                            ""type"": ""email""
+                            ""type"": ""email"",
+                            ""created_by_name"": null
                         }
                     ]
                 }";
@@ -232,7 +239,8 @@ namespace Notify.Tests.UnitTests
                                 ""id"": ""913e9fa6-9cbb-44ad-8f58-38487dccfd82"",
                                 ""uri"": ""/service/fd29e421-24b6-4f45-ac5c-e642a1d68641/template/323e9fa6-9cbb-44ad-8f64-38487dccfd43"",
                                 ""version"": 2  },
-                            ""type"": ""letter""
+                            ""type"": ""letter"",
+                            ""created_by_name"": null
                         },
                         {
                             ""completed_at"": null,
@@ -254,7 +262,8 @@ namespace Notify.Tests.UnitTests
                                 ""id"": ""913e9fa6-9cbb-44ad-8f58-38487dccfd84"",
                                 ""uri"": ""/service/fd29e421-24b6-4f45-ac5c-e642a1d68641/template/323e9fa6-9cbb-44ad-8f64-38487dccfd43"",
                                 ""version"": 2  },
-                            ""type"": ""letter""
+                            ""type"": ""letter"",
+                            ""created_by_name"": null
                         }
                     ]
                 }";
