@@ -1,3 +1,8 @@
+## [2.1.0] - 2018-08-14
+
+* The Notification class has a new `createdByName` property.
+    * If the notification was sent manually this will be the name of the sender. If the notification was sent through the API this will be `null`.
+
 ## [2.0.1] - 2018-03-29
 
 * Add `pending-virus-check` and `virus-scan-failed` to statuses
