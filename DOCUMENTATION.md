@@ -116,6 +116,8 @@ NotificationClient client = new NotificationClient(apiKey);
 
 Generate an API key by signing in to [GOV.UK Notify](https://www.notifications.service.gov.uk) and going to the **API integration** page.
 
+When using a proxy set the proxy details in the web.config, see https://docs.microsoft.com/en-us/dotnet/framework/network-programming/proxy-configuration for more details.
+
 ## Send messages
 
 ### Text message
