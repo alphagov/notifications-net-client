@@ -20,9 +20,7 @@ namespace Notify.Models.Responses
                 id == resp.id &&
                 reference == resp.reference &&
                 uri == resp.uri &&
-                template.id == resp.template.id &&
-                template.uri == resp.template.uri &&
-                template.version == resp.template.version;
+                (template == resp.template || template.Equals(resp.template));
         }
 
         public override int GetHashCode()
