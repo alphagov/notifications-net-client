@@ -6,6 +6,7 @@ using Notify.Models;
 using Notify.Models.Responses;
 using System.Collections.Generic;
 using System.Collections.Specialized;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
@@ -170,6 +171,19 @@ namespace Notify.Client
             var response = this.POST(SEND_LETTER_NOTIFICATION_URL, o.ToString(Formatting.None));
 
             return JsonConvert.DeserializeObject<LetterNotificationResponse>(response);            
+        }
+
+        public LetterNotificationResponse SendPrecompiledLetter(string clientReference, byte[] pdfContents)
+        {
+            var requestParams = new JObject
+            {
+                {"reference", clientReference},
+                {"content", System.Convert.ToBase64String(pdfContents)}
+            };
+
+            var response = this.POST(SEND_LETTER_NOTIFICATION_URL, requestParams.ToString(Formatting.None));
+
+            return JsonConvert.DeserializeObject<LetterNotificationResponse>(response);
         }
 
         public TemplateResponse GetTemplateById(string templateId)
