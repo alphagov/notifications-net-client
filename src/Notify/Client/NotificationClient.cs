@@ -226,10 +226,13 @@ namespace Notify.Client
 
         public static JObject PrepareUpload(byte[] documentContents)
         {
-          return new JObject
-          {
-              {"file", System.Convert.ToBase64String(documentContents)}
-          };
+            if (documentContents.Length > 2 * 1024 * 1024) {
+                throw new System.ArgumentException("documentContents size is over the 2MB limit");
+            }
+            return new JObject
+            {
+                {"file", System.Convert.ToBase64String(documentContents)}
+            };
         }
 
         private TemplateResponse GetTemplateFromURL(string url)

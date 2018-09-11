@@ -469,16 +469,12 @@ namespace Notify.Tests.UnitTests
         }
 
         [Test, Category("Unit/NotificationClient")]
-        [ExpectedException]
-        public void SendEmailNotificationWithLargeDocumentGeneratesAnError()
+        public void PrepareUploadWithLargeDocumentGeneratesAnError()
         {
-            Dictionary<string, dynamic> personalisation = new Dictionary<string, dynamic>
-                {
-                    { "document", NotificationClient.PrepareUpload(new byte[3*1024*1024]) }
-                };
-            MockRequest(Constants.fakeTemplatePreviewResponseJson);
-
-            EmailNotificationResponse response = client.SendEmail(Constants.fakeEmail, Constants.fakeTemplateId, personalisation, Constants.fakeNotificationReference);
+            Assert.That(
+                    () => { NotificationClient.PrepareUpload(new byte[3*1024*1024]); },
+                    Throws.ArgumentException
+                    );
         }
 
         [Test, Category("Unit/NotificationClient")]
