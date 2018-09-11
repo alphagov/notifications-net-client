@@ -437,6 +437,51 @@ namespace Notify.Tests.UnitTests
         }
 
         [Test, Category("Unit/NotificationClient")]
+        public void SendEmailNotificationWithDocumentGeneratesExpectedRequest()
+        {
+            Dictionary<string, dynamic> personalisation = new Dictionary<string, dynamic>
+                {
+                    { "document", NotificationClient.PrepareUpload(Encoding.UTF8.GetBytes("%PDF-1.5 testpdf")) }
+                };
+            JObject expected = new JObject
+            {
+                { "email_address", Constants.fakeEmail },
+                { "template_id", Constants.fakeTemplateId },
+                { "personalisation", new JObject
+                  {
+                    {"document", new JObject
+                      {
+                        {"file", "JVBERi0xLjUgdGVzdHBkZg=="}
+                      }
+                    }
+                  }
+                },
+                { "reference", Constants.fakeNotificationReference }
+            };
+
+            MockRequest(Constants.fakeTemplatePreviewResponseJson,
+                client.SEND_EMAIL_NOTIFICATION_URL,
+                AssertValidRequest,
+                HttpMethod.Post,
+                AssertGetExpectedContent, expected.ToString(Formatting.None));
+
+            EmailNotificationResponse response = client.SendEmail(Constants.fakeEmail, Constants.fakeTemplateId, personalisation, Constants.fakeNotificationReference);
+        }
+
+        [Test, Category("Unit/NotificationClient")]
+        [ExpectedException]
+        public void SendEmailNotificationWithLargeDocumentGeneratesAnError()
+        {
+            Dictionary<string, dynamic> personalisation = new Dictionary<string, dynamic>
+                {
+                    { "document", NotificationClient.PrepareUpload(new byte[3*1024*1024]) }
+                };
+            MockRequest(Constants.fakeTemplatePreviewResponseJson);
+
+            EmailNotificationResponse response = client.SendEmail(Constants.fakeEmail, Constants.fakeTemplateId, personalisation, Constants.fakeNotificationReference);
+        }
+
+        [Test, Category("Unit/NotificationClient")]
         public void SendEmailNotificationGeneratesExpectedResponse()
         {
             Dictionary<string, dynamic> personalisation = new Dictionary<string, dynamic>
