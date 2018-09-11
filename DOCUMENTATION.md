@@ -257,15 +257,20 @@ public class Template
 
 Otherwise the client will raise a `Notify.Exceptions.NotifyClientException`.
 
-|`error.status_code`|`error.message`|
-|:---|:---|
-|`429`|`[{`<br>`"error": "RateLimitError",`<br>`"message": "Exceeded rate limit for key type TEAM of 10 requests per 10 seconds"`<br>`}]`|
-|`429`|`[{`<br>`"error": "TooManyRequestsError",`<br>`"message": "Exceeded send limits (50) for today"`<br>`}]`|
-|`400`|`[{`<br>`"error": "BadRequestError",`<br>`"message": "Can"t send to this recipient using a team-only API key"`<br>`]}`|
-|`400`|`[{`<br>`"error": "BadRequestError",`<br>`"message": "Can"t send to this recipient when service is in trial mode - see https://www.notifications.service.gov.uk/trial-mode"`<br>`}]`|
+|error.status_code|error.message|How to fix|
+|:---|:---|:---|
+|`400`|`[{`<br>`"error": "BadRequestError",`<br>`"message": "Can't send to this recipient using a team-only API key"`<br>`]}`|Use the correct type of [API key](#api-keys)|
+|`400`|`[{`<br>`"error": "BadRequestError",`<br>`"message": "Can't send to this recipient when service is in trial mode - see https://www.notifications.service.gov.uk/trial-mode"`<br>`}]`|Your service cannot send this notification in [trial mode](https://www.notifications.service.gov.uk/features/using-notify#trial-mode)|
+|`400`|`[{`<br>`"error": "BadRequestError",`<br>`"message": "Unsupported document type '{}'. Supported types are: {}"`<br>`}]`|The attached document must be a PDF file|
+|`400`|`[{`<br>`"error": "BadRequestError",`<br>`"message": "Document didn't pass the virus scan"`<br>`}]`|The attached document must be virus free|
+|`403`|`[{`<br>`"error": "AuthError",`<br>`"message": "Error: Your system clock must be accurate to within 30 seconds"`<br>`}]`|Check your system clock|
+|`403`|`[{`<br>`"error": "AuthError",`<br>`"message": "Invalid token: signature, api token not found"`<br>`}]`|Use the correct type of [API key](#api-keys)|
+|`429`|`[{`<br>`"error": "RateLimitError",`<br>`"message": "Exceeded rate limit for key type TEAM/TEST/LIVE of 3000 requests per 60 seconds"`<br>`}]`|Refer to [API rate limits](#api-rate-limits) for more information|
+|`429`|`[{`<br>`"error": "TooManyRequestsError",`<br>`"message": "Exceeded send limits (LIMIT NUMBER) for today"`<br>`}]`|Refer to [service limits](#service-limits) for the limit number|
+|`500`|`[{`<br>`"error": "Exception",`<br>`"message": "Internal server error"`<br>`}]`|Notify was unable to process the request, resend your notification.|
+|-|`System.ArgumentException("documentContents size is over the 2MB limit")`|Document size was too large, upload a smaller file|
 
 </details>
-
 
 #### Arguments
 
@@ -308,6 +313,40 @@ If you omit this argument your default email reply-to address will be set for th
 
 </details>
 
+
+#### Send a document by email
+
+<details>
+<summary>
+Click here to expand for more information.
+</summary>
+
+Send files without the need for email attachments.
+To send a document by email, add a placeholder field to the template then upload a file. The placeholder field will contain a secure link to download the document.
+[Contact the GOV.UK Notify team](https://www.notifications.service.gov.uk/support) to enable this function for your service.
+
+##### Add a placeholder field to the template
+In Notify, use double brackets to add a placeholder field to the email template. For example:
+
+"Download your document at: ((link_to_document))"
+
+##### Upload your document
+
+The document you upload must be a PDF file smaller than 2MB.
+Convert the PDF to a `byte[]` and pass that to the the personalisation argument, then call the [sendEmail method](#send-an-email) as usual. For example:
+
+```csharp
+
+byte[] documentContents = File.ReadAllBytes("<document file path>");
+
+Dictionary<String, dynamic> personalisation = new Dictionary<String, dynamic>
+{
+    { "name", "Foo" },
+    { "link_to_document", NotificationClient.PrepareUpload(documentContents)}
+};
+```
+
+</details>
 
 ### Letter
 
