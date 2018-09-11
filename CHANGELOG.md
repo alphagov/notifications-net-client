@@ -1,6 +1,7 @@
 ## [Unreleased]
 
 * Add `NotificationClient.SendPrecompiledLetter` method.
+* Add support for document uploads using `NotificationClient.PrepareUpload`
 * Fixed `NotificationResponse.Equals` and `LetterNotificationResponse.Equals` for instances with `.template` and `.content` attributes set to `null` in order to support pre-compiled letter responses.
 
 ## [2.1.0] - 2018-08-14
