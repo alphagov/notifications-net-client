@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Net;
 using System.Net.Http;
+using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using Moq;
@@ -492,6 +493,43 @@ namespace Notify.Tests.UnitTests
 
             LetterNotificationResponse actualResponse = client.SendLetter(Constants.fakeTemplateId, personalisation, Constants.fakeNotificationReference);
 
+            Assert.IsTrue(expectedResponse.Equals(actualResponse));
+
+        }
+
+        [Test, Category("Unit/NotificationClient")]
+        public void SendPrecompiledLetterNotificationGeneratesExpectedRequest()
+        {
+            JObject expected = new JObject
+            {
+                { "reference", Constants.fakeNotificationReference },
+                { "content", "JVBERi0xLjUgdGVzdHBkZg==" }
+            };
+
+            MockRequest(Constants.fakeTemplatePreviewResponseJson,
+                client.SEND_LETTER_NOTIFICATION_URL,
+                AssertValidRequest,
+                HttpMethod.Post,
+                AssertGetExpectedContent, expected.ToString(Formatting.None));
+
+            LetterNotificationResponse response = client.SendPrecompiledLetter(
+                    Constants.fakeNotificationReference,
+                    Encoding.UTF8.GetBytes("%PDF-1.5 testpdf")
+            );
+        }
+
+        [Test, Category("Unit/NotificationClient")]
+        public void SendPrecompiledLetterNotificationGeneratesExpectedResponse()
+        {
+            LetterNotificationResponse expectedResponse = JsonConvert.DeserializeObject<LetterNotificationResponse>(Constants.fakePrecompiledLetterNotificationResponseJson);
+
+            MockRequest(Constants.fakePrecompiledLetterNotificationResponseJson);
+
+            LetterNotificationResponse actualResponse = client.SendPrecompiledLetter(Constants.fakeNotificationReference, Encoding.UTF8.GetBytes("%PDF-1.5 testpdf"));
+
+            Assert.IsNotNull(expectedResponse.id);
+            Assert.IsNotNull(expectedResponse.reference);
+            Assert.IsNull(expectedResponse.content);
             Assert.IsTrue(expectedResponse.Equals(actualResponse));
 
         }

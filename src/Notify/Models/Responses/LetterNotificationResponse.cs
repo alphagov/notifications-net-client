@@ -11,10 +11,7 @@
                 return false;
             }
 
-            return 
-                content.body == resp.content.body &&
-                content.subject == resp.content.subject &&
-                base.Equals(resp);
+            return (content == resp.content || content.Equals(resp.content)) && base.Equals(resp);
         }
 
         public override int GetHashCode()
@@ -27,5 +24,20 @@
     {
         public string body;
         public string subject;
+
+        public override bool Equals(object other)
+        {
+            if (!(other is LetterResponseContent o))
+            {
+                return false;
+            }
+
+            return body == o.body && subject == o.subject;
+        }
+
+        public override int GetHashCode()
+        {
+            return base.GetHashCode();
+        }
     }
 }

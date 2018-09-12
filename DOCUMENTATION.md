@@ -405,6 +405,78 @@ You can omit this argument if you do not require a reference for the notificatio
 
 </details>
 
+### Precompiled letter
+
+This is an invitation-only feature. Contact the GOV.UK Notify team on the [support page](https://www.notifications.service.gov.uk/support) or through the [Slack channel](https://ukgovernmentdigital.slack.com/messages/govuk-notify) for more information.
+
+#### Method
+
+<details>
+<summary>
+Click here to expand for more information.
+</summary>
+
+```csharp
+LetterNotificationsResponse response = client.SendPrecompiledLetter(
+    clientReference,
+    pdfContents
+    );
+```
+
+</details>
+
+#### Arguments
+
+<details>
+<summary>
+Click here to expand for more information.
+</summary>
+
+##### clientReference (required)
+
+A unique identifier you create. This reference identifies a single unique notification or a batch of notifications. It must not contain any personal information such as name or postal address.
+
+##### pdfContents (required for the SendPrecompiledLetter method)
+
+The precompiled letter must be a PDF file. The method sends the contents of the file to GOV.UK Notify.
+
+```csharp
+byte[] pdfContents = File.ReadAllBytes("<PDF file path>");
+```
+
+</details>
+
+#### Response
+
+<details>
+<summary>
+Click here to expand for more information.
+</summary>
+
+If the request to the client is successful, the client returns a `LetterNotificationResponse` with only `id` and `reference` set:
+
+```csharp
+public String id;
+public String reference;
+```
+
+Otherwise the client will raise a `Notify.Exceptions.NotifyClientException`.
+
+|httpResult|Message|How to fix|
+|:--- |:---|:---|
+|`400`|`[{`<br>`"error": "BadRequestError",`<br>`"message": "Cannot send letters with a team api key"`<br>`]}`|Use the correct type of [API key](#api-keys)|
+|`400`|`[{`<br>`"error": "BadRequestError",`<br>`"message": "Cannot send letters when service is in trial mode - see https://www.notifications.service.gov.uk/trial-mode"`<br>`}]`|Your service cannot send this notification in [trial mode](https://www.notifications.service.gov.uk/features/using-notify#trial-mode)|
+|`400`|`[{`<br>`"error": "ValidationError",`<br>`"message": "personalisation address_line_1 is a required property"`<br>`}]`|Send a valid PDF file|
+|`403`|`[{`<br>`"error": "AuthError",`<br>`"message": "Error: Your system clock must be accurate to within 30 seconds"`<br>`}]`|Check your system clock|
+|`403`|`[{`<br>`"error": "AuthError",`<br>`"message": "Invalid token: signature, api token not found"`<br>`}]`|Use the correct API key. Refer to [API keys](#api-keys) for more information|
+|`429`|`[{`<br>`"error": "RateLimitError",`<br>`"message": "Exceeded rate limit for key type TEAM/TEST/LIVE of 3000 requests per 60 seconds"`<br>`}]`|Refer to [API rate limits](#api-rate-limits) for more information|
+|`429`|`[{`<br>`"error": "TooManyRequestsError",`<br>`"message": "Exceeded send limits (LIMIT NUMBER) for today"`<br>`}]`|Refer to [service limits](#service-limits) for the limit number|
+|N/A|`"message":"precompiledPDF must be a valid PDF file"`|Send a valid PDF file|
+|N/A|`"message":"reference cannot be null or empty"`|Populate the reference parameter|
+|N/A|`"message":"precompiledPDF cannot be null or empty"`|Send a PDF file with data in it|
+
+</details>
+
 
 ## Get the status of one message
 
