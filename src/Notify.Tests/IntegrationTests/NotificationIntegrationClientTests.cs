@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using Notify.Client;
 using Notify.Exceptions;
 using Notify.Models;
@@ -156,6 +157,38 @@ namespace Notify.Tests.IntegrationTests
 
 			Assert.IsNotNull(notification.subject);
 			Assert.AreEqual(notification.subject, TEST_LETTER_SUBJECT);
+
+			NotifyAssertions.AssertNotification(notification);
+		}
+
+		[Test, Category("Integration")]
+		public void SendPrecompiledLetterTest()
+		{
+
+			string reference = System.Guid.NewGuid().ToString();
+                        byte[] pdfContents;
+
+                        try
+                        {
+                            pdfContents = File.ReadAllBytes("../../../IntegrationTests/test_files/one_page_pdf.pdf");
+                        }
+                        catch (DirectoryNotFoundException)
+                        {
+                            pdfContents = File.ReadAllBytes("IntegrationTests/test_files/one_page_pdf.pdf");
+                        }
+
+			LetterNotificationResponse response = this.client.SendPrecompiledLetter(reference, pdfContents);
+
+			Assert.IsNotNull(response.id);
+			Assert.AreEqual(response.reference, reference);
+
+			Notification notification = this.client.GetNotificationById(response.id);
+
+			Assert.IsNotNull(notification);
+			Assert.IsNotNull(notification.id);
+			Assert.AreEqual(notification.id, response.id);
+
+			Assert.AreEqual(notification.reference, response.reference);
 
 			NotifyAssertions.AssertNotification(notification);
 		}
