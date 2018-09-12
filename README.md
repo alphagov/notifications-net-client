@@ -270,7 +270,7 @@ Otherwise the client will raise a `Notify.Exceptions.NotifyClientException`.
 |`429`|`[{`<br>`"error": "RateLimitError",`<br>`"message": "Exceeded rate limit for key type TEAM/TEST/LIVE of 3000 requests per 60 seconds"`<br>`}]`|Refer to [API rate limits](#api-rate-limits) for more information|
 |`429`|`[{`<br>`"error": "TooManyRequestsError",`<br>`"message": "Exceeded send limits (LIMIT NUMBER) for today"`<br>`}]`|Refer to [service limits](#service-limits) for the limit number|
 |`500`|`[{`<br>`"error": "Exception",`<br>`"message": "Internal server error"`<br>`}]`|Notify was unable to process the request, resend your notification.|
-|-|`System.ArgumentException("documentContents size is over the 2MB limit")`|Document size was too large, upload a smaller file|
+|-|`System.ArgumentException("Document is larger than 2MB")`|Document size was too large, upload a smaller file|
 
 </details>
 
