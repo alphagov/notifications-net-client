@@ -1,4 +1,4 @@
-## [Unreleased]
+## [2.2.0] - 2018-09-13
 
 * Add `NotificationClient.SendPrecompiledLetter` method.
 * Add support for document uploads using `NotificationClient.PrepareUpload`
