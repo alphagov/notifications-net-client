@@ -31,8 +31,10 @@ Click here to expand for more information.
 </summary>
 
 Navigate to your project directory and install Notify with the following command:
+
 ```
-nuget install Notify -Source https://api.bintray.com/nuget/gov-uk-notify/notifications-net-client
+nuget sources Add -Name NotifyBintray -Source https://api.bintray.com/nuget/gov-uk-notify/nuget
+nuget install Notify
 ```
 
 Alternatively if you are using the Nuget Package Manager in Visual Studio, add the source below to install:
