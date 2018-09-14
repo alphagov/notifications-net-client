@@ -224,6 +224,17 @@ namespace Notify.Client
             }
         }
 
+        public static JObject PrepareUpload(byte[] documentContents)
+        {
+            if (documentContents.Length > 2 * 1024 * 1024) {
+                throw new System.ArgumentException("Document is larger than 2MB");
+            }
+            return new JObject
+            {
+                {"file", System.Convert.ToBase64String(documentContents)}
+            };
+        }
+
         private TemplateResponse GetTemplateFromURL(string url)
         {
             var response = this.GET(url);
