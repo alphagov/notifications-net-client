@@ -8,10 +8,10 @@ namespace Notify.Interfaces
     {
         Notification GetNotificationById(string notificationId);
 
-        List<Notification> GetNotifications(string templateType = "", string status = "");
+        NotificationList GetNotifications(string templateType = "", string status = "", string reference = "", string olderThanId = "");
 
-        SmsNotificationResponse SendSms(string mobileNumber, string templateId, Dictionary<string, dynamic> personalisation = null);
+        SmsNotificationResponse SendSms(string mobileNumber, string templateId, Dictionary<string, dynamic> personalisation = null, string clientReference = null, string smsSenderId = null);
 
-        EmailNotificationResponse SendEmail(string emailAddress, string templateId, Dictionary<string, dynamic> personalisation = null);
+        EmailNotificationResponse SendEmail(string emailAddress, string templateId, Dictionary<string, dynamic> personalisation = null, string clientReference = null, string emailReplyToId = null);
     }
 }
