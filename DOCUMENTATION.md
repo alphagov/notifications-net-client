@@ -372,6 +372,58 @@ _Exclude these error code as document upload is not implemented for this client 
 |`400`|`[{`<br>`"error": "BadRequestError",`<br>`"message": "Unsupported document type '{}'. Supported types are: {}"`<br>`}]`|The attached document must be a PDF file|
 |`400`|`[{`<br>`"error": "BadRequestError",`<br>`"message": "Document didn't pass the virus scan"`<br>`}]`|The attached document must be virus free|
 
+
+
+## Send a document by email
+
+Send files without the need for email attachments.
+
+To send a document by email, add a placeholder field to the template then upload a file. The placeholder field will contain a secure link to download the document.
+
+[Contact the GOV.UK Notify team](https://www.notifications.service.gov.uk/support) to enable this function for your service.
+
+#### Add a placeholder field to the template
+
+1. Sign into your GOV.UK Notify account.
+1. Go to the Templates page.
+1. Add a placeholder field to the email template using double brackets. For example:
+
+"Download your document at: ((link_to_document))"
+
+#### Upload your document
+
+The document you upload must be a PDF file smaller than 2MB.
+
+Convert the PDF to a `byte[]` and pass that to the the personalisation argument, then call the [sendEmail method](#send-an-email) as usual. For example:
+
+```csharp
+
+byte[] documentContents = File.ReadAllBytes("<document file path>");
+
+Dictionary<String, dynamic> personalisation = new Dictionary<String, dynamic>
+{
+    { "name", "Foo" },
+    { "link_to_document", NotificationClient.PrepareUpload(documentContents)}
+};
+```
+
+### Error codes
+
+If the request is not successful, the client returns an `HTTPError` containing the relevant error code.
+
+|error.status_code|error.message|How to fix|
+|:---|:---|:---|
+|`400`|`[{`<br>`"error": "BadRequestError",`<br>`"message": "Can't send to this recipient using a team-only API key"`<br>`]}`|Use the correct type of [API key](#api-keys)|
+|`400`|`[{`<br>`"error": "BadRequestError",`<br>`"message": "Can't send to this recipient when service is in trial mode - see https://www.notifications.service.gov.uk/trial-mode"`<br>`}]`|Your service cannot send this notification in [trial mode](https://www.notifications.service.gov.uk/features/using-notify#trial-mode)|
+|`400`|`[{`<br>`"error": "BadRequestError",`<br>`"message": "Unsupported document type '{}'. Supported types are: {}"`<br>`}]`|The document you upload must be a PDF file|
+|`400`|`[{`<br>`"error": "BadRequestError",`<br>`"message": "Document didn't pass the virus scan"`<br>`}]`|The document you upload must be virus free|
+|`403`|`[{`<br>`"error": "AuthError",`<br>`"message": "Error: Your system clock must be accurate to within 30 seconds"`<br>`}]`|Check your system clock|
+|`403`|`[{`<br>`"error": "AuthError",`<br>`"message": "Invalid token: signature, api token not found"`<br>`}]`|Use the correct type of [API key](#api-keys)|
+|`429`|`[{`<br>`"error": "RateLimitError",`<br>`"message": "Exceeded rate limit for key type TEAM/TEST/LIVE of 3000 requests per 60 seconds"`<br>`}]`|Refer to [API rate limits](#api-rate-limits) for more information|
+|`429`|`[{`<br>`"error": "TooManyRequestsError",`<br>`"message": "Exceeded send limits (LIMIT NUMBER) for today"`<br>`}]`|Refer to [service limits](#service-limits) for the limit number|
+|`500`|`[{`<br>`"error": "Exception",`<br>`"message": "Internal server error"`<br>`}]`|Notify was unable to process the request, resend your notification.|
+|`N\A`|`Document is larger than 2MB`|Document size was too large, upload a smaller file|
+
 ## Send a letter
 
 When your service first signs up to GOV.UK Notify, you’ll start in trial mode. You can only send letters in live mode. You must ask GOV.UK Notify to make your service live.
@@ -484,6 +536,57 @@ If the request is not successful, the client returns a `Notify.Exceptions.Notify
 |`429`|`[{`<br>`"error": "TooManyRequestsError",`<br>`"message": "Exceeded send limits (LIMIT NUMBER) for today"`<br>`}]`|Refer to [service limits](#service-limits) for the limit number|
 |`500`|`[{`<br>`"error": "Exception",`<br>`"message": "Internal server error"`<br>`}]`|Notify was unable to process the request, resend your notification|
 
+## Send a precompiled letter
+
+This is an invitation-only feature. Contact the GOV.UK Notify team on the [support page](https://www.notifications.service.gov.uk/support) or through the [Slack channel](https://ukgovernmentdigital.slack.com/messages/govuk-notify) for more information.
+
+### Method
+
+```csharp
+LetterNotificationsResponse response = client.SendPrecompiledLetter(
+    clientReference,
+    pdfContents
+    );
+```
+
+### Arguments
+
+#### clientReference (required)
+
+A unique identifier you create. This reference identifies a single unique notification or a batch of notifications. It must not contain any personal information such as name or postal address.
+
+#### pdfContents (required for the SendPrecompiledLetter method)
+
+The precompiled letter must be a PDF file. The method sends the contents of the file to GOV.UK Notify.
+
+```csharp
+byte[] pdfContents = File.ReadAllBytes("<PDF file path>");
+```
+### Response
+
+If the request to the client is successful, the client returns a `LetterNotificationResponse` with the `id` and `reference` set:
+
+```csharp
+public String id;
+public String reference;
+```
+
+### Error codes
+
+If the request is not successful, the client returns a `Notify.Exceptions.NotifyClientException` containing the relevant error code:
+
+|httpResult|Message|How to fix|
+|:--- |:---|:---|
+|`400`|`[{`<br>`"error": "BadRequestError",`<br>`"message": "Cannot send letters with a team api key"`<br>`]}`|Use the correct type of [API key](#api-keys)|
+|`400`|`[{`<br>`"error": "BadRequestError",`<br>`"message": "Cannot send letters when service is in trial mode - see https://www.notifications.service.gov.uk/trial-mode"`<br>`}]`|Your service cannot send this notification in [trial mode](https://www.notifications.service.gov.uk/features/using-notify#trial-mode)|
+|`400`|`[{`<br>`"error": "ValidationError",`<br>`"message": "personalisation address_line_1 is a required property"`<br>`}]`|Send a valid PDF file|
+|`403`|`[{`<br>`"error": "AuthError",`<br>`"message": "Error: Your system clock must be accurate to within 30 seconds"`<br>`}]`|Check your system clock|
+|`403`|`[{`<br>`"error": "AuthError",`<br>`"message": "Invalid token: signature, api token not found"`<br>`}]`|Use the correct API key. Refer to [API keys](#api-keys) for more information|
+|`429`|`[{`<br>`"error": "RateLimitError",`<br>`"message": "Exceeded rate limit for key type TEAM/TEST/LIVE of 3000 requests per 60 seconds"`<br>`}]`|Refer to [API rate limits](#api-rate-limits) for more information|
+|`429`|`[{`<br>`"error": "TooManyRequestsError",`<br>`"message": "Exceeded send limits (LIMIT NUMBER) for today"`<br>`}]`|Refer to [service limits](#service-limits) for the limit number|
+|N/A|`"message":"precompiledPDF must be a valid PDF file"`|Send a valid PDF file|
+|N/A|`"message":"reference cannot be null or empty"`|Populate the reference parameter|
+|N/A|`"message":"precompiledPDF cannot be null or empty"`|Send a PDF file with data in it|
 
 # Get message status
 
