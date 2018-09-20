@@ -99,7 +99,6 @@ If you are using Visual Studio for Mac OS, you must:
 
 - set the target framework
 - set Mac OS environment variables
-- open Visual Studio from the terminal
 
 #### Set the target framework
 
@@ -120,14 +119,10 @@ export EMAIL_TEMPLATE_ID=valid email_template_id
 export SMS_TEMPLATE_ID=valid sms_template_id
 export LETTER_TEMPLATE_ID=valid letter_template_id
 ```
-
-#### Open Visual Studio from the terminal
-
-Run the following to open Visual Studio:
-
-```
-open -n /Applications/"Visual Studio.app"
-```
+_Does OSX not include these three variables?_
+_SETX SMS_SENDER_ID "valid sms_sender_id - to test sending to a receiving number, so needs to be a real number"
+SETX API_SENDING_KEY "API_whitelist_key for sending an SMS to a receiving number"
+SETX INBOUND_SMS_QUERY_KEY "API_test_key to get received text messages"_
 
 ## Create a new instance of the client
 
@@ -155,8 +150,8 @@ You can use GOV.UK Notify to send text messages, emails and letters.
 
 ```csharp
 SmsNotificationResponse response = client.SendSms(
-  mobileNumber="+447900900123",
-  templateId="f33517ff-2a88-4f6e-b855-c550268ce08a",
+  mobileNumber: "+447900900123",
+  templateId: "f33517ff-2a88-4f6e-b855-c550268ce08a",
   );
 ```
 
@@ -167,7 +162,7 @@ SmsNotificationResponse response = client.SendSms(
 The phone number of the recipient of the text message. This can be a UK or international number.
 
 ```csharp
-string mobileNumber = "+447900900123";
+string mobileNumber: "+447900900123";
 ```
 
 #### templateId (required)
@@ -175,7 +170,7 @@ string mobileNumber = "+447900900123";
 Sign in to [GOV.UK Notify](https://www.notifications.service.gov.uk/) and go to the __Templates__ page to find the template ID.
 
 ```csharp
-string templateId = "f33517ff-2a88-4f6e-b855-c550268ce08a";
+string templateId: "f33517ff-2a88-4f6e-b855-c550268ce08a";
 ```
 
 #### personalisation (optional)
@@ -197,7 +192,7 @@ You can leave out this argument if a template does not have any placeholder fiel
 A unique identifier you can create if necessary. This reference identifies a single unique notification or a batch of notifications. For example:
 
 ```csharp
-string reference = "STRING";
+string reference: "STRING";
 ```
 You can leave out this argument if you do not have a reference.
 
@@ -218,7 +213,7 @@ You can then either:
 For example:
 
 ```csharp
-string smsSenderId = "8e222534-7f05-4972-86e3-17c5d9f894e2";
+string smsSenderId: "8e222534-7f05-4972-86e3-17c5d9f894e2";
 ```
 
 You can leave out this argument if your service only has one text message sender, or if you want to use the default sender.
@@ -283,7 +278,7 @@ client.SendSms(
 The email address of the recipient. For example:
 
 ```csharp
-string emailAddress="sender@something.com";
+string emailAddress: "sender@something.com";
 ```
 
 #### templateId (required)
@@ -291,7 +286,7 @@ string emailAddress="sender@something.com";
 Sign in to [GOV.UK Notify](https://www.notifications.service.gov.uk/) and go to the __Templates__ page to find the template ID. For example:
 
 ```csharp
-string templateId="f33517ff-2a88-4f6e-b855-c550268ce08a";
+string templateId: "f33517ff-2a88-4f6e-b855-c550268ce08a";
 ```
 
 #### personalisation (optional)
@@ -300,7 +295,7 @@ If a template has placeholder fields for personalised information such as name o
 
 
 ```csharp
-Dictionary<String, dynamic> personalisation = new Dictionary<String, dynamic>
+Dictionary<String, dynamic> personalisation: new Dictionary<String, dynamic>
 {
     { "first_name", "Amala"
       "application_date", "2018-01-01"
@@ -315,7 +310,7 @@ You can leave out this argument if a template does not have any placeholder fiel
 A unique identifier you can create if necessary. This reference identifies a single unique notification or a batch of notifications. For example:
 
 ```csharp
-string reference = "STRING";
+string reference: "STRING";
 ```
 You can leave out this argument if you do not have a reference.
 
@@ -332,7 +327,7 @@ This is an email reply-to address specified by you to receive replies from your 
 For example:
 
 ```csharp
-string emailReplyToId = "8e222534-7f05-4972-86e3-17c5d9f894e2";
+string emailReplyToId: "8e222534-7f05-4972-86e3-17c5d9f894e2";
 ```
 
 You can leave out this argument if your service only has one email reply to address, or you want to use the default email address.
@@ -407,7 +402,7 @@ LetterNotificationResponse response = client.SendLetter(templateId, personalisat
 Sign in to GOV.UK Notify and go to the __Templates__ page to find the template ID. For example:
 
 ```csharp
-string templateId="f33517ff-2a88-4f6e-b855-c550268ce08a";
+string templateId: "f33517ff-2a88-4f6e-b855-c550268ce08a";
 ```
 
 #### personalisation (required)
@@ -421,7 +416,7 @@ The personalisation argument always contains the following required parameters f
 Any other placeholder fields included in the letter template also count as required parameters. You need to provide their values in a `Dictionary`. For example:
 
 ```python
-personalisation={
+personalisation: {
   "address_line_1": "The Occupier",
   "address_line_2": "123 High Street",
   "postcode": "SW14 6BF",
@@ -435,7 +430,7 @@ personalisation={
 A unique identifier you can create if necessary. This reference identifies a single unique notification or a batch of notifications. For example:
 
 ```csharp
-string reference = "STRING";
+string reference: "STRING";
 ```
 You can leave out this argument if you don't have a reference.
 
@@ -444,7 +439,7 @@ You can leave out this argument if you don't have a reference.
 The following parameters in the letter recipient's address are optional:
 
 ```csharp
-Dictionary<String, dynamic> personalisation = new Dictionary<String, dynamic>
+Dictionary<String, dynamic> personalisation: new Dictionary<String, dynamic>
 {
 { "address_line_1", "23 Foo Road" }, # required
 { "address_line_2", "Bar Town" }, # required
@@ -637,7 +632,7 @@ string reference = "STRING";
 Input the ID of a notification into this argument. If you use this argument, the client returns the next 250 received notifications older than the given ID. For example:
 
 ```csharp
-string olderThanId = "e194efd1-c34d-49c9-9915-e4267e01e92e";
+string olderThanId: "e194efd1-c34d-49c9-9915-e4267e01e92e";
 ```
 
 If you leave out this argument, the client returns the most recent 250 notifications.
@@ -690,7 +685,7 @@ TemplateResponse response = client.GetTemplateById(
 The ID of the template. Sign into GOV.UK Notify and go to the __Templates__ page to find this. For example:
 
 ```csharp
-string templateId = "f33517ff-2a88-4f6e-b855-c550268ce08a";
+string templateId: "f33517ff-2a88-4f6e-b855-c550268ce08a";
 ```
 
 ### Response
@@ -742,7 +737,7 @@ TemplateResponse response = client.GetTemplateByIdAndVersion(
 The ID of the template. Sign in to GOV.UK Notify and go to the __Templates__ page to find this. For example:
 
 ```csharp
-string templateId = "f33517ff-2a88-4f6e-b855-c550268ce08a";
+string templateId: "f33517ff-2a88-4f6e-b855-c550268ce08a";
 ```
 
 #### version (required)
@@ -835,7 +830,7 @@ The parameters in the personalisation argument must match the placeholder fields
 The ID of the template. Sign into GOV.UK Notify and go to the __Templates__ page. For example:
 
 ```csharp
-string templateId = "f33517ff-2a88-4f6e-b855-c550268ce08a";
+string templateId: "f33517ff-2a88-4f6e-b855-c550268ce08a";
 ```
 
 #### personalisation (required)
@@ -899,7 +894,7 @@ If you leave out the `olderThanId` argument, the client returns the most recent 
 Input the ID of a received text message into this argument. If you use this argument, the method returns the next 250 received text messages older than the given ID. For example:
 
 ```csharp
-olderThanId="740e5834-3a29-46b4-9a6f-16142fde533a" # optional string - notification ID
+olderThanId: "740e5834-3a29-46b4-9a6f-16142fde533a"
 ```
 
 If you leave out the `olderThanId` argument, the client returns the most recent 250 notifications.
