@@ -13,7 +13,7 @@ using System.Net.Http;
 
 namespace Notify.Client
 {
-    public class NotificationClient : BaseClient
+    public class NotificationClient : BaseClient, INotificationClient
     {
         public string GET_RECEIVED_TEXTS_URL = "v2/received-text-messages";
         public string GET_NOTIFICATION_URL = "v2/notifications/";
