@@ -23,3 +23,6 @@ SMS_SENDER_ID "valid sms_sender_id - to test sending to a receiving number, so n
 API_SENDING_KEY "API_whitelist_key for sending an SMS to a receiving number"
 INBOUND_SMS_QUERY_KEY "API_test_key to get received text messages"
 ```
+
+## Deploying the client to Bintray
+Go to the latest build on https://jenkins.notify.tools/job/run-app-veyor-build/, re-run this build with the `PUBLISH_TO_BINTRAY` checked.
