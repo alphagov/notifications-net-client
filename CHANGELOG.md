@@ -1,3 +1,7 @@
+## [2.3.0] - 2018-10-02
+
+* Implement the `INotificationClient` interface to make mocking easier (see https://github.com/alphagov/notifications-net-client/pull/57)
+
 ## [2.2.0] - 2018-09-13
 
 * Add `NotificationClient.SendPrecompiledLetter` method.
