@@ -25,4 +25,4 @@ INBOUND_SMS_QUERY_KEY "API_test_key to get received text messages"
 ```
 
 ## Deploying the client to Bintray
-Go to the latest build on https://jenkins.notify.tools/job/run-app-veyor-build/, re-run this build with the `PUBLISH_TO_BINTRAY` checked.
+If you are a member of the Notify team go to the latest build on https://jenkins.notify.tools/job/run-app-veyor-build/, re-run this build with the `PUBLISH_TO_BINTRAY` checked.
