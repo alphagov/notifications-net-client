@@ -21,7 +21,8 @@ You can install the GOV.UK Notify client package using either the command line o
 Go to your project directory and run the following in the command line to install the client package:
 
 ```
-nuget install Notify -Source https://api.bintray.com/nuget/gov-uk-notify/notifications-net-client
+nuget sources Add -Name NotifyBintray -Source https://api.bintray.com/nuget/gov-uk-notify/nuget
+nuget install Notify
 ```
 
 ### Use Microsoft Visual Studio
@@ -288,10 +289,9 @@ If the request is not successful, the client returns a `Notify.Exceptions.Notify
 |`429`|`[{`<br>`"error": "RateLimitError",`<br>`"message": "Exceeded rate limit for key type TEAM/TEST/LIVE of 3000 requests per 60 seconds"`<br>`}]`|Refer to [API rate limits](#api-rate-limits) for more information|
 |`429`|`[{`<br>`"error": "TooManyRequestsError",`<br>`"message": "Exceeded send limits (LIMIT NUMBER) for today"`<br>`}]`|Refer to [service limits](#service-limits) for the limit number|
 |`500`|`[{`<br>`"error": "Exception",`<br>`"message": "Internal server error"`<br>`}]`|Notify was unable to process the request, resend your notification.|
+|N/A|`System.ArgumentException("Document is larger than 2MB")`|Document size was too large, upload a smaller file|
 
 ## Send a document by email
-
-Send files without the need for email attachments.
 
 To send a document by email, add a placeholder field to the template and then upload a file. The placeholder field will contain a secure link to download the document.
 

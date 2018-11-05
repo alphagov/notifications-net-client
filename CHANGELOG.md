@@ -1,3 +1,13 @@
+## [2.3.0] - 2018-10-02
+
+* Implement the `INotificationClient` interface to make mocking easier (see https://github.com/alphagov/notifications-net-client/pull/57)
+
+## [2.2.0] - 2018-09-13
+
+* Add `NotificationClient.SendPrecompiledLetter` method.
+* Add support for document uploads using `NotificationClient.PrepareUpload`
+* Fixed `NotificationResponse.Equals` and `LetterNotificationResponse.Equals` for instances with `.template` and `.content` attributes set to `null` in order to support pre-compiled letter responses.
+
 ## [2.1.0] - 2018-08-14
 
 * The Notification class has a new `createdByName` property.

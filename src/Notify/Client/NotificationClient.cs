@@ -6,13 +6,14 @@ using Notify.Models;
 using Notify.Models.Responses;
 using System.Collections.Generic;
 using System.Collections.Specialized;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
 
 namespace Notify.Client
 {
-    public class NotificationClient : BaseClient
+    public class NotificationClient : BaseClient, INotificationClient
     {
         public string GET_RECEIVED_TEXTS_URL = "v2/received-text-messages";
         public string GET_NOTIFICATION_URL = "v2/notifications/";
@@ -172,6 +173,19 @@ namespace Notify.Client
             return JsonConvert.DeserializeObject<LetterNotificationResponse>(response);            
         }
 
+        public LetterNotificationResponse SendPrecompiledLetter(string clientReference, byte[] pdfContents)
+        {
+            var requestParams = new JObject
+            {
+                {"reference", clientReference},
+                {"content", System.Convert.ToBase64String(pdfContents)}
+            };
+
+            var response = this.POST(SEND_LETTER_NOTIFICATION_URL, requestParams.ToString(Formatting.None));
+
+            return JsonConvert.DeserializeObject<LetterNotificationResponse>(response);
+        }
+
         public TemplateResponse GetTemplateById(string templateId)
         {
             var url = GET_TEMPLATE_URL + templateId;
@@ -208,6 +222,17 @@ namespace Notify.Client
             {
                 throw new NotifyClientException("Could not create Template object from response: {0}", response);
             }
+        }
+
+        public static JObject PrepareUpload(byte[] documentContents)
+        {
+            if (documentContents.Length > 2 * 1024 * 1024) {
+                throw new System.ArgumentException("Document is larger than 2MB");
+            }
+            return new JObject
+            {
+                {"file", System.Convert.ToBase64String(documentContents)}
+            };
         }
 
         private TemplateResponse GetTemplateFromURL(string url)

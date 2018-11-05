@@ -452,6 +452,14 @@ namespace Notify.Tests.UnitTests
 			}
 		}
 
+        public static String fakePrecompiledLetterNotificationResponseJson { get {
+                return @"{
+                            ""id"": ""731b9c83-563f-4b59-afc5-87e9ca717833"",
+                            ""reference"":  ""some-client-ref"",
+                        }";
+            }
+        }
+
     }
 }
 

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using Notify.Client;
 using Notify.Exceptions;
 using Notify.Models;
@@ -158,6 +159,68 @@ namespace Notify.Tests.IntegrationTests
 			Assert.AreEqual(notification.subject, TEST_LETTER_SUBJECT);
 
 			NotifyAssertions.AssertNotification(notification);
+		}
+
+		[Test, Category("Integration")]
+		public void SendPrecompiledLetterTest()
+		{
+
+			string reference = System.Guid.NewGuid().ToString();
+                        byte[] pdfContents;
+
+                        try
+                        {
+                            pdfContents = File.ReadAllBytes("../../../IntegrationTests/test_files/one_page_pdf.pdf");
+                        }
+                        catch (DirectoryNotFoundException)
+                        {
+                            pdfContents = File.ReadAllBytes("IntegrationTests/test_files/one_page_pdf.pdf");
+                        }
+
+			LetterNotificationResponse response = this.client.SendPrecompiledLetter(reference, pdfContents);
+
+			Assert.IsNotNull(response.id);
+			Assert.AreEqual(response.reference, reference);
+
+			Notification notification = this.client.GetNotificationById(response.id);
+
+			Assert.IsNotNull(notification);
+			Assert.IsNotNull(notification.id);
+			Assert.AreEqual(notification.id, response.id);
+
+			Assert.AreEqual(notification.reference, response.reference);
+
+			NotifyAssertions.AssertNotification(notification);
+		}
+
+		[Test, Category("Integration")]
+		public void SendEmailWithDocumentPersonalisationTest()
+		{
+			byte[] pdfContents;
+
+			try
+			{
+				pdfContents = File.ReadAllBytes("../../../IntegrationTests/test_files/one_page_pdf.pdf");
+			}
+			catch (DirectoryNotFoundException)
+			{
+				pdfContents = File.ReadAllBytes("IntegrationTests/test_files/one_page_pdf.pdf");
+			}
+
+			Dictionary<String, dynamic> personalisation = new Dictionary<String, dynamic>
+			{
+				{ "name", NotificationClient.PrepareUpload(pdfContents) }
+			};
+
+			EmailNotificationResponse response =
+				this.client.SendEmail(FUNCTIONAL_TEST_EMAIL, EMAIL_TEMPLATE_ID, personalisation);
+
+			Assert.IsNotNull(response.id);
+			Assert.IsNotNull(response.template.id);
+			Assert.IsNotNull(response.template.uri);
+			Assert.IsNotNull(response.template.version);
+			Assert.AreEqual(response.content.subject, TEST_EMAIL_SUBJECT);
+			Assert.IsTrue(response.content.body.Contains("https://documents."));
 		}
 
 		[Test, Category("Integration")]

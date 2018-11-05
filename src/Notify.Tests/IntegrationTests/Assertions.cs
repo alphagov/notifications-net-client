@@ -42,7 +42,8 @@ namespace Notify.Tests.IntegrationTests
 				"accepted",
 				"received",
 				"pending-virus-check",
-				"virus-scan-failed"
+				"virus-scan-failed",
+				"validation-failed"
 			};
 			CollectionAssert.Contains(allowedStatusTypes, notificationStatus);
 
