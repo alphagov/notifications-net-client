@@ -293,6 +293,8 @@ If the request is not successful, the client returns a `Notify.Exceptions.Notify
 
 ## Send a document by email
 
+Send files without the need for email attachments.
+
 To send a document by email, add a placeholder field to the template and then upload a file. The placeholder field will contain a secure link to download the document.
 
 [Contact the GOV.UK Notify team](https://www.notifications.service.gov.uk/support) to enable this function for your service.
