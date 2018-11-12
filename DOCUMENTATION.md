@@ -538,6 +538,13 @@ You can only get the status of messages that are 7 days old or newer.
 |Accepted|GOV.UK Notify is printing and posting the letter.|
 |Received|The provider has received the letter to deliver.|
 
+## Status - pre-compiled letter
+
+|Status|information|
+|:---|:---|
+|Pending virus check|GOV.UK Notify virus scan of the pre-compiled letter file is not yet complete.|
+|Virus scan failed|GOV.UK Notify virus scan has identified a potential virus in the pre-compiled letter file.|
+
 ## Get the status of one message
 
 You can only get the status of messages that are 7 days old or newer.
