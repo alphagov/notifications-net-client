@@ -36,7 +36,7 @@ You can use either the [console](https://docs.microsoft.com/en-us/nuget/tools/pa
 Run the following in the NuGet package manager console to install the client package:
 
 ```
-nuget install Notify -Source https://api.bintray.com/nuget/gov-uk-notify/notifications-net-client
+nuget install Notify -Source https://api.bintray.com/nuget/gov-uk-notify/nuget
 ```
 
 #### UI
@@ -301,7 +301,7 @@ To send a document by email, add a placeholder field to the template and then up
 
 #### Add a placeholder field to the template
 
-1. Sign in to [GOV.UK Notify](https://www.notifications.service.gov.uk/). 
+1. Sign in to [GOV.UK Notify](https://www.notifications.service.gov.uk/).
 1. Go to the __Templates__ page and select the relevant email template.
 1. Add a placeholder field to the email template using double brackets. For example:
 
@@ -313,7 +313,7 @@ The document you upload must be a PDF file smaller than 2MB.
 
 1. Convert the PDF to a `byte[]`.
 1. Pass the `byte[]` to the personalisation argument.
-1. Call the [sendEmail method](#send-an-email). 
+1. Call the [sendEmail method](#send-an-email).
 
 For example:
 
