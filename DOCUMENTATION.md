@@ -110,7 +110,7 @@ You can leave out this argument if a template does not have any placeholder fiel
 
 #### reference (optional)
 
-A unique identifier you can create if you need to. This reference identifies a single unique notification or a batch of notifications. For example:
+A unique identifier you can create if you need to. This reference identifies a single unique notification or a batch of notifications. It must not contain any personal information such as name or postal address. For example:
 
 ```csharp
 string reference: "STRING";
@@ -228,7 +228,7 @@ You can leave out this argument if a template does not have any placeholder fiel
 
 #### reference (optional)
 
-A unique identifier you can create if you need to. This reference identifies a single unique notification or a batch of notifications. For example:
+A unique identifier you can create if you need to. This reference identifies a single unique notification or a batch of notifications. It must not contain any personal information such as name or postal address. For example:
 
 ```csharp
 string reference: "STRING";
@@ -401,7 +401,7 @@ personalisation: {
 
 #### reference (optional)
 
-A unique identifier you can create if you need to. This reference identifies a single unique notification or a batch of notifications. For example:
+A unique identifier you can create if you need to. This reference identifies a single unique notification or a batch of notifications. It must not contain any personal information such as name or postal address. For example:
 
 ```csharp
 string reference: "STRING";
@@ -650,7 +650,7 @@ You can filter by:
 
 #### reference (optional)
 
-A unique identifier you can create if you need to. This reference identifies a single unique notification or a batch of notifications. For example:
+A unique identifier you can create if you need to. This reference identifies a single unique notification or a batch of notifications. It must not contain any personal information such as name or postal address. For example:
 
 ```csharp
 string reference = "STRING";
@@ -953,3 +953,12 @@ public String notifyNumber;
 public String content;
 ```
 If the notification specified in the `olderThanId` argument is older than 7 days, the client returns an empty `ReceivedTextListResponse` response.
+
+### Error codes
+
+If the request is not successful, the client returns a `Notify.Exceptions.NotifyClientException` and an error code.
+
+|error.code|error.message|How to fix|
+|:---|:---|:---|
+|`403`|`[{`<br>`"error": "AuthError",`<br>`"message": "Error: Your system clock must be accurate to within 30 seconds"`<br>`}]`|Check your system clock|
+|`403`|`[{`<br>`"error": "AuthError",`<br>`"message": "Invalid token: signature, api token not found"`<br>`}]`|Use the correct API key. Refer to [API keys](#api-keys) for more information|
