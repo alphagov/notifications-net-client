@@ -750,8 +750,6 @@ If the request is not successful, the client returns an `HTTPError` and an error
 
 ### Method
 
-This returns the latest version of the template.
-
 ```csharp
 TemplateResponse response = client.GetTemplateByIdAndVersion(
     "templateId",
