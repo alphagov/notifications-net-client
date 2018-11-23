@@ -540,12 +540,12 @@ You can only get the status of messages that are 7 days old or newer.
 |Accepted|GOV.UK Notify is printing and posting the letter.|
 |Received|The provider has received the letter to deliver.|
 
-## Status - pre-compiled letter
+## Status - precompiled letter
 
 |Status|information|
 |:---|:---|
-|Pending virus check|GOV.UK Notify virus scan of the pre-compiled letter file is not yet complete.|
-|Virus scan failed|GOV.UK Notify virus scan has identified a potential virus in the pre-compiled letter file.|
+|Pending virus check|GOV.UK Notify virus scan of the precompiled letter file is not yet complete.|
+|Virus scan failed|GOV.UK Notify virus scan has identified a potential virus in the precompiled letter file.|
 
 ## Get the status of one message
 
@@ -908,11 +908,6 @@ You can only get the status of messages that are 7 days old or newer.
 ```csharp
 ReceivedTextListResponse response = client.GetReceivedTexts(olderThanId);
 ```
-
-To get older messages, pass the ID of an older notification into the `olderThanId` argument. This returns the next oldest messages from the specified notification ID.
-
-If you leave out the `olderThanId` argument, the client returns the most recent 250 notifications.
-
 
 ### Arguments
 
