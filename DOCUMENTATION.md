@@ -186,7 +186,7 @@ EmailNotificationResponse response = client.SendEmail(emailAddress, templateId, 
 ```
 
 ```csharp
-client.SendSms(
+client.SendEmail(
     emailAddress: "sender@something.com",
     templateId: "f33517ff-2a88-4f6e-b855-c550268ce08a"
 );
