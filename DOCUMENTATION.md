@@ -182,10 +182,6 @@ If the request is not successful, the client returns a `Notify.Exceptions.Notify
 ### Method
 
 ```csharp
-EmailNotificationResponse response = client.SendEmail(emailAddress, templateId, personalisation, reference, emailReplyToId);
-```
-
-```csharp
 client.SendEmail(
     emailAddress: "sender@something.com",
     templateId: "f33517ff-2a88-4f6e-b855-c550268ce08a"
@@ -359,14 +355,17 @@ When your service first signs up to GOV.UK Notify, you’ll start in trial mode.
 ```csharp
 Dictionary<String, dynamic> personalisation = new Dictionary<String, dynamic>
 {
-    { "address_line_1", "The Occupier" },  # required
-    { "address_line_2", "123 High Street" }, # required
+    { "address_line_1", "The Occupier" },
+    { "address_line_2", "123 High Street" },
     { "address_line_3", "London" },
-    { "postcode", "SW14 6BF" } # required
-      ... # any other optional address lines, or personalisation fields found in your template
+    { "postcode", "SW14 6BF" }
 };
 
-LetterNotificationResponse response = client.SendLetter(templateId, personalisation, reference);
+LetterNotificationResponse response = client.SendLetter(
+    templateId,
+    personalisation,
+    reference
+);
 ```
 
 ### Arguments
@@ -617,7 +616,12 @@ You can only get messages that are 7 days old or newer.
 ### Method
 
 ```csharp
-NotificationList notifications = client.GetNotifications(templateType, status, reference, olderThanId);
+NotificationList notifications = client.GetNotifications(
+  templateType,
+  status,
+  reference,
+  olderThanId
+  );
 ```
 
 ### Arguments
@@ -807,7 +811,7 @@ This returns the latest version of all templates.
 
 ```csharp
 TemplateList response = client.GetAllTemplates(
-    "sms" | "email" | "letter" // optional
+    "sms"
 );
 ```
 
