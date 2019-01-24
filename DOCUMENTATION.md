@@ -637,20 +637,20 @@ You can filter by:
 
 | status | description | text | email | letter |Precompiled letter|
 |:--- |:--- |:--- |:--- |:--- |:--- |
-|`created`|GOV.UK Notify has placed the message in a queue, ready to be sent to the provider. It should only remain in this state for a few seconds.|Yes|Yes|||
-|`sending`|GOV.UK Notify has sent the message to the provider. The provider will try to deliver the message to the recipient. GOV.UK Notify is waiting for delivery information.|Yes|Yes|||
-|`delivered`|The message was successfully delivered|Yes|Yes|||
-|`sent` / `Sent internationally`|The message was sent to an international number. The mobile networks in some countries do not provide any more delivery information.|Yes||||
-|`pending`|GOV.UK Notify is waiting for more delivery information.<br>GOV.UK Notify received a callback from the provider but the recipient's device has not yet responded. Another callback from the provider determines the final status of the notification.|Yes||||
-|`failed`|This returns all failure statuses:<br>- `permanent-failure`<br>- `temporary-failure`<br>- `technical-failure`|Yes|Yes|||
-|`permanent-failure`|The provider could not deliver the message because the email address or phone number was wrong. You should remove these email addresses or phone numbers from your database. You’ll still be charged for text messages to numbers that do not exist.|Yes|Yes|||
-|`temporary-failure`|The provider could not deliver the message after trying for 72 hours. This can happen when the recipient's inbox is full or their phone is off. You can try to send the message again. You’ll still be charged for text messages to phones that are not accepting messages.|Yes|Yes|||
-|`technical-failure`|Email / Text: Your message was not sent because there was a problem between Notify and the provider.<br>You’ll have to try sending your messages again. You will not be charged for text messages that are affected by a technical failure. <br><br>Letter: Notify had an unexpected error while sending to our printing provider. <br><br>You can leave out this argument to ignore this filter.|Yes|Yes|||
-|`accepted`|GOV.UK Notify has sent the letter to the provider to be printed.|||Yes||
-|`received`|The provider has printed and dispatched the letter.|||Yes||
-|`pending-virus-check`|GOV.UK Notify has not completed a virus scan of the precompiled letter file.||||Yes|
-|`virus-scan-failed`|GOV.UK Notify found a potential virus in the precompiled letter file.||||Yes|
-|`validation-failed`|Content in the precompiled letter file is outside the printable area.||||Yes|
+|created|GOV.UK Notify has placed the message in a queue, ready to be sent to the provider. It should only remain in this state for a few seconds.|Yes|Yes|||
+|sending|GOV.UK Notify has sent the message to the provider. The provider will try to deliver the message to the recipient. GOV.UK Notify is waiting for delivery information.|Yes|Yes|||
+|delivered|The message was successfully delivered|Yes|Yes|||
+|sent / sent internationally|The message was sent to an international number. The mobile networks in some countries do not provide any more delivery information.|Yes||||
+|pending|GOV.UK Notify is waiting for more delivery information.<br>GOV.UK Notify received a callback from the provider but the recipient's device has not yet responded. Another callback from the provider determines the final status of the notification.|Yes||||
+|failed|This returns all failure statuses:<br>- permanent-failure<br>- temporary-failure<br>- technical-failure|Yes|Yes|||
+|permanent-failure|The provider could not deliver the message because the email address or phone number was wrong. You should remove these email addresses or phone numbers from your database. You’ll still be charged for text messages to numbers that do not exist.|Yes|Yes|||
+|temporary-failure|The provider could not deliver the message after trying for 72 hours. This can happen when the recipient's inbox is full or their phone is off. You can try to send the message again. You’ll still be charged for text messages to phones that are not accepting messages.|Yes|Yes|||
+|technical-failure|Email / Text: Your message was not sent because there was a problem between Notify and the provider.<br>You’ll have to try sending your messages again. You will not be charged for text messages that are affected by a technical failure. <br><br>Letter: Notify had an unexpected error while sending to our printing provider. <br><br>You can leave out this argument to ignore this filter.|Yes|Yes|||
+|accepted|GOV.UK Notify has sent the letter to the provider to be printed.|||Yes||
+|received|The provider has printed and dispatched the letter.|||Yes||
+|pending-virus-check|GOV.UK Notify is scanning the precompiled letter file for viruses.||||Yes|
+|virus-scan-failed|GOV.UK Notify found a potential virus in the precompiled letter file.||||Yes|
+|validation-failed|Content in the precompiled letter file is outside the printable area.||||Yes|
 
 #### reference (optional)
 
