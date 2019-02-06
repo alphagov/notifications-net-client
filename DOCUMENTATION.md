@@ -299,7 +299,7 @@ This is an invitation-only feature. [Contact the GOV.UK Notify team](https://www
 
 To send a document by email, add a placeholder field to the template and then upload a file. The placeholder field will contain a secure link to download the document.
 
-#### Add a placeholder field to the template
+### Add a placeholder field to the template
 
 1. Sign in to [GOV.UK Notify](https://www.notifications.service.gov.uk/).
 1. Go to the __Templates__ page and select the relevant email template.
@@ -307,7 +307,7 @@ To send a document by email, add a placeholder field to the template and then up
 
 "Download your document at: ((link_to_document))"
 
-#### Upload the document
+### Upload the document
 
 The document you upload must be a PDF file smaller than 2MB.
 
@@ -906,6 +906,14 @@ If the request is not successful, the client returns a `Notify.Exceptions.Notify
 This API call returns one page of up to 250 received text messages. You can get either the most recent messages, or get older messages by specifying a particular notification ID in the `olderThanId` argument.
 
 You can only get the status of messages that are 7 days old or newer.
+
+You can also set up [callbacks](/net.html#callbacks) for received text messages.
+
+## Enable received text messages
+
+Contact the GOV.UK Notify team on the [support page](https://www.notifications.service.gov.uk/support) or through the [Slack channel](https://ukgovernmentdigital.slack.com/messages/govuk-notify) to enable receiving text messages for your service.
+
+## Get a page of received text messages
 
 ### Method
 
