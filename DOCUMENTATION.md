@@ -466,7 +466,8 @@ This is an invitation-only feature. Contact the GOV.UK Notify team on the [suppo
 ```csharp
 LetterNotificationsResponse response = client.SendPrecompiledLetter(
     clientReference,
-    pdfContents
+    pdfContents,
+    postage
     );
 ```
 
@@ -483,13 +484,20 @@ The precompiled letter must be a PDF file. The method sends the contents of the 
 ```csharp
 byte[] pdfContents = File.ReadAllBytes("<PDF file path>");
 ```
+
+#### postage (optional)
+
+You can choose first or second class postage for your precompiled letter. Set the value to `first` for first class, or `second` for second class. If you do not pass in this argument, the postage will default to second class.
+
+
 ### Response
 
-If the request to the client is successful, the client returns a `LetterNotificationResponse` with the `id` and `reference` set:
+If the request to the client is successful, the client returns a `LetterNotificationResponse` with the `id`, `reference` and `postage` set:
 
 ```csharp
 public String id;
 public String reference;
+public String postage;
 ```
 
 ### Error codes
@@ -501,6 +509,8 @@ If the request is not successful, the client returns a `Notify.Exceptions.Notify
 |`400`|`[{`<br>`"error": "BadRequestError",`<br>`"message": "Cannot send letters with a team api key"`<br>`]}`|Use the correct type of [API key](#api-keys)|
 |`400`|`[{`<br>`"error": "BadRequestError",`<br>`"message": "Cannot send letters when service is in trial mode - see https://www.notifications.service.gov.uk/trial-mode"`<br>`}]`|Your service cannot send this notification in [trial mode](https://www.notifications.service.gov.uk/features/using-notify#trial-mode)|
 |`400`|`[{`<br>`"error": "ValidationError",`<br>`"message": "personalisation address_line_1 is a required property"`<br>`}]`|Send a valid PDF file|
+|`400`|`[{`<br>`"error": "ValidationError",`<br>`"message": "reference is a required property"`<br>`}]`|Add a `reference` argument to the method call|
+|`400`|`[{`<br>`"error": "ValidationError",`<br>`"message": "postage invalid. It must be either first or second."`<br>`}]`|Change the value of `postage` argument in the method call to either 'first' or 'second'|
 |`400`|`[{`<br>`"error": "BadRequestError",`<br>`"message": "Service is not allowed to send precompiled letters"`<br>`}]`|Contact the GOV.UK Notify team|
 |`403`|`[{`<br>`"error": "AuthError",`<br>`"message": "Error: Your system clock must be accurate to within 30 seconds"`<br>`}]`|Check your system clock|
 |`403`|`[{`<br>`"error": "AuthError",`<br>`"message": "Invalid token: signature, api token not found"`<br>`}]`|Use the correct API key. Refer to [API keys](#api-keys) for more information|
@@ -590,6 +600,7 @@ public String line5;
 public String line6;
 public String phoneNumber;
 public String postcode;
+public String postage;
 public String reference;
 public String sentAt;
 public String status;

@@ -166,8 +166,8 @@ namespace Notify.Tests.IntegrationTests
 		{
 
 			string reference = System.Guid.NewGuid().ToString();
+			string postage = "first";
                         byte[] pdfContents;
-
                         try
                         {
                             pdfContents = File.ReadAllBytes("../../../IntegrationTests/test_files/one_page_pdf.pdf");
@@ -177,10 +177,11 @@ namespace Notify.Tests.IntegrationTests
                             pdfContents = File.ReadAllBytes("IntegrationTests/test_files/one_page_pdf.pdf");
                         }
 
-			LetterNotificationResponse response = this.client.SendPrecompiledLetter(reference, pdfContents);
+			LetterNotificationResponse response = this.client.SendPrecompiledLetter(reference, pdfContents, postage);
 
 			Assert.IsNotNull(response.id);
 			Assert.AreEqual(response.reference, reference);
+			Assert.AreEqual(response.postage, postage);
 
 			Notification notification = this.client.GetNotificationById(response.id);
 
@@ -189,6 +190,7 @@ namespace Notify.Tests.IntegrationTests
 			Assert.AreEqual(notification.id, response.id);
 
 			Assert.AreEqual(notification.reference, response.reference);
+			Assert.AreEqual(notification.postage, response.postage);
 
 			NotifyAssertions.AssertNotification(notification);
 		}
