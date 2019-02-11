@@ -16,7 +16,7 @@ namespace Notify.Models.Responses
                 return false;
             }
 
-            return 
+            return
                 id == resp.id &&
                 reference == resp.reference &&
                 uri == resp.uri &&

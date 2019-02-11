@@ -28,6 +28,7 @@ namespace Notify.Models
         [JsonProperty("phone_number")]
         public string phoneNumber;
         public string postcode;
+        public string postage;
         public string reference;
         [JsonProperty("sent_at")]
         public string sentAt;
@@ -58,6 +59,7 @@ namespace Notify.Models
                 line6 == note.line6 &&
                 phoneNumber == note.phoneNumber &&
                 postcode == note.postcode &&
+                postage == note.postage &&
                 reference == note.reference &&
                 sentAt == note.sentAt &&
                 status == note.status &&

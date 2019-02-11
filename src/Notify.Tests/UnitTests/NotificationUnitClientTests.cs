@@ -560,6 +560,29 @@ namespace Notify.Tests.UnitTests
         }
 
         [Test, Category("Unit/NotificationClient")]
+        public void SendPrecompiledLetterNotificationGeneratesExpectedRequestWithPostage()
+        {
+            JObject expected = new JObject
+            {
+                { "reference", Constants.fakeNotificationReference },
+                { "content", "JVBERi0xLjUgdGVzdHBkZg==" },
+                { "postage", "first" }
+            };
+
+            MockRequest(Constants.fakeTemplatePreviewResponseJson,
+                client.SEND_LETTER_NOTIFICATION_URL,
+                AssertValidRequest,
+                HttpMethod.Post,
+                AssertGetExpectedContent, expected.ToString(Formatting.None));
+
+            LetterNotificationResponse response = client.SendPrecompiledLetter(
+                    Constants.fakeNotificationReference,
+                    Encoding.UTF8.GetBytes("%PDF-1.5 testpdf"),
+                    "first"
+            );
+        }
+
+        [Test, Category("Unit/NotificationClient")]
         public void SendPrecompiledLetterNotificationGeneratesExpectedResponse()
         {
             LetterNotificationResponse expectedResponse = JsonConvert.DeserializeObject<LetterNotificationResponse>(Constants.fakePrecompiledLetterNotificationResponseJson);
@@ -570,6 +593,7 @@ namespace Notify.Tests.UnitTests
 
             Assert.IsNotNull(expectedResponse.id);
             Assert.IsNotNull(expectedResponse.reference);
+            Assert.IsNotNull(expectedResponse.postage);
             Assert.IsNull(expectedResponse.content);
             Assert.IsTrue(expectedResponse.Equals(actualResponse));
 

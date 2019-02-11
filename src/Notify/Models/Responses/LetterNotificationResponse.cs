@@ -2,6 +2,7 @@
 {
     public class LetterNotificationResponse : NotificationResponse
     {
+        public string postage;
         public LetterResponseContent content;
 
         public override bool Equals(object response)
@@ -11,7 +12,7 @@
                 return false;
             }
 
-            return (content == resp.content || content.Equals(resp.content)) && base.Equals(resp);
+            return (content == resp.content || content.Equals(resp.content)) && base.Equals(resp) && (postage == resp.postage);
         }
 
         public override int GetHashCode()

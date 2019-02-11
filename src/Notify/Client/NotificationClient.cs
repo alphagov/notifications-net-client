@@ -173,13 +173,19 @@ namespace Notify.Client
             return JsonConvert.DeserializeObject<LetterNotificationResponse>(response);            
         }
 
-        public LetterNotificationResponse SendPrecompiledLetter(string clientReference, byte[] pdfContents)
+        public LetterNotificationResponse SendPrecompiledLetter(string clientReference, byte[] pdfContents,
+            string postage = null)
         {
             var requestParams = new JObject
             {
                 {"reference", clientReference},
                 {"content", System.Convert.ToBase64String(pdfContents)}
             };
+
+            if (postage != null)
+            {
+                requestParams.Add(new JProperty("postage", postage));
+            }
 
             var response = this.POST(SEND_LETTER_NOTIFICATION_URL, requestParams.ToString(Formatting.None));
 

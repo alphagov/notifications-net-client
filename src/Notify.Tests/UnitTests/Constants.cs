@@ -31,6 +31,7 @@ namespace Notify.Tests.UnitTests
                             ""line_6"": null,
                             ""phone_number"": ""+447588767647"",
                             ""postcode"": null,
+                            ""postage"": null,
                             ""reference"": null,
                             ""sent_at"": ""2016-11-22T16:16:09.885808Z"",
                             ""status"": ""sending"",
@@ -63,6 +64,7 @@ namespace Notify.Tests.UnitTests
                             ""line_6"": null,
                             ""phone_number"": ""+447588767647"",
                             ""postcode"": null,
+                            ""postage"": null,
                             ""reference"": null,
                             ""sent_at"": ""2016-11-22T16:16:09.885808Z"",
                             ""status"": ""sending"",
@@ -86,6 +88,7 @@ namespace Notify.Tests.UnitTests
                             ""line_6"": null,
                             ""phone_number"": null,
                             ""postcode"": null,
+                            ""postage"": null,
                             ""reference"": null,
                             ""sent_at"": ""2016-11-23T16:16:09.885808Z"",
                             ""status"": ""sending"",
@@ -119,6 +122,7 @@ namespace Notify.Tests.UnitTests
                             ""line_6"": null,
                             ""phone_number"": ""+447588767647"",
                             ""postcode"": null,
+                            ""postage"": null,
                             ""reference"": null,
                             ""sent_at"": ""2016-11-22T16:16:09.885808Z"",
                             ""status"": ""sending"",
@@ -142,6 +146,7 @@ namespace Notify.Tests.UnitTests
                             ""line_6"": null,
                             ""phone_number"": ""+447588767647"",
                             ""postcode"": null,
+                            ""postage"": null,
                             ""reference"": null,
                             ""sent_at"": ""2016-11-24T16:16:09.885808Z"",
                             ""status"": ""sending"",
@@ -176,6 +181,7 @@ namespace Notify.Tests.UnitTests
                             ""line_6"": null,
                             ""phone_number"": null,
                             ""postcode"": null,
+                            ""postage"": null,
                             ""reference"": null,
                             ""sent_at"": ""2016-11-22T16:16:09.885808Z"",
                             ""status"": ""sending"",
@@ -199,6 +205,7 @@ namespace Notify.Tests.UnitTests
                             ""line_6"": null,
                             ""phone_number"": null,
                             ""postcode"": null,
+                            ""postage"": null,
                             ""reference"": null,
                             ""sent_at"": ""2016-11-24T16:16:09.885808Z"",
                             ""status"": ""sending"",
@@ -232,6 +239,7 @@ namespace Notify.Tests.UnitTests
                             ""line_6"": null,
                             ""phone_number"": null,
                             ""postcode"": ""N1"",
+                            ""postage"": ""second"",
                             ""reference"": null,
                             ""sent_at"": ""2016-11-22T16:16:09.885808Z"",
                             ""status"": ""sending"",
@@ -255,6 +263,7 @@ namespace Notify.Tests.UnitTests
                             ""line_6"": null,
                             ""phone_number"": null,
                             ""postcode"": ""N1"",
+                            ""postage"": ""first"",
                             ""reference"": null,
                             ""sent_at"": ""2016-11-24T16:16:09.885808Z"",
                             ""status"": ""sending"",
@@ -456,11 +465,10 @@ namespace Notify.Tests.UnitTests
                 return @"{
                             ""id"": ""731b9c83-563f-4b59-afc5-87e9ca717833"",
                             ""reference"":  ""some-client-ref"",
+                            ""postage"": ""second""
                         }";
             }
         }
 
     }
 }
-
-
