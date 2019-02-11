@@ -1,3 +1,9 @@
+## [2.4.0] - 2018-02-11
+
+* Add an optional `postage` argument to `SendPrecompiledLetter`.
+* Add `postage` attribute to `LetterNotificationResponse` model.
+* Add `postage` attribute to `Notification` model.
+
 ## [2.3.0] - 2018-10-02
 
 * Implement the `INotificationClient` interface to make mocking easier (see https://github.com/alphagov/notifications-net-client/pull/57)
