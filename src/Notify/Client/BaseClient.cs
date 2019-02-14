@@ -7,6 +7,7 @@ using System;
 using System.Net.Http;
 using System.Reflection;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace Notify.Client
 {
@@ -37,18 +38,18 @@ namespace Notify.Client
             this.client.AddUserAgent(NOTIFY_CLIENT_NAME + productVersion);
         }
 
-        public string GET(string url)
+        public async Task<string> GET(string url)
         {
-            return MakeRequest(url, HttpMethod.Get);
+            return await MakeRequest(url, HttpMethod.Get);
         }
 
-        public string POST(string url, string json)
+        public async Task<string> POST(string url, string json)
         {
             var content = new StringContent(json, Encoding.UTF8, "application/json");
-            return MakeRequest(url, HttpMethod.Post, content);
+            return await MakeRequest(url, HttpMethod.Post, content);
         }
 
-        public string MakeRequest(string url, HttpMethod method, HttpContent content = null)
+        public async Task<string> MakeRequest(string url, HttpMethod method, HttpContent content = null)
         {
             var request = new HttpRequestMessage(method, url);
 
@@ -64,7 +65,7 @@ namespace Notify.Client
 
             try
             {
-                response = this.client.SendAsync(request);
+                response = await this.client.SendAsync(request);
             }
             catch (AggregateException ae)
             {
@@ -79,7 +80,7 @@ namespace Notify.Client
                 throw ae.Flatten();
             }
 
-            var responseContent = response.Content.ReadAsStringAsync().Result;
+            var responseContent = await response.Content.ReadAsStringAsync();
 
             if (response.IsSuccessStatusCode)
             {
