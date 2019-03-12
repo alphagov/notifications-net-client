@@ -1,3 +1,7 @@
+## [2.4.1] - 2019-03-12
+
+* Added GetAllTemplates, GenerateTemplatePreview, GetTemplateById and GetTemplateByIdAndVersion to the INoficiationClient interface.
+
 ## [2.4.0] - 2018-02-11
 
 * Add an optional `postage` argument to `SendPrecompiledLetter`.

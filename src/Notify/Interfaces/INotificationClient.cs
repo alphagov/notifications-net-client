@@ -13,5 +13,13 @@ namespace Notify.Interfaces
         SmsNotificationResponse SendSms(string mobileNumber, string templateId, Dictionary<string, dynamic> personalisation = null, string clientReference = null, string smsSenderId = null);
 
         EmailNotificationResponse SendEmail(string emailAddress, string templateId, Dictionary<string, dynamic> personalisation = null, string clientReference = null, string emailReplyToId = null);
+
+        TemplateList GetAllTemplates(string templateType = "");
+
+        TemplatePreviewResponse GenerateTemplatePreview(string templateId, Dictionary<string, dynamic> personalisation = null);
+        
+        TemplateResponse GetTemplateById(string templateId);
+
+        TemplateResponse GetTemplateByIdAndVersion(string templateId, int version = 0);
     }
 }
