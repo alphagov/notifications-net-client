@@ -4,16 +4,18 @@ using Notify.Exceptions;
 using Notify.Interfaces;
 using Notify.Models;
 using Notify.Models.Responses;
+using System;
 using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Threading.Tasks;
 
 namespace Notify.Client
 {
-    public class NotificationClient : BaseClient, INotificationClient
+    public class NotificationClient : BaseClient, INotificationClient, IAsyncNotificationClient
     {
         public string GET_RECEIVED_TEXTS_URL = "v2/received-text-messages";
         public string GET_NOTIFICATION_URL = "v2/notifications/";
@@ -39,11 +41,11 @@ namespace Notify.Client
         {
         }
 
-        public Notification GetNotificationById(string notificationId)
+        public async Task<Notification> GetNotificationByIdAsync(string notificationId)
         {
             var url = GET_NOTIFICATION_URL + notificationId;
 
-            var response = this.GET(url);
+            var response = await this.GET(url);
 
             try
             {
@@ -68,7 +70,7 @@ namespace Notify.Client
             return "?" + string.Join("&", segments);
         }
 
-        public NotificationList GetNotifications(string templateType = "", string status = "", string reference = "",
+        public async Task<NotificationList> GetNotificationsAsync(string templateType = "", string status = "", string reference = "",
             string olderThanId = "")
         {
             var query = new NameValueCollection();
@@ -93,13 +95,13 @@ namespace Notify.Client
             }
 
             var finalUrl = GET_ALL_NOTIFICATIONS_URL + ToQueryString(query);
-            var response = GET(finalUrl);
+            var response = await GET(finalUrl);
 
             var notifications = JsonConvert.DeserializeObject<NotificationList>(response);
             return notifications;
         }
 
-        public TemplateList GetAllTemplates(string templateType = "")
+        public async Task<TemplateList> GetAllTemplatesAsync(string templateType = "")
         {
             var finalUrl = string.Format(
                 "{0}{1}",
@@ -107,14 +109,14 @@ namespace Notify.Client
                 templateType == string.Empty ? string.Empty : TYPE_PARAM + templateType
             );
 
-            var response = GET(finalUrl);
+            var response = await GET(finalUrl);
 
             var templateList = JsonConvert.DeserializeObject<TemplateList>(response);
 
             return templateList;
         }
 
-        public ReceivedTextListResponse GetReceivedTexts(string olderThanId = "")
+        public async Task<ReceivedTextListResponse> GetReceivedTextsAsync(string olderThanId = "")
         {
             var finalUrl = string.Format(
                 "{0}{1}",
@@ -122,14 +124,14 @@ namespace Notify.Client
                 string.IsNullOrWhiteSpace(olderThanId) ? "" : "?older_than=" + olderThanId
             );
 
-            var response = this.GET(finalUrl);
+            var response = await this.GET(finalUrl);
 
             var receivedTexts = JsonConvert.DeserializeObject<ReceivedTextListResponse>(response);
 
             return receivedTexts;
         }
 
-        public SmsNotificationResponse SendSms(string mobileNumber, string templateId,
+        public async Task<SmsNotificationResponse> SendSmsAsync(string mobileNumber, string templateId,
             Dictionary<string, dynamic> personalisation = null, string clientReference = null,
             string smsSenderId = null)
         {
@@ -141,12 +143,12 @@ namespace Notify.Client
                 o.Add(new JProperty("sms_sender_id", smsSenderId));
             }
 
-            var response = POST(SEND_SMS_NOTIFICATION_URL, o.ToString(Formatting.None));
+            var response = await POST(SEND_SMS_NOTIFICATION_URL, o.ToString(Formatting.None));
 
             return JsonConvert.DeserializeObject<SmsNotificationResponse>(response);            
         }
 
-        public EmailNotificationResponse SendEmail(string emailAddress, string templateId,
+        public async Task<EmailNotificationResponse> SendEmailAsync(string emailAddress, string templateId,
             Dictionary<string, dynamic> personalisation = null, string clientReference = null,
             string emailReplyToId = null)
         {
@@ -158,23 +160,22 @@ namespace Notify.Client
                 o.Add(new JProperty("email_reply_to_id", emailReplyToId));
             }
 
-            var response = POST(SEND_EMAIL_NOTIFICATION_URL, o.ToString(Formatting.None));
+            var response = await POST(SEND_EMAIL_NOTIFICATION_URL, o.ToString(Formatting.None));
 
             return JsonConvert.DeserializeObject<EmailNotificationResponse>(response);
         }
 
-        public LetterNotificationResponse SendLetter(string templateId, Dictionary<string, dynamic> personalisation,
+        public async Task<LetterNotificationResponse> SendLetterAsync(string templateId, Dictionary<string, dynamic> personalisation,
             string clientReference = null)
         {
             var o = CreateRequestParams(templateId, personalisation, clientReference);
 
-            var response = this.POST(SEND_LETTER_NOTIFICATION_URL, o.ToString(Formatting.None));
+            var response = await this.POST(SEND_LETTER_NOTIFICATION_URL, o.ToString(Formatting.None));
 
             return JsonConvert.DeserializeObject<LetterNotificationResponse>(response);            
         }
 
-        public LetterNotificationResponse SendPrecompiledLetter(string clientReference, byte[] pdfContents,
-            string postage = null)
+        public async Task<LetterNotificationResponse> SendPrecompiledLetterAsync(string clientReference, byte[] pdfContents, string postage = null)
         {
             var requestParams = new JObject
             {
@@ -187,27 +188,27 @@ namespace Notify.Client
                 requestParams.Add(new JProperty("postage", postage));
             }
 
-            var response = this.POST(SEND_LETTER_NOTIFICATION_URL, requestParams.ToString(Formatting.None));
+            var response = await this.POST(SEND_LETTER_NOTIFICATION_URL, requestParams.ToString(Formatting.None));
 
             return JsonConvert.DeserializeObject<LetterNotificationResponse>(response);
         }
 
-        public TemplateResponse GetTemplateById(string templateId)
+        public async Task<TemplateResponse> GetTemplateByIdAsync(string templateId)
         {
             var url = GET_TEMPLATE_URL + templateId;
 
-            return GetTemplateFromURL(url);
+            return await GetTemplateFromURLAsync(url);
         }
 
-        public TemplateResponse GetTemplateByIdAndVersion(string templateId, int version = 0)
+        public async Task<TemplateResponse> GetTemplateByIdAndVersionAsync(string templateId, int version = 0)
         {
             var pattern = "{0}{1}" + (version > 0 ? VERSION_PARAM + "{2}" : "");
             var url = string.Format(pattern, GET_TEMPLATE_URL, templateId, version);
 
-            return GetTemplateFromURL(url);
+            return await GetTemplateFromURLAsync(url);
         }
 
-        public TemplatePreviewResponse GenerateTemplatePreview(string templateId,
+        public async Task<TemplatePreviewResponse> GenerateTemplatePreviewAsync(string templateId,
             Dictionary<string, dynamic> personalisation = null)
         {
             var url = string.Format("{0}{1}/preview", GET_TEMPLATE_URL, templateId);
@@ -217,7 +218,7 @@ namespace Notify.Client
                 {"personalisation", JObject.FromObject(personalisation)}
             };
 
-            var response = this.POST(url, o.ToString(Formatting.None));
+            var response = await this.POST(url, o.ToString(Formatting.None));
 
             try
             {
@@ -241,9 +242,9 @@ namespace Notify.Client
             };
         }
 
-        private TemplateResponse GetTemplateFromURL(string url)
+        private async Task<TemplateResponse> GetTemplateFromURLAsync(string url)
         {
-            var response = this.GET(url);
+            var response = await this.GET(url);
 
             try
             {
@@ -278,6 +279,155 @@ namespace Notify.Client
             }
 
             return o;
+        }
+
+        private static Exception HandleAggregateException(AggregateException ex)
+        {
+            if (ex == null)
+            {
+                throw new ArgumentNullException("ex");
+            }
+
+            if (ex.InnerExceptions != null && ex.InnerExceptions.Count == 1)
+            {
+                return ex.InnerException;
+            }
+            else
+            {
+                return ex;
+            }
+        }
+
+        public TemplatePreviewResponse GenerateTemplatePreview(string templateId, Dictionary<string, dynamic> personalisation = null)
+        {
+            try
+            {
+                return GenerateTemplatePreviewAsync(templateId, personalisation).Result;
+            }
+            catch (AggregateException ex)
+            {
+                throw HandleAggregateException(ex);
+            }
+        }
+
+        public TemplateList GetAllTemplates(string templateType = "")
+        {
+            try
+            {
+                return GetAllTemplatesAsync(templateType).Result;
+            }
+            catch (AggregateException ex)
+            {
+                throw HandleAggregateException(ex);
+            }
+        }
+
+        public Notification GetNotificationById(string notificationId)
+        {
+            try
+            {
+                return GetNotificationByIdAsync(notificationId).Result;
+            }
+            catch (AggregateException ex)
+            {
+                throw HandleAggregateException(ex);
+            }
+        }
+
+        public NotificationList GetNotifications(string templateType = "", string status = "", string reference = "", string olderThanId = "")
+        {
+            try
+            {
+                return GetNotificationsAsync(templateType, status, reference, olderThanId).Result;
+            }
+            catch (AggregateException ex)
+            {
+                throw HandleAggregateException(ex);
+            }
+        }
+
+        public ReceivedTextListResponse GetReceivedTexts(string olderThanId = "")
+        {
+            try
+            {
+                return GetReceivedTextsAsync(olderThanId).Result;
+            }
+            catch (AggregateException ex)
+            {
+                throw HandleAggregateException(ex);
+            }
+        }
+
+        public TemplateResponse GetTemplateById(string templateId)
+        {
+            try
+            {
+                return GetTemplateByIdAsync(templateId).Result;
+            }
+            catch (AggregateException ex)
+            {
+                throw HandleAggregateException(ex);
+            }
+        }
+
+        public TemplateResponse GetTemplateByIdAndVersion(string templateId, int version = 0)
+        {
+            try
+            {
+                return GetTemplateByIdAndVersionAsync(templateId, version).Result;
+            }
+            catch (AggregateException ex)
+            {
+                throw HandleAggregateException(ex);
+            }
+        }
+
+        public SmsNotificationResponse SendSms(string mobileNumber, string templateId, Dictionary<string, dynamic> personalisation = null, string clientReference = null, string smsSenderId = null)
+        {
+            try
+            {
+                return SendSmsAsync(mobileNumber, templateId, personalisation, clientReference, smsSenderId).Result;
+            }
+            catch (AggregateException ex)
+            {
+                throw HandleAggregateException(ex);
+            }
+        }
+
+        public EmailNotificationResponse SendEmail(string emailAddress, string templateId, Dictionary<string, dynamic> personalisation = null, string clientReference = null, string emailReplyToId = null)
+        {
+            try
+            {
+                return SendEmailAsync(emailAddress, templateId, personalisation, clientReference, emailReplyToId).Result;
+            }
+            catch (AggregateException ex)
+            {
+                throw HandleAggregateException(ex);
+            }
+        }
+
+        public LetterNotificationResponse SendLetter(string templateId, Dictionary<string, dynamic> personalisation, string clientReference = null)
+        {
+            try
+            {
+                return SendLetterAsync(templateId, personalisation, clientReference).Result;
+            }
+            catch (AggregateException ex)
+            {
+                throw HandleAggregateException(ex);
+            }
+        }
+
+        public LetterNotificationResponse SendPrecompiledLetter(string clientReference, byte[] pdfContents, string postage = null)
+        {
+            try
+            {
+                return SendPrecompiledLetterAsync(clientReference, pdfContents, postage).Result;
+            }
+            catch (AggregateException ex)
+            {
+                throw HandleAggregateException(ex);
+            }
         }
     }
 }

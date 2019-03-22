@@ -1,3 +1,7 @@
+## [2.5.0] - 2018-02-14
+
+* Implement asynchronous versions of the NotificationClient methods
+
 ## [2.4.0] - 2018-02-11
 
 * Add an optional `postage` argument to `SendPrecompiledLetter`.
