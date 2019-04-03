@@ -61,6 +61,16 @@ To get an API key, [sign in to GOV.UK Notify](https://www.notifications.service.
 
 If you use a proxy, you must set the proxy configuration in the `web.config` file. Refer to the [Microsoft documentation on proxy configuration](https://docs.microsoft.com/en-us/dotnet/framework/network-programming/proxy-configuration) for more information.
 
+```csharp
+using Notify.Client;
+using Notify.Models;
+using Notify.Models.Responses;
+using System.Net.Http;
+
+var httpClientWithProxy = new HttpClientWrapper(new HttpClient(...));
+var client = new NotificationClient(httpClientWithProxy, apiKey);
+```
+
 # Send a message
 
 You can use GOV.UK Notify to send text messages, emails and letters.
