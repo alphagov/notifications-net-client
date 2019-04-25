@@ -447,11 +447,10 @@ public class Template
     public String uri;
     public Int32 version;
 }
-public class LetterResponseContent
-{
+public class LetterResponseContent{
     public string body;
     public string subject;
-
+}
 ```
 
 ### Error codes
@@ -504,27 +503,15 @@ You can choose first or second class postage for your precompiled letter. Set th
 
 ### Response
 
-If the request to the client is successful, the client returns a `LetterNotificationResponse` with the `id`, `reference` and `postage` sets the other attributes are null:
+If the request to the client is successful, the client returns a `LetterNotificationResponse` with the `id`, `reference` and `postage`:
 
 ```csharp
 public String id;
 public String reference;
 public String postage;
-public String uri;
-public Template template;
-public LetterResponseContent content;
-
-public class Template
-{
-    public String id;
-    public String uri;
-    public Int32 version;
-}
-
-public class LetterResponseContent
-{
-    public string body;
-    public string subject;
+public String uri;  // null for this response
+public Template template;  // null for this response
+public LetterResponseContent content;  // null for this response
 
 ```
 
