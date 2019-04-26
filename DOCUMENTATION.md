@@ -156,17 +156,20 @@ You can leave out this argument if your service only has one text message sender
 If the request to the client is successful, the client returns an `SmsNotificationResponse`:
 
 ```csharp
-public String fromNumber;
-public String body;
 public String id;
 public String reference;
 public String uri;
 public Template template;
+public SmsResponseContent;
 
 public class Template {
     public String id;
     public String uri;
     public Int32 version;
+}
+public class SmsResponseContent{
+    public string body;
+    public string fromNumber;
 }
 
 ```
@@ -270,19 +273,21 @@ You can leave out this argument if your service only has one email reply-to addr
 If the request to the client is successful, the client returns an `EmailNotificationResponse`:
 
 ```csharp
-public String fromEmail;
-public String body;
-public String subject;
 public String id;
 public String reference;
 public String uri;
 public Template template;
+public EmailResponseContent content;
 
-public class Template
-{
+public class Template{
     public String id;
     public String uri;
     public Int32 version;
+}
+public class EmailResponseContent{
+  public String fromEmail;
+  public String body;
+  public String subject;
 }
 ```
 
@@ -440,17 +445,21 @@ If the request to the client is successful, the client returns a `LetterNotifica
 
 ```csharp
 public String id;
-public String body;
-public String subject;
 public String reference;
 public String uri;
 public Template template;
+public string postage;
+public LetterResponseContent content;
 
 public class Template
 {
     public String id;
     public String uri;
     public Int32 version;
+}
+public class LetterResponseContent{
+    public string body;
+    public string subject;
 }
 ```
 
@@ -504,12 +513,16 @@ You can choose first or second class postage for your precompiled letter. Set th
 
 ### Response
 
-If the request to the client is successful, the client returns a `LetterNotificationResponse` with the `id`, `reference` and `postage` set:
+If the request to the client is successful, the client returns a `LetterNotificationResponse` with the `id`, `reference` and `postage`:
 
 ```csharp
 public String id;
 public String reference;
 public String postage;
+public String uri;  // null for this response
+public Template template;  // null for this response
+public LetterResponseContent content;  // null for this response
+
 ```
 
 ### Error codes
@@ -618,6 +631,16 @@ public String sentAt;
 public String status;
 public Template template;
 public String type;
+public string createdByName;
+
+public class Template
+{
+    public String id;
+    public String uri;
+    public Int32 version;
+}
+
+
 ```
 
 ### Error codes
