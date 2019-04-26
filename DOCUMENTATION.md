@@ -2,6 +2,8 @@
 
 This documentation is for developers interested in using the GOV.UK Notify .NET client to send emails (including documents), text messages or letters. GOV.UK Notify supports .NET framework 4.6.2 and .NET Core 2.0.
 
+We recommend that you use this client library rather than use the [GOV.UK Notify API](https://github.com/alphagov/notifications-api) directly, as there is no documentation for using the API in this way.
+
 # Set up the client
 
 ## Prerequisites
