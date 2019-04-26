@@ -3,7 +3,7 @@
   <PropertyGroup>
     <RestoreProjectStyle>PackageReference</RestoreProjectStyle>
     <TargetFrameworks>netstandard2.0;netcoreapp2.0;net462</TargetFrameworks>
-    <Version>2.5.0</Version>
+    <Version>2.5.1</Version>
     <Authors>GOV.UK Notify</Authors>
     <Description>GOV.UK .NET Notify Client</Description>
     <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
@@ -16,12 +16,12 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="JWT" Version="3.1.1" />
+    <PackageReference Include="JWT" Version="5.0.1" />
     <PackageReference Include="Newtonsoft.Json" Version="10.0.3" />
     <PackageReference Include="System.Collections.Specialized" Version="4.3.0" />
     <PackageReference Include="System.Reflection" Version="4.3.0" />
     <PackageReference Include="System.Runtime.Extensions" Version="4.3.0" />
-  </ItemGroup>  
+  </ItemGroup>
 
   <ItemGroup Condition=" '$(TargetFramework)' == 'net462' ">
     <PackageReference Include="System.Net.Http" Version="4.3.3" />
