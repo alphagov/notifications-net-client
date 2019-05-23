@@ -18,6 +18,14 @@ The GOV.UK Notify client deploys to [Bintray](https://bintray.com/) [external li
 
 You can install the GOV.UK Notify client package using either the command line or Microsoft Visual Studio.
 
+<div class="govuk-warning-text">
+  <span class="govuk-warning-text__icon" aria-hidden="true">!</span>
+  <strong class="govuk-warning-text__text">
+    <span class="govuk-warning-text__assistive">Warning</span>
+    The latest version (2.5.0) does not work properly unless your code is asynchronous. Until this problem is fixed you should install the previous version (2.4.0).
+  </strong>
+</div>
+
 ### Use the command line
 
 Go to your project directory and run the following in the command line to install the client package:
