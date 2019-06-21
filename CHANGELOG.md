@@ -1,12 +1,12 @@
-## [2.5.0] - 2018-02-14
+## [2.5.1] - 2019-04-26
 
 * Update JWT version to the latest
 
-## [2.5.0] - 2018-02-14
+## [2.5.0] - 2019-02-14
 
 * Implement asynchronous versions of the NotificationClient methods
 
-## [2.4.0] - 2018-02-11
+## [2.4.0] - 2019-02-11
 
 * Add an optional `postage` argument to `SendPrecompiledLetter`.
 * Add `postage` attribute to `LetterNotificationResponse` model.
