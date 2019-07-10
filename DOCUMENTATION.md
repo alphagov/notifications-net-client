@@ -316,13 +316,13 @@ If the request is not successful, the client returns a `Notify.Exceptions.Notify
 |`500`|`[{`<br>`"error": "Exception",`<br>`"message": "Internal server error"`<br>`}]`|Notify was unable to process the request, resend your notification.|
 |N/A|`System.ArgumentException("Document is larger than 2MB")`|Document size was too large, upload a smaller file|
 
-## Send a document by email
+## Send a file by email
 
 Send files without the need for email attachments.
 
-This is an invitation-only feature. [Contact the GOV.UK Notify team](https://www.notifications.service.gov.uk/support) to enable this function for your service.
+This is an invitation-only feature. [Contact the GOV.UK Notify team](https://www.notifications.service.gov.uk/support/ask-question-give-feedback) to enable this function for your service.
 
-To send a document by email, add a placeholder field to the template and then upload a file. The placeholder field will contain a secure link to download the document.
+To send a file by email, add a placeholder field to the template and then upload a file. The placeholder field will contain a secure link to download the file.
 
 ### Add a placeholder field to the template
 
