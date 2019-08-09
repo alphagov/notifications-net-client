@@ -212,7 +212,7 @@ namespace Notify.Tests.UnitTests
             MockRequest(Constants.fakeTemplatePreviewResponseJson,
                 client.GET_TEMPLATE_URL + Constants.fakeTemplateId + "/preview", AssertValidRequest, HttpMethod.Post);
 
-            var response = client.GenerateTemplatePreview(Constants.fakeTemplateId, personalisation);
+            var response = client.GenerateTemplatePreviewAsync(Constants.fakeTemplateId, personalisation);
         }
 
         [Test, Category("Unit/NotificationClient")]
@@ -233,7 +233,7 @@ namespace Notify.Tests.UnitTests
                 HttpMethod.Post,
                 AssertGetExpectedContent, expected.ToString(Formatting.None));
 
-            client.GenerateTemplatePreview(Constants.fakeTemplateId, personalisation);
+            client.GenerateTemplatePreviewAsync(Constants.fakeTemplateId, personalisation);
         }
 
         [Test, Category("Unit/NotificationClient")]
@@ -250,7 +250,7 @@ namespace Notify.Tests.UnitTests
         {
             const string type = "sms";
             MockRequest(Constants.fakeTemplateSmsListResponseJson,
-                         client.GET_ALL_TEMPLATES_URL+ client.TYPE_PARAM + type, AssertValidRequest);
+                         client.GET_ALL_TEMPLATES_URL + client.TYPE_PARAM + type, AssertValidRequest);
 
             client.GetAllTemplates(type);
         }
@@ -261,7 +261,7 @@ namespace Notify.Tests.UnitTests
             const string type = "email";
 
             MockRequest(Constants.fakeTemplateEmailListResponseJson,
-                         client.GET_ALL_TEMPLATES_URL+ client.TYPE_PARAM + type, AssertValidRequest);
+                         client.GET_ALL_TEMPLATES_URL + client.TYPE_PARAM + type, AssertValidRequest);
 
             client.GetAllTemplates(type);
         }
@@ -271,7 +271,7 @@ namespace Notify.Tests.UnitTests
         {
             var expectedResponse = JsonConvert.DeserializeObject<TemplateList>(Constants.fakeTemplateEmptyListResponseJson);
 
-               MockRequest(Constants.fakeTemplateEmptyListResponseJson);
+            MockRequest(Constants.fakeTemplateEmptyListResponseJson);
 
             TemplateList templateList = client.GetAllTemplates();
 
@@ -473,7 +473,7 @@ namespace Notify.Tests.UnitTests
         public void PrepareUploadWithLargeDocumentGeneratesAnError()
         {
             Assert.That(
-                    () => { NotificationClient.PrepareUpload(new byte[3*1024*1024]); },
+                    () => { NotificationClient.PrepareUpload(new byte[3 * 1024 * 1024]); },
                     Throws.ArgumentException
                     );
         }
@@ -612,7 +612,7 @@ namespace Notify.Tests.UnitTests
             {
                 method = HttpMethod.Get;
             }
-                
+
             Assert.AreEqual(r.Method, method);
             Assert.AreEqual(r.RequestUri.ToString(), client.BaseUrl + uri);
             Assert.IsNotNull(r.Headers.Authorization);
@@ -624,7 +624,7 @@ namespace Notify.Tests.UnitTests
         private void MockRequest(string content, string uri,
                           Action<string, HttpRequestMessage, HttpMethod> _assertValidRequest = null,
                           HttpMethod method = null,
-                          Action<string, string> _assertGetExpectedContent = null, 
+                          Action<string, string> _assertGetExpectedContent = null,
                           string expected = null,
                           HttpStatusCode status = HttpStatusCode.OK)
         {
@@ -696,7 +696,7 @@ namespace Notify.Tests.UnitTests
             var expectedResponse = JsonConvert.DeserializeObject<EmailNotificationResponse>(Constants.fakeEmailNotificationResponseJson);
 
             MockRequest(Constants.fakeEmailNotificationResponseJson);
-            
+
             var actualResponse = client.SendEmail(Constants.fakeEmail, Constants.fakeTemplateId, personalisation, Constants.fakeNotificationReference, Constants.fakeReplyToId);
 
             Assert.IsTrue(expectedResponse.Equals(actualResponse));

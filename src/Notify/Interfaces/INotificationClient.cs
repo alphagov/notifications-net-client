@@ -6,7 +6,7 @@ namespace Notify.Interfaces
 {
     public interface INotificationClient : IBaseClient
     {
-        TemplatePreviewResponse GenerateTemplatePreview(string templateId, Dictionary<string, dynamic> personalisation = null);
+        TemplatePreviewResponse GenerateTemplatePreviewAsync(string templateId, Dictionary<string, dynamic> personalisation = null);
 
         TemplateList GetAllTemplates(string templateType = "");
 
