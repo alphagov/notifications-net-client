@@ -962,7 +962,7 @@ You can also set up [callbacks](/net.html#callbacks) for received text messages.
 
 ## Enable received text messages
 
-Contact the GOV.UK Notify team on the [support page](https://www.notifications.service.gov.uk/support) or through the [Slack channel](https://ukgovernmentdigital.slack.com/messages/govuk-notify) to enable receiving text messages for your service.
+Contact the GOV.UK Notify team on the [support page](https://www.notifications.service.gov.uk/support) or through the [Slack channel](https://ukgovernmentdigital.slack.com/messages/C0E1ADVPC) to enable receiving text messages for your service.
 
 ## Get a page of received text messages
 
