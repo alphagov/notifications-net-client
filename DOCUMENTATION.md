@@ -322,6 +322,8 @@ This is an invitation-only feature. [Contact the GOV.UK Notify team](https://www
 
 To send a file by email, add a placeholder field to the template and then upload a file. The placeholder field will contain a secure link to download the file.
 
+The links are unique and unguessable. GOV.UK Notify cannot access or decrypt your file.
+
 ### Add a placeholder field to the template
 
 1. Sign in to [GOV.UK Notify](https://www.notifications.service.gov.uk/).
