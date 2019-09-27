@@ -506,7 +506,7 @@ A unique identifier you create. This reference identifies a single unique notifi
 
 #### pdfContents (required for the SendPrecompiledLetter method)
 
-The precompiled letter must be a PDF file which meets [the GOV.UK Notify PDF letter specification](https://docs.notifications.service.gov.uk/documentation/images/notify-pdf-letter-spec-v2.3.pdf). The method sends the contents of the file to GOV.UK Notify.
+The precompiled letter must be a PDF file which meets [the GOV.UK Notify PDF letter specification](https://docs.notifications.service.gov.uk/documentation/images/notify-pdf-letter-spec-v2.4.pdf). The method sends the contents of the file to GOV.UK Notify.
 
 ```csharp
 byte[] pdfContents = File.ReadAllBytes("<PDF file path>");
