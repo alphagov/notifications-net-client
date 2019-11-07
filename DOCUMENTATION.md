@@ -190,7 +190,7 @@ If the request is not successful, the client returns a `Notify.Exceptions.Notify
 
 |error.code|error.message|How to fix|
 |:---|:---|:---|
-|`400`|`[{`<br>`"error": "BadRequestError",`<br>`"message": "Can't send to this recipient using a team-only API key"`<br>`]}`|Use the correct type of [API key](/ruby.html#api-keys)|
+|`400`|`[{`<br>`"error": "BadRequestError",`<br>`"message": "Can't send to this recipient using a team-only API key"`<br>`]}`|Use the correct type of [API key](#api-keys)|
 |`400`|`[{`<br>`"error": "BadRequestError",`<br>`"message": "Can't send to this recipient when service is in trial mode - see https://www.notifications.service.gov.uk/trial-mode"`<br>`}]`|Your service cannot send this notification in [trial mode](https://www.notifications.service.gov.uk/features/using-notify#trial-mode)|
 |`403`|`[{`<br>`"error": "AuthError",`<br>`"message": "Error: Your system clock must be accurate to within 30 seconds"`<br>`}]`|Check your system clock|
 |`403`|`[{`<br>`"error": "AuthError",`<br>`"message": "Invalid token: signature, api token not found"`<br>`}]`|Use the correct API key. Refer to [API keys](#api-keys) for more information|
@@ -604,12 +604,7 @@ Notification notification = client.GetNotificationById(notificationId);
 
 The ID of the notification. You can find the notification ID in the response to the [original notification method call](#response).
 
-You can also find it in your [GOV.UK Notify Dashboard](https://www.notifications.service.gov.uk).
-
-1. Sign in to GOV.UK Notify and select __Dashboard__.
-1. Select either __emails sent__, __text messages sent__ or __letters sent__.
-1. Select the relevant notification.
-1. Copy the notification ID from the end of the page URL, for example `https://www.notifications.service.gov.uk/services/af90d4cb-ae88-4a7c-a197-5c30c7db423b/notification/ID`.
+You can also find it by signing in to [GOV.UK Notify](https://www.notifications.service.gov.uk) and going to the __API integration__ page.
 
 ### Response
 
@@ -851,7 +846,7 @@ If the request is not successful, the client returns a `Notify.Exceptions.Notify
 |`400`|`[{`<br>`"error": "ValidationError",`<br>`"message": "id is not a valid UUID"`<br>`}]`|Check the notification ID|
 |`403`|`[{`<br>`"error": "AuthError",`<br>`"message": "Error: Your system clock must be accurate to within 30 seconds"`<br>`}]`|Check your system clock|
 |`403`|`[{`<br>`"error": "AuthError",`<br>`"message": "Invalid token: signature, api token not found"`<br>`}]`|Use the correct API key. Refer to [API keys](#api-keys) for more information|
-|`404`|`[{`<br>`"error": "NoResultFound",`<br>`"message": "No Result Found"`<br>`}]`|Check your [template ID](/ruby.html#get-a-template-by-id-and-version-arguments-id-required) and [version](#version-required)|
+|`404`|`[{`<br>`"error": "NoResultFound",`<br>`"message": "No Result Found"`<br>`}]`|Check your [template ID](#get-a-template-by-id-and-version-arguments-id-required) and [version](#version-required)|
 
 
 ## Get all templates
@@ -958,7 +953,7 @@ This API call returns one page of up to 250 received text messages. You can get 
 
 You can only get the status of messages that are 7 days old or newer.
 
-You can also set up [callbacks](/net.html#callbacks) for received text messages.
+You can also set up [callbacks](#callbacks) for received text messages.
 
 ## Enable received text messages
 
