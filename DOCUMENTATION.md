@@ -976,7 +976,7 @@ You can also set up [callbacks](#callbacks) for received text messages.
 
 ## Enable received text messages
 
-To let your service receive text message replies, contact the Notify team using the [support page](https://www.notifications.service.gov.uk/support) or [chat to us on Slack](https://ukgovernmentdigital.slack.com/messages/C0E1ADVPC).
+Contact the Notify team using the [support page](https://www.notifications.service.gov.uk/support) or [chat to us on Slack](https://ukgovernmentdigital.slack.com/messages/C0E1ADVPC) to request a unique number for text message replies.
 
 ## Get a page of received text messages
 
