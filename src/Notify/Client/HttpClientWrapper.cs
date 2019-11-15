@@ -2,6 +2,7 @@
 using System;
 using System.Net.Http;
 using System.Net.Http.Headers;
+using System.Threading.Tasks;
 
 namespace Notify.Client
 {
@@ -30,9 +31,9 @@ namespace Notify.Client
             _client.Dispose();
         }
 
-        public HttpResponseMessage SendAsync(HttpRequestMessage request)
+        public async Task<HttpResponseMessage> SendAsync(HttpRequestMessage request)
         {
-            return _client.SendAsync(request).Result;
+            return await _client.SendAsync(request);
         }
 
         public void SetClientBaseAddress()

@@ -1,15 +1,16 @@
 ﻿using System;
 using System.Net.Http;
+using System.Threading.Tasks;
 
 namespace Notify.Interfaces
 {
     public interface IBaseClient
     {
-        string GET(string url);
+        Task<string> GET(string url);
 
-        string POST(string url, string json);
+        Task<string> POST(string url, string json);
 
-        string MakeRequest(string url, HttpMethod method, HttpContent content = null);
+        Task<string> MakeRequest(string url, HttpMethod method, HttpContent content = null);
 
         Tuple<string, string> ExtractServiceIdAndApiKey(string fromApiKey);
 

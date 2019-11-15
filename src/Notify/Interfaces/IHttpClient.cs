@@ -1,11 +1,12 @@
 ﻿using System;
 using System.Net.Http;
+using System.Threading.Tasks;
 
 namespace Notify.Interfaces
 {
     public interface IHttpClient : IDisposable
     {
-        HttpResponseMessage SendAsync(HttpRequestMessage request);
+        Task<HttpResponseMessage> SendAsync(HttpRequestMessage request);
 
         Uri BaseAddress { get; set; }
 

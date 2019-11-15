@@ -16,6 +16,14 @@ The GOV.UK Notify client deploys to [Bintray](https://bintray.com/) [external li
 
 You can install the GOV.UK Notify client package using either the command line or Microsoft Visual Studio.
 
+<div class="govuk-warning-text">
+  <span class="govuk-warning-text__icon" aria-hidden="true">!</span>
+  <strong class="govuk-warning-text__text">
+    <span class="govuk-warning-text__assistive">Warning</span>
+    The latest version (2.5.0) does not work properly unless your code is asynchronous. Until this problem is fixed you should install the previous version (2.4.0).
+  </strong>
+</div>
+
 ### Use the command line
 
 Go to your project directory and run the following in the command line to install the client package:
@@ -60,6 +68,16 @@ var client = new NotificationClient(apiKey);
 To get an API key, [sign in to GOV.UK Notify](https://www.notifications.service.gov.uk/) and go to the __API integration__ page. Refer to the [API keys](#api-keys) section of this documentation for more information.
 
 If you use a proxy, you must set the proxy configuration in the `web.config` file. Refer to the [Microsoft documentation on proxy configuration](https://docs.microsoft.com/en-us/dotnet/framework/network-programming/proxy-configuration) for more information.
+
+```csharp
+using Notify.Client;
+using Notify.Models;
+using Notify.Models.Responses;
+using System.Net.Http;
+
+var httpClientWithProxy = new HttpClientWrapper(new HttpClient(...));
+var client = new NotificationClient(httpClientWithProxy, apiKey);
+```
 
 # Send a message
 
@@ -144,17 +162,20 @@ You can leave out this argument if your service only has one text message sender
 If the request to the client is successful, the client returns an `SmsNotificationResponse`:
 
 ```csharp
-public String fromNumber;
-public String body;
 public String id;
 public String reference;
 public String uri;
 public Template template;
+public SmsResponseContent;
 
 public class Template {
     public String id;
     public String uri;
     public Int32 version;
+}
+public class SmsResponseContent{
+    public string body;
+    public string fromNumber;
 }
 
 ```
@@ -169,7 +190,7 @@ If the request is not successful, the client returns a `Notify.Exceptions.Notify
 
 |error.code|error.message|How to fix|
 |:---|:---|:---|
-|`400`|`[{`<br>`"error": "BadRequestError",`<br>`"message": "Can't send to this recipient using a team-only API key"`<br>`]}`|Use the correct type of [API key](/ruby.html#api-keys)|
+|`400`|`[{`<br>`"error": "BadRequestError",`<br>`"message": "Can't send to this recipient using a team-only API key"`<br>`]}`|Use the correct type of [API key](#api-keys)|
 |`400`|`[{`<br>`"error": "BadRequestError",`<br>`"message": "Can't send to this recipient when service is in trial mode - see https://www.notifications.service.gov.uk/trial-mode"`<br>`}]`|Your service cannot send this notification in [trial mode](https://www.notifications.service.gov.uk/features/using-notify#trial-mode)|
 |`403`|`[{`<br>`"error": "AuthError",`<br>`"message": "Error: Your system clock must be accurate to within 30 seconds"`<br>`}]`|Check your system clock|
 |`403`|`[{`<br>`"error": "AuthError",`<br>`"message": "Invalid token: signature, api token not found"`<br>`}]`|Use the correct API key. Refer to [API keys](#api-keys) for more information|
@@ -258,19 +279,21 @@ You can leave out this argument if your service only has one email reply-to addr
 If the request to the client is successful, the client returns an `EmailNotificationResponse`:
 
 ```csharp
-public String fromEmail;
-public String body;
-public String subject;
 public String id;
 public String reference;
 public String uri;
 public Template template;
+public EmailResponseContent content;
 
-public class Template
-{
+public class Template{
     public String id;
     public String uri;
     public Int32 version;
+}
+public class EmailResponseContent{
+  public String fromEmail;
+  public String body;
+  public String subject;
 }
 ```
 
@@ -291,13 +314,15 @@ If the request is not successful, the client returns a `Notify.Exceptions.Notify
 |`500`|`[{`<br>`"error": "Exception",`<br>`"message": "Internal server error"`<br>`}]`|Notify was unable to process the request, resend your notification.|
 |N/A|`System.ArgumentException("Document is larger than 2MB")`|Document size was too large, upload a smaller file|
 
-## Send a document by email
+## Send a file by email
 
 Send files without the need for email attachments.
 
-This is an invitation-only feature. [Contact the GOV.UK Notify team](https://www.notifications.service.gov.uk/support) to enable this function for your service.
+This is an invitation-only feature. [Contact the GOV.UK Notify team](https://www.notifications.service.gov.uk/support/ask-question-give-feedback) to enable this function for your service.
 
-To send a document by email, add a placeholder field to the template and then upload a file. The placeholder field will contain a secure link to download the document.
+To send a file by email, add a placeholder field to the template and then upload a file. The placeholder field will contain a secure link to download the file.
+
+The links are unique and unguessable. GOV.UK Notify cannot access or decrypt your file.
 
 ### Add a placeholder field to the template
 
@@ -305,11 +330,11 @@ To send a document by email, add a placeholder field to the template and then up
 1. Go to the __Templates__ page and select the relevant email template.
 1. Add a placeholder field to the email template using double brackets. For example:
 
-"Download your document at: ((link_to_document))"
+"Download your file at: ((link_to_document))"
 
-### Upload the document
+### Upload the file
 
-The document you upload must be a PDF file smaller than 2MB.
+The file you upload must be a PDF file smaller than 2MB.
 
 1. Convert the PDF to a `byte[]`.
 1. Pass the `byte[]` to the personalisation argument.
@@ -428,17 +453,21 @@ If the request to the client is successful, the client returns a `LetterNotifica
 
 ```csharp
 public String id;
-public String body;
-public String subject;
 public String reference;
 public String uri;
 public Template template;
+public string postage;
+public LetterResponseContent content;
 
 public class Template
 {
     public String id;
     public String uri;
     public Int32 version;
+}
+public class LetterResponseContent{
+    public string body;
+    public string subject;
 }
 ```
 
@@ -459,8 +488,6 @@ If the request is not successful, the client returns a `Notify.Exceptions.Notify
 
 ## Send a precompiled letter
 
-This is an invitation-only feature. Contact the GOV.UK Notify team on the [support page](https://www.notifications.service.gov.uk/support) or through the [Slack channel](https://ukgovernmentdigital.slack.com/messages/govuk-notify) for more information.
-
 ### Method
 
 ```csharp
@@ -479,7 +506,7 @@ A unique identifier you create. This reference identifies a single unique notifi
 
 #### pdfContents (required for the SendPrecompiledLetter method)
 
-The precompiled letter must be a PDF file. The method sends the contents of the file to GOV.UK Notify.
+The precompiled letter must be a PDF file which meets [the GOV.UK Notify PDF letter specification](https://docs.notifications.service.gov.uk/documentation/images/notify-pdf-letter-spec-v2.4.pdf). The method sends the contents of the file to GOV.UK Notify.
 
 ```csharp
 byte[] pdfContents = File.ReadAllBytes("<PDF file path>");
@@ -492,12 +519,16 @@ You can choose first or second class postage for your precompiled letter. Set th
 
 ### Response
 
-If the request to the client is successful, the client returns a `LetterNotificationResponse` with the `id`, `reference` and `postage` set:
+If the request to the client is successful, the client returns a `LetterNotificationResponse` with the `id`, `reference` and `postage`:
 
 ```csharp
 public String id;
 public String reference;
 public String postage;
+public String uri;  // null for this response
+public Template template;  // null for this response
+public LetterResponseContent content;  // null for this response
+
 ```
 
 ### Error codes
@@ -511,7 +542,6 @@ If the request is not successful, the client returns a `Notify.Exceptions.Notify
 |`400`|`[{`<br>`"error": "ValidationError",`<br>`"message": "personalisation address_line_1 is a required property"`<br>`}]`|Send a valid PDF file|
 |`400`|`[{`<br>`"error": "ValidationError",`<br>`"message": "reference is a required property"`<br>`}]`|Add a `reference` argument to the method call|
 |`400`|`[{`<br>`"error": "ValidationError",`<br>`"message": "postage invalid. It must be either first or second."`<br>`}]`|Change the value of `postage` argument in the method call to either 'first' or 'second'|
-|`400`|`[{`<br>`"error": "BadRequestError",`<br>`"message": "Service is not allowed to send precompiled letters"`<br>`}]`|Contact the GOV.UK Notify team|
 |`403`|`[{`<br>`"error": "AuthError",`<br>`"message": "Error: Your system clock must be accurate to within 30 seconds"`<br>`}]`|Check your system clock|
 |`403`|`[{`<br>`"error": "AuthError",`<br>`"message": "Invalid token: signature, api token not found"`<br>`}]`|Use the correct API key. Refer to [API keys](#api-keys) for more information|
 |`429`|`[{`<br>`"error": "RateLimitError",`<br>`"message": "Exceeded rate limit for key type TEAM/TEST/LIVE of 3000 requests per 60 seconds"`<br>`}]`|Refer to [API rate limits](#api-rate-limits) for more information|
@@ -556,7 +586,7 @@ You can only get the status of messages that are 7 days old or newer.
 |:---|:---|
 |Pending virus check|GOV.UK Notify has not completed a virus scan of the precompiled letter file.|
 |Virus scan failed|GOV.UK Notify found a potential virus in the precompiled letter file.|
-|Validation failed|Content in the precompiled letter file is outside the printable area.|
+|Validation failed|Content in the precompiled letter file is outside the printable area. See the [GOV.UK Notify PDF letter specification](https://docs.notifications.service.gov.uk/documentation/images/notify-pdf-letter-spec-v2.3.pdf) for more information.|
 
 ## Get the status of one message
 
@@ -574,12 +604,7 @@ Notification notification = client.GetNotificationById(notificationId);
 
 The ID of the notification. You can find the notification ID in the response to the [original notification method call](#response).
 
-You can also find it in your [GOV.UK Notify Dashboard](https://www.notifications.service.gov.uk).
-
-1. Sign in to GOV.UK Notify and select __Dashboard__.
-1. Select either __emails sent__, __text messages sent__ or __letters sent__.
-1. Select the relevant notification.
-1. Copy the notification ID from the end of the page URL, for example `https://www.notifications.service.gov.uk/services/af90d4cb-ae88-4a7c-a197-5c30c7db423b/notification/ID`.
+You can also find it by signing in to [GOV.UK Notify](https://www.notifications.service.gov.uk) and going to the __API integration__ page.
 
 ### Response
 
@@ -606,6 +631,16 @@ public String sentAt;
 public String status;
 public Template template;
 public String type;
+public string createdByName;
+
+public class Template
+{
+    public String id;
+    public String uri;
+    public Int32 version;
+}
+
+
 ```
 
 ### Error codes
@@ -811,7 +846,7 @@ If the request is not successful, the client returns a `Notify.Exceptions.Notify
 |`400`|`[{`<br>`"error": "ValidationError",`<br>`"message": "id is not a valid UUID"`<br>`}]`|Check the notification ID|
 |`403`|`[{`<br>`"error": "AuthError",`<br>`"message": "Error: Your system clock must be accurate to within 30 seconds"`<br>`}]`|Check your system clock|
 |`403`|`[{`<br>`"error": "AuthError",`<br>`"message": "Invalid token: signature, api token not found"`<br>`}]`|Use the correct API key. Refer to [API keys](#api-keys) for more information|
-|`404`|`[{`<br>`"error": "NoResultFound",`<br>`"message": "No Result Found"`<br>`}]`|Check your [template ID](/ruby.html#get-a-template-by-id-and-version-arguments-id-required) and [version](#version-required)|
+|`404`|`[{`<br>`"error": "NoResultFound",`<br>`"message": "No Result Found"`<br>`}]`|Check your [template ID](#get-a-template-by-id-and-version-arguments-id-required) and [version](#version-required)|
 
 
 ## Get all templates
@@ -918,11 +953,11 @@ This API call returns one page of up to 250 received text messages. You can get 
 
 You can only get the status of messages that are 7 days old or newer.
 
-You can also set up [callbacks](/net.html#callbacks) for received text messages.
+You can also set up [callbacks](#callbacks) for received text messages.
 
 ## Enable received text messages
 
-Contact the GOV.UK Notify team on the [support page](https://www.notifications.service.gov.uk/support) or through the [Slack channel](https://ukgovernmentdigital.slack.com/messages/govuk-notify) to enable receiving text messages for your service.
+Contact the GOV.UK Notify team on the [support page](https://www.notifications.service.gov.uk/support) or through the [Slack channel](https://ukgovernmentdigital.slack.com/messages/C0E1ADVPC) to enable receiving text messages for your service.
 
 ## Get a page of received text messages
 
