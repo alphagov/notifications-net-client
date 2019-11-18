@@ -40,13 +40,13 @@ namespace Notify.Client
 
         public async Task<string> GET(string url)
         {
-            return await MakeRequest(url, HttpMethod.Get);
+            return await MakeRequest(url, HttpMethod.Get).ConfigureAwait(false);
         }
 
         public async Task<string> POST(string url, string json)
         {
             var content = new StringContent(json, Encoding.UTF8, "application/json");
-            return await MakeRequest(url, HttpMethod.Post, content);
+            return await MakeRequest(url, HttpMethod.Post, content).ConfigureAwait(false);
         }
 
         public async Task<string> MakeRequest(string url, HttpMethod method, HttpContent content = null)
@@ -65,7 +65,7 @@ namespace Notify.Client
 
             try
             {
-                response = await this.client.SendAsync(request);
+                response = await this.client.SendAsync(request).ConfigureAwait(false);
             }
             catch (AggregateException ae)
             {
@@ -80,7 +80,7 @@ namespace Notify.Client
                 throw ae.Flatten();
             }
 
-            var responseContent = await response.Content.ReadAsStringAsync();
+            var responseContent = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
 
             if (response.IsSuccessStatusCode)
             {

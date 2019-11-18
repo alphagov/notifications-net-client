@@ -45,7 +45,7 @@ namespace Notify.Client
         {
             var url = GET_NOTIFICATION_URL + notificationId;
 
-            var response = await this.GET(url);
+            var response = await this.GET(url).ConfigureAwait(false);
 
             try
             {
@@ -95,7 +95,7 @@ namespace Notify.Client
             }
 
             var finalUrl = GET_ALL_NOTIFICATIONS_URL + ToQueryString(query);
-            var response = await GET(finalUrl);
+            var response = await GET(finalUrl).ConfigureAwait(false);
 
             var notifications = JsonConvert.DeserializeObject<NotificationList>(response);
             return notifications;
@@ -109,7 +109,7 @@ namespace Notify.Client
                 templateType == string.Empty ? string.Empty : TYPE_PARAM + templateType
             );
 
-            var response = await GET(finalUrl);
+            var response = await GET(finalUrl).ConfigureAwait(false);
 
             var templateList = JsonConvert.DeserializeObject<TemplateList>(response);
 
@@ -124,7 +124,7 @@ namespace Notify.Client
                 string.IsNullOrWhiteSpace(olderThanId) ? "" : "?older_than=" + olderThanId
             );
 
-            var response = await this.GET(finalUrl);
+            var response = await this.GET(finalUrl).ConfigureAwait(false);
 
             var receivedTexts = JsonConvert.DeserializeObject<ReceivedTextListResponse>(response);
 
@@ -143,7 +143,7 @@ namespace Notify.Client
                 o.Add(new JProperty("sms_sender_id", smsSenderId));
             }
 
-            var response = await POST(SEND_SMS_NOTIFICATION_URL, o.ToString(Formatting.None));
+            var response = await POST(SEND_SMS_NOTIFICATION_URL, o.ToString(Formatting.None)).ConfigureAwait(false);
 
             return JsonConvert.DeserializeObject<SmsNotificationResponse>(response);            
         }
@@ -160,7 +160,7 @@ namespace Notify.Client
                 o.Add(new JProperty("email_reply_to_id", emailReplyToId));
             }
 
-            var response = await POST(SEND_EMAIL_NOTIFICATION_URL, o.ToString(Formatting.None));
+            var response = await POST(SEND_EMAIL_NOTIFICATION_URL, o.ToString(Formatting.None)).ConfigureAwait(false);
 
             return JsonConvert.DeserializeObject<EmailNotificationResponse>(response);
         }
@@ -170,7 +170,7 @@ namespace Notify.Client
         {
             var o = CreateRequestParams(templateId, personalisation, clientReference);
 
-            var response = await this.POST(SEND_LETTER_NOTIFICATION_URL, o.ToString(Formatting.None));
+            var response = await this.POST(SEND_LETTER_NOTIFICATION_URL, o.ToString(Formatting.None)).ConfigureAwait(false);
 
             return JsonConvert.DeserializeObject<LetterNotificationResponse>(response);            
         }
@@ -188,7 +188,7 @@ namespace Notify.Client
                 requestParams.Add(new JProperty("postage", postage));
             }
 
-            var response = await this.POST(SEND_LETTER_NOTIFICATION_URL, requestParams.ToString(Formatting.None));
+            var response = await this.POST(SEND_LETTER_NOTIFICATION_URL, requestParams.ToString(Formatting.None)).ConfigureAwait(false);
 
             return JsonConvert.DeserializeObject<LetterNotificationResponse>(response);
         }
@@ -197,7 +197,7 @@ namespace Notify.Client
         {
             var url = GET_TEMPLATE_URL + templateId;
 
-            return await GetTemplateFromURLAsync(url);
+            return await GetTemplateFromURLAsync(url).ConfigureAwait(false);
         }
 
         public async Task<TemplateResponse> GetTemplateByIdAndVersionAsync(string templateId, int version = 0)
@@ -205,7 +205,7 @@ namespace Notify.Client
             var pattern = "{0}{1}" + (version > 0 ? VERSION_PARAM + "{2}" : "");
             var url = string.Format(pattern, GET_TEMPLATE_URL, templateId, version);
 
-            return await GetTemplateFromURLAsync(url);
+            return await GetTemplateFromURLAsync(url).ConfigureAwait(false);
         }
 
         public async Task<TemplatePreviewResponse> GenerateTemplatePreviewAsync(string templateId,
@@ -218,7 +218,7 @@ namespace Notify.Client
                 {"personalisation", JObject.FromObject(personalisation)}
             };
 
-            var response = await this.POST(url, o.ToString(Formatting.None));
+            var response = await this.POST(url, o.ToString(Formatting.None)).ConfigureAwait(false);
 
             try
             {
@@ -244,7 +244,7 @@ namespace Notify.Client
 
         private async Task<TemplateResponse> GetTemplateFromURLAsync(string url)
         {
-            var response = await this.GET(url);
+            var response = await this.GET(url).ConfigureAwait(false);
 
             try
             {
