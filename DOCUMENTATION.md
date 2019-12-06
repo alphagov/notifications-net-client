@@ -350,7 +350,7 @@ The links are unique and unguessable. GOV.UK Notify cannot access or decrypt you
 
 ### Upload the file
 
-The file you upload must be a PDF file smaller than 2MB.
+The file you upload must be a PDF or CSV file smaller than 2MB. [Contact the GOV.UK Notify team](https://www.notifications.service.gov.uk/support/ask-question-give-feedback) if you need to send other file types.
 
 1. Convert the PDF to a `byte[]`.
 1. Pass the `byte[]` to the personalisation argument.
