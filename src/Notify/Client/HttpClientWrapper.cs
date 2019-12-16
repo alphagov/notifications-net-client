@@ -33,7 +33,7 @@ namespace Notify.Client
 
         public async Task<HttpResponseMessage> SendAsync(HttpRequestMessage request)
         {
-            return await _client.SendAsync(request);
+            return await _client.SendAsync(request).ConfigureAwait(false);
         }
 
         public void SetClientBaseAddress()

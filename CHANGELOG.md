@@ -1,3 +1,7 @@
+## [2.5.2] - 2019-11-18
+
+* Applied fix for issue with synchronous version of NotificationClient API
+
 ## [2.5.1] - 2019-04-26
 
 * Update JWT version to the latest
