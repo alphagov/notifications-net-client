@@ -20,7 +20,7 @@ You can install the GOV.UK Notify client package using either the command line o
   <span class="govuk-warning-text__icon" aria-hidden="true">!</span>
   <strong class="govuk-warning-text__text">
     <span class="govuk-warning-text__assistive">Warning</span>
-    The latest version (2.5.0) does not work properly unless your code is asynchronous. Until this problem is fixed you should install the previous version (2.4.0).
+    Version 2.5.0 will only work if your code is asynchronous. We have fixed this issue in version 2.5.2. [Contact us](https://www.notifications.service.gov.uk/support/ask-question-give-feedback) if you have any problems.
   </strong>
 </div>
 
