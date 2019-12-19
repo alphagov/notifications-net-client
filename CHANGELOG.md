@@ -1,3 +1,7 @@
+## [2.6.0] - 2019-12-20
+
+** Add an optional `includeSpreadsheetUploads` argument to `GetNotifications`.
+
 ## [2.5.2] - 2019-11-18
 
 * Applied fix for issue with synchronous version of NotificationClient API

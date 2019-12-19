@@ -71,7 +71,7 @@ namespace Notify.Client
         }
 
         public async Task<NotificationList> GetNotificationsAsync(string templateType = "", string status = "", string reference = "",
-            string olderThanId = "")
+            string olderThanId = "", bool includeSpreadsheetUploads = false)
         {
             var query = new NameValueCollection();
             if (!string.IsNullOrWhiteSpace(templateType))
@@ -92,6 +92,11 @@ namespace Notify.Client
             if (!string.IsNullOrWhiteSpace(olderThanId))
             {
                 query.Add("older_than", olderThanId);
+            }
+
+            if (includeSpreadsheetUploads)
+            {
+                query.Add("include_jobs", "True");
             }
 
             var finalUrl = GET_ALL_NOTIFICATIONS_URL + ToQueryString(query);
@@ -334,11 +339,11 @@ namespace Notify.Client
             }
         }
 
-        public NotificationList GetNotifications(string templateType = "", string status = "", string reference = "", string olderThanId = "")
+        public NotificationList GetNotifications(string templateType = "", string status = "", string reference = "", string olderThanId = "", bool includeSpreadsheetUploads = false)
         {
             try
             {
-                return GetNotificationsAsync(templateType, status, reference, olderThanId).Result;
+                return GetNotificationsAsync(templateType, status, reference, olderThanId, includeSpreadsheetUploads).Result;
             }
             catch (AggregateException ex)
             {

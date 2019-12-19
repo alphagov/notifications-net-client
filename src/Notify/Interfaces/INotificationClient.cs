@@ -12,7 +12,7 @@ namespace Notify.Interfaces
 
         Notification GetNotificationById(string notificationId);
 
-        NotificationList GetNotifications(string templateType = "", string status = "", string reference = "", string olderThanId = "");
+        NotificationList GetNotifications(string templateType = "", string status = "", string reference = "", string olderThanId = "", bool includeSpreadsheetUploads = false);
 
         ReceivedTextListResponse GetReceivedTexts(string olderThanId = "");
 

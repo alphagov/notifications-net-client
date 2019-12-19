@@ -104,6 +104,16 @@ namespace Notify.Tests.UnitTests
         }
 
         [Test, Category("Unit/NotificationClient")]
+        public void GetAllNotificationsWithIncludeSpreadsheetUploadsCreatesExpectedResult()
+        {
+            MockRequest(Constants.fakeNotificationsJson,
+                client.GET_ALL_NOTIFICATIONS_URL + "?include_jobs=True",
+                AssertValidRequest);
+
+            client.GetNotifications(includeSpreadsheetUploads: true);
+        }
+
+        [Test, Category("Unit/NotificationClient")]
         public void GetAllSmsNotificationsWithStatusAndReferenceWithCreatesExpectedResult()
         {
             MockRequest(Constants.fakeNotificationsJson,
