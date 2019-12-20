@@ -12,11 +12,11 @@ build: ## Build project
 	dotnet build -f=netcoreapp2.0
 
 .PHONY: integration-test
-integration-test: test=TestCategory=Unit/Integration ## Run integration tests
+integration-test: test=TestCategory=Integration ## Run integration tests
 integration-test: single-test
 
 .PHONY: test
-test: test=TestCategory=Unit/NotificationClient
+test: test=TestCategory=Unit
 test: single-test
 
 .PHONY: single-test

@@ -44,13 +44,13 @@ namespace Notify.Tests.IntegrationTests
 		const String TEST_LETTER_SUBJECT = "Main heading";
 
 		[SetUp]
-		[Test, Category("Integration/NotificationClient")]
+		[Test, Category("Integration"), Category("Integration/NotificationClient")]
 		public void SetUp()
 		{
 			this.client = new NotificationClient(NOTIFY_API_URL, API_KEY);
 		}
 
-		[Test, Category("Integration/NotificationClient")]
+		[Test, Category("Integration"), Category("Integration/NotificationClient")]
 		public void SendSmsTestWithPersonalisation()
 		{
 			Dictionary<String, dynamic> personalisation = new Dictionary<String, dynamic>
@@ -68,7 +68,7 @@ namespace Notify.Tests.IntegrationTests
 			Assert.AreEqual(response.reference, "sample-test-ref");
 		}
 
-		[Test, Category("Integration/NotificationClient")]
+		[Test, Category("Integration"), Category("Integration/NotificationClient")]
 		public void GetSMSNotificationWithIdReturnsNotification()
 		{
 			SendSmsTestWithPersonalisation();
@@ -87,7 +87,7 @@ namespace Notify.Tests.IntegrationTests
 			NotifyAssertions.AssertNotification(notification);
 		}
 
-		[Test, Category("Integration/NotificationClient")]
+		[Test, Category("Integration"), Category("Integration/NotificationClient")]
 		public void SendEmailTestWithPersonalisation()
 		{
 			Dictionary<String, dynamic> personalisation = new Dictionary<String, dynamic>
@@ -104,7 +104,7 @@ namespace Notify.Tests.IntegrationTests
 			Assert.AreEqual(response.content.subject, TEST_EMAIL_SUBJECT);
 		}
 
-		[Test, Category("Integration/NotificationClient")]
+		[Test, Category("Integration"), Category("Integration/NotificationClient")]
 		public void GetEmailNotificationWithIdReturnsNotification()
 		{
 			SendEmailTestWithPersonalisation();
@@ -121,7 +121,7 @@ namespace Notify.Tests.IntegrationTests
 			NotifyAssertions.AssertNotification(notification);
 		}
 
-		[Test, Category("Integration/NotificationClient")]
+		[Test, Category("Integration"), Category("Integration/NotificationClient")]
 		public void SendLetterTestWithPersonalisation()
 		{
 			Dictionary<String, dynamic> personalisation = new Dictionary<String, dynamic>
@@ -143,7 +143,7 @@ namespace Notify.Tests.IntegrationTests
 
 		}
 
-		[Test, Category("Integration/NotificationClient")]
+		[Test, Category("Integration"), Category("Integration/NotificationClient")]
 		public void GetLetterNotificationWithIdReturnsNotification()
 		{
 			SendLetterTestWithPersonalisation();
@@ -162,7 +162,7 @@ namespace Notify.Tests.IntegrationTests
 			NotifyAssertions.AssertNotification(notification);
 		}
 
-		[Test, Category("Integration/NotificationClient")]
+		[Test, Category("Integration"), Category("Integration/NotificationClient")]
 		public void SendPrecompiledLetterTest()
 		{
 
@@ -196,7 +196,7 @@ namespace Notify.Tests.IntegrationTests
 			NotifyAssertions.AssertNotification(notification);
 		}
 
-		[Test, Category("Integration/NotificationClient")]
+		[Test, Category("Integration"), Category("Integration/NotificationClient")]
 		public void SendEmailWithDocumentPersonalisationTest()
 		{
 			byte[] pdfContents;
@@ -226,7 +226,7 @@ namespace Notify.Tests.IntegrationTests
 			Assert.IsTrue(response.content.body.Contains("https://documents."));
 		}
 
-		[Test, Category("Integration/NotificationClient")]
+		[Test, Category("Integration"), Category("Integration/NotificationClient")]
 		public void GetAllNotifications()
 		{
 			NotificationList notificationsResponse = this.client.GetNotifications();
@@ -242,7 +242,7 @@ namespace Notify.Tests.IntegrationTests
 
 		}
 
-		[Test, Category("Integration/NotificationClient")]
+		[Test, Category("Integration"), Category("Integration/NotificationClient")]
 		public void GetReceivedTexts()
 		{
 			INotificationClient client_inbound = new NotificationClient(NOTIFY_API_URL, INBOUND_SMS_QUERY_KEY);
@@ -259,7 +259,7 @@ namespace Notify.Tests.IntegrationTests
 			}
 		}
 
-		[Test, Category("Integration/NotificationClient")]
+		[Test, Category("Integration"), Category("Integration/NotificationClient")]
 		public void GetNotificationWithInvalidIdRaisesClientException()
 		{
 			var ex = Assert.Throws<NotifyClientException>(() =>
@@ -268,7 +268,7 @@ namespace Notify.Tests.IntegrationTests
 			Assert.That(ex.Message, Does.Contain("No result found"));
 		}
 
-		[Test, Category("Integration/NotificationClient")]
+		[Test, Category("Integration"), Category("Integration/NotificationClient")]
 		public void GetTemplateWithInvalidIdRaisesClientException()
 		{
 			var ex = Assert.Throws<NotifyClientException>(() =>
@@ -277,7 +277,7 @@ namespace Notify.Tests.IntegrationTests
 			Assert.That(ex.Message, Does.Contain("id is not a valid UUID"));
 		}
 
-		[Test, Category("Integration/NotificationClient")]
+		[Test, Category("Integration"), Category("Integration/NotificationClient")]
 		public void GetTemplateWithIdWithoutResultRaisesClientException()
 		{
 			var ex = Assert.Throws<NotifyClientException>(() =>
@@ -286,7 +286,7 @@ namespace Notify.Tests.IntegrationTests
 			Assert.That(ex.Message, Does.Contain("No result found"));
 		}
 
-		[Test, Category("Integration/NotificationClient")]
+		[Test, Category("Integration"), Category("Integration/NotificationClient")]
 		public void GetAllTemplates()
 		{
 			TemplateList templateList = this.client.GetAllTemplates();
@@ -299,7 +299,7 @@ namespace Notify.Tests.IntegrationTests
 			}
 		}
 
-		[Test, Category("Integration/NotificationClient")]
+		[Test, Category("Integration"), Category("Integration/NotificationClient")]
 		public void GetAllSMSTemplates()
 		{
 			const String type = "sms";
@@ -313,7 +313,7 @@ namespace Notify.Tests.IntegrationTests
 			}
 		}
 
-		[Test, Category("Integration/NotificationClient")]
+		[Test, Category("Integration"), Category("Integration/NotificationClient")]
 		public void GetAllEmailTemplates()
 		{
 			const String type = "email";
@@ -327,7 +327,7 @@ namespace Notify.Tests.IntegrationTests
 			}
 		}
 
-		[Test, Category("Integration/NotificationClient")]
+		[Test, Category("Integration"), Category("Integration/NotificationClient")]
 		public void GetAllInvalidTemplatesRaisesClientException()
 		{
 			const String type = "invalid";
@@ -336,7 +336,7 @@ namespace Notify.Tests.IntegrationTests
 			Assert.That(ex.Message, Does.Contain("type invalid is not one of [sms, email, letter]"));
 		}
 
-		[Test, Category("Integration/NotificationClient")]
+		[Test, Category("Integration"), Category("Integration/NotificationClient")]
 		public void GetSMSTemplateWithId()
 		{
 			TemplateResponse template = this.client.GetTemplateById(SMS_TEMPLATE_ID);
@@ -344,7 +344,7 @@ namespace Notify.Tests.IntegrationTests
 			Assert.AreEqual(template.body, TEST_TEMPLATE_SMS_BODY);
 		}
 
-		[Test, Category("Integration/NotificationClient")]
+		[Test, Category("Integration"), Category("Integration/NotificationClient")]
 		public void GetEmailTemplateWithId()
 		{
 			TemplateResponse template = this.client.GetTemplateById(EMAIL_TEMPLATE_ID);
@@ -352,7 +352,7 @@ namespace Notify.Tests.IntegrationTests
 			Assert.AreEqual(template.body, TEST_TEMPLATE_EMAIL_BODY);
 		}
 
-		[Test, Category("Integration/NotificationClient")]
+		[Test, Category("Integration"), Category("Integration/NotificationClient")]
 		public void GenerateSMSPreviewWithPersonalisation()
 		{
 			Dictionary<String, dynamic> personalisation = new Dictionary<String, dynamic>
@@ -368,7 +368,7 @@ namespace Notify.Tests.IntegrationTests
 			Assert.AreEqual(response.subject, null);
 		}
 
-		[Test, Category("Integration/NotificationClient")]
+		[Test, Category("Integration"), Category("Integration/NotificationClient")]
 		public void GenerateEmailPreviewWithPersonalisation()
 		{
 			Dictionary<String, dynamic> personalisation = new Dictionary<String, dynamic>
@@ -384,7 +384,7 @@ namespace Notify.Tests.IntegrationTests
 			Assert.AreEqual(response.subject, TEST_EMAIL_SUBJECT);
 		}
 
-		[Test, Category("Integration/NotificationClient")]
+		[Test, Category("Integration"), Category("Integration/NotificationClient")]
 		public void GenerateEmailPreviewWithMissingPersonalisationRaisesClientException()
 		{
 			Dictionary<String, dynamic> personalisation = new Dictionary<String, dynamic>
@@ -398,7 +398,7 @@ namespace Notify.Tests.IntegrationTests
 			Assert.That(ex.Message, Does.Contain("Missing personalisation: name"));
 		}
 
-		[Test, Category("Integration/NotificationClient")]
+		[Test, Category("Integration"), Category("Integration/NotificationClient")]
 		public void SendEmailTestServiceDefaultEmailReplyTo()
 		{
 			Dictionary<String, dynamic> personalisation = new Dictionary<String, dynamic>
@@ -413,7 +413,7 @@ namespace Notify.Tests.IntegrationTests
 			Assert.AreEqual(response.content.subject, TEST_EMAIL_SUBJECT);
 		}
 
-		[Test, Category("Integration/NotificationClient")]
+		[Test, Category("Integration"), Category("Integration/NotificationClient")]
 		public void SendEmailTestSpecificEmailReplyTo()
 		{
 			Dictionary<String, dynamic> personalisation = new Dictionary<String, dynamic>
@@ -428,7 +428,7 @@ namespace Notify.Tests.IntegrationTests
 			Assert.AreEqual(response.content.subject, TEST_EMAIL_SUBJECT);
 		}
 
-		[Test, Category("Integration/NotificationClient")]
+		[Test, Category("Integration"), Category("Integration/NotificationClient")]
 		public void SendEmailTestEmailReplyToNotPresent()
 		{
 			String fakeReplayToId = System.Guid.NewGuid().ToString();
@@ -441,7 +441,7 @@ namespace Notify.Tests.IntegrationTests
 			Assert.That(ex.Message, Does.Contain("email_reply_to_id " + fakeReplayToId));
 		}
 
-		[Test, Category("Integration/NotificationClient")]
+		[Test, Category("Integration"), Category("Integration/NotificationClient")]
 		public void SendEmailTestAllArguments()
 		{
 			Dictionary<String, dynamic> personalisation = new Dictionary<String, dynamic>
@@ -456,7 +456,7 @@ namespace Notify.Tests.IntegrationTests
 			Assert.AreEqual(response.content.subject, TEST_EMAIL_SUBJECT);
 		}
 
-		[Test, Category("Integration/NotificationClient")]
+		[Test, Category("Integration"), Category("Integration/NotificationClient")]
 		public void SendSmsTestWithPersonalisationAndSmsSenderId()
 		{
 			Dictionary<String, dynamic> personalisation = new Dictionary<String, dynamic>
