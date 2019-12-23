@@ -12,15 +12,15 @@ build: ## Build project
 	dotnet build -f=netcoreapp2.0
 
 .PHONY: integration-test
-integration-test: ## Run integration tests
-	dotnet test ./src/Notify.Tests/Notify.Tests.csproj -f=netcoreapp2.0 --filter TestCategory=Integration
+integration-test: test=TestCategory=Unit/Integration ## Run integration tests
+integration-test: single-test
 
 .PHONY: test
-test: ## Run tests
-	dotnet test ./src/Notify.Tests/Notify.Tests.csproj -f=netcoreapp2.0 --filter TestCategory=Unit/NotificationClient
+test: test=TestCategory=Unit/NotificationClient
+test: single-test
 
 .PHONY: single-test
-single-test: build ## run a single test: make single-test test=[test name]
+single-test: build ## run a single test. usage: "make single-test test=[test name]"
 	dotnet test ./src/Notify.Tests/Notify.Tests.csproj -f=netcoreapp2.0 --no-build -v=n --filter $(test)
 
 .PHONY: build-release
