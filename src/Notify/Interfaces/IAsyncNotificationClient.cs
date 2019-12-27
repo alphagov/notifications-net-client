@@ -13,7 +13,7 @@ namespace Notify.Interfaces
 
         Task<Notification> GetNotificationByIdAsync(string notificationId);
 
-        Task<NotificationList> GetNotificationsAsync(string templateType = "", string status = "", string reference = "", string olderThanId = "");
+        Task<NotificationList> GetNotificationsAsync(string templateType = "", string status = "", string reference = "", string olderThanId = "", bool includeSpreadsheetUploads = false);
 
         Task<ReceivedTextListResponse> GetReceivedTextsAsync(string olderThanId = "");
 

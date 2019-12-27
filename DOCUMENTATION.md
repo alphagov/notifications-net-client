@@ -688,7 +688,7 @@ You can only get messages that are 7 days old or newer.
 ### Method
 
 ```csharp
-NotificationList notifications = client.GetNotifications(templateType, status, reference, olderThanId);
+NotificationList notifications = client.GetNotifications(templateType, status, reference, olderThanId, includeSpreadsheetUploads);
 ```
 
 ### Arguments
@@ -741,6 +741,16 @@ string olderThanId: "e194efd1-c34d-49c9-9915-e4267e01e92e";
 If you leave out this argument, the client returns the most recent 250 notifications.
 
 The client only returns notifications that are 7 days old or newer. If the notification specified in this argument is older than 7 days, the client returns an empty response.
+
+#### includeSpreadsheetUploads (optional)
+
+Specifies whether the response should include notifications which were sent by uploading a spreadsheet of recipients to Notify.
+
+```csharp
+bool includeSpreadsheetUploads = true;
+```
+
+If you do not pass in this argument it defaults to `false`.
 
 ### Response
 
