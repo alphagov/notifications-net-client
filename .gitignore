@@ -17,3 +17,6 @@ environment.sh
 .DS_Store
 .idea/
 /src/Notify.Tests/Notify.Tests.csproj.user
+
+
+docker.env

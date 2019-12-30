@@ -40,19 +40,19 @@ namespace Notify.Tests.UnitTests
             client = null;
         }
 
-        [Test, Category("Unit/NotificationClientAsync")]
+        [Test, Category("Unit"), Category("Unit/NotificationClientAsync")]
         public void CreateNotificationClientWithInvalidApiKeyFails()
         {
             Assert.Throws<NotifyAuthException>(() => new NotificationClient("someinvalidkey"));
         }
 
-        [Test, Category("Unit/NotificationClientAsync")]
+        [Test, Category("Unit"), Category("Unit/NotificationClientAsync")]
         public void CreateNotificationClientWithEmptyApiKeyFails()
         {
             Assert.Throws<NotifyAuthException>(() => new NotificationClient(""));
         }
 
-        [Test, Category("Unit/NotificationClientAsync")]
+        [Test, Category("Unit"), Category("Unit/NotificationClientAsync")]
         public void GetNonJsonResponseHandlesException()
         {
             MockRequest("non json response",
@@ -63,7 +63,7 @@ namespace Notify.Tests.UnitTests
             Assert.That(ex.Message, Does.Contain("Status code 404. Error: non json response"));
         }
 
-        [Test, Category("Unit/NotificationClientAsync")]
+        [Test, Category("Unit"), Category("Unit/NotificationClientAsync")]
         public async Task GetNotificationWithIdCreatesExpectedRequest()
         {
             MockRequest(Constants.fakeNotificationJson,
@@ -73,7 +73,7 @@ namespace Notify.Tests.UnitTests
             await client.GetNotificationByIdAsync(Constants.fakeNotificationId);
         }
 
-        [Test, Category("Unit/NotificationClientAsync")]
+        [Test, Category("Unit"), Category("Unit/NotificationClientAsync")]
         public async Task GetAllNotificationsCreatesExpectedResult()
         {
             MockRequest(Constants.fakeNotificationsJson,
@@ -83,7 +83,7 @@ namespace Notify.Tests.UnitTests
             await client.GetNotificationsAsync();
         }
 
-        [Test, Category("Unit/NotificationClientAsync")]
+        [Test, Category("Unit"), Category("Unit/NotificationClientAsync")]
         public async Task GetAllNotificationsWithStatusCreatesExpectedResult()
         {
             MockRequest(Constants.fakeNotificationsJson,
@@ -93,7 +93,7 @@ namespace Notify.Tests.UnitTests
             await client.GetNotificationsAsync(status: "sending");
         }
 
-        [Test, Category("Unit/NotificationClientAsync")]
+        [Test, Category("Unit"), Category("Unit/NotificationClientAsync")]
         public async Task GetAllNotificationsWithReferenceCreatesExpectedResult()
         {
             MockRequest(Constants.fakeNotificationsJson,
@@ -103,7 +103,7 @@ namespace Notify.Tests.UnitTests
             await client.GetNotificationsAsync(reference: "foo");
         }
 
-        [Test, Category("Unit/NotificationClientAsync")]
+        [Test, Category("Unit"), Category("Unit/NotificationClientAsync")]
         public async Task GetAllSmsNotificationsWithStatusAndReferenceWithCreatesExpectedResult()
         {
             MockRequest(Constants.fakeNotificationsJson,
@@ -113,7 +113,7 @@ namespace Notify.Tests.UnitTests
             await client.GetNotificationsAsync(templateType: "sms", status: "sending", reference: "foo");
         }
 
-        [Test, Category("Unit/NotificationClientAsync")]
+        [Test, Category("Unit"), Category("Unit/NotificationClientAsync")]
         public async Task GetAllSmsNotificationsCreatesExpectedResult()
         {
             MockRequest(Constants.fakeSmsNotificationResponseJson,
@@ -123,7 +123,7 @@ namespace Notify.Tests.UnitTests
             await client.GetNotificationsAsync(templateType: "sms");
         }
 
-        [Test, Category("Unit/NotificationClientAsync")]
+        [Test, Category("Unit"), Category("Unit/NotificationClientAsync")]
         public async Task GetAllEmailNotificationsCreatesExpectedResult()
         {
             MockRequest(Constants.fakeEmailNotificationResponseJson,
@@ -133,7 +133,7 @@ namespace Notify.Tests.UnitTests
             await client.GetNotificationsAsync(templateType: "email");
         }
 
-        [Test, Category("Unit/NotificationClientAsync")]
+        [Test, Category("Unit"), Category("Unit/NotificationClientAsync")]
         public async Task GetAllLetterNotificationsCreatesExpectedResult()
         {
             MockRequest(Constants.fakeEmailNotificationResponseJson,
@@ -143,7 +143,7 @@ namespace Notify.Tests.UnitTests
             await client.GetNotificationsAsync(templateType: "letter");
         }
 
-        [Test, Category("Unit/NotificationClientAsync")]
+        [Test, Category("Unit"), Category("Unit/NotificationClientAsync")]
         public async Task GetTemplateWithIdCreatesExpectedRequest()
         {
             MockRequest(Constants.fakeTemplateResponseJson,
@@ -153,7 +153,7 @@ namespace Notify.Tests.UnitTests
             await client.GetTemplateByIdAndVersionAsync(Constants.fakeTemplateId);
         }
 
-        [Test, Category("Unit/NotificationClientAsync")]
+        [Test, Category("Unit"), Category("Unit/NotificationClientAsync")]
         public async Task GetTemplateWithIdAndVersionCreatesExpectedRequest()
         {
             MockRequest(Constants.fakeTemplateResponseJson,
@@ -163,7 +163,7 @@ namespace Notify.Tests.UnitTests
             await client.GetTemplateByIdAndVersionAsync(Constants.fakeTemplateId, 2);
         }
 
-        [Test, Category("Unit/NotificationClientAsync")]
+        [Test, Category("Unit"), Category("Unit/NotificationClientAsync")]
         public async Task GetNotificationWithIdReceivesExpectedResponse()
         {
             var expectedResponse = JsonConvert.DeserializeObject<Notification>(Constants.fakeNotificationJson);
@@ -174,7 +174,7 @@ namespace Notify.Tests.UnitTests
             Assert.IsTrue(expectedResponse.Equals(responseNotification));
         }
 
-        [Test, Category("Unit/NotificationClientAsync")]
+        [Test, Category("Unit"), Category("Unit/NotificationClientAsync")]
         public async Task GetTemplateWithIdReceivesExpectedResponse()
         {
             var expectedResponse = JsonConvert.DeserializeObject<TemplateResponse>(Constants.fakeTemplateResponseJson);
@@ -185,7 +185,7 @@ namespace Notify.Tests.UnitTests
             Assert.IsTrue(expectedResponse.Equals(responseTemplate));
         }
 
-        [Test, Category("Unit/NotificationClientAsync")]
+        [Test, Category("Unit"), Category("Unit/NotificationClientAsync")]
         public async Task GetTemplateWithIdAndVersionReceivesExpectedResponse()
         {
             var expectedResponse =
@@ -197,7 +197,7 @@ namespace Notify.Tests.UnitTests
             Assert.IsTrue(expectedResponse.Equals(responseTemplate));
         }
 
-        [Test, Category("Unit/NotificationClientAsync")]
+        [Test, Category("Unit"), Category("Unit/NotificationClientAsync")]
         public async Task GenerateTemplatePreviewGeneratesExpectedRequest()
         {
             Dictionary<string, dynamic> personalisation = new Dictionary<string, dynamic> {
@@ -215,7 +215,7 @@ namespace Notify.Tests.UnitTests
             var response = await client.GenerateTemplatePreviewAsync(Constants.fakeTemplateId, personalisation);
         }
 
-        [Test, Category("Unit/NotificationClientAsync")]
+        [Test, Category("Unit"), Category("Unit/NotificationClientAsync")]
         public async Task GenerateTemplatePreviewReceivesExpectedResponse()
         {
             Dictionary<string, dynamic> personalisation = new Dictionary<string, dynamic> {
@@ -236,7 +236,7 @@ namespace Notify.Tests.UnitTests
             await client.GenerateTemplatePreviewAsync(Constants.fakeTemplateId, personalisation);
         }
 
-        [Test, Category("Unit/NotificationClientAsync")]
+        [Test, Category("Unit"), Category("Unit/NotificationClientAsync")]
         public async Task GetAllTemplatesCreatesExpectedRequest()
         {
             MockRequest(Constants.fakeTemplateListResponseJson,
@@ -245,7 +245,7 @@ namespace Notify.Tests.UnitTests
             await client.GetAllTemplatesAsync();
         }
 
-        [Test, Category("Unit/NotificationClientAsync")]
+        [Test, Category("Unit"), Category("Unit/NotificationClientAsync")]
         public async Task GetAllTemplatesBySmsTypeCreatesExpectedRequest()
         {
             const string type = "sms";
@@ -255,7 +255,7 @@ namespace Notify.Tests.UnitTests
             await client.GetAllTemplatesAsync(type);
         }
 
-        [Test, Category("Unit/NotificationClientAsync")]
+        [Test, Category("Unit"), Category("Unit/NotificationClientAsync")]
         public async Task GetAllTemplatesByEmailTypeCreatesExpectedRequest()
         {
             const string type = "email";
@@ -266,7 +266,7 @@ namespace Notify.Tests.UnitTests
             await client.GetAllTemplatesAsync(type);
         }
 
-        [Test, Category("Unit/NotificationClientAsync")]
+        [Test, Category("Unit"), Category("Unit/NotificationClientAsync")]
         public async Task GetAllTemplatesForEmptyListReceivesExpectedResponse()
         {
             var expectedResponse = JsonConvert.DeserializeObject<TemplateList>(Constants.fakeTemplateEmptyListResponseJson);
@@ -280,7 +280,7 @@ namespace Notify.Tests.UnitTests
             Assert.IsTrue(templates.Count == 0);
         }
 
-        [Test, Category("Unit/NotificationClientAsync")]
+        [Test, Category("Unit"), Category("Unit/NotificationClientAsync")]
         public async Task GetAllTemplatesReceivesExpectedResponse()
         {
             TemplateList expectedResponse = JsonConvert.DeserializeObject<TemplateList>(Constants.fakeTemplateListResponseJson);
@@ -298,7 +298,7 @@ namespace Notify.Tests.UnitTests
             }
         }
 
-        [Test, Category("Unit/NotificationClientAsync")]
+        [Test, Category("Unit"), Category("Unit/NotificationClientAsync")]
         public async Task GetAllTemplatesBySmsTypeReceivesExpectedResponse()
         {
             const string type = "sms";
@@ -320,7 +320,7 @@ namespace Notify.Tests.UnitTests
             }
         }
 
-        [Test, Category("Unit/NotificationClientAsync")]
+        [Test, Category("Unit"), Category("Unit/NotificationClientAsync")]
         public async Task GetAllTemplatesByEmailTypeReceivesExpectedResponse()
         {
             const string type = "email";
@@ -342,7 +342,7 @@ namespace Notify.Tests.UnitTests
             }
         }
 
-        [Test, Category("Unit/NotificationClientAsync")]
+        [Test, Category("Unit"), Category("Unit/NotificationClientAsync")]
         public async Task GetAllReceivedTextsCreatesExpectedRequest()
         {
             MockRequest(Constants.fakeReceivedTextListResponseJson,
@@ -351,7 +351,7 @@ namespace Notify.Tests.UnitTests
             await client.GetReceivedTextsAsync();
         }
 
-        [Test, Category("Unit/NotificationClientAsync")]
+        [Test, Category("Unit"), Category("Unit/NotificationClientAsync")]
         public async Task GetAllReceivedTextsReceivesExpectedResponse()
         {
             MockRequest(Constants.fakeReceivedTextListResponseJson,
@@ -374,7 +374,7 @@ namespace Notify.Tests.UnitTests
             }
         }
 
-        [Test, Category("Unit/NotificationClientAsync")]
+        [Test, Category("Unit"), Category("Unit/NotificationClientAsync")]
         public async Task SendSmsNotificationGeneratesExpectedRequest()
         {
             Dictionary<string, dynamic> personalisation = new Dictionary<string, dynamic>
@@ -397,7 +397,7 @@ namespace Notify.Tests.UnitTests
             SmsNotificationResponse response = await client.SendSmsAsync(Constants.fakePhoneNumber, Constants.fakeTemplateId, personalisation);
         }
 
-        [Test, Category("Unit/NotificationClientAsync")]
+        [Test, Category("Unit"), Category("Unit/NotificationClientAsync")]
         public async Task SendSmsNotificationGeneratesExpectedResponse()
         {
             Dictionary<string, dynamic> personalisation = new Dictionary<string, dynamic>
@@ -413,7 +413,7 @@ namespace Notify.Tests.UnitTests
             Assert.IsTrue(expectedResponse.Equals(actualResponse));
         }
 
-        [Test, Category("Unit/NotificationClientAsync")]
+        [Test, Category("Unit"), Category("Unit/NotificationClientAsync")]
         public async Task SendEmailNotificationGeneratesExpectedRequest()
         {
             Dictionary<string, dynamic> personalisation = new Dictionary<string, dynamic>
@@ -437,7 +437,7 @@ namespace Notify.Tests.UnitTests
             EmailNotificationResponse response = await client.SendEmailAsync(Constants.fakeEmail, Constants.fakeTemplateId, personalisation, Constants.fakeNotificationReference);
         }
 
-        [Test, Category("Unit/NotificationClientAsync")]
+        [Test, Category("Unit"), Category("Unit/NotificationClientAsync")]
         public async Task SendEmailNotificationWithDocumentGeneratesExpectedRequest()
         {
             Dictionary<string, dynamic> personalisation = new Dictionary<string, dynamic>
@@ -469,7 +469,7 @@ namespace Notify.Tests.UnitTests
             EmailNotificationResponse response = await client.SendEmailAsync(Constants.fakeEmail, Constants.fakeTemplateId, personalisation, Constants.fakeNotificationReference);
         }
 
-        [Test, Category("Unit/NotificationClientAsync")]
+        [Test, Category("Unit"), Category("Unit/NotificationClientAsync")]
         public void PrepareUploadWithLargeDocumentGeneratesAnError()
         {
             Assert.That(
@@ -478,7 +478,7 @@ namespace Notify.Tests.UnitTests
                     );
         }
 
-        [Test, Category("Unit/NotificationClientAsync")]
+        [Test, Category("Unit"), Category("Unit/NotificationClientAsync")]
         public async Task SendEmailNotificationGeneratesExpectedResponse()
         {
             Dictionary<string, dynamic> personalisation = new Dictionary<string, dynamic>
@@ -495,7 +495,7 @@ namespace Notify.Tests.UnitTests
 
         }
 
-        [Test, Category("Unit/NotificationClientAsync")]
+        [Test, Category("Unit"), Category("Unit/NotificationClientAsync")]
         public async Task SendLetterNotificationGeneratesExpectedRequest()
         {
             Dictionary<string, dynamic> personalisation = new Dictionary<string, dynamic>
@@ -520,7 +520,7 @@ namespace Notify.Tests.UnitTests
             LetterNotificationResponse response = await client.SendLetterAsync(Constants.fakeTemplateId, personalisation, Constants.fakeNotificationReference);
         }
 
-        [Test, Category("Unit/NotificationClientAsync")]
+        [Test, Category("Unit"), Category("Unit/NotificationClientAsync")]
         public async Task SendLetterNotificationGeneratesExpectedResponse()
         {
             Dictionary<string, dynamic> personalisation = new Dictionary<string, dynamic>
@@ -539,7 +539,7 @@ namespace Notify.Tests.UnitTests
 
         }
 
-        [Test, Category("Unit/NotificationClientAsync")]
+        [Test, Category("Unit"), Category("Unit/NotificationClientAsync")]
         public async Task SendPrecompiledLetterNotificationGeneratesExpectedRequest()
         {
             JObject expected = new JObject
@@ -560,7 +560,7 @@ namespace Notify.Tests.UnitTests
             );
         }
 
-        [Test, Category("Unit/NotificationClientAsync")]
+        [Test, Category("Unit"), Category("Unit/NotificationClientAsync")]
         public async Task SendPrecompiledLetterNotificationGeneratesExpectedResponse()
         {
             LetterNotificationResponse expectedResponse = JsonConvert.DeserializeObject<LetterNotificationResponse>(Constants.fakePrecompiledLetterNotificationResponseJson);
@@ -588,7 +588,7 @@ namespace Notify.Tests.UnitTests
             {
                 method = HttpMethod.Get;
             }
-                
+
             Assert.AreEqual(r.Method, method);
             Assert.AreEqual(r.RequestUri.ToString(), client.BaseUrl + uri);
             Assert.IsNotNull(r.Headers.Authorization);
@@ -600,7 +600,7 @@ namespace Notify.Tests.UnitTests
         private void MockRequest(string content, string uri,
                           Action<string, HttpRequestMessage, HttpMethod> _assertValidRequest = null,
                           HttpMethod method = null,
-                          Action<string, string> _assertGetExpectedContent = null, 
+                          Action<string, string> _assertGetExpectedContent = null,
                           string expected = null,
                           HttpStatusCode status = HttpStatusCode.OK)
         {
@@ -634,7 +634,7 @@ namespace Notify.Tests.UnitTests
                 }));
         }
 
-        [Test, Category("Unit/NotificationClientAsync")]
+        [Test, Category("Unit"), Category("Unit/NotificationClientAsync")]
         public async Task SendEmailNotificationWithReplyToIdGeneratesExpectedRequest()
         {
             var personalisation = new Dictionary<string, dynamic>
@@ -661,7 +661,7 @@ namespace Notify.Tests.UnitTests
             var response = await client.SendEmailAsync(Constants.fakeEmail, Constants.fakeTemplateId, personalisation, Constants.fakeNotificationReference, Constants.fakeReplyToId);
         }
 
-        [Test, Category("Unit/NotificationClientAsync")]
+        [Test, Category("Unit"), Category("Unit/NotificationClientAsync")]
         public async Task SendEmailNotificationWithReplyToIdGeneratesExpectedResponse()
         {
             var personalisation = new Dictionary<string, dynamic>
@@ -672,13 +672,13 @@ namespace Notify.Tests.UnitTests
             var expectedResponse = JsonConvert.DeserializeObject<EmailNotificationResponse>(Constants.fakeEmailNotificationResponseJson);
 
             MockRequest(Constants.fakeEmailNotificationResponseJson);
-            
+
             var actualResponse = await client.SendEmailAsync(Constants.fakeEmail, Constants.fakeTemplateId, personalisation, Constants.fakeNotificationReference, Constants.fakeReplyToId);
 
             Assert.IsTrue(expectedResponse.Equals(actualResponse));
         }
 
-        [Test, Category("Unit/NotificationClientAsync")]
+        [Test, Category("Unit"), Category("Unit/NotificationClientAsync")]
         public async Task SendSmsNotificationWithSmsSenderIdGeneratesExpectedRequest()
         {
             var personalisation = new Dictionary<string, dynamic>

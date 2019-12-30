@@ -45,13 +45,13 @@ namespace Notify.Tests.IntegrationTests
 		const String TEST_LETTER_SUBJECT = "Main heading";
 
         [SetUp]
-		[Test, Category("Integration/NotificationClientAsync")]
+		[Test, Category("Integration"), Category("Integration/NotificationClientAsync")]
 		public void SetUp()
 		{
 			this.client = new NotificationClient(NOTIFY_API_URL, API_KEY);
 		}
 
-		[Test, Category("Integration/NotificationClientAsync")]
+		[Test, Category("Integration"), Category("Integration/NotificationClientAsync")]
 		public async Task SendSmsTestWithPersonalisation()
 		{
 			Dictionary<String, dynamic> personalisation = new Dictionary<String, dynamic>
@@ -69,7 +69,7 @@ namespace Notify.Tests.IntegrationTests
 			Assert.AreEqual(response.reference, "sample-test-ref");
 		}
 
-		[Test, Category("Integration/NotificationClientAsync")]
+		[Test, Category("Integration"), Category("Integration/NotificationClientAsync")]
 		public async Task GetSMSNotificationWithIdReturnsNotification()
 		{
 			await SendSmsTestWithPersonalisation();
@@ -88,7 +88,7 @@ namespace Notify.Tests.IntegrationTests
 			NotifyAssertions.AssertNotification(notification);
 		}
 
-		[Test, Category("Integration/NotificationClientAsync")]
+		[Test, Category("Integration"), Category("Integration/NotificationClientAsync")]
 		public async Task SendEmailTestWithPersonalisation()
 		{
 			Dictionary<String, dynamic> personalisation = new Dictionary<String, dynamic>
@@ -105,7 +105,7 @@ namespace Notify.Tests.IntegrationTests
 			Assert.AreEqual(response.content.subject, TEST_EMAIL_SUBJECT);
 		}
 
-		[Test, Category("Integration/NotificationClientAsync")]
+		[Test, Category("Integration"), Category("Integration/NotificationClientAsync")]
 		public async Task GetEmailNotificationWithIdReturnsNotification()
 		{
 			await SendEmailTestWithPersonalisation();
@@ -122,7 +122,7 @@ namespace Notify.Tests.IntegrationTests
 			NotifyAssertions.AssertNotification(notification);
 		}
 
-		[Test, Category("Integration/NotificationClientAsync")]
+		[Test, Category("Integration"), Category("Integration/NotificationClientAsync")]
 		public async Task SendLetterTestWithPersonalisation()
 		{
 			Dictionary<String, dynamic> personalisation = new Dictionary<String, dynamic>
@@ -144,7 +144,7 @@ namespace Notify.Tests.IntegrationTests
 
 		}
 
-		[Test, Category("Integration/NotificationClientAsync")]
+		[Test, Category("Integration"), Category("Integration/NotificationClientAsync")]
 		public async Task GetLetterNotificationWithIdReturnsNotification()
 		{
 			await SendLetterTestWithPersonalisation();
@@ -163,7 +163,7 @@ namespace Notify.Tests.IntegrationTests
 			NotifyAssertions.AssertNotification(notification);
 		}
 
-		[Test, Category("Integration/NotificationClientAsync")]
+		[Test, Category("Integration"), Category("Integration/NotificationClientAsync")]
 		public async Task SendPrecompiledLetterTest()
 		{
 
@@ -197,7 +197,7 @@ namespace Notify.Tests.IntegrationTests
 			NotifyAssertions.AssertNotification(notification);
 		}
 
-		[Test, Category("Integration/NotificationClientAsync")]
+		[Test, Category("Integration"), Category("Integration/NotificationClientAsync")]
 		public async Task SendEmailWithDocumentPersonalisationTest()
 		{
 			byte[] pdfContents;
@@ -227,7 +227,7 @@ namespace Notify.Tests.IntegrationTests
 			Assert.IsTrue(response.content.body.Contains("https://documents."));
 		}
 
-		[Test, Category("Integration/NotificationClientAsync")]
+		[Test, Category("Integration"), Category("Integration/NotificationClientAsync")]
 		public async Task GetAllNotifications()
 		{
 			NotificationList notificationsResponse = await this.client.GetNotificationsAsync();
@@ -242,7 +242,7 @@ namespace Notify.Tests.IntegrationTests
 			}
 		}
 
-		[Test, Category("Integration/NotificationClientAsync")]
+		[Test, Category("Integration"), Category("Integration/NotificationClientAsync")]
 		public async Task GetReceivedTexts()
 		{
 			NotificationClient client_inbound = new NotificationClient(NOTIFY_API_URL, INBOUND_SMS_QUERY_KEY);
@@ -259,7 +259,7 @@ namespace Notify.Tests.IntegrationTests
 			}
 		}
 
-		[Test, Category("Integration/NotificationClientAsync")]
+		[Test, Category("Integration"), Category("Integration/NotificationClientAsync")]
 		public void GetNotificationWithInvalidIdRaisesClientException()
 		{
 			var ex = Assert.ThrowsAsync<NotifyClientException>(async () =>
@@ -268,7 +268,7 @@ namespace Notify.Tests.IntegrationTests
 			Assert.That(ex.Message, Does.Contain("No result found"));
 		}
 
-		[Test, Category("Integration/NotificationClientAsync")]
+		[Test, Category("Integration"), Category("Integration/NotificationClientAsync")]
 		public void GetTemplateWithInvalidIdRaisesClientException()
 		{
 			var ex = Assert.ThrowsAsync<NotifyClientException>(async () =>
@@ -277,7 +277,7 @@ namespace Notify.Tests.IntegrationTests
 			Assert.That(ex.Message, Does.Contain("id is not a valid UUID"));
 		}
 
-		[Test, Category("Integration/NotificationClientAsync")]
+		[Test, Category("Integration"), Category("Integration/NotificationClientAsync")]
 		public void GetTemplateWithIdWithoutResultRaisesClientException()
 		{
 			var ex = Assert.ThrowsAsync<NotifyClientException>(async () =>
@@ -286,7 +286,7 @@ namespace Notify.Tests.IntegrationTests
 			Assert.That(ex.Message, Does.Contain("No result found"));
 		}
 
-		[Test, Category("Integration/NotificationClientAsync")]
+		[Test, Category("Integration"), Category("Integration/NotificationClientAsync")]
 		public async Task GetAllTemplates()
 		{
 			TemplateList templateList = await this.client.GetAllTemplatesAsync();
@@ -299,7 +299,7 @@ namespace Notify.Tests.IntegrationTests
 			}
 		}
 
-		[Test, Category("Integration/NotificationClientAsync")]
+		[Test, Category("Integration"), Category("Integration/NotificationClientAsync")]
 		public async Task GetAllSMSTemplates()
 		{
 			const String type = "sms";
@@ -313,7 +313,7 @@ namespace Notify.Tests.IntegrationTests
 			}
 		}
 
-		[Test, Category("Integration/NotificationClientAsync")]
+		[Test, Category("Integration"), Category("Integration/NotificationClientAsync")]
 		public async Task GetAllEmailTemplates()
 		{
 			const String type = "email";
@@ -327,7 +327,7 @@ namespace Notify.Tests.IntegrationTests
 			}
 		}
 
-		[Test, Category("Integration/NotificationClientAsync")]
+		[Test, Category("Integration"), Category("Integration/NotificationClientAsync")]
 		public void GetAllInvalidTemplatesRaisesClientException()
 		{
 			const String type = "invalid";
@@ -336,7 +336,7 @@ namespace Notify.Tests.IntegrationTests
 			Assert.That(ex.Message, Does.Contain("type invalid is not one of [sms, email, letter]"));
 		}
 
-		[Test, Category("Integration/NotificationClientAsync")]
+		[Test, Category("Integration"), Category("Integration/NotificationClientAsync")]
 		public async Task GetSMSTemplateWithId()
 		{
 			TemplateResponse template = await this.client.GetTemplateByIdAsync(SMS_TEMPLATE_ID);
@@ -344,7 +344,7 @@ namespace Notify.Tests.IntegrationTests
 			Assert.AreEqual(template.body, TEST_TEMPLATE_SMS_BODY);
 		}
 
-		[Test, Category("Integration/NotificationClientAsync")]
+		[Test, Category("Integration"), Category("Integration/NotificationClientAsync")]
 		public async Task GetEmailTemplateWithId()
 		{
 			TemplateResponse template = await this.client.GetTemplateByIdAsync(EMAIL_TEMPLATE_ID);
@@ -352,7 +352,7 @@ namespace Notify.Tests.IntegrationTests
 			Assert.AreEqual(template.body, TEST_TEMPLATE_EMAIL_BODY);
 		}
 
-		[Test, Category("Integration/NotificationClientAsync")]
+		[Test, Category("Integration"), Category("Integration/NotificationClientAsync")]
 		public async Task GenerateSMSPreviewWithPersonalisation()
 		{
 			Dictionary<String, dynamic> personalisation = new Dictionary<String, dynamic>
@@ -368,7 +368,7 @@ namespace Notify.Tests.IntegrationTests
 			Assert.AreEqual(response.subject, null);
 		}
 
-		[Test, Category("Integration/NotificationClientAsync")]
+		[Test, Category("Integration"), Category("Integration/NotificationClientAsync")]
 		public async Task GenerateEmailPreviewWithPersonalisation()
 		{
 			Dictionary<String, dynamic> personalisation = new Dictionary<String, dynamic>
@@ -384,7 +384,7 @@ namespace Notify.Tests.IntegrationTests
 			Assert.AreEqual(response.subject, TEST_EMAIL_SUBJECT);
 		}
 
-		[Test, Category("Integration/NotificationClientAsync")]
+		[Test, Category("Integration"), Category("Integration/NotificationClientAsync")]
 		public void GenerateEmailPreviewWithMissingPersonalisationRaisesClientException()
 		{
 			Dictionary<String, dynamic> personalisation = new Dictionary<String, dynamic>
@@ -398,7 +398,7 @@ namespace Notify.Tests.IntegrationTests
 			Assert.That(ex.Message, Does.Contain("Missing personalisation: name"));
 		}
 
-		[Test, Category("Integration/NotificationClientAsync")]
+		[Test, Category("Integration"), Category("Integration/NotificationClientAsync")]
 		public async Task SendEmailTestServiceDefaultEmailReplyTo()
 		{
 			Dictionary<String, dynamic> personalisation = new Dictionary<String, dynamic>
@@ -413,7 +413,7 @@ namespace Notify.Tests.IntegrationTests
 			Assert.AreEqual(response.content.subject, TEST_EMAIL_SUBJECT);
 		}
 
-		[Test, Category("Integration/NotificationClientAsync")]
+		[Test, Category("Integration"), Category("Integration/NotificationClientAsync")]
 		public async Task SendEmailTestSpecificEmailReplyTo()
 		{
 			Dictionary<String, dynamic> personalisation = new Dictionary<String, dynamic>
@@ -428,7 +428,7 @@ namespace Notify.Tests.IntegrationTests
 			Assert.AreEqual(response.content.subject, TEST_EMAIL_SUBJECT);
 		}
 
-		[Test, Category("Integration/NotificationClientAsync")]
+		[Test, Category("Integration"), Category("Integration/NotificationClientAsync")]
 		public void SendEmailTestEmailReplyToNotPresent()
 		{
 			String fakeReplayToId = System.Guid.NewGuid().ToString();
@@ -441,7 +441,7 @@ namespace Notify.Tests.IntegrationTests
 			Assert.That(ex.Message, Does.Contain("email_reply_to_id " + fakeReplayToId));
 		}
 
-		[Test, Category("Integration/NotificationClientAsync")]
+		[Test, Category("Integration"), Category("Integration/NotificationClientAsync")]
 		public async Task SendEmailTestAllArguments()
 		{
 			Dictionary<String, dynamic> personalisation = new Dictionary<String, dynamic>
@@ -456,7 +456,7 @@ namespace Notify.Tests.IntegrationTests
 			Assert.AreEqual(response.content.subject, TEST_EMAIL_SUBJECT);
 		}
 
-		[Test, Category("Integration/NotificationClientAsync")]
+		[Test, Category("Integration"), Category("Integration/NotificationClientAsync")]
 		public async Task SendSmsTestWithPersonalisationAndSmsSenderId()
 		{
 			Dictionary<String, dynamic> personalisation = new Dictionary<String, dynamic>
