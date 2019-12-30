@@ -64,7 +64,7 @@ namespace Notify.Tests.UnitTests
         }
 
         [Test, Category("Unit"), Category("Unit/NotificationClient")]
-        public void GetNotificationWithIdCreatesExpectedRequest()
+        public void GetNotificationByIdCreatesExpectedRequest()
         {
             MockRequest(Constants.fakeNotificationJson,
                 client.GET_NOTIFICATION_URL + Constants.fakeNotificationId,
@@ -174,14 +174,14 @@ namespace Notify.Tests.UnitTests
         }
 
         [Test, Category("Unit"), Category("Unit/NotificationClient")]
-        public void GetNotificationWithIdReceivesExpectedResponse()
+        public void GetNotificationByIdReceivesExpectedResponse()
         {
             var expectedResponse = JsonConvert.DeserializeObject<Notification>(Constants.fakeNotificationJson);
 
             MockRequest(Constants.fakeNotificationJson);
 
             var responseNotification = client.GetNotificationById(Constants.fakeNotificationId);
-            Assert.IsTrue(expectedResponse.Equals(responseNotification));
+            Assert.AreEqual(expectedResponse, responseNotification);
         }
 
         [Test, Category("Unit"), Category("Unit/NotificationClient")]
@@ -192,7 +192,7 @@ namespace Notify.Tests.UnitTests
             MockRequest(Constants.fakeTemplateResponseJson);
 
             var responseTemplate = client.GetTemplateById(Constants.fakeTemplateId);
-            Assert.IsTrue(expectedResponse.Equals(responseTemplate));
+            Assert.AreEqual(expectedResponse, responseTemplate);
         }
 
         [Test, Category("Unit"), Category("Unit/NotificationClient")]
@@ -204,7 +204,7 @@ namespace Notify.Tests.UnitTests
             MockRequest(Constants.fakeTemplateResponseJson);
 
             var responseTemplate = client.GetTemplateByIdAndVersion(Constants.fakeTemplateId, 2);
-            Assert.IsTrue(expectedResponse.Equals(responseTemplate));
+            Assert.AreEqual(expectedResponse, responseTemplate);
         }
 
         [Test, Category("Unit"), Category("Unit/NotificationClient")]
@@ -287,7 +287,7 @@ namespace Notify.Tests.UnitTests
 
             List<TemplateResponse> templates = templateList.templates;
 
-            Assert.IsTrue(templates.Count == 0);
+            Assert.AreEqual(templates.Count, 0);
         }
 
         [Test, Category("Unit"), Category("Unit/NotificationClient")]
@@ -304,7 +304,7 @@ namespace Notify.Tests.UnitTests
             Assert.AreEqual(templates.Count, expectedResponse.templates.Count);
             for (int i = 0; i < templates.Count; i++)
             {
-                Assert.IsTrue(expectedResponse.templates[i].Equals(templates[i]));
+                Assert.AreEqual(expectedResponse.templates[i], templates[i]);
             }
         }
 
@@ -326,7 +326,7 @@ namespace Notify.Tests.UnitTests
             Assert.AreEqual(templates.Count, expectedResponse.templates.Count);
             for (int i = 0; i < templates.Count; i++)
             {
-                Assert.IsTrue(expectedResponse.templates[i].Equals(templates[i]));
+                Assert.AreEqual(expectedResponse.templates[i], templates[i]);
             }
         }
 
@@ -348,7 +348,7 @@ namespace Notify.Tests.UnitTests
             Assert.AreEqual(templates.Count, expectedResponse.templates.Count);
             for (int i = 0; i < templates.Count; i++)
             {
-                Assert.IsTrue(expectedResponse.templates[i].Equals(templates[i]));
+                Assert.AreEqual(expectedResponse.templates[i], templates[i]);
             }
         }
 
@@ -380,7 +380,7 @@ namespace Notify.Tests.UnitTests
             Assert.AreEqual(receivedTexts.Count, expectedResponse.receivedTexts.Count);
             for (int i = 0; i < receivedTexts.Count; i++)
             {
-                Assert.IsTrue(expectedResponse.receivedTexts[i].Equals(receivedTexts[i]));
+                Assert.AreEqual(expectedResponse.receivedTexts[i], receivedTexts[i]);
             }
         }
 
@@ -420,7 +420,7 @@ namespace Notify.Tests.UnitTests
 
             SmsNotificationResponse actualResponse = client.SendSms(Constants.fakePhoneNumber, Constants.fakeTemplateId, personalisation);
 
-            Assert.IsTrue(expectedResponse.Equals(actualResponse));
+            Assert.AreEqual(expectedResponse, actualResponse);
         }
 
         [Test, Category("Unit"), Category("Unit/NotificationClient")]
@@ -501,7 +501,7 @@ namespace Notify.Tests.UnitTests
 
             EmailNotificationResponse actualResponse = client.SendEmail(Constants.fakeEmail, Constants.fakeTemplateId, personalisation, Constants.fakeNotificationReference);
 
-            Assert.IsTrue(expectedResponse.Equals(actualResponse));
+            Assert.AreEqual(expectedResponse, actualResponse);
 
         }
 
@@ -545,7 +545,7 @@ namespace Notify.Tests.UnitTests
 
             LetterNotificationResponse actualResponse = client.SendLetter(Constants.fakeTemplateId, personalisation, Constants.fakeNotificationReference);
 
-            Assert.IsTrue(expectedResponse.Equals(actualResponse));
+            Assert.AreEqual(expectedResponse, actualResponse);
 
         }
 
@@ -606,7 +606,7 @@ namespace Notify.Tests.UnitTests
             Assert.IsNotNull(expectedResponse.reference);
             Assert.IsNotNull(expectedResponse.postage);
             Assert.IsNull(expectedResponse.content);
-            Assert.IsTrue(expectedResponse.Equals(actualResponse));
+            Assert.AreEqual(expectedResponse, actualResponse);
 
         }
 
@@ -709,7 +709,7 @@ namespace Notify.Tests.UnitTests
 
             var actualResponse = client.SendEmail(Constants.fakeEmail, Constants.fakeTemplateId, personalisation, Constants.fakeNotificationReference, Constants.fakeReplyToId);
 
-            Assert.IsTrue(expectedResponse.Equals(actualResponse));
+            Assert.AreEqual(expectedResponse, actualResponse);
         }
 
         [Test, Category("Unit"), Category("Unit/NotificationClient")]

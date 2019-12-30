@@ -249,7 +249,7 @@ namespace Notify.Tests.IntegrationTests
 			ReceivedTextListResponse receivedTextListResponse = client_inbound.GetReceivedTexts();
 			Assert.IsNotNull(receivedTextListResponse);
 			Assert.IsNotNull(receivedTextListResponse.receivedTexts);
-			Assert.IsTrue(receivedTextListResponse.receivedTexts.Count > 0);
+			Assert.AreNotEqual(receivedTextListResponse.receivedTexts.Count, 0);
 
 			List<ReceivedTextResponse> receivedTexts = receivedTextListResponse.receivedTexts;
 
@@ -291,7 +291,7 @@ namespace Notify.Tests.IntegrationTests
 		{
 			TemplateList templateList = this.client.GetAllTemplates();
 			Assert.IsNotNull(templateList);
-			Assert.IsTrue(templateList.templates.Count > 0);
+			Assert.AreNotEqual(templateList.templates.Count, 0);
 
 			foreach (TemplateResponse template in templateList.templates)
 			{
@@ -305,7 +305,7 @@ namespace Notify.Tests.IntegrationTests
 			const String type = "sms";
 			TemplateList templateList = this.client.GetAllTemplates(type);
 			Assert.IsNotNull(templateList);
-			Assert.IsTrue(templateList.templates.Count > 0);
+			Assert.AreNotEqual(templateList.templates.Count, 0);
 
 			foreach (TemplateResponse template in templateList.templates)
 			{
@@ -319,7 +319,7 @@ namespace Notify.Tests.IntegrationTests
 			const String type = "email";
 			TemplateList templateList = this.client.GetAllTemplates(type);
 			Assert.IsNotNull(templateList);
-			Assert.IsTrue(templateList.templates.Count > 0);
+			Assert.AreNotEqual(templateList.templates.Count, 0);
 
 			foreach (TemplateResponse template in templateList.templates)
 			{
