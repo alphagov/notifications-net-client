@@ -49,7 +49,40 @@ namespace Notify.Client
             return await MakeRequest(url, HttpMethod.Post, content).ConfigureAwait(false);
         }
 
+        public async Task<byte[]> GETBytes(string url)
+        {
+            return await MakeRequestBytes(url, HttpMethod.Get).ConfigureAwait(false);
+        }
+
+        public async Task<byte[]> MakeRequestBytes(string url, HttpMethod method, HttpContent content = null) {
+            var response = SendRequest(url, method, content).Result;
+
+            var responseContent = await response.Content.ReadAsByteArrayAsync().ConfigureAwait(false);
+
+            if (!response.IsSuccessStatusCode)
+            {
+                // if there was an error, rather than a binary pdf, the http body will be a json error message, so
+                // encode the bytes as UTF8
+                HandleHTTPErrors(response, Encoding.UTF8.GetString(responseContent));
+            }
+            return responseContent;
+
+        }
+
         public async Task<string> MakeRequest(string url, HttpMethod method, HttpContent content = null)
+        {
+            var response = SendRequest(url, method, content).Result;
+
+            var responseContent = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
+
+            if (!response.IsSuccessStatusCode)
+            {
+                HandleHTTPErrors(response, responseContent);
+            }
+            return responseContent;
+        }
+
+        private async Task<HttpResponseMessage> SendRequest(string url, HttpMethod method, HttpContent content)
         {
             var request = new HttpRequestMessage(method, url);
 
@@ -79,22 +112,19 @@ namespace Notify.Client
                 });
                 throw ae.Flatten();
             }
+            return response;
+        }
 
-            var responseContent = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
-
-            if (response.IsSuccessStatusCode)
-            {
-                return responseContent;
-            }
-
+        private void HandleHTTPErrors(HttpResponseMessage response, string errorResponseContent)
+        {
             try
             {
-                var errorResponse = JsonConvert.DeserializeObject<NotifyHTTPErrorResponse>(responseContent);
+                var errorResponse = JsonConvert.DeserializeObject<NotifyHTTPErrorResponse>(errorResponseContent);
                 throw new NotifyClientException("Status code {0}. The following errors occured {1}", errorResponse.getStatusCode(), errorResponse.getErrorsAsJson());
             }
             catch (Exception ex)
             {
-                throw new NotifyClientException("Status code {0}. Error: {1}, Exception: {2}", response.StatusCode.GetHashCode(), responseContent, ex.Message);
+                throw new NotifyClientException("Status code {0}. Error: {1}, Exception: {2}", response.StatusCode.GetHashCode(), errorResponseContent, ex.Message);
             }
         }
 
@@ -122,7 +152,7 @@ namespace Notify.Client
             }
 
             return uriResult;
-            
+
         }
 
         public string GetUserAgent()
