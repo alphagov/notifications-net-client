@@ -74,6 +74,18 @@ namespace Notify.Tests.UnitTests
         }
 
         [Test, Category("Unit"), Category("Unit/NotificationClientAsync")]
+        public async Task GetPdfForLetterCreatesExpectedRequest()
+        {
+            var responseAsString = "%PDF-1.5 testpdf";
+            MockRequest(
+                responseAsString,
+                string.Format(client.GET_PDF_FOR_LETTER_URL, Constants.fakeNotificationId),
+                AssertValidRequest);
+
+            await client.GetPdfForLetterAsync(Constants.fakeNotificationId);
+        }
+
+        [Test, Category("Unit"), Category("Unit/NotificationClientAsync")]
         public async Task GetAllNotificationsCreatesExpectedResult()
         {
             MockRequest(Constants.fakeNotificationsJson,
@@ -172,6 +184,18 @@ namespace Notify.Tests.UnitTests
 
             var responseNotification = await client.GetNotificationByIdAsync(Constants.fakeNotificationId);
             Assert.AreEqual(expectedResponse, responseNotification);
+        }
+
+        [Test, Category("Unit"), Category("Unit/NotificationClient")]
+        public async Task GetPdfForLetterReceivesExpectedResponse()
+        {
+            var responseAsString = "%PDF-1.5 testpdf";
+            var expectedResponse = Encoding.UTF8.GetBytes(responseAsString);
+
+            MockRequest(responseAsString);
+
+            var actualResponse = await client.GetPdfForLetterAsync(Constants.fakeNotificationId);
+            Assert.AreEqual(expectedResponse, actualResponse);
         }
 
         [Test, Category("Unit"), Category("Unit/NotificationClientAsync")]

@@ -1,4 +1,7 @@
 ﻿using System;
+using System.Text;
+using System.Threading;
+using System.Linq;
 using System.Collections.Generic;
 using System.IO;
 using Notify.Client;
@@ -476,6 +479,26 @@ namespace Notify.Tests.IntegrationTests
 			Assert.AreEqual(response.reference, "sample-test-ref");
 		}
 
-
+		[Test, Category("Integration"), Category("Integration/NotificationClient")]
+		public void GetPdfForLetter()
+		{
+			byte[] pdfData = null;
+			for (int i = 0; i < 15; i++)
+			{
+				try {
+					pdfData = this.client.GetPdfForLetter(this.letterNotificationId);
+					break;
+				} catch (NotifyClientException e) {
+					if (!e.Message.Contains("PDFNotReadyError")) {
+						throw e;
+					} else {
+						Thread.Sleep(3000);
+					}
+				}
+			}
+			Assert.IsNotNull(pdfData);
+			var expectedResponse = Encoding.UTF8.GetBytes("%PDF-");
+			Assert.AreEqual(pdfData.Take(expectedResponse.Length).ToArray(), expectedResponse);
+		}
 	}
 }
