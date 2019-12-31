@@ -1,3 +1,8 @@
+## [2.7.0] - 2019-12-31
+* Added `NotificationClient.getPdfForLetter` function
+  - accepts `string notificationId`
+  - returns a `byte[]` containing the final printable PDF for a precompiled or templated letter
+
 ## [2.6.0] - 2019-12-20
 
 ** Add an optional `includeSpreadsheetUploads` argument to `GetNotifications`.
