@@ -19,6 +19,7 @@ namespace Notify.Client
     {
         public string GET_RECEIVED_TEXTS_URL = "v2/received-text-messages";
         public string GET_NOTIFICATION_URL = "v2/notifications/";
+        public string GET_PDF_FOR_LETTER_URL = "v2/notifications/{0}/pdf";
         public string SEND_SMS_NOTIFICATION_URL = "v2/notifications/sms";
         public string SEND_EMAIL_NOTIFICATION_URL = "v2/notifications/email";
         public string SEND_LETTER_NOTIFICATION_URL = "v2/notifications/letter";
@@ -150,7 +151,7 @@ namespace Notify.Client
 
             var response = await POST(SEND_SMS_NOTIFICATION_URL, o.ToString(Formatting.None)).ConfigureAwait(false);
 
-            return JsonConvert.DeserializeObject<SmsNotificationResponse>(response);            
+            return JsonConvert.DeserializeObject<SmsNotificationResponse>(response);
         }
 
         public async Task<EmailNotificationResponse> SendEmailAsync(string emailAddress, string templateId,
@@ -177,7 +178,7 @@ namespace Notify.Client
 
             var response = await this.POST(SEND_LETTER_NOTIFICATION_URL, o.ToString(Formatting.None)).ConfigureAwait(false);
 
-            return JsonConvert.DeserializeObject<LetterNotificationResponse>(response);            
+            return JsonConvert.DeserializeObject<LetterNotificationResponse>(response);
         }
 
         public async Task<LetterNotificationResponse> SendPrecompiledLetterAsync(string clientReference, byte[] pdfContents, string postage = null)
@@ -234,6 +235,14 @@ namespace Notify.Client
             {
                 throw new NotifyClientException("Could not create Template object from response: {0}", response);
             }
+        }
+
+
+        public async Task<byte[]> GetPdfForLetterAsync(string notificationId)
+        {
+            var finalUrl = string.Format(GET_PDF_FOR_LETTER_URL, notificationId);
+            var response = await GETBytes(finalUrl).ConfigureAwait(false);
+            return response;
         }
 
         public static JObject PrepareUpload(byte[] documentContents)
@@ -428,6 +437,18 @@ namespace Notify.Client
             try
             {
                 return SendPrecompiledLetterAsync(clientReference, pdfContents, postage).Result;
+            }
+            catch (AggregateException ex)
+            {
+                throw HandleAggregateException(ex);
+            }
+        }
+
+        public byte[] GetPdfForLetter(string notificationId)
+        {
+            try
+            {
+                return GetPdfForLetterAsync(notificationId).Result;
             }
             catch (AggregateException ex)
             {

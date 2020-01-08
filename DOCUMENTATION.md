@@ -777,6 +777,44 @@ If the request is not successful, the client returns a `Notify.Exceptions.Notify
 |`403`|`[{`<br>`"error": "AuthError",`<br>`"message": "Error: Your system clock must be accurate to within 30 seconds"`<br>`}]`|Check your system clock|
 |`403`|`[{`<br>`"error": "AuthError",`<br>`"message": "Invalid token: signature, api token not found"`<br>`}]`|Use the correct API key. Refer to [API keys](#api-keys) for more information|
 
+## Get a PDF for a letter notification
+
+### Method
+
+This returns the pdf contents of a letter notification.
+
+```csharp
+byte[] pdfFile = client.GetPdfForLetter(notificationId)
+```
+
+### Arguments
+
+#### notificationId (required)
+
+The ID of the notification. You can find the notification ID in the response to the [original notification method call](#get-the-status-of-one-message-response).
+
+You can also find it by signing in to [GOV.UK Notify](https://www.notifications.service.gov.uk) and going to the __API integration__ page.
+
+### Response
+
+If the request to the client is successful, the client will return a `byte[]` object containing the raw PDF data.
+
+### Error codes
+
+If the request is not successful, the client returns a `NotificationClientException` containing the relevant error code:
+
+|error.status_code|error.message|How to fix|
+|:---|:---|:---|
+|`400`|`[{`<br>`"error": "ValidationError",`<br>`"message": "id is not a valid UUID"`<br>`}]`|Check the notification ID|
+|`400`|`[{`<br>`"error": "ValidationError",`<br>`"message": "Notification is not a letter"`<br>`}]`|Check that you are looking up the correct notification|
+|`400`|`[{`<br>`"error": "PDFNotReadyError",`<br>`"message": "PDF not available yet, try again later"`<br>`}]`|Wait for the notification to finish processing. This usually takes a few seconds|
+|`400`|`[{`<br>`"error": "BadRequestError",`<br>`"message": "Document did not pass the virus scan"`<br>`}]`|You cannot retrieve the contents of a letter notification that contains a virus|
+|`400`|`[{`<br>`"error": "BadRequestError",`<br>`"message": "PDF not available for letters in technical-failure"`<br>`}]`|You cannot retrieve the contents of a letter notification in technical-failure|
+|`403`|`[{`<br>`"error": "AuthError",`<br>`"message": "Error: Your system clock must be accurate to within 30 seconds"`<br>`}]`|Check your system clock|
+|`403`|`[{`<br>`"error": "AuthError",`<br>`"message": "Invalid token: signature, api token not found"`<br>`}]`|Use the correct API key. Refer to [API keys](#api-keys) for more information|
+|`404`|`[{`<br>`"error": "NoResultFound",`<br>`"message": "No result found"`<br>`}]`|Check the notification ID|
+
+
 # Get a template
 
 ## Get a template by ID

@@ -1,4 +1,7 @@
 ﻿using System;
+using System.Text;
+using System.Threading;
+using System.Linq;
 using System.Collections.Generic;
 using System.IO;
 using Notify.Client;
@@ -249,7 +252,7 @@ namespace Notify.Tests.IntegrationTests
 			ReceivedTextListResponse receivedTextListResponse = client_inbound.GetReceivedTexts();
 			Assert.IsNotNull(receivedTextListResponse);
 			Assert.IsNotNull(receivedTextListResponse.receivedTexts);
-			Assert.IsTrue(receivedTextListResponse.receivedTexts.Count > 0);
+			Assert.AreNotEqual(receivedTextListResponse.receivedTexts.Count, 0);
 
 			List<ReceivedTextResponse> receivedTexts = receivedTextListResponse.receivedTexts;
 
@@ -291,7 +294,7 @@ namespace Notify.Tests.IntegrationTests
 		{
 			TemplateList templateList = this.client.GetAllTemplates();
 			Assert.IsNotNull(templateList);
-			Assert.IsTrue(templateList.templates.Count > 0);
+			Assert.AreNotEqual(templateList.templates.Count, 0);
 
 			foreach (TemplateResponse template in templateList.templates)
 			{
@@ -305,7 +308,7 @@ namespace Notify.Tests.IntegrationTests
 			const String type = "sms";
 			TemplateList templateList = this.client.GetAllTemplates(type);
 			Assert.IsNotNull(templateList);
-			Assert.IsTrue(templateList.templates.Count > 0);
+			Assert.AreNotEqual(templateList.templates.Count, 0);
 
 			foreach (TemplateResponse template in templateList.templates)
 			{
@@ -319,7 +322,7 @@ namespace Notify.Tests.IntegrationTests
 			const String type = "email";
 			TemplateList templateList = this.client.GetAllTemplates(type);
 			Assert.IsNotNull(templateList);
-			Assert.IsTrue(templateList.templates.Count > 0);
+			Assert.AreNotEqual(templateList.templates.Count, 0);
 
 			foreach (TemplateResponse template in templateList.templates)
 			{
@@ -476,6 +479,26 @@ namespace Notify.Tests.IntegrationTests
 			Assert.AreEqual(response.reference, "sample-test-ref");
 		}
 
-
+		[Test, Category("Integration"), Category("Integration/NotificationClient")]
+		public void GetPdfForLetter()
+		{
+			byte[] pdfData = null;
+			for (int i = 0; i < 15; i++)
+			{
+				try {
+					pdfData = this.client.GetPdfForLetter(this.letterNotificationId);
+					break;
+				} catch (NotifyClientException e) {
+					if (!e.Message.Contains("PDFNotReadyError")) {
+						throw e;
+					} else {
+						Thread.Sleep(3000);
+					}
+				}
+			}
+			Assert.IsNotNull(pdfData);
+			var expectedResponse = Encoding.UTF8.GetBytes("%PDF-");
+			Assert.AreEqual(pdfData.Take(expectedResponse.Length).ToArray(), expectedResponse);
+		}
 	}
 }
