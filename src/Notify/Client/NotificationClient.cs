@@ -248,7 +248,7 @@ namespace Notify.Client
         public static JObject PrepareUpload(byte[] documentContents)
         {
             if (documentContents.Length > 2 * 1024 * 1024) {
-                throw new System.ArgumentException("Document is larger than 2MB");
+                throw new System.ArgumentException("File is larger than 2MB");
             }
             return new JObject
             {
