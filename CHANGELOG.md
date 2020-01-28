@@ -1,4 +1,9 @@
+## [2.7.1] - 2020-01-27
+
+* change error message to refer to file rather than document
+
 ## [2.7.0] - 2019-12-31
+
 * Added `NotificationClient.getPdfForLetter` function
   - accepts `string notificationId`
   - returns a `byte[]` containing the final printable PDF for a precompiled or templated letter
