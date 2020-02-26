@@ -341,8 +341,6 @@ The links are unique and unguessable. GOV.UK Notify cannot access or decrypt you
 1. In the __Email__ section, select __Manage__ on the __Send files by email__ row.
 1. Enter the contact details you want to use, and select __Save__.
 
-Your contact details will appear on the file download page.
-
 #### Add a placeholder to the template
 
 1. [Sign in to GOV.UK Notify](https://www.notifications.service.gov.uk/sign-in).
