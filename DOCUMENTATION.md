@@ -334,14 +334,14 @@ To send a file by email, add a placeholder to the template then upload a file. T
 
 The links are unique and unguessable. GOV.UK Notify cannot access or decrypt your file.
 
-#### Add contact details to the file download page
+### Add contact details to the file download page
 
 1. [Sign in to GOV.UK Notify](https://www.notifications.service.gov.uk/sign-in).
 1. Go to the __Settings__ page.
 1. In the __Email__ section, select __Manage__ on the __Send files by email__ row.
 1. Enter the contact details you want to use, and select __Save__.
 
-#### Add a placeholder to the template
+### Add a placeholder to the template
 
 1. [Sign in to GOV.UK Notify](https://www.notifications.service.gov.uk/sign-in).
 1. Go to the __Templates__ page and select the relevant email template.
