@@ -131,7 +131,7 @@ namespace Notify.Tests.IntegrationTests
 			{
 				{ "address_line_1", "Foo" },
 				{ "address_line_2", "Bar" },
-				{ "postcode", "Baz" }
+				{ "postcode", "SW1 1AA" }
 			};
 
 			LetterNotificationResponse response =

@@ -526,7 +526,7 @@ namespace Notify.Tests.UnitTests
                 {
                     { "address_line_1", "Foo" },
                     { "address_line_2", "Bar" },
-                    { "postcode", "Baz" }
+                    { "postcode", "SW1 1AA" }
                 };
             JObject expected = new JObject
             {
@@ -551,7 +551,7 @@ namespace Notify.Tests.UnitTests
                 {
                     { "address_line_1", "Foo" },
                     { "address_line_2", "Bar" },
-                    { "postcode", "Baz" }
+                    { "postcode", "SW1 1AA" }
                 };
             LetterNotificationResponse expectedResponse = JsonConvert.DeserializeObject<LetterNotificationResponse>(Constants.fakeLetterNotificationResponseJson);
 
