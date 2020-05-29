@@ -1,3 +1,7 @@
+## [2.8.0] - 2020-06-01
+
+* Add support for an optional `isCsv` parameter in the `prepare_upload()` function. This fixes a bug when sending a CSV file by email. This ensures that the file is downloaded as a CSV rather than a TXT file.
+
 ## [2.7.1] - 2020-01-27
 
 * change error message to refer to file rather than document

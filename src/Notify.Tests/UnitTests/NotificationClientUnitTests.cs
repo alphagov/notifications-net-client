@@ -487,7 +487,41 @@ namespace Notify.Tests.UnitTests
                   {
                     {"document", new JObject
                       {
-                        {"file", "JVBERi0xLjUgdGVzdHBkZg=="}
+                        {"file", "JVBERi0xLjUgdGVzdHBkZg=="},
+                        {"is_csv", false}
+                      }
+                    }
+                  }
+                },
+                { "reference", Constants.fakeNotificationReference }
+            };
+
+            MockRequest(Constants.fakeTemplatePreviewResponseJson,
+                client.SEND_EMAIL_NOTIFICATION_URL,
+                AssertValidRequest,
+                HttpMethod.Post,
+                AssertGetExpectedContent, expected.ToString(Formatting.None));
+
+            EmailNotificationResponse response = client.SendEmail(Constants.fakeEmail, Constants.fakeTemplateId, personalisation, Constants.fakeNotificationReference);
+        }
+
+        [Test, Category("Unit"), Category("Unit/NotificationClient")]
+        public void SendEmailNotificationWithCSVDocumentGeneratesExpectedRequest()
+        {
+            Dictionary<string, dynamic> personalisation = new Dictionary<string, dynamic>
+                {
+                    { "document", NotificationClient.PrepareUpload(Encoding.UTF8.GetBytes("%PDF-1.5 testpdf"), true) }
+                };
+            JObject expected = new JObject
+            {
+                { "email_address", Constants.fakeEmail },
+                { "template_id", Constants.fakeTemplateId },
+                { "personalisation", new JObject
+                  {
+                    {"document", new JObject
+                      {
+                        {"file", "JVBERi0xLjUgdGVzdHBkZg=="},
+                        {"is_csv", true}
                       }
                     }
                   }
