@@ -371,6 +371,21 @@ Dictionary<String, dynamic> personalisation = new Dictionary<String, dynamic>
 };
 ```
 
+#### CSV files
+
+Uploads for CSV files should use the `isCsv` parameter on the `prepare_upload()` function. For example:
+
+```csharp
+
+byte[] documentContents = File.ReadAllBytes("<file path>");
+
+Dictionary<String, dynamic> personalisation = new Dictionary<String, dynamic>
+{
+    { "name", "Foo" },
+    { "link_to_file", NotificationClient.PrepareUpload(documentContents, isCsv = true)}
+};
+```
+
 ### Error codes
 
 If the request is not successful, the client returns an `HTTPError` containing the relevant error code.

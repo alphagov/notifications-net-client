@@ -245,14 +245,15 @@ namespace Notify.Client
             return response;
         }
 
-        public static JObject PrepareUpload(byte[] documentContents)
+        public static JObject PrepareUpload(byte[] documentContents, bool isCsv = false)
         {
             if (documentContents.Length > 2 * 1024 * 1024) {
                 throw new System.ArgumentException("File is larger than 2MB");
             }
             return new JObject
             {
-                {"file", System.Convert.ToBase64String(documentContents)}
+                {"file", System.Convert.ToBase64String(documentContents)},
+                {"is_csv", isCsv}
             };
         }
 
