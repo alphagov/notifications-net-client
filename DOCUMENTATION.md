@@ -734,6 +734,8 @@ You can filter by each:
 * [letter status](#status---letter)
 * [precompiled letter status](#status---precompiled-letter)
 
+You can leave out this argument to ignore this filter.
+
 
 #### reference (optional)
 
