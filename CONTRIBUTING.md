@@ -32,7 +32,7 @@ export EMAIL_TEMPLATE_ID="valid email_template_id"
 export SMS_TEMPLATE_ID="valid sms_template_id"
 export LETTER_TEMPLATE_ID="valid letter_template_id"
 export SMS_SENDER_ID="valid sms_sender_id - to test sending to a receiving number, so needs to be a real number"
-export API_SENDING_KEY="API_whitelist_key for sending an SMS to a receiving number"
+export API_SENDING_KEY="API_team_key for sending an SMS to a receiving number"
 export INBOUND_SMS_QUERY_KEY="API_test_key to get received text messages"
 ```
 
