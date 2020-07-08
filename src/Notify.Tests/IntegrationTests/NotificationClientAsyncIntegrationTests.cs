@@ -333,7 +333,7 @@ namespace Notify.Tests.IntegrationTests
 			const String type = "invalid";
 
 			var ex = Assert.ThrowsAsync<NotifyClientException>(async () => await this.client.GetAllTemplatesAsync(type));
-			Assert.That(ex.Message, Does.Contain("type invalid is not one of [sms, email, letter]"));
+			Assert.That(ex.Message, Does.Contain("type invalid is not one of [sms, email, letter, broadcast]"));
 		}
 
 		[Test, Category("Integration"), Category("Integration/NotificationClientAsync")]

@@ -336,7 +336,7 @@ namespace Notify.Tests.IntegrationTests
 			const String type = "invalid";
 
 			var ex = Assert.Throws<NotifyClientException>(() => this.client.GetAllTemplates(type));
-			Assert.That(ex.Message, Does.Contain("type invalid is not one of [sms, email, letter]"));
+			Assert.That(ex.Message, Does.Contain("type invalid is not one of [sms, email, letter, broadcast]"));
 		}
 
 		[Test, Category("Integration"), Category("Integration/NotificationClient")]
