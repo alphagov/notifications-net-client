@@ -13,6 +13,7 @@ namespace Notify.Models.Responses
         public int version;
         public string body;
         public string subject;
+        public string letter_contact_block;
 
         public override bool Equals(object response)
         {
@@ -21,7 +22,7 @@ namespace Notify.Models.Responses
                 return false;
             }
 
-            return 
+            return
                 id == resp.id &&
                 name == resp.name &&
                 type == resp.type &&
@@ -30,7 +31,8 @@ namespace Notify.Models.Responses
                 created_by == resp.created_by &&
                 version == resp.version &&
                 body == resp.body &&
-                subject == resp.subject;
+                subject == resp.subject &&
+                letter_contact_block == resp.letter_contact_block;
         }
 
         public override int GetHashCode()

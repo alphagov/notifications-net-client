@@ -1,3 +1,7 @@
+## [2.9.0] - 2020-07-13
+
+* Add support for a `letter_contact_block` attribute in the `TemplateResponse` schema. This will allow our users to check contact blocks for their letter templates.
+
 ## [2.8.0] - 2020-06-01
 
 * Add support for an optional `isCsv` parameter in the `prepare_upload()` function. This fixes a bug when sending a CSV file by email. This ensures that the file is downloaded as a CSV rather than a TXT file.
