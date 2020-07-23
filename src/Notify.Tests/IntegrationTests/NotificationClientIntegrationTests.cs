@@ -45,6 +45,7 @@ namespace Notify.Tests.IntegrationTests
 
 		const String TEST_LETTER_BODY = "Hello Foo";
 		const String TEST_LETTER_SUBJECT = "Main heading";
+		const String TEST_LETTER_CONTACT_BLOCK = "Government Digital Service\nThe White Chapel Building\n10 Whitechapel High Street\nLondon\nE1 8QS\nUnited Kingdom";
 
 		[SetUp]
 		[Test, Category("Integration"), Category("Integration/NotificationClient")]
@@ -353,6 +354,14 @@ namespace Notify.Tests.IntegrationTests
 			TemplateResponse template = this.client.GetTemplateById(EMAIL_TEMPLATE_ID);
 			Assert.AreEqual(template.id, EMAIL_TEMPLATE_ID);
 			Assert.AreEqual(template.body, TEST_TEMPLATE_EMAIL_BODY);
+		}
+
+		[Test, Category("Integration"), Category("Integration/NotificationClient")]
+		public void GetLetterTemplateWithIdCheckContactBlock()
+		{
+			TemplateResponse template = this.client.GetTemplateById(LETTER_TEMPLATE_ID);
+			Assert.AreEqual(template.id, LETTER_TEMPLATE_ID);
+			Assert.AreEqual(template.letter_contact_block, TEST_LETTER_CONTACT_BLOCK);
 		}
 
 		[Test, Category("Integration"), Category("Integration/NotificationClient")]
