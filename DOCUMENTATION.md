@@ -867,6 +867,7 @@ public String created_by;
 public int version;
 public String body;
 public String subject; // null if an sms message
+public String letter_contact_block; // null if not a letter template or contact block not set for letter
 ```
 
 
@@ -921,6 +922,7 @@ public String created_by;
 public int version;
 public String body;
 public String subject; // null if an sms message
+public String letter_contact_block; // null if not a letter template or contact block not set for letter
 ```
 
 ### Error codes
