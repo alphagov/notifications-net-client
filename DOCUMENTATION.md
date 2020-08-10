@@ -350,7 +350,7 @@ The links are unique and unguessable. GOV.UK Notify cannot access or decrypt you
 
 "Download your file at: ((link_to_file))"
 
-### Upload the file
+### Upload your file
 
 You can upload PDF, CSV, .odt, .txt and MS Word Document files. Your file must be smaller than 2MB. [Contact the GOV.UK Notify team](https://www.notifications.service.gov.uk/support/ask-question-give-feedback) if you need to send other file types.
 
