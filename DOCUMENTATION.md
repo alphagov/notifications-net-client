@@ -450,11 +450,11 @@ The personalisation argument always contains the following parameters for the le
 
 - `address_line_1`
 - `address_line_2`
-– `address_line_3` 
-– `address_line_4` 
-– `address_line_5` 
-– `address_line_6`
-– `address_line_7`
+- `address_line_3` 
+- `address_line_4` 
+- `address_line_5` 
+- `address_line_6`
+- `address_line_7`
 
 The address must have at least 3 lines.
 
