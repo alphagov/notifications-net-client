@@ -466,7 +466,7 @@ The `postcode` personalisation argument has been replaced. If your template stil
 
 Any other placeholder fields included in the letter template also count as required parameters. You need to provide their values in a `Dictionary`. For example:
 
-```python
+```csharp
 personalisation: {
   "address_line_1": "The Occupier",
   "address_line_2": "123 High Street",
@@ -648,9 +648,10 @@ Notification notification = client.GetNotificationById(notificationId);
 
 #### notificationId (required)
 
-The ID of the notification. You can find the notification ID in the response to the [original notification method call](#response).
+The ID of the notification. To find the notification ID, you can either:
 
-You can also find it by [signing in to GOV.UK Notify](https://www.notifications.service.gov.uk/sign-in) and going to the __API integration__ page.
+* check the response to the [original notification method call](#response)
+* [sign in to GOV.UK Notify](https://www.notifications.service.gov.uk/sign-in) and go to the __API integration__ page
 
 ### Response
 
@@ -805,9 +806,10 @@ byte[] pdfFile = client.GetPdfForLetter(notificationId)
 
 #### notificationId (required)
 
-The ID of the notification. You can find the notification ID in the response to the [original notification method call](#get-the-status-of-one-message-response).
+The ID of the notification. To find the notification ID, you can either:
 
-You can also find it by signing in to [GOV.UK Notify](https://www.notifications.service.gov.uk) and going to the __API integration__ page.
+* check the response to the [original notification method call](#get-the-status-of-one-message-response)
+* [sign in to GOV.UK Notify](https://www.notifications.service.gov.uk/sign-in) and go to the __API integration__ page
 
 ### Response
 
