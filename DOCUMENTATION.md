@@ -450,9 +450,9 @@ The personalisation argument always contains the following parameters for the le
 
 - `address_line_1`
 - `address_line_2`
-- `address_line_3` 
-- `address_line_4` 
-- `address_line_5` 
+- `address_line_3`
+- `address_line_4`
+- `address_line_5`
 - `address_line_6`
 - `address_line_7`
 
@@ -632,7 +632,7 @@ You can only get the status of messages that are 7 days old or newer.
 |:---|:---|
 |Pending virus check|GOV.UK Notify has not completed a virus scan of the precompiled letter file.|
 |Virus scan failed|GOV.UK Notify found a potential virus in the precompiled letter file.|
-|Validation failed|Content in the precompiled letter file is outside the printable area. See the [GOV.UK Notify PDF letter specification](https://docs.notifications.service.gov.uk/documentation/images/notify-pdf-letter-spec-v2.3.pdf) for more information.|
+|Validation failed|Content in the precompiled letter file is outside the printable area. See the [GOV.UK Notify PDF letter specification](https://docs.notifications.service.gov.uk/documentation/images/notify-pdf-letter-spec-v2.4.pdf) for more information.|
 
 ## Get the status of one message
 
