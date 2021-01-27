@@ -1,3 +1,7 @@
+## [3.0.0] - 2021-01-27
+
+* Upgrade the JWT dependency. Version 6.x or 7.x of the JWT dependency is now required.
+
 ## [2.9.0] - 2020-07-13
 
 * Add support for a `letter_contact_block` attribute in the `TemplateResponse` schema. This will allow our users to check contact blocks for their letter templates.
