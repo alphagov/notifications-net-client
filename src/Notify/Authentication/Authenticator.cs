@@ -43,7 +43,8 @@ namespace Notify.Authentication
                 IDateTimeProvider provider = new UtcDateTimeProvider();
                 IJwtValidator validator = new JwtValidator(serializer, provider);
                 IBase64UrlEncoder urlEncoder = new JwtBase64UrlEncoder();
-                IJwtDecoder decoder = new JwtDecoder(serializer, validator, urlEncoder);
+                IJwtAlgorithm algorithm = new HMACSHA256Algorithm();
+                IJwtDecoder decoder = new JwtDecoder(serializer, validator, urlEncoder, algorithm);
 
                 var jsonPayload = decoder.DecodeToObject<IDictionary<string, object>>(token, secret, verify: true);
 
@@ -52,7 +53,7 @@ namespace Notify.Authentication
             catch (Exception e) when (e is SignatureVerificationException || e is ArgumentException)
             {
                 throw new NotifyAuthException(e.Message);
-            } 
+            }
         }
 
         public static void ValidateGuids(String[] stringGuids)
@@ -66,5 +67,5 @@ namespace Notify.Authentication
             }
         }
     }
-    
+
 }
