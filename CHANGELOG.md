@@ -1,3 +1,7 @@
+## [4.0.0] - 2021-02-08
+
+* Fixed an issue when importing the JWT dependency by pinning the version to 7.x. It is not possible to support both version 6.x and 7.x of JWT because version 7.0 introduced a breaking change.
+
 ## [3.0.0] - 2021-01-27
 
 * Upgrade the JWT dependency. Version 6.x or 7.x of the JWT dependency is now required.
