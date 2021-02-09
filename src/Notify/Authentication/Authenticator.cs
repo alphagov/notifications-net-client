@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using JWT;
 using JWT.Algorithms;
-using JWT.Exceptions;
 using JWT.Serializers;
 using Notify.Exceptions;
 
