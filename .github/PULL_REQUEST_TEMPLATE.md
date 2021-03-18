@@ -9,4 +9,4 @@
 - [x] I’ve used the pull request template
 - [ ] I’ve written unit tests for these changes
 - [ ] I’ve update the documentation (in `DOCUMENATION.md` and `CHANGELOG.md`)
-- [ ] I’ve bumped the version number (in `src/Notify/Notify.csproj`)
+- [ ] I’ve bumped the version number (in `src/GovukNotify/GovukNotify.csproj`)
