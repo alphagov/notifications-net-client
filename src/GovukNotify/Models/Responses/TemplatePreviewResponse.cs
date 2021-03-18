@@ -16,7 +16,7 @@
                 return false;
             }
 
-            return 
+            return
                 id == resp.id &&
                 name == resp.name &&
                 type == resp.type &&

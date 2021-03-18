@@ -321,7 +321,7 @@ namespace Notify.Tests.UnitTests
 
         public static String fakeReceivedTextListResponseJson { get {
                 return @"{ ""received_text_messages"": [
-                        { 
+                        {
                             ""user_number"": ""447700900111"",
                             ""created_at"": ""2017-11-02T15:07:57.197546Z"",
                             ""service_id"": ""a5149c32-f03b-4711-af49-ad6993797d45"",
@@ -329,7 +329,7 @@ namespace Notify.Tests.UnitTests
                             ""notify_number"": ""testing"",
                             ""content"": ""Hello""
                         },
-                        { 
+                        {
                             ""user_number"": ""447700900111"",
                             ""created_at"": ""2017-11-02T15:07:57.197546Z"",
                             ""service_id"": ""a5149c32-f03b-4711-af49-ad6993797d45"",

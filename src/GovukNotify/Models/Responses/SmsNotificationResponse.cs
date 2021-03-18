@@ -13,7 +13,7 @@ namespace Notify.Models.Responses
                 return false;
             }
 
-            return 
+            return
                 content.body == resp.content.body &&
                 content.fromNumber == resp.content.fromNumber &&
                 base.Equals(response);

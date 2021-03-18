@@ -5,7 +5,7 @@ namespace Notify.Models
     public class TemplatePreview
     {
         public string personalisation;
-        
+
         public override bool Equals(object template)
         {
             if (!(template is TemplatePreview temp))
