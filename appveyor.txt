@@ -30,6 +30,6 @@ environment:
     secure: KGEhHJcNoRlFXpb9CjrmDwiHK7CdAD3Md50k14/KNueHROXZiQdDQ9K47DKkAT+z4+914AB/o6ZF6X4r6oTSsw==
   pullId: 0
 build: off
-test_script: dotnet test C:\projects\notifications-net-client\src\Notify.Tests -c=Release
+test_script: dotnet test C:\projects\notifications-net-client\src\GovukNotify.Tests -c=Release
 on_success:
 - publish.cmd
