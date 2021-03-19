@@ -21,7 +21,7 @@ test: single-test
 
 .PHONY: single-test
 single-test: build ## run a single test. usage: "make single-test test=[test name]"
-	dotnet test ./src/Notify.Tests/Notify.Tests.csproj -f=netcoreapp2.0 --no-build -v=n --filter $(test)
+	dotnet test ./src/GovukNotify.Tests/GovukNotify.Tests.csproj -f=netcoreapp2.0 --no-build -v=n --filter $(test)
 
 .PHONY: build-release
 build-release: ## Build release version
@@ -73,4 +73,4 @@ bash-with-docker: generate-env-file ## bash with docker
 
 .PHONY: build-package
 build-package: build-release ## Build and package NuGet
-	dotnet pack -c=Release ./src/Notify/Notify.csproj /p:TargetFrameworks=netcoreapp2.0 -o=publish
+	dotnet pack -c=Release ./src/GovukNotify/GovukNotify.csproj /p:TargetFrameworks=netcoreapp2.0 -o=publish

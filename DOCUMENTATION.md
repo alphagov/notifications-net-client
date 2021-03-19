@@ -12,7 +12,7 @@ Refer to the [client changelog](https://github.com/alphagov/notifications-net-cl
 
 ### Install the client
 
-The GOV.UK Notify client deploys to [Bintray](https://bintray.com/) [external link].
+The GOV.UK Notify client deploys to [Nuget.org](https://nuget.org/) [external link].
 
 You can install the GOV.UK Notify client package using either the command line or Microsoft Visual Studio.
 
@@ -24,18 +24,17 @@ You can install the GOV.UK Notify client package using either the command line o
   </strong>
 </div>
 
-#### Use the command line
+#### Use the dotnet command line interface
 
 Go to your project directory and run the following in the command line to install the client package:
 
 ```
-nuget sources Add -Name NotifyBintray -Source https://api.bintray.com/nuget/gov-uk-notify/nuget
-nuget install Notify
+dotnet add package GovukNotify
 ```
 
 #### Use Microsoft Visual Studio
 
-Use the [NuGet Package Manager](https://docs.microsoft.com/en-us/nuget/what-is-nuget) [external link] to install the `notifications-net-client` client package in Visual Studio.
+Use the [NuGet Package Manager](https://docs.microsoft.com/en-us/nuget/what-is-nuget) [external link] to install the `GovukNotify` client package in Visual Studio.
 
 You can use either the [console](https://docs.microsoft.com/en-us/nuget/tools/package-manager-console) [external link] or [the UI](https://docs.microsoft.com/en-us/nuget/tools/package-manager-ui) [external link].
 
@@ -44,14 +43,12 @@ You can use either the [console](https://docs.microsoft.com/en-us/nuget/tools/pa
 Run the following in the NuGet package manager console to install the client package:
 
 ```
-nuget install Notify -Source https://api.bintray.com/nuget/gov-uk-notify/nuget
+nuget install GovukNotify
 ```
 
 ##### UI
 
-1. Add the `https://api.bintray.com/nuget/gov-uk-notify/nuget` package source to your project.
-
-1. Use the Package Manager UI to [search for and install the client package](https://docs.microsoft.com/en-us/nuget/tools/package-manager-ui#finding-and-installing-a-package) [external link].
+Use the Package Manager UI to [search for and install the client package](https://docs.microsoft.com/en-us/nuget/tools/package-manager-ui#finding-and-installing-a-package) [external link].
 
 ### Create a new instance of the client
 

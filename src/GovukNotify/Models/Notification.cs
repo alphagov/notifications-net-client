@@ -46,7 +46,7 @@ namespace Notify.Models
                 return false;
             }
 
-            return 
+            return
                 id == note.id &&
                 completedAt == note.completedAt &&
                 createdAt == note.createdAt &&

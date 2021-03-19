@@ -1,6 +1,6 @@
 # Visual Studio
 .vs/
-Notify.userprefs
+GovukNotify.userprefs
 
 # NuGet Packages
 *.nupkg
@@ -16,7 +16,7 @@ TestResult.xml
 environment.sh
 .DS_Store
 .idea/
-/src/Notify.Tests/Notify.Tests.csproj.user
+/src/GovukNotify.Tests/GovukNotify.Tests.csproj.user
 
 
 docker.env
