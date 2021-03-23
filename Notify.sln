@@ -3,9 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
 VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Notify", "src\Notify\Notify.csproj", "{A5F982FE-7ACF-49AD-A2D2-3ECC96D010DB}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GovukNotify", "src\GovukNotify\GovukNotify.csproj", "{A5F982FE-7ACF-49AD-A2D2-3ECC96D010DB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NotifyTests", "NotifyTests\NotifyTests.csproj", "{3644588E-CBEF-42D1-A6E6-84B9E76EA032}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GovukNotifyTests", "GovukNotifyTests\GovukNotifyTests.csproj", "{3644588E-CBEF-42D1-A6E6-84B9E76EA032}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

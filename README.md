@@ -4,14 +4,14 @@
 
 ### Nuget Package Manager
 
-The notifications-net-client is deployed to [Bintray](https://bintray.com/gov-uk-notify/nuget/Notify). Navigate to your project directory and install Notify with the following command
+The notifications-net-client is deployed to [Nuget.org](https://www.nuget.org/packages/GovukNotify/). Navigate to your project directory and install Notify with the following command
 ```
-nuget install Notify -Source https://api.bintray.com/nuget/gov-uk-notify/notifications-net-client
+nuget install GovukNotify -Version 1.6.0
 ```
 
-Alternatively if you are using the NuGet Package Manager in Visual Studio, add the source below to install.
+Alternatively if you are using the NuGet Package Manager in Visual Studio, run the following command to install
 ```
-https://api.bintray.com/nuget/gov-uk-notify/nuget
+Install-Package GovukNotify -Version 1.6.0
 ```
 
 ## Development
@@ -440,7 +440,7 @@ Otherwise the client will raise a `Notify.Exceptions.NotifyClientException`:
 Find by clicking **API info** for the template you want to send.
 
 #### `personalisation`
-	
+
 If a template has placeholders you need to provide their values. For example:
 
 ```csharp
@@ -668,7 +668,7 @@ Response
 If the request is successful, `response` will be a `TemplateResponse`:
 
 ```csharp
-public String id; 
+public String id;
 public String name;
 public String type;
 public DateTime created_at;
@@ -732,7 +732,7 @@ Response
 If the request is successful, `response` will be a `TemplateResponse`:
 
 ```csharp
-public String id; 
+public String id;
 public String name;
 public String type;
 public DateTime created_at;
@@ -825,7 +825,7 @@ If omitted all messages are returned. Otherwise you can filter by:
 
 ```csharp
 TemplatePreviewResponse response = client.GenerateTemplatePreview(
-    'templateId', 
+    'templateId',
     personalisation
 )
 ```

@@ -14,19 +14,19 @@ build: dependencies ## Build project
 
 .PHONY: test
 test: ## Run unit tests
-	nunit-console NotifyTests/bin/Debug/NotifyTests.dll -include=Unit/NotificationClient -labels
+	nunit-console GovukNotifyTests/bin/Debug/GovukNotifyTests.dll -include=Unit/NotificationClient -labels
 
 .PHONY: authentication-test
 authentication-test: ## Run integration tests
-	nunit-console NotifyTests/bin/Debug/NotifyTests.dll -include=Unit/AuthenticationTests -labels
+	nunit-console GovukNotifyTests/bin/Debug/GovukNotifyTests.dll -include=Unit/AuthenticationTests -labels
 
 .PHONY: integration-test
 integration-test: ## Run integration tests
-	nunit-console NotifyTests/bin/Debug/NotifyTests.dll -include=Integration -labels
+	nunit-console GovukNotifyTests/bin/Debug/GovukNotifyTests.dll -include=Integration -labels
 
 .PHONY: single-test
 single-test: ## Run a single test: make single-test test=[fully qualified test with namespace]
-	nunit-console NotifyTests/bin/Debug/NotifyTests.dll -nologo -nodots -run=$(test)
+	nunit-console GovukNotifyTests/bin/Debug/GovukNotifyTests.dll -nologo -nodots -run=$(test)
 
 .PHONY: build-test
 build-test: dependencies ## build and test
@@ -44,8 +44,8 @@ build-test_all: dependencies ## build and test all
 
 .PHONY: build-release
 build-release: dependencies ## build release version
-	msbuild src/Notify/Notify.csproj /property:Configuration=Release
+	msbuild src/GovukNotify/GovukNotify.csproj /property:Configuration=Release
 
 .PHONY: build-package
 build-package: build-release ## build nuget package
-	nuget pack src/Notify/Notify.csproj -Properties Configuration=Release
+	nuget pack src/GovukNotify/GovukNotify.csproj -Properties Configuration=Release
