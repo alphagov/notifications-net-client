@@ -12,7 +12,7 @@ Refer to the [client changelog](https://github.com/alphagov/notifications-net-cl
 
 ### Install the client
 
-The GOV.UK Notify client deploys to [Nuget.org](https://nuget.org/) [external link].
+The GOV.UK Notify client can be installed from [Nuget.org](https://www.nuget.org/packages/GovukNotify/) [external link].
 
 You can install the GOV.UK Notify client package using either the command line or Microsoft Visual Studio.
 
