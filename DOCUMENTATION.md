@@ -20,7 +20,8 @@ You can install the GOV.UK Notify client package using either the command line o
   <span class="govuk-warning-text__icon" aria-hidden="true">!</span>
   <strong class="govuk-warning-text__text">
     <span class="govuk-warning-text__assistive">Warning</span>
-    Version 2.5.0 will only work if your code is asynchronous. We have fixed this issue in version 2.5.2. <a href= "https://www.notifications.service.gov.uk/support/ask-question-give-feedback">Contact us</a> if you have any problems.
+      If you require an older version of our API client earlier than 4.0.0, download an older version from
+      <a href="https://github.com/alphagov/notifications-net-client/releases">Github</a> [external link]
   </strong>
 </div>
 
