@@ -20,7 +20,7 @@ You can install the GOV.UK Notify client package using either the command line o
   <span class="govuk-warning-text__icon" aria-hidden="true">!</span>
   <strong class="govuk-warning-text__text">
     <span class="govuk-warning-text__assistive">Warning</span>
-      If you require an older version of our API client earlier than 4.0.0, download an older version from
+      If you need a version of our API client older than 4.0.0, you should download it from
       <a href="https://github.com/alphagov/notifications-net-client/releases">Github</a> [external link]
   </strong>
 </div>
