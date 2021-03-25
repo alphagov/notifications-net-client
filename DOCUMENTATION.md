@@ -416,10 +416,10 @@ To send Notify a request to go live:
 ```csharp
 Dictionary<String, dynamic> personalisation = new Dictionary<String, dynamic>
 {
-    { "address_line_1", "The Occupier" },  # required
-    { "address_line_2", "123 High Street" }, # required
-    { "address_line_3", "SW14 6BF" }, # required
-      ... # any other optional address lines, or personalisation fields found in your template
+    { "address_line_1", "The Occupier" }, // required
+    { "address_line_2", "123 High Street" }, // required
+    { "address_line_3", "SW14 6BF" }, // required
+      ... // any other optional address lines, or personalisation fields found in your template
 };
 
 LetterNotificationResponse response = client.SendLetter(templateId, personalisation, reference);
@@ -467,9 +467,9 @@ Any other placeholder fields included in the letter template also count as requi
 personalisation: {
   "address_line_1": "The Occupier",
   "address_line_2": "123 High Street",
-  'address_line_3': 'Richmond upon Thames',
-  'address_line_4': 'Middlesex',
-  'address_line_5': 'SW14 6BF',
+  "address_line_3": "Richmond upon Thames",
+  "address_line_4": "Middlesex",
+  "address_line_5": "SW14 6BF",
   "name": "John Smith",
   "application_id": "4134325"
 }
@@ -796,7 +796,7 @@ If the request is not successful, the client returns a `Notify.Exceptions.Notify
 This returns the pdf contents of a letter notification.
 
 ```csharp
-byte[] pdfFile = client.GetPdfForLetter(notificationId)
+byte[] pdfFile = client.GetPdfForLetter(notificationId);
 ```
 
 #### Arguments
