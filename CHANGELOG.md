@@ -1,3 +1,8 @@
+## [4.0.1] - 2021-04-23
+
+* Fixed a build warning that version 7.0 of the JWT package does not exist
+* Bump System.Net.Http packagefrom 4.3.3 to 4.3.4
+
 ## [4.0.0] - 2021-02-08
 
 * Fixed an issue when importing the JWT dependency by pinning the version to 7.x. It is not possible to support both version 6.x and 7.x of JWT because version 7.0 introduced a breaking change.
