@@ -622,9 +622,10 @@ You can only get the status of messages that are 7 days old or newer.
 
 |Status|information|
 |:---|:---|
-|#Failed|The only failure status that applies to letters is `technical-failure`. GOV.UK Notify had an unexpected error while sending to our printing provider.|
 |#Accepted|GOV.UK Notify has sent the letter to the provider to be printed.|
 |#Received|The provider has printed and dispatched the letter.|
+|#technical-failure|GOV.UK Notify had an unexpected error while sending the letter to our printing provider.|
+|#permanent-failure|The provider cannot print the letter. Your letter will not be dispatched.|
 
 ### Status - precompiled letter
 
@@ -633,6 +634,8 @@ You can only get the status of messages that are 7 days old or newer.
 |#Pending virus check|GOV.UK Notify has not completed a virus scan of the precompiled letter file.|
 |#Virus scan failed|GOV.UK Notify found a potential virus in the precompiled letter file.|
 |#Validation failed|Content in the precompiled letter file is outside the printable area. See the [GOV.UK Notify letter specification](https://www.notifications.service.gov.uk/using-notify/guidance/letter-specification) for more information.|
+|#technical-failure|GOV.UK Notify had an unexpected error while sending the letter to our printing provider.|
+|#permanent-failure|The provider cannot print the letter. Your letter will not be dispatched.|
 
 ### Get the status of one message
 
