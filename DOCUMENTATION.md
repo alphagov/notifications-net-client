@@ -593,53 +593,9 @@ If the request is not successful, the client returns a `Notify.Exceptions.Notify
 |N/A|`"message":"precompiledPDF cannot be null or empty"`|Send a PDF file with data in it|
 
 ## Get message status
-
-Message status depends on the type of message you have sent.
-
-You can only get the status of messages that are 7 days old or newer.
-
-### Status - email
-
-|Status|Information|
-|:---|:---|
-|#Created|GOV.UK Notify has placed the message in a queue, ready to be sent to the provider. It should only remain in this state for a few seconds.|
-|#Sending|GOV.UK Notify has sent the message to the provider. The provider will try to deliver the message to the recipient for up to 72 hours. GOV.UK Notify is waiting for delivery information.|
-|#Delivered|The message was successfully delivered.|
-|#Failed|This covers all failure statuses:<br>- `permanent-failure` - "The provider could not deliver the message because the email address was wrong. You should remove these email addresses from your database."<br>- `temporary-failure` - "The provider could not deliver the message. This can happen when the recipient’s inbox is full or their anti-spam filter rejects your email. [Check your content does not look like spam](https://www.gov.uk/service-manual/design/sending-emails-and-text-messages#protect-your-users-from-spam-and-phishing) before you try to send the message again."<br>- `technical-failure` - "Your message was not sent because there was a problem between Notify and the provider.<br>You’ll have to try sending your messages again."|
-
-### Status - text message
-
-|Status|Information|
-|:---|:---|
-|#Created|GOV.UK Notify has placed the message in a queue, ready to be sent to the provider. It should only remain in this state for a few seconds.|
-|#Sending|GOV.UK Notify has sent the message to the provider. The provider will try to deliver the message to the recipient for up to 72 hours. GOV.UK Notify is waiting for delivery information.|
-|#Pending|GOV.UK Notify is waiting for more delivery information.<br>GOV.UK Notify received a callback from the provider but the recipient’s device has not yet responded. Another callback from the provider determines the final status of the notification.|
-|#Sent / Sent internationally|The message was sent to an international number. The mobile networks in some countries do not provide any more delivery information. The GOV.UK Notify client API returns this status as `sent`. The GOV.UK Notify client app returns this status as `Sent to an international number`.|
-|#Delivered|The message was successfully delivered.|
-|#Failed|This covers all failure statuses:<br>- `permanent-failure` - "The provider could not deliver the message. This can happen if the phone number was wrong or if the network operator rejects the message. If you’re sure that these phone numbers are correct, you should [contact GOV.UK Notify support](https://www.notifications.service.gov.uk/support). If not, you should remove them from your database. You’ll still be charged for text messages that cannot be delivered."<br>- `temporary-failure` - "The provider could not deliver the message. This can happen when the recipient’s phone is off, has no signal, or their text message inbox is full. You can try to send the message again. You’ll still be charged for text messages to phones that are not accepting messages."<br>- `technical-failure` - "Your message was not sent because there was a problem between Notify and the provider.<br>You’ll have to try sending your messages again. You will not be charged for text messages that are affected by a technical failure."|
-
-### Status - letter
-
-|Status|information|
-|:---|:---|
-|#Accepted|GOV.UK Notify has sent the letter to the provider to be printed.|
-|#Received|The provider has printed and dispatched the letter.|
-|#technical-failure|GOV.UK Notify had an unexpected error while sending the letter to our printing provider.|
-|#permanent-failure|The provider cannot print the letter. Your letter will not be dispatched.|
-
-### Status - precompiled letter
-
-|Status|information|
-|:---|:---|
-|#Pending virus check|GOV.UK Notify has not completed a virus scan of the precompiled letter file.|
-|#Virus scan failed|GOV.UK Notify found a potential virus in the precompiled letter file.|
-|#Validation failed|Content in the precompiled letter file is outside the printable area. See the [GOV.UK Notify letter specification](https://www.notifications.service.gov.uk/using-notify/guidance/letter-specification) for more information.|
-|#technical-failure|GOV.UK Notify had an unexpected error while sending the letter to our printing provider.|
-|#permanent-failure|The provider cannot print the letter. Your letter will not be dispatched.|
-
 ### Get the status of one message
 
-You can only get the status of messages that are 7 days old or newer.
+You can only get the status of messages sent within the retention period. The default retention period is 7 days.
 
 #### Method
 
@@ -733,10 +689,10 @@ You can filter by:
 
 You can filter by each:
 
-* [email status](#status-email)
-* [text message status](#status-text-message)
-* [letter status](#status-letter)
-* [precompiled letter status](#status-precompiled-letter)
+* [email status](#email-status-descriptions)
+* [text message status](#text-message-status-descriptions)
+* [letter status](#letter-status-descriptions)
+* [precompiled letter status](#precompiled-letter-status-descriptions)
 
 You can leave out this argument to ignore this filter.
 
@@ -794,6 +750,53 @@ If the request is not successful, the client returns a `Notify.Exceptions.Notify
 |`400`|`[{`<br>`"error": "ValidationError",`<br>`"message": "Apple is not one of [sms, email, letter]"`<br>`}]`|Contact the GOV.UK Notify team|
 |`403`|`[{`<br>`"error": "AuthError",`<br>`"message": "Error: Your system clock must be accurate to within 30 seconds"`<br>`}]`|Check your system clock|
 |`403`|`[{`<br>`"error": "AuthError",`<br>`"message": "Invalid token: API key not found"`<br>`}]`|Use the correct API key. Refer to [API keys](#api-keys) for more information|
+
+### Email status descriptions
+
+|Status|Description|
+|:---|:---|
+|#`created`|GOV.UK Notify has placed the message in a queue, ready to be sent to the provider. It should only remain in this state for a few seconds.|
+|#`sending`|GOV.UK Notify has sent the message to the provider. The provider will try to deliver the message to the recipient for up to 72 hours. GOV.UK Notify is waiting for delivery information.|
+|#`delivered`|The message was successfully delivered.|
+|#`permanent-failure`|The provider could not deliver the message because the email address was wrong. You should remove these email addresses from your database.|
+|#`temporary-failure`|The provider could not deliver the message. This can happen when the recipient’s inbox is full or their anti-spam filter rejects your email. [Check your content does not look like spam](https://www.gov.uk/service-manual/design/sending-emails-and-text-messages#protect-your-users-from-spam-and-phishing) before you try to send the message again.|
+|#`technical-failure`|Your message was not sent because there was a problem between Notify and the provider.<br>You’ll have to try sending your messages again.|
+
+### Text message status descriptions
+
+|Status|Description|
+|:---|:---|
+|#`created`|GOV.UK Notify has placed the message in a queue, ready to be sent to the provider. It should only remain in this state for a few seconds.|
+|#`sending`|GOV.UK Notify has sent the message to the provider. The provider will try to deliver the message to the recipient for up to 72 hours. GOV.UK Notify is waiting for delivery information.|
+|#`pending`|GOV.UK Notify is waiting for more delivery information.<br>GOV.UK Notify received a callback from the provider but the recipient’s device has not yet responded. Another callback from the provider determines the final status of the text message.|
+|#`sent`|The message was sent to an international number. The mobile networks in some countries do not provide any more delivery information. The GOV.UK Notify website displays this status as 'Sent to an international number'.|
+|#`delivered`|The message was successfully delivered.|
+|#`permanent-failure`|The provider could not deliver the message. This can happen if the phone number was wrong or if the network operator rejects the message. If you’re sure that these phone numbers are correct, you should [contact GOV.UK Notify support](https://www.notifications.service.gov.uk/support). If not, you should remove them from your database. You’ll still be charged for text messages that cannot be delivered.
+|#`temporary-failure`|The provider could not deliver the message. This can happen when the recipient’s phone is off, has no signal, or their text message inbox is full. You can try to send the message again. You’ll still be charged for text messages to phones that are not accepting messages.|
+|#`technical-failure`|Your message was not sent because there was a problem between Notify and the provider.<br>You’ll have to try sending your messages again. You will not be charged for text messages that are affected by a technical failure.|
+
+### Letter status descriptions
+
+|Status|Description|
+|:---|:---|
+|#`accepted`|GOV.UK Notify has sent the letter to the provider to be printed.|
+|#`received`|The provider has printed and dispatched the letter.|
+|#`cancelled`|Sending cancelled. The letter will not be printed or dispatched.|
+|#`technical-failure`|GOV.UK Notify had an unexpected error while sending the letter to our printing provider.|
+|#`permanent-failure`|The provider cannot print the letter. Your letter will not be dispatched.|
+
+### Precompiled letter status descriptions
+
+|Status|Description|
+|:---|:---|
+|#`accepted`|GOV.UK Notify has sent the letter to the provider to be printed.|
+|#`received`|The provider has printed and dispatched the letter.|
+|#`cancelled`|Sending cancelled. The letter will not be printed or dispatched.|
+|#`pending-virus-check`|GOV.UK Notify has not completed a virus scan of the precompiled letter file.|
+|#`virus-scan-failed`|GOV.UK Notify found a potential virus in the precompiled letter file.|
+|#`validation-failed`|Content in the precompiled letter file is outside the printable area. See the [GOV.UK Notify letter specification](https://www.notifications.service.gov.uk/using-notify/guidance/letter-specification) for more information.|
+|#`technical-failure`|GOV.UK Notify had an unexpected error while sending the letter to our printing provider.|
+|#`permanent-failure`|The provider cannot print the letter. Your letter will not be dispatched.|
 
 ### Get a PDF for a letter notification
 
