@@ -24,6 +24,10 @@ single-test: build ## run a single test. usage: "make single-test test=[test nam
 build-release: ## Build release version
 	dotnet build -c=Release -f=netcoreapp2.0
 
+.PHONY: build-package
+build-package: build-release ## Build and package NuGet
+	dotnet pack -c=Release ./src/GovukNotify/GovukNotify.csproj /p:TargetFrameworks=netcoreapp2.0 -o=publish
+
 .PHONY: bootstrap-with-docker
 bootstrap-with-docker:  ## Prepare the Docker builder image
 	docker build -t notifications-net-client .
@@ -39,7 +43,3 @@ test-with-docker: build-with-docker ## Test with Docker
 .PHONY: integration-test-with-docker
 integration-test-with-docker: build-with-docker ## Integration test with Docker
 	./scripts/run_with_docker.sh make integration-test
-
-.PHONY: build-package
-build-package: build-release ## Build and package NuGet
-	dotnet pack -c=Release ./src/GovukNotify/GovukNotify.csproj /p:TargetFrameworks=netcoreapp2.0 -o=publish
