@@ -24,12 +24,8 @@ single-test: build ## run a single test. usage: "make single-test test=[test nam
 build-release: ## Build release version
 	dotnet build -c=Release -f=netcoreapp2.0
 
-.PHONY: generate-env-file
-generate-env-file: ## Generate the environment file for running the tests inside a Docker container
-	scripts/generate_docker_env.sh
-
 .PHONY: bootstrap-with-docker
-bootstrap-with-docker: generate-env-file ## Prepare the Docker builder image
+bootstrap-with-docker:  ## Prepare the Docker builder image
 	docker build -t notifications-net-client .
 
 .PHONY: build-with-docker
