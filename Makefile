@@ -1,8 +1,5 @@
 .DEFAULT_GOAL := help
 
-DOCKER_BUILDER_IMAGE_NAME = govuknotify/net-client-tests
-
-
 .PHONY: help
 help:
 	@cat $(MAKEFILE_LIST) | grep -E '^[a-zA-Z_-]+:.*?## .*$$' | sort | awk 'BEGIN {FS = ":.*?## "}; {printf "\033[36m%-30s\033[0m %s\n", $$1, $$2}'
@@ -33,34 +30,19 @@ generate-env-file: ## Generate the environment file for running the tests inside
 
 .PHONY: bootstrap-with-docker
 bootstrap-with-docker: generate-env-file ## Prepare the Docker builder image
-	docker build -t ${DOCKER_BUILDER_IMAGE_NAME} .
+	docker build -t notifications-net-client .
 
 .PHONY: build-with-docker
 build-with-docker: ## Build with Docker
-	docker run -it --rm \
-		--name "${USER}-notifications-net-client-manual-test" \
-		-v "`pwd`:/var/project" \
-		--env-file docker.env \
-		${DOCKER_BUILDER_IMAGE_NAME} \
-		make build
+	./scripts/run_with_docker.sh make build
 
 .PHONY: test-with-docker
 test-with-docker: build-with-docker ## Test with Docker
-	docker run -it --rm \
-		--name "${USER}-notifications-net-client-manual-test" \
-		-v "`pwd`:/var/project" \
-		--env-file docker.env \
-		${DOCKER_BUILDER_IMAGE_NAME} \
-		make test
+	./scripts/run_with_docker.sh make test
 
 .PHONY: integration-test-with-docker
 integration-test-with-docker: build-with-docker ## Integration test with Docker
-	docker run -it --rm \
-		--name "${USER}-notifications-net-client-manual-test" \
-		-v "`pwd`:/var/project" \
-		--env-file docker.env \
-		${DOCKER_BUILDER_IMAGE_NAME} \
-		make integration-test
+	./scripts/run_with_docker.sh make integration-test
 
 .PHONY: bash-with-docker
 bash-with-docker: generate-env-file ## bash with docker
