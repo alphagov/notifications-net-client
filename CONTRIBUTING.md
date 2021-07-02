@@ -2,11 +2,6 @@
 
 Pull requests are welcome.
 
-## Working on the client locally
-
-You will need to ensure that you have .Net 4.6.2 Framework and .Net core 2.0 installed on your machine.
-If you are not working on a windows OS, .Net Frameworks are not supported but you can use the Makefile to build and run tests, run `make` on your terminal to see the available options.
-
 ## Tests
 
 To run the tests, you'll first need to build the binaries:
@@ -42,5 +37,12 @@ Then run the integration tests by running:
 make integration-test-with-docker
 ```
 
+## Working on the client locally
+
+You will need to ensure that you have .Net 4.6.2 Framework and .Net core 2.0 installed on your machine.
+
+If you are not working on a windows OS, .Net Frameworks are not supported but you can use the Makefile to build and run tests, run `make` on your terminal to see the available options.
+
 ## Deploying the client to Bintray
+
 If you are a member of the Notify team go to the latest build on https://jenkins.notify.tools/job/run-app-veyor-build/, re-run this build with the `PUBLISH_TO_BINTRAY` checked.
