@@ -45,8 +45,7 @@ build-with-docker: ## Build with Docker
 		make build
 
 .PHONY: test-with-docker
-test-with-docker: ## Test with docker
-	docker build -t ${DOCKER_BUILDER_IMAGE_NAME} .
+test-with-docker: build-with-docker ## Test with Docker
 	docker run -it --rm \
 		--name "${USER}-notifications-net-client-manual-test" \
 		-v "`pwd`:/var/project" \
@@ -55,8 +54,7 @@ test-with-docker: ## Test with docker
 		make test
 
 .PHONY: integration-test-with-docker
-integration-test-with-docker: ## integration-Test with docker
-	docker build -t ${DOCKER_BUILDER_IMAGE_NAME} .
+integration-test-with-docker: build-with-docker ## Integration test with Docker
 	docker run -it --rm \
 		--name "${USER}-notifications-net-client-manual-test" \
 		-v "`pwd`:/var/project" \
