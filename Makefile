@@ -31,9 +31,12 @@ build-release: ## Build release version
 generate-env-file: ## Generate the environment file for running the tests inside a Docker container
 	scripts/generate_docker_env.sh
 
-.PHONY: build-with-docker
-build-with-docker: generate-env-file ## build with docker
+.PHONY: bootstrap-with-docker
+bootstrap-with-docker: generate-env-file ## Prepare the Docker builder image
 	docker build -t ${DOCKER_BUILDER_IMAGE_NAME} .
+
+.PHONY: build-with-docker
+build-with-docker: ## Build with Docker
 	docker run -it --rm \
 		--name "${USER}-notifications-net-client-manual-test" \
 		-v "`pwd`:/var/project" \
@@ -42,7 +45,7 @@ build-with-docker: generate-env-file ## build with docker
 		make build
 
 .PHONY: test-with-docker
-test-with-docker: generate-env-file ## Test with docker
+test-with-docker: ## Test with docker
 	docker build -t ${DOCKER_BUILDER_IMAGE_NAME} .
 	docker run -it --rm \
 		--name "${USER}-notifications-net-client-manual-test" \
@@ -52,7 +55,7 @@ test-with-docker: generate-env-file ## Test with docker
 		make test
 
 .PHONY: integration-test-with-docker
-integration-test-with-docker: generate-env-file ## integration-Test with docker
+integration-test-with-docker: ## integration-Test with docker
 	docker build -t ${DOCKER_BUILDER_IMAGE_NAME} .
 	docker run -it --rm \
 		--name "${USER}-notifications-net-client-manual-test" \

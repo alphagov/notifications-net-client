@@ -2,6 +2,16 @@
 
 Pull requests are welcome.
 
+## Setting Up
+
+### Docker container
+
+This app uses dependencies that are difficult to install locally. In order to make local development easy, we run app commands through a Docker container. Run the following to set this up:
+
+```shell
+make bootstrap-with-docker
+```
+
 ## Tests
 
 To run the tests, you'll first need to build the binaries:
