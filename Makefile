@@ -44,16 +44,6 @@ test-with-docker: build-with-docker ## Test with Docker
 integration-test-with-docker: build-with-docker ## Integration test with Docker
 	./scripts/run_with_docker.sh make integration-test
 
-.PHONY: bash-with-docker
-bash-with-docker: generate-env-file ## bash with docker
-	docker build -t ${DOCKER_BUILDER_IMAGE_NAME} .
-	docker run -it --rm \
-		--name "${USER}-notifications-net-client-manual-test" \
-		-v "`pwd`:/var/project" \
-		--env-file docker.env \
-		${DOCKER_BUILDER_IMAGE_NAME} \
-		bash
-
 .PHONY: build-package
 build-package: build-release ## Build and package NuGet
 	dotnet pack -c=Release ./src/GovukNotify/GovukNotify.csproj /p:TargetFrameworks=netcoreapp2.0 -o=publish
