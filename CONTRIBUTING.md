@@ -30,11 +30,19 @@ To run the tests, you'll first need to build the binaries:
 make build-with-docker
 ```
 
-Then you can run the tests themselves by calling:
+### Unit Tests
+
+To run the unit tests:
 
 ```
 make test-with-docker
+```
 
+### Integration Tests
+
+To run the integration tests:
+
+```
 make integration-test-with-docker
 ```
 
