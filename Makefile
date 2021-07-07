@@ -1,8 +1,5 @@
 .DEFAULT_GOAL := help
 
-DOCKER_BUILDER_IMAGE_NAME = govuknotify/net-client-tests
-
-
 .PHONY: help
 help:
 	@cat $(MAKEFILE_LIST) | grep -E '^[a-zA-Z_-]+:.*?## .*$$' | sort | awk 'BEGIN {FS = ":.*?## "}; {printf "\033[36m%-30s\033[0m %s\n", $$1, $$2}'
@@ -27,50 +24,22 @@ single-test: build ## run a single test. usage: "make single-test test=[test nam
 build-release: ## Build release version
 	dotnet build -c=Release -f=netcoreapp2.0
 
-.PHONY: generate-env-file
-generate-env-file: ## Generate the environment file for running the tests inside a Docker container
-	scripts/generate_docker_env.sh
-
-.PHONY: build-with-docker
-build-with-docker: generate-env-file ## build with docker
-	docker build -t ${DOCKER_BUILDER_IMAGE_NAME} .
-	docker run -it --rm \
-		--name "${USER}-notifications-net-client-manual-test" \
-		-v "`pwd`:/var/project" \
-		--env-file docker.env \
-		${DOCKER_BUILDER_IMAGE_NAME} \
-		make build
-
-.PHONY: test-with-docker
-test-with-docker: generate-env-file ## Test with docker
-	docker build -t ${DOCKER_BUILDER_IMAGE_NAME} .
-	docker run -it --rm \
-		--name "${USER}-notifications-net-client-manual-test" \
-		-v "`pwd`:/var/project" \
-		--env-file docker.env \
-		${DOCKER_BUILDER_IMAGE_NAME} \
-		make test
-
-.PHONY: integration-test-with-docker
-integration-test-with-docker: generate-env-file ## integration-Test with docker
-	docker build -t ${DOCKER_BUILDER_IMAGE_NAME} .
-	docker run -it --rm \
-		--name "${USER}-notifications-net-client-manual-test" \
-		-v "`pwd`:/var/project" \
-		--env-file docker.env \
-		${DOCKER_BUILDER_IMAGE_NAME} \
-		make integration-test
-
-.PHONY: bash-with-docker
-bash-with-docker: generate-env-file ## bash with docker
-	docker build -t ${DOCKER_BUILDER_IMAGE_NAME} .
-	docker run -it --rm \
-		--name "${USER}-notifications-net-client-manual-test" \
-		-v "`pwd`:/var/project" \
-		--env-file docker.env \
-		${DOCKER_BUILDER_IMAGE_NAME} \
-		bash
-
 .PHONY: build-package
 build-package: build-release ## Build and package NuGet
 	dotnet pack -c=Release ./src/GovukNotify/GovukNotify.csproj /p:TargetFrameworks=netcoreapp2.0 -o=publish
+
+.PHONY: bootstrap-with-docker
+bootstrap-with-docker:  ## Prepare the Docker builder image
+	docker build -t notifications-net-client .
+
+.PHONY: build-with-docker
+build-with-docker: ## Build with Docker
+	./scripts/run_with_docker.sh make build
+
+.PHONY: test-with-docker
+test-with-docker: build-with-docker ## Test with Docker
+	./scripts/run_with_docker.sh make test
+
+.PHONY: integration-test-with-docker
+integration-test-with-docker: build-with-docker ## Integration test with Docker
+	./scripts/run_with_docker.sh make integration-test
