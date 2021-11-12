@@ -372,7 +372,7 @@ Dictionary<String, dynamic> personalisation = new Dictionary<String, dynamic>
 
 ##### CSV files
 
-Uploads for CSV files should use the `isCsv` parameter on the `prepare_upload()` function. For example:
+Uploads for CSV files should use the `isCsv` parameter on the `PrepareUpload()` function. For example:
 
 ```csharp
 
