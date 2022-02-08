@@ -727,7 +727,7 @@ If you do not pass in this argument it defaults to `false`.
 
 #### Response
 
-If the request to the client is successful, the client returns a `Notify.Exceptions.NotifyClientException`.
+If the request to the client is successful, the client returns a `NotificationList`.
 
 ```csharp
 public List<Notification> notifications;
