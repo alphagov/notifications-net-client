@@ -191,9 +191,9 @@ All messages sent using the [team and guest list](#team-and-guest-list) or [live
 
 #### Error codes
 
-If the request is not successful, the client returns a `Notify.Exceptions.NotifyClientException` and an error code.
+If the request is not successful, the client returns a `Notify.Exceptions.NotifyClientException` containing the relevant error code.
 
-|error.code|error.message|How to fix|
+|Status code|Message|How to fix|
 |:---|:---|:---|
 |`400`|`[{`<br>`"error": "BadRequestError",`<br>`"message": "Can't send to this recipient using a team-only API key"`<br>`}]`|Use the correct type of [API key](#api-keys)|
 |`400`|`[{`<br>`"error": "BadRequestError",`<br>`"message": "Can't send to this recipient when service is in trial mode - see https://www.notifications.service.gov.uk/trial-mode"`<br>`}]`|Your service cannot send this notification in [trial mode](https://www.notifications.service.gov.uk/features/using-notify#trial-mode)|
@@ -312,9 +312,9 @@ public class EmailResponseContent{
 
 #### Error codes
 
-If the request is not successful, the client returns a `Notify.Exceptions.NotifyClientException` and an error code.
+If the request is not successful, the client returns a `Notify.Exceptions.NotifyClientException` containing the relevant error code.
 
-|error.status_code|error.message|How to fix|
+|Status code|Message|How to fix|
 |:---|:---|:---|
 |`400`|`[{`<br>`"error": "BadRequestError",`<br>`"message": "Can't send to this recipient using a team-only API key"`<br>`}]`|Use the correct type of [API key](#api-keys)|
 |`400`|`[{`<br>`"error": "BadRequestError",`<br>`"message": "Can't send to this recipient when service is in trial mode - see https://www.notifications.service.gov.uk/trial-mode"`<br>`}]`|Your service cannot send this notification in [trial mode](https://www.notifications.service.gov.uk/features/using-notify#trial-mode)|
@@ -387,9 +387,9 @@ Dictionary<String, dynamic> personalisation = new Dictionary<String, dynamic>
 
 #### Error codes
 
-If the request is not successful, the client returns an `HTTPError` containing the relevant error code.
+If the request is not successful, the client returns a `Notify.Exceptions.NotifyClientException` containing the relevant error code.
 
-|error.status_code|error.message|How to fix|
+|Status code|Message|How to fix|
 |:---|:---|:---|
 |`400`|`[{`<br>`"error": "BadRequestError",`<br>`"message": "Can't send to this recipient using a team-only API key"`<br>`}]`|Use the correct type of [API key](#api-keys)|
 |`400`|`[{`<br>`"error": "BadRequestError",`<br>`"message": "Can't send to this recipient when service is in trial mode - see https://www.notifications.service.gov.uk/trial-mode"`<br>`}]`|Your service cannot send this notification in [trial mode](https://www.notifications.service.gov.uk/features/using-notify#trial-mode)|
@@ -512,9 +512,9 @@ public class LetterResponseContent{
 
 #### Error codes
 
-If the request is not successful, the client returns a `Notify.Exceptions.NotifyClientException` and an error code.
+If the request is not successful, the client returns a `Notify.Exceptions.NotifyClientException` containing the relevant error code.
 
-|error.code|error.message|How to fix|
+|Status code|Message|How to fix|
 |:--- |:---|:---|
 |`400`|`[{`<br>`"error": "BadRequestError",`<br>`"message": "Cannot send letters with a team api key"`<br>`}]`|Use the correct type of [API key](#api-keys).|
 |`400`|`[{`<br>`"error": "BadRequestError",`<br>`"message": "Cannot send letters when service is in trial mode - see https://www.notifications.service.gov.uk/trial-mode"`<br>`}]`|Your service cannot send this notification in [trial mode](https://www.notifications.service.gov.uk/features/using-notify#trial-mode).|
@@ -574,9 +574,9 @@ public LetterResponseContent content;  // null for this response
 
 #### Error codes
 
-If the request is not successful, the client returns a `Notify.Exceptions.NotifyClientException` containing the relevant error code:
+If the request is not successful, the client returns a `Notify.Exceptions.NotifyClientException` containing the relevant error code.
 
-|httpResult|Message|How to fix|
+|Status code|Message|How to fix|
 |:--- |:---|:---|
 |`400`|`[{`<br>`"error": "BadRequestError",`<br>`"message": "Cannot send letters with a team api key"`<br>`}]`|Use the correct type of [API key](#api-keys)|
 |`400`|`[{`<br>`"error": "BadRequestError",`<br>`"message": "Cannot send letters when service is in trial mode - see https://www.notifications.service.gov.uk/trial-mode"`<br>`}]`|Your service cannot send this notification in [trial mode](https://www.notifications.service.gov.uk/features/using-notify#trial-mode)|
@@ -650,9 +650,9 @@ public class Template
 
 #### Error codes
 
-If the request is not successful, the client returns a `Notify.Exceptions.NotifyClientException` and an error code:
+If the request is not successful, the client returns a `Notify.Exceptions.NotifyClientException` containing the relevant error code.
 
-|error.status_code|error.message|How to fix|
+|Status code|Message|How to fix|
 |:---|:---|:---|
 |`400`|`[{`<br>`"error": "ValidationError",`<br>`"message": "id is not a valid UUID"`<br>`}]`|Check the notification ID|
 |`403`|`[{`<br>`"error": "AuthError",`<br>`"message": "Error: Your system clock must be accurate to within 30 seconds"`<br>`}]`|Check your system clock|
@@ -727,7 +727,7 @@ If you do not pass in this argument it defaults to `false`.
 
 #### Response
 
-If the request to the client is successful, the client returns a `Notify.Exceptions.NotifyClientException`.
+If the request to the client is successful, the client returns a `NotificationList`.
 
 ```csharp
 public List<Notification> notifications;
@@ -741,9 +741,9 @@ public class Link {
 
 #### Error codes
 
-If the request is not successful, the client returns a `Notify.Exceptions.NotifyClientException` and an error code:
+If the request is not successful, the client returns a `Notify.Exceptions.NotifyClientException` containing the relevant error code.
 
-|error.status_code|error.message|How to fix|
+|Status code|Message|How to fix|
 |:---|:---|:---|
 |`400`|`[{`<br>`"error": "ValidationError",`<br>`"message": "bad status is not one of [created, sending, delivered, pending, failed, technical-failure, temporary-failure, permanent-failure]"`<br>`}]`|Contact the GOV.UK Notify team|
 |`400`|`[{`<br>`"error": "ValidationError",`<br>`"message": "Apple is not one of [sms, email, letter]"`<br>`}]`|Contact the GOV.UK Notify team|
@@ -822,9 +822,9 @@ If the request to the client is successful, the client will return a `byte[]` ob
 
 #### Error codes
 
-If the request is not successful, the client returns a `NotificationClientException` containing the relevant error code:
+If the request is not successful, the client returns a `NotificationClientException` containing the relevant error code.
 
-|error.status_code|error.message|How to fix|
+|Status code|Message|How to fix|
 |:---|:---|:---|
 |`400`|`[{`<br>`"error": "ValidationError",`<br>`"message": "id is not a valid UUID"`<br>`}]`|Check the notification ID|
 |`400`|`[{`<br>`"error": "ValidationError",`<br>`"message": "Notification is not a letter"`<br>`}]`|Check that you are looking up the correct notification|
@@ -880,9 +880,9 @@ public String letter_contact_block; // null if not a letter template or contact 
 
 #### Error codes
 
-If the request is not successful, the client returns an `HTTPError` and an error code:
+If the request is not successful, the client returns a `Notify.Exceptions.NotifyClientException` containing the relevant error code.
 
-|error.code|error.message|How to fix|
+|Status code|Message|How to fix|
 |:---|:---|:---|
 |`400`|`[{`<br>`"error": "ValidationError",`<br>`"message": "id is not a valid UUID"`<br>`}]`|Check the notification ID|
 |`403`|`[{`<br>`"error": "AuthError",`<br>`"message": "Error: Your system clock must be accurate to within 30 seconds"`<br>`}]`|Check your system clock|
@@ -934,9 +934,9 @@ public String letter_contact_block; // null if not a letter template or contact 
 
 #### Error codes
 
-If the request is not successful, the client returns a `Notify.Exceptions.NotifyClientException` and an error code:
+If the request is not successful, the client returns a `Notify.Exceptions.NotifyClientException` containing the relevant error code.
 
-|error.code|error.message|How to fix|
+|Status code|Message|How to fix|
 |:---|:---|:---|
 |`400`|`[{`<br>`"error": "ValidationError",`<br>`"message": "id is not a valid UUID"`<br>`}]`|Check the notification ID|
 |`403`|`[{`<br>`"error": "AuthError",`<br>`"message": "Error: Your system clock must be accurate to within 30 seconds"`<br>`}]`|Check your system clock|
@@ -1032,9 +1032,9 @@ public String subject; // null if a sms message
 
 #### Error codes
 
-If the request is not successful, the client returns a `Notify.Exceptions.NotifyClientException` and an error code:
+If the request is not successful, the client returns a `Notify.Exceptions.NotifyClientException` containing the relevant error code.
 
-|error.status_code|error.message|Notes|
+|Status code|Message|How to fix|
 |:---|:---|:---|
 |`400`|`[{`<br>`"error": "BadRequestError",`<br>`"message": "Missing personalisation: [PERSONALISATION FIELD]"`<br>`}]`|Check that the personalisation arguments in the method match the placeholder fields in the template|
 |`400`|`[{`<br>`"error": "NoResultFound",`<br>`"message": "No result found"`<br>`}]`|Check the [template ID](#generate-a-preview-template-arguments-templateid-required)|
@@ -1102,9 +1102,9 @@ If the notification specified in the `olderThanId` argument is older than 7 days
 
 #### Error codes
 
-If the request is not successful, the client returns a `Notify.Exceptions.NotifyClientException` and an error code.
+If the request is not successful, the client returns a `Notify.Exceptions.NotifyClientException` containing the relevant error code.
 
-|error.code|error.message|How to fix|
+|Status code|Message|How to fix|
 |:---|:---|:---|
 |`403`|`[{`<br>`"error": "AuthError",`<br>`"message": "Error: Your system clock must be accurate to within 30 seconds"`<br>`}]`|Check your system clock|
 |`403`|`[{`<br>`"error": "AuthError",`<br>`"message": "Invalid token: API key not found"`<br>`}]`|Use the correct API key. Refer to [API keys](#api-keys) for more information|
