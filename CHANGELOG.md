@@ -1,3 +1,7 @@
+## [5.0.0] - 2022-04-01
+
+* Increase minimum .NET Core version to 3.0
+
 ## [4.0.1] - 2021-04-23
 
 * Fixed a build warning that version 7.0 of the JWT package does not exist

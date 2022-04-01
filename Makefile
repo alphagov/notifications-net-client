@@ -6,7 +6,7 @@ help:
 
 .PHONY: build
 build: ## Build project
-	dotnet build -f=netcoreapp2.0
+	dotnet build -f=netcoreapp3.0
 
 .PHONY: integration-test
 integration-test: test=TestCategory=Integration ## Run integration tests
@@ -18,15 +18,15 @@ test: single-test
 
 .PHONY: single-test
 single-test: build ## run a single test. usage: "make single-test test=[test name]"
-	dotnet test ./src/GovukNotify.Tests/GovukNotify.Tests.csproj -f=netcoreapp2.0 --no-build -v=n --filter $(test)
+	dotnet test ./src/GovukNotify.Tests/GovukNotify.Tests.csproj -f=netcoreapp3.0 --no-build -v=n --filter $(test)
 
 .PHONY: build-release
 build-release: ## Build release version
-	dotnet build -c=Release -f=netcoreapp2.0
+	dotnet build -c=Release -f=netcoreapp3.0
 
 .PHONY: build-package
 build-package: build-release ## Build and package NuGet
-	dotnet pack -c=Release ./src/GovukNotify/GovukNotify.csproj /p:TargetFrameworks=netcoreapp2.0 -o=publish
+	dotnet pack -c=Release ./src/GovukNotify/GovukNotify.csproj /p:TargetFrameworks=netcoreapp3.0 -o=publish
 
 .PHONY: bootstrap-with-docker
 bootstrap-with-docker:  ## Prepare the Docker builder image
