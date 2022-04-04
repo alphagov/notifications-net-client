@@ -30,7 +30,7 @@ environment:
     secure: pdTFB380I1f6886ekz3rJLkqW+/zETcltPg3xdhTQ24SPMdknU81dvk4nQK8pP+i
   pullId: 0
 build: off
-image: Visual Studio 2019
+image: Visual Studio 2022
 test_script: dotnet test C:\projects\notifications-net-client\src\GovukNotify.Tests -c=Release
 on_success:
 - publish.cmd
