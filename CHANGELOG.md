@@ -1,3 +1,7 @@
+## [6.0.0] - 2022-04-04
+
+* Increase target .NET Core version to 6 as previous versions are End Of Life.
+
 ## [5.0.0] - 2022-04-01
 
 * Increase minimum .NET Core version to 3.1

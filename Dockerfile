@@ -1,4 +1,4 @@
-FROM mcr.microsoft.com/dotnet/sdk:3.1
+FROM mcr.microsoft.com/dotnet/sdk:6.0
 
 RUN \
     echo "Install base packages" \
