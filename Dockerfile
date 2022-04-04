@@ -5,6 +5,7 @@ RUN \
     && apt-get update \
     && apt-get install -y --no-install-recommends \
     gnupg \
-    make
+    make \
+    jq
 
 WORKDIR /var/project
