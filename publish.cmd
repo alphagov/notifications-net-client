@@ -8,8 +8,8 @@ IF %publish% NEQ true (
 
 dotnet pack -c=Release %APPVEYOR_BUILD_FOLDER%\src\GovukNotify\GovukNotify.csproj -o=publish
 
-FOR %%i IN ("%APPVEYOR_BUILD_FOLDER%/src/GovukNotify/publish/*.nupkg") DO (
+FOR %%i IN ("%APPVEYOR_BUILD_FOLDER%/publish/*.nupkg") DO (
     set filename=%%~nxi
 )
 
-nuget push "%APPVEYOR_BUILD_FOLDER%/src/GovukNotify/publish/%filename%" -Source https://api.nuget.org/v3/index.json -apikey %NUGET_API_KEY%
+nuget push "%APPVEYOR_BUILD_FOLDER%/publish/%filename%" -Source https://api.nuget.org/v3/index.json -apikey %NUGET_API_KEY%
