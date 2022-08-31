@@ -424,7 +424,7 @@ Dictionary<String, dynamic> personalisation = new Dictionary<String, dynamic>
 
 If you do not want to use this feature after 29 March 2023, you can turn it off on a file-by-file basis.
 
-To do this you will need version X.X.X of the Python client library, or a more recent version.
+To do this you will need version X.X.X of the .NET client library, or a more recent version.
 
 You should not turn this feature off if you send files that contain:
 
