@@ -453,7 +453,9 @@ Set the number of weeks you want the file to be available using the `retention_p
 
 You can choose any value between 1 week and 78 weeks.
 
-If you do not do this, the file will be available for the default period of 78 weeks (18 months).
+To use this feature will need version X.X.X of the .NET client library, or a more recent version.
+
+If you do not choose a value, the file will be available for the default period of 78 weeks (18 months).
 
 ```csharp
 
