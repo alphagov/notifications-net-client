@@ -415,7 +415,8 @@ byte[] documentContents = File.ReadAllBytes("<file path>");
 Dictionary<String, dynamic> personalisation = new Dictionary<String, dynamic>
 {
     { "name", "Foo" },
-    { "link_to_file", NotificationClient.PrepareUpload(documentContents)}
+    { "link_to_file", NotificationClient.PrepareUpload(documentContents)},
+    { "verify_email_before_download", true}
 };
 ```
 
