@@ -331,11 +331,14 @@ To send a file by email, add a placeholder to the template then upload a file. T
 
 The links are unique and unguessable. GOV.UK Notify cannot access or decrypt your file.
 
-For added security, you can ask recipients to confirm their email address before they can download the file.
+Your file will be available to download for a default period of 78 weeks (18 months). From 29 March 2023 we will reduce this to 26 weeks (6 months) for all new files. Files sent before 29 March will not be affected.
 
-You can also choose the length of time that a file is available to download. The default period is 78 weeks (18 months).
+To help protect your files you can also:
 
-From 29 March 2023 we will reduce this to 26 weeks (6 months) for all new files.
+* ask recipients to confirm their email address before downloading
+* choose the length of time that a file is available to download
+
+To turn these features on or off, you will need version X.X.X of the .NET client library or a more recent version.
 
 #### Add contact details to the file download page
 
@@ -391,13 +394,19 @@ Dictionary<String, dynamic> personalisation = new Dictionary<String, dynamic>
 
 #### Ask recipients to confirm their email address before they can download the file
 
-This feature is currently opt-in only. From 29 March 2023 it will apply to all new files by default, unless you opt out.
+This new security feature is optional. You should use it if you send files that are sensitive - for example, because they contain personal information about your users.
 
-##### Opt in
+When a recipient clicks the link in the email you’ve sent them, they have to enter their email address. Only someone who knows the recipient’s email address can download the file.
 
-To ask recipients to confirm their email address, set the `verify_email_before_download` flag to `true`.
+From 29 March 2023, we will turn this feature on by default for every file you send. Files sent before 29 March will not be affected.
 
-You will not need to do this after 29 March 2023.
+##### Turn on email address check
+
+To use this feature before 29 March 2023 you will need version X.X.X of the Python client library, or a more recent version.
+
+To make the recipient confirm their email address before downloading the file, set the `verify_email_before_download` flag to `True`.
+
+You will not need to do this after 29 March.
 
 ```csharp
 
@@ -410,11 +419,20 @@ Dictionary<String, dynamic> personalisation = new Dictionary<String, dynamic>
 };
 ```
 
-##### Opt out (not recommended)
+##### Turn off email address check (not recommended)
 
-You should not opt out if you send files that contain personally identifiable information or sensitive information.
+If you do not want to use this feature after 29 March 2023, you can turn it off on a file-by-file basis.
 
-If you do not want to use this security feature, set the `verify_email_before_download` flag to `false` by 29 March 2023.
+To do this you will need version X.X.X of the Python client library, or a more recent version.
+
+You should not turn this feature off if you send files that contain:
+
+* personally identifiable information
+* commercially sensitive information
+* information classified as ‘OFFICIAL’ or ‘OFFICIAL-SENSITIVE’ under the [Government Security Classifications](https://www.gov.uk/government/publications/government-security-classifications) policy
+
+To let the recipient download the file without confirming their email address, set the `verify_email_before_download` flag to `false`.
+
 
 ```csharp
 
