@@ -1,3 +1,9 @@
+## [6.1.0] - 2022-09-27
+
+* Add support for new security features when sending a file by email:
+  * `confirmEmailBeforeDownload` can be set to `true` to require the user to enter their email address before accessing the file.
+  * `retentionPeriod` can be set to `<1-78> weeks` to set how long the file should be made available.
+
 ## [6.0.0] - 2022-04-04
 
 * Increase target .NET Core version to 6 as previous versions are End Of Life.

@@ -488,7 +488,9 @@ namespace Notify.Tests.UnitTests
                     {"document", new JObject
                       {
                         {"file", "JVBERi0xLjUgdGVzdHBkZg=="},
-                        {"is_csv", false}
+                        {"is_csv", false},
+                        {"confirm_email_before_download", null},
+                        {"retention_period", null}
                       }
                     }
                   }
@@ -521,7 +523,9 @@ namespace Notify.Tests.UnitTests
                     {"document", new JObject
                       {
                         {"file", "JVBERi0xLjUgdGVzdHBkZg=="},
-                        {"is_csv", true}
+                        {"is_csv", true},
+                        {"confirm_email_before_download", null},
+                        {"retention_period", null}
                       }
                     }
                   }
@@ -545,6 +549,21 @@ namespace Notify.Tests.UnitTests
                     () => { NotificationClient.PrepareUpload(new byte[3*1024*1024]); },
                     Throws.ArgumentException
                     );
+        }
+
+        [Test, Category("Unit"), Category("Unit/NotificationClient")]
+        public void PrepareUploadCanSetConfirmEmailBeforeDownloadAndRetentionPeriod()
+        {
+            var fileData = new byte[1*1024*1024];
+            var actual = NotificationClient.PrepareUpload(fileData, false, false, "1 weeks");
+            var expected = new JObject
+            {
+                {"file", System.Convert.ToBase64String(fileData)},
+                {"is_csv", false},
+                {"confirm_email_before_download", false},
+                {"retention_period", "1 weeks"}
+            };
+            Assert.AreEqual(actual, expected);
         }
 
         [Test, Category("Unit"), Category("Unit/NotificationClient")]
