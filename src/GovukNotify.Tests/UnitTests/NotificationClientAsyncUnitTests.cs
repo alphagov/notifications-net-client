@@ -477,7 +477,9 @@ namespace Notify.Tests.UnitTests
                     {"document", new JObject
                       {
                         {"file", "JVBERi0xLjUgdGVzdHBkZg=="},
-                        {"is_csv", false}
+                        {"is_csv", false},
+                        {"confirm_email_before_download", null},
+                        {"retention_period", null}
                       }
                     }
                   }
@@ -510,7 +512,9 @@ namespace Notify.Tests.UnitTests
                     {"document", new JObject
                       {
                         {"file", "JVBERi0xLjUgdGVzdHBkZg=="},
-                        {"is_csv", true}
+                        {"is_csv", true},
+                        {"confirm_email_before_download", null},
+                        {"retention_period", null}
                       }
                     }
                   }

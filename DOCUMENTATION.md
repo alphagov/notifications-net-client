@@ -329,9 +329,16 @@ If the request is not successful, the client returns a `Notify.Exceptions.Notify
 
 To send a file by email, add a placeholder to the template then upload a file. The placeholder will contain a secure link to download the file.
 
-The file will be available for the recipient to download for 18 months.
-
 The links are unique and unguessable. GOV.UK Notify cannot access or decrypt your file.
+
+Your file will be available to download for a default period of 78 weeks (18 months). From 29 March 2023 we will reduce this to 26 weeks (6 months) for all new files. Files sent before 29 March will not be affected.
+
+To help protect your files you can also:
+
+* ask recipients to confirm their email address before downloading
+* choose the length of time that a file is available to download
+
+To turn these features on or off, you will need version 6.1.0 of the .NET client library or a more recent version.
 
 #### Add contact details to the file download page
 
@@ -345,9 +352,9 @@ The links are unique and unguessable. GOV.UK Notify cannot access or decrypt you
 1. [Sign in to GOV.UK Notify](https://www.notifications.service.gov.uk/sign-in).
 1. Go to the __Templates__ page and select the relevant email template.
 1. Select __Edit__.
-1. Add a placeholder to the email template using double brackets. For example:
+1. Add a placeholder to the email template using double brackets. For example: "Download your file at: ((link_to_file))"
 
-"Download your file at: ((link_to_file))"
+Your email should also tell recipients how long the file will be available to download.
 
 #### Upload your file
 
@@ -385,6 +392,80 @@ Dictionary<String, dynamic> personalisation = new Dictionary<String, dynamic>
 };
 ```
 
+#### Ask recipients to confirm their email address before they can download the file
+
+This new security feature is optional. You should use it if you send files that are sensitive - for example, because they contain personal information about your users.
+
+When a recipient clicks the link in the email you’ve sent them, they have to enter their email address. Only someone who knows the recipient’s email address can download the file.
+
+From 29 March 2023, we will turn this feature on by default for every file you send. Files sent before 29 March will not be affected.
+
+##### Turn on email address check
+
+To use this feature before 29 March 2023 you will need version 6.1.0 of the .NET client library, or a more recent version.
+
+To make the recipient confirm their email address before downloading the file, set the `confirmEmailBeforeDownload` flag to `true`.
+
+You will not need to do this after 29 March.
+
+```csharp
+
+byte[] documentContents = File.ReadAllBytes("<file path>");
+
+Dictionary<String, dynamic> personalisation = new Dictionary<String, dynamic>
+{
+    { "name", "Foo" },
+    { "link_to_file", NotificationClient.PrepareUpload(documentContents, false, true)}
+};
+```
+
+##### Turn off email address check (not recommended)
+
+If you do not want to use this feature after 29 March 2023, you can turn it off on a file-by-file basis.
+
+To do this you will need version 6.1.0 of the .NET client library, or a more recent version.
+
+You should not turn this feature off if you send files that contain:
+
+* personally identifiable information
+* commercially sensitive information
+* information classified as ‘OFFICIAL’ or ‘OFFICIAL-SENSITIVE’ under the [Government Security Classifications](https://www.gov.uk/government/publications/government-security-classifications) policy
+
+To let the recipient download the file without confirming their email address, set the `confirmEmailBeforeDownload` flag to `false`.
+
+
+```csharp
+
+byte[] documentContents = File.ReadAllBytes("<file path>");
+
+Dictionary<String, dynamic> personalisation = new Dictionary<String, dynamic>
+{
+    { "name", "Foo" },
+    { "link_to_file", NotificationClient.PrepareUpload(documentContents, false, false)}
+};
+```
+
+#### Choose the length of time that a file is available to download
+
+Set the number of weeks you want the file to be available using the `retentionPeriod` parameter.
+
+You can choose any value between 1 week and 78 weeks.
+
+To use this feature will need version 6.1.0 of the .NET client library, or a more recent version.
+
+If you do not choose a value, the file will be available for the default period of 78 weeks (18 months).
+
+```csharp
+
+byte[] documentContents = File.ReadAllBytes("<file path>");
+
+Dictionary<String, dynamic> personalisation = new Dictionary<String, dynamic>
+{
+    { "name", "Foo" },
+    { "link_to_file", NotificationClient.PrepareUpload(documentContents, false, true, "52 weeks")}
+};
+```
+
 #### Error codes
 
 If the request is not successful, the client returns a `Notify.Exceptions.NotifyClientException` containing the relevant error code.
@@ -394,6 +475,8 @@ If the request is not successful, the client returns a `Notify.Exceptions.Notify
 |`400`|`[{`<br>`"error": "BadRequestError",`<br>`"message": "Can't send to this recipient using a team-only API key"`<br>`}]`|Use the correct type of [API key](#api-keys)|
 |`400`|`[{`<br>`"error": "BadRequestError",`<br>`"message": "Can't send to this recipient when service is in trial mode - see https://www.notifications.service.gov.uk/trial-mode"`<br>`}]`|Your service cannot send this notification in [trial mode](https://www.notifications.service.gov.uk/features/using-notify#trial-mode)|
 |`400`|`[{`<br>`"error": "BadRequestError",`<br>`"message": "Unsupported file type '(FILE TYPE)'. Supported types are: '(ALLOWED TYPES)'"`<br>`}]`|Wrong file type. You can only upload .pdf, .csv, .txt, .doc, .docx, .xlsx, .rtf or .odt files|
+|`400`|`[{`<br>`"error": "BadRequestError",`<br>`"message": "Unsupported value for retention_period '(PERIOD)'. Supported periods are from 1 to 78 weeks."`<br>`}]`|Choose a period between 1 and 78 weeks|
+|`400`|`[{`<br>`"error": "BadRequestError",`<br>`"message": "Unsupported value for confirm_email_before_download: '(VALUE)'. Use a boolean true or false value."`<br>`}]`|Use either true or false|
 |`400`|`[{`<br>`"error": "BadRequestError",`<br>`"message": "File did not pass the virus scan"`<br>`}]`|The file contains a virus|
 |`400`|`[{`<br>`"error": "BadRequestError",`<br>`"message": "Send files by email has not been set up - add contact details for your service at https://www.notifications.service.gov.uk/services/(SERVICE ID)/service-settings/send-files-by-email"`<br>`}]`|See how to [add contact details to the file download page](#add-contact-details-to-the-file-download-page)|
 |`400`|`[{`<br>`"error": "BadRequestError",`<br>`"message": "Can only send a file by email"`<br>`}]`|Make sure you are using an email template|

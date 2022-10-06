@@ -228,6 +228,36 @@ namespace Notify.Tests.IntegrationTests
 		}
 
 		[Test, Category("Integration"), Category("Integration/NotificationClientAsync")]
+		public async Task SendEmailWithCSVDocumentPersonalisationTestUsingEmailConfirmationAndRetentionPeriod()
+		{
+			byte[] pdfContents;
+
+			try
+			{
+				pdfContents = File.ReadAllBytes("../../../IntegrationTests/test_files/one_page_pdf.pdf");
+			}
+			catch (DirectoryNotFoundException)
+			{
+				pdfContents = File.ReadAllBytes("IntegrationTests/test_files/one_page_pdf.pdf");
+			}
+
+			Dictionary<String, dynamic> personalisation = new Dictionary<String, dynamic>
+			{
+				{ "name", NotificationClient.PrepareUpload(pdfContents, true, true, "4 weeks") }
+			};
+
+			EmailNotificationResponse response =
+				await this.client.SendEmailAsync(FUNCTIONAL_TEST_EMAIL, EMAIL_TEMPLATE_ID, personalisation);
+
+			Assert.IsNotNull(response.id);
+			Assert.IsNotNull(response.template.id);
+			Assert.IsNotNull(response.template.uri);
+			Assert.IsNotNull(response.template.version);
+			Assert.AreEqual(response.content.subject, TEST_EMAIL_SUBJECT);
+			Assert.IsTrue(response.content.body.Contains("https://documents."));
+		}
+
+		[Test, Category("Integration"), Category("Integration/NotificationClientAsync")]
 		public async Task GetAllNotifications()
 		{
 			NotificationList notificationsResponse = await this.client.GetNotificationsAsync();
