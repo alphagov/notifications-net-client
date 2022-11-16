@@ -6,5 +6,5 @@ Useful links:
 
 - [Documentation](https://docs.notifications.service.gov.uk/net.html)
 - [Nuget package](https://www.nuget.org/packages/GovukNotify)
-- [Changelog](https://github.com/alphagov/notifications-net-client/blob/master/CHANGELOG.md)
-- [Contributing to this client](https://github.com/alphagov/notifications-net-client/blob/master/CONTRIBUTING.md)
+- [Changelog](https://github.com/alphagov/notifications-net-client/blob/main/CHANGELOG.md)
+- [Contributing to this client](https://github.com/alphagov/notifications-net-client/blob/main/CONTRIBUTING.md)
