@@ -8,7 +8,7 @@ This documentation is for developers interested in using the GOV.UK Notify .NET 
 
 This documentation assumes you are using [Microsoft Visual Studio](https://visualstudio.microsoft.com/) [external link] with the [NuGet Package Manager](https://www.nuget.org/) [external link].
 
-Refer to the [client changelog](https://github.com/alphagov/notifications-net-client/blob/master/CHANGELOG.md) for the version number and the latest updates.
+Refer to the [client changelog](https://github.com/alphagov/notifications-net-client/blob/main/CHANGELOG.md) for the version number and the latest updates.
 
 ### Install the client
 
