@@ -12,14 +12,16 @@ namespace Notify.Models.Responses
         [JsonProperty("errors")]
         private List<NotifyHTTPError> errors;
 
+        [JsonProperty("exception")]
+        private string exception;
+        
         public string getStatusCode()
-        {
-            return statusCode;
-        }
+            => statusCode;
 
-        public string getErrorsAsJson()
-        {
-            return JsonConvert.SerializeObject(errors, Formatting.Indented);
-        }
+        public string getException()
+            => exception;
+
+        public string getErrorsAsJson(Formatting format = Formatting.Indented)
+            => JsonConvert.SerializeObject(errors, format);
     }
 }

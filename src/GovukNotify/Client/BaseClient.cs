@@ -120,23 +120,21 @@ namespace Notify.Client
             string Exception = "";
             try
             {
-                errorResponseContent = 
-                    "{\"status_code\":400,\"errors\":[{\"error\":\"sdfdsfsf\",\"message\":\"sdfdsfsdfdsfsdf\"},{\"error\":\"sdfdsfsf\",\"message\":\"sdfdsfsdfdsfsdf\"}]}";
-                
                 var errorResponse = JsonConvert.DeserializeObject<NotifyHTTPErrorResponse>(errorResponseContent);
-                dynamic errorObject = new
-                {
-                    status_code = errorResponse.getStatusCode(),
-                    errors = errorResponse.getErrorsAsJson()
-                };
-                Exception = JsonConvert.SerializeObject(errorObject);
+                Exception = JsonConvert.SerializeObject(errorResponse);
             }
             catch (Exception ex)
             {
                 dynamic errorObject = new
                 {
                     status_code = response.StatusCode.GetHashCode(),
-                    errors = errorResponseContent,
+                    errors = new []
+                    {
+                        new {
+                            error = "The following error occured",
+                            message = errorResponseContent
+                        }
+                    },
                     exception = ex.Message
                 };
                 Exception = JsonConvert.SerializeObject(errorObject);
@@ -147,19 +145,6 @@ namespace Notify.Client
             }
         }
         
-        private void HandleHTTPErrors2(HttpResponseMessage response, string errorResponseContent)
-        {
-            try
-            {
-                var errorResponse = JsonConvert.DeserializeObject<NotifyHTTPErrorResponse>(errorResponseContent);
-                throw new NotifyClientException("Status_code {0}. The following errors occured {1}", errorResponse.getStatusCode(), errorResponse.getErrorsAsJson());
-            }
-            catch (Exception ex)
-            {
-                throw new NotifyClientException("Status code {0}. Error: {1}, Exception: {2}", response.StatusCode.GetHashCode(), errorResponseContent, ex.Message);
-            }
-        }
-
         public Tuple<string, string> ExtractServiceIdAndApiKey(string fromApiKey)
         {
             if (fromApiKey.Length < 74 || string.IsNullOrWhiteSpace(fromApiKey) || fromApiKey.Contains(" "))
