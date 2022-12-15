@@ -117,10 +117,42 @@ namespace Notify.Client
 
         private void HandleHTTPErrors(HttpResponseMessage response, string errorResponseContent)
         {
+            string Exception = "";
+            try
+            {
+                errorResponseContent = 
+                    "{\"status_code\":400,\"errors\":[{\"error\":\"sdfdsfsf\",\"message\":\"sdfdsfsdfdsfsdf\"},{\"error\":\"sdfdsfsf\",\"message\":\"sdfdsfsdfdsfsdf\"}]}";
+                
+                var errorResponse = JsonConvert.DeserializeObject<NotifyHTTPErrorResponse>(errorResponseContent);
+                dynamic errorObject = new
+                {
+                    status_code = errorResponse.getStatusCode(),
+                    errors = errorResponse.getErrorsAsJson()
+                };
+                Exception = JsonConvert.SerializeObject(errorObject);
+            }
+            catch (Exception ex)
+            {
+                dynamic errorObject = new
+                {
+                    status_code = response.StatusCode.GetHashCode(),
+                    errors = errorResponseContent,
+                    exception = ex.Message
+                };
+                Exception = JsonConvert.SerializeObject(errorObject);
+            }
+            finally
+            {
+                throw new NotifyClientException(Exception);
+            }
+        }
+        
+        private void HandleHTTPErrors2(HttpResponseMessage response, string errorResponseContent)
+        {
             try
             {
                 var errorResponse = JsonConvert.DeserializeObject<NotifyHTTPErrorResponse>(errorResponseContent);
-                throw new NotifyClientException("Status code {0}. The following errors occured {1}", errorResponse.getStatusCode(), errorResponse.getErrorsAsJson());
+                throw new NotifyClientException("Status_code {0}. The following errors occured {1}", errorResponse.getStatusCode(), errorResponse.getErrorsAsJson());
             }
             catch (Exception ex)
             {
