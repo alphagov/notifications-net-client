@@ -331,7 +331,7 @@ To send a file by email, add a placeholder to the template then upload a file. T
 
 The links are unique and unguessable. GOV.UK Notify cannot access or decrypt your file.
 
-Your file will be available to download for a default period of 78 weeks (18 months). From 29 March 2023 we will reduce this to 26 weeks (6 months) for all new files. Files sent before 29 March will not be affected.
+Your file will be available to download for a default period of 78 weeks (18 months). From 12 April 2023 we will reduce this to 26 weeks (6 months) for all new files. Files sent before 12 April will not be affected.
 
 To help protect your files you can also:
 
@@ -398,15 +398,15 @@ This new security feature is optional. You should use it if you send files that 
 
 When a recipient clicks the link in the email you’ve sent them, they have to enter their email address. Only someone who knows the recipient’s email address can download the file.
 
-From 29 March 2023, we will turn this feature on by default for every file you send. Files sent before 29 March will not be affected.
+From 12 April 2023, we will turn this feature on by default for every file you send. Files sent before 12 April will not be affected.
 
 ##### Turn on email address check
 
-To use this feature before 29 March 2023 you will need version 6.1.0 of the .NET client library, or a more recent version.
+To use this feature before 12 April 2023 you will need version 6.1.0 of the .NET client library, or a more recent version.
 
 To make the recipient confirm their email address before downloading the file, set the `confirmEmailBeforeDownload` flag to `true`.
 
-You will not need to do this after 29 March.
+You will not need to do this after 12 April.
 
 ```csharp
 
@@ -421,7 +421,7 @@ Dictionary<String, dynamic> personalisation = new Dictionary<String, dynamic>
 
 ##### Turn off email address check (not recommended)
 
-If you do not want to use this feature after 29 March 2023, you can turn it off on a file-by-file basis.
+If you do not want to use this feature after 12 April 2023, you can turn it off on a file-by-file basis.
 
 To do this you will need version 6.1.0 of the .NET client library, or a more recent version.
 
