@@ -331,14 +331,12 @@ To send a file by email, add a placeholder to the template then upload a file. T
 
 The links are unique and unguessable. GOV.UK Notify cannot access or decrypt your file.
 
-Your file will be available to download for a default period of 78 weeks (18 months). From 12 April 2023 we will reduce this to 26 weeks (6 months) for all new files. Files sent before 12 April will not be affected.
+Your file will be available to download for a default period of 26 weeks (6 months).
 
 To help protect your files you can also:
 
 * ask recipients to confirm their email address before downloading
 * choose the length of time that a file is available to download
-
-To turn these features on or off, you will need version 6.1.0 of the .NET client library or a more recent version.
 
 #### Add contact details to the file download page
 
@@ -394,34 +392,13 @@ Dictionary<String, dynamic> personalisation = new Dictionary<String, dynamic>
 
 #### Ask recipients to confirm their email address before they can download the file
 
-This new security feature is optional. You should use it if you send files that are sensitive - for example, because they contain personal information about your users.
-
 When a recipient clicks the link in the email you’ve sent them, they have to enter their email address. Only someone who knows the recipient’s email address can download the file.
 
-From 12 April 2023, we will turn this feature on by default for every file you send. Files sent before 12 April will not be affected.
-
-##### Turn on email address check
-
-To use this feature before 12 April 2023 you will need version 6.1.0 of the .NET client library, or a more recent version.
-
-To make the recipient confirm their email address before downloading the file, set the `confirmEmailBeforeDownload` flag to `true`.
-
-You will not need to do this after 12 April.
-
-```csharp
-
-byte[] documentContents = File.ReadAllBytes("<file path>");
-
-Dictionary<String, dynamic> personalisation = new Dictionary<String, dynamic>
-{
-    { "name", "Foo" },
-    { "link_to_file", NotificationClient.PrepareUpload(documentContents, false, true)}
-};
-```
+This security feature is turned on by default.
 
 ##### Turn off email address check (not recommended)
 
-If you do not want to use this feature after 12 April 2023, you can turn it off on a file-by-file basis.
+If you do not want to use this feature, you can turn it off on a file-by-file basis.
 
 To do this you will need version 6.1.0 of the .NET client library, or a more recent version.
 
@@ -453,7 +430,9 @@ You can choose any value between 1 week and 78 weeks.
 
 To use this feature will need version 6.1.0 of the .NET client library, or a more recent version.
 
-If you do not choose a value, the file will be available for the default period of 78 weeks (18 months).
+If you do not choose a value, the file will be available for the default period of 26 weeks (6 months).
+
+Files sent before 12 April 2023 had a longer default period of 78 weeks (18 months).
 
 ```csharp
 
