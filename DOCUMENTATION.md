@@ -1118,7 +1118,10 @@ You can also set up [callbacks](#callbacks) for received text messages.
 
 ### Enable received text messages
 
-Contact the GOV.UK Notify team using the [support page](https://www.notifications.service.gov.uk/support) or [chat to us on Slack](https://ukgovernmentdigital.slack.com/messages/C0E1ADVPC) to request a unique number for text message replies.
+To receive text messages:
+
+1. Go to the **Text message settings** section of the **Settings** page.
+1. Select **Change** on the **Receive text messages** row.
 
 ### Get a page of received text messages
 
