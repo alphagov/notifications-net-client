@@ -7,10 +7,10 @@ using Notify.Models.Responses;
 using System;
 using System.Collections.Generic;
 using System.Collections.Specialized;
-using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace Notify.Client
@@ -42,11 +42,12 @@ namespace Notify.Client
         {
         }
 
-        public async Task<Notification> GetNotificationByIdAsync(string notificationId)
+        public async Task<Notification> GetNotificationByIdAsync(string notificationId, CancellationToken cancellationToken = default)
         {
             var url = GET_NOTIFICATION_URL + notificationId;
 
-            var response = await this.GET(url).ConfigureAwait(false);
+            var response = await this.GET(url, cancellationToken)
+                .ConfigureAwait(false);
 
             try
             {
@@ -72,7 +73,7 @@ namespace Notify.Client
         }
 
         public async Task<NotificationList> GetNotificationsAsync(string templateType = "", string status = "", string reference = "",
-            string olderThanId = "", bool includeSpreadsheetUploads = false)
+            string olderThanId = "", bool includeSpreadsheetUploads = false, CancellationToken cancellationToken = default)
         {
             var query = new NameValueCollection();
             if (!string.IsNullOrWhiteSpace(templateType))
@@ -101,13 +102,14 @@ namespace Notify.Client
             }
 
             var finalUrl = GET_ALL_NOTIFICATIONS_URL + ToQueryString(query);
-            var response = await GET(finalUrl).ConfigureAwait(false);
+            var response = await GET(finalUrl, cancellationToken)
+                .ConfigureAwait(false);
 
             var notifications = JsonConvert.DeserializeObject<NotificationList>(response);
             return notifications;
         }
 
-        public async Task<TemplateList> GetAllTemplatesAsync(string templateType = "")
+        public async Task<TemplateList> GetAllTemplatesAsync(string templateType = "", CancellationToken cancellationToken = default)
         {
             var finalUrl = string.Format(
                 "{0}{1}",
@@ -115,14 +117,15 @@ namespace Notify.Client
                 templateType == string.Empty ? string.Empty : TYPE_PARAM + templateType
             );
 
-            var response = await GET(finalUrl).ConfigureAwait(false);
+            var response = await GET(finalUrl, cancellationToken)
+                .ConfigureAwait(false);
 
             var templateList = JsonConvert.DeserializeObject<TemplateList>(response);
 
             return templateList;
         }
 
-        public async Task<ReceivedTextListResponse> GetReceivedTextsAsync(string olderThanId = "")
+        public async Task<ReceivedTextListResponse> GetReceivedTextsAsync(string olderThanId = "", CancellationToken cancellationToken = default)
         {
             var finalUrl = string.Format(
                 "{0}{1}",
@@ -130,7 +133,8 @@ namespace Notify.Client
                 string.IsNullOrWhiteSpace(olderThanId) ? "" : "?older_than=" + olderThanId
             );
 
-            var response = await this.GET(finalUrl).ConfigureAwait(false);
+            var response = await this.GET(finalUrl, cancellationToken)
+                .ConfigureAwait(false);
 
             var receivedTexts = JsonConvert.DeserializeObject<ReceivedTextListResponse>(response);
 
@@ -139,7 +143,7 @@ namespace Notify.Client
 
         public async Task<SmsNotificationResponse> SendSmsAsync(string mobileNumber, string templateId,
             Dictionary<string, dynamic> personalisation = null, string clientReference = null,
-            string smsSenderId = null)
+            string smsSenderId = null, CancellationToken cancellationToken = default)
         {
             var o = CreateRequestParams(templateId, personalisation, clientReference);
             o.AddFirst(new JProperty("phone_number", mobileNumber));
@@ -149,14 +153,15 @@ namespace Notify.Client
                 o.Add(new JProperty("sms_sender_id", smsSenderId));
             }
 
-            var response = await POST(SEND_SMS_NOTIFICATION_URL, o.ToString(Formatting.None)).ConfigureAwait(false);
+            var response = await POST(SEND_SMS_NOTIFICATION_URL, o.ToString(Formatting.None), cancellationToken)
+                .ConfigureAwait(false);
 
             return JsonConvert.DeserializeObject<SmsNotificationResponse>(response);
         }
 
         public async Task<EmailNotificationResponse> SendEmailAsync(string emailAddress, string templateId,
             Dictionary<string, dynamic> personalisation = null, string clientReference = null,
-            string emailReplyToId = null)
+            string emailReplyToId = null, CancellationToken cancellationToken = default)
         {
             var o = CreateRequestParams(templateId, personalisation, clientReference);
             o.AddFirst(new JProperty("email_address", emailAddress));
@@ -166,22 +171,25 @@ namespace Notify.Client
                 o.Add(new JProperty("email_reply_to_id", emailReplyToId));
             }
 
-            var response = await POST(SEND_EMAIL_NOTIFICATION_URL, o.ToString(Formatting.None)).ConfigureAwait(false);
+            var response = await POST(SEND_EMAIL_NOTIFICATION_URL, o.ToString(Formatting.None), cancellationToken)
+                .ConfigureAwait(false);
 
             return JsonConvert.DeserializeObject<EmailNotificationResponse>(response);
         }
 
         public async Task<LetterNotificationResponse> SendLetterAsync(string templateId, Dictionary<string, dynamic> personalisation,
-            string clientReference = null)
+            string clientReference = null, CancellationToken cancellationToken = default)
         {
             var o = CreateRequestParams(templateId, personalisation, clientReference);
 
-            var response = await this.POST(SEND_LETTER_NOTIFICATION_URL, o.ToString(Formatting.None)).ConfigureAwait(false);
+            var response = await this.POST(SEND_LETTER_NOTIFICATION_URL, o.ToString(Formatting.None), cancellationToken)
+                .ConfigureAwait(false);
 
             return JsonConvert.DeserializeObject<LetterNotificationResponse>(response);
         }
 
-        public async Task<LetterNotificationResponse> SendPrecompiledLetterAsync(string clientReference, byte[] pdfContents, string postage = null)
+        public async Task<LetterNotificationResponse> SendPrecompiledLetterAsync(string clientReference, byte[] pdfContents, 
+            string postage = null, CancellationToken cancellationToken = default)
         {
             var requestParams = new JObject
             {
@@ -194,28 +202,31 @@ namespace Notify.Client
                 requestParams.Add(new JProperty("postage", postage));
             }
 
-            var response = await this.POST(SEND_LETTER_NOTIFICATION_URL, requestParams.ToString(Formatting.None)).ConfigureAwait(false);
+            var response = await this.POST(SEND_LETTER_NOTIFICATION_URL, requestParams.ToString(Formatting.None), cancellationToken)
+                .ConfigureAwait(false);
 
             return JsonConvert.DeserializeObject<LetterNotificationResponse>(response);
         }
 
-        public async Task<TemplateResponse> GetTemplateByIdAsync(string templateId)
+        public async Task<TemplateResponse> GetTemplateByIdAsync(string templateId, CancellationToken cancellationToken = default)
         {
             var url = GET_TEMPLATE_URL + templateId;
 
-            return await GetTemplateFromURLAsync(url).ConfigureAwait(false);
+            return await GetTemplateFromURLAsync(url, cancellationToken)
+                .ConfigureAwait(false);
         }
 
-        public async Task<TemplateResponse> GetTemplateByIdAndVersionAsync(string templateId, int version = 0)
+        public async Task<TemplateResponse> GetTemplateByIdAndVersionAsync(string templateId, int version = 0, CancellationToken cancellationToken = default)
         {
             var pattern = "{0}{1}" + (version > 0 ? VERSION_PARAM + "{2}" : "");
             var url = string.Format(pattern, GET_TEMPLATE_URL, templateId, version);
 
-            return await GetTemplateFromURLAsync(url).ConfigureAwait(false);
+            return await GetTemplateFromURLAsync(url, cancellationToken)
+                .ConfigureAwait(false);
         }
 
         public async Task<TemplatePreviewResponse> GenerateTemplatePreviewAsync(string templateId,
-            Dictionary<string, dynamic> personalisation = null)
+            Dictionary<string, dynamic> personalisation = null, CancellationToken cancellationToken = default)
         {
             var url = string.Format("{0}{1}/preview", GET_TEMPLATE_URL, templateId);
 
@@ -224,7 +235,8 @@ namespace Notify.Client
                 {"personalisation", JObject.FromObject(personalisation)}
             };
 
-            var response = await this.POST(url, o.ToString(Formatting.None)).ConfigureAwait(false);
+            var response = await this.POST(url, o.ToString(Formatting.None), cancellationToken)
+                .ConfigureAwait(false);
 
             try
             {
@@ -238,10 +250,11 @@ namespace Notify.Client
         }
 
 
-        public async Task<byte[]> GetPdfForLetterAsync(string notificationId)
+        public async Task<byte[]> GetPdfForLetterAsync(string notificationId, CancellationToken cancellationToken = default)
         {
             var finalUrl = string.Format(GET_PDF_FOR_LETTER_URL, notificationId);
-            var response = await GETBytes(finalUrl).ConfigureAwait(false);
+            var response = await GETBytes(finalUrl, cancellationToken)
+                .ConfigureAwait(false);
             return response;
         }
 
@@ -273,9 +286,10 @@ namespace Notify.Client
             };
         }
 
-        private async Task<TemplateResponse> GetTemplateFromURLAsync(string url)
+        private async Task<TemplateResponse> GetTemplateFromURLAsync(string url, CancellationToken cancellationToken = default)
         {
-            var response = await this.GET(url).ConfigureAwait(false);
+            var response = await this.GET(url, cancellationToken)
+                .ConfigureAwait(false);
 
             try
             {
@@ -316,10 +330,10 @@ namespace Notify.Client
         {
             if (ex == null)
             {
-                throw new ArgumentNullException("ex");
+                throw new ArgumentNullException(nameof(ex));
             }
 
-            if (ex.InnerExceptions != null && ex.InnerExceptions.Count == 1)
+            if (ex.InnerExceptions.Count == 1)
             {
                 return ex.InnerException;
             }

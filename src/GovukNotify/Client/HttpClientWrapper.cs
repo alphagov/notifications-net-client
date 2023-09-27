@@ -2,6 +2,7 @@
 using System;
 using System.Net.Http;
 using System.Net.Http.Headers;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace Notify.Client
@@ -9,7 +10,10 @@ namespace Notify.Client
     public class HttpClientWrapper : IHttpClient
     {
         private readonly HttpClient _client;
+
         private Uri _baseAddress;
+
+        private bool _disposed;
 
         public Uri BaseAddress
         {
@@ -28,12 +32,29 @@ namespace Notify.Client
 
         public void Dispose()
         {
-            _client.Dispose();
+            Dispose(true);
+            GC.SuppressFinalize(this);
         }
 
-        public async Task<HttpResponseMessage> SendAsync(HttpRequestMessage request)
+        protected virtual void Dispose(bool disposing)
         {
-            return await _client.SendAsync(request).ConfigureAwait(false);
+            if (_disposed)
+            {
+                return;
+            }
+
+            if (disposing)
+            {
+                _client.Dispose();
+            }
+
+            _disposed = true;
+        }
+
+        public async Task<HttpResponseMessage> SendAsync(HttpRequestMessage request, CancellationToken cancellationToken = default)
+        {
+            return await _client.SendAsync(request, HttpCompletionOption.ResponseHeadersRead, cancellationToken)
+                .ConfigureAwait(false);
         }
 
         public void SetClientBaseAddress()

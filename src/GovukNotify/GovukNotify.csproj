@@ -8,6 +8,8 @@
     <Description>GOV.UK .NET Notify Client</Description>
     <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
     <PackageReleaseNotes>See https://github.com/alphagov/notifications-net-client/blob/main/CHANGELOG.md</PackageReleaseNotes>
+    <RootNamespace>Notify</RootNamespace>
+    <LangVersion>latest</LangVersion>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|netstandard2.0|AnyCPU'">
