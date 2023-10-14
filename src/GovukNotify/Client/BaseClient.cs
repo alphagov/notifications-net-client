@@ -117,17 +117,34 @@ namespace Notify.Client
 
         private void HandleHTTPErrors(HttpResponseMessage response, string errorResponseContent)
         {
+            string Exception = "";
             try
             {
                 var errorResponse = JsonConvert.DeserializeObject<NotifyHTTPErrorResponse>(errorResponseContent);
-                throw new NotifyClientException("Status code {0}. The following errors occured {1}", errorResponse.getStatusCode(), errorResponse.getErrorsAsJson());
+                Exception = JsonConvert.SerializeObject(errorResponse);
             }
             catch (Exception ex)
             {
-                throw new NotifyClientException("Status code {0}. Error: {1}, Exception: {2}", response.StatusCode.GetHashCode(), errorResponseContent, ex.Message);
+                dynamic errorObject = new
+                {
+                    status_code = response.StatusCode.GetHashCode(),
+                    errors = new []
+                    {
+                        new {
+                            error = "The following error occured",
+                            message = errorResponseContent
+                        }
+                    },
+                    exception = ex.Message
+                };
+                Exception = JsonConvert.SerializeObject(errorObject);
+            }
+            finally
+            {
+                throw new NotifyClientException(Exception);
             }
         }
-
+        
         public Tuple<string, string> ExtractServiceIdAndApiKey(string fromApiKey)
         {
             if (fromApiKey.Length < 74 || string.IsNullOrWhiteSpace(fromApiKey) || fromApiKey.Contains(" "))

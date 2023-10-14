@@ -60,7 +60,7 @@ namespace Notify.Tests.UnitTests
                 AssertValidRequest, status: HttpStatusCode.NotFound);
 
             var ex = Assert.ThrowsAsync<NotifyClientException>(async () => await client.GetNotificationsAsync());
-            Assert.That(ex.Message, Does.Contain("Status code 404. Error: non json response"));
+            Assert.That(ex.Message, Does.Contain("{\"status_code\":404,\"errors\":[{\"error\":\"The following error occured\",\"message\":\"non json response\"}]"));
         }
 
         [Test, Category("Unit"), Category("Unit/NotificationClientAsync")]
