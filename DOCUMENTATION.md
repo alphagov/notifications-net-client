@@ -77,17 +77,17 @@ var httpClientWithProxy = new HttpClientWrapper(new HttpClient(...));
 var client = new NotificationClient(httpClientWithProxy, apiKey);
 ```
 
-## Error codes
+## Error messages
 
-Errors consist of:
+Error messages consist of:
 
-- a code, for example ‘400’
-- a type, for example’BadRequestError’
+- a status_code, for example ‘400’
+- an error, for example’BadRequestError’
 - a message, for example ‘Mobile numbers can only include: 0 1 2 3 4 5 6 7 8 9 ( ) + -‘
 
-Do not use the error message despcriptions in your code. These can sometimes change, which may affect your API integration.
+Do not use the content of the message despcriptions in your code. These can sometimes change, which may affect your API integration.
 
-Use the error code or error type instead, as these will not change. 
+Use the status_code or the error instead, as these will not change. 
 
 Find more information on error codes in:
 - [send a message](https://docs.notifications.service.gov.uk/net.html#send-a-message)
