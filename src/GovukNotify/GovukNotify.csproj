@@ -3,11 +3,12 @@
 	<PropertyGroup>
 		<RestoreProjectStyle>PackageReference</RestoreProjectStyle>
 		<TargetFrameworks>netstandard2.0;net6;net462</TargetFrameworks>
-		<Version>6.2.0</Version>
+		<Version>6.3.0</Version>
 		<Authors>GOV.UK Notify</Authors>
 		<Description>GOV.UK .NET Notify Client</Description>
 		<PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
 		<PackageReleaseNotes>See https://github.com/alphagov/notifications-net-client/blob/main/CHANGELOG.md</PackageReleaseNotes>
+		<GeneratePackageOnBuild>True</GeneratePackageOnBuild>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|netstandard2.0|AnyCPU'">
@@ -16,8 +17,8 @@
 	</PropertyGroup>
 
 	<ItemGroup>
-		<PackageReference Include="JWT" Version="[7.1,11)" />
-		<PackageReference Include="Newtonsoft.Json" Version="[10.0.3,14)" />
+		<PackageReference Include="JWT" Version="10.1.1" />
+		<PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
 		<PackageReference Include="System.Collections.Specialized" Version="4.3.0" />
 		<PackageReference Include="System.Reflection" Version="4.3.0" />
 		<PackageReference Include="System.Runtime.Extensions" Version="4.3.1" />
