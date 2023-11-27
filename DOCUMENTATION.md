@@ -258,6 +258,22 @@ Dictionary<String, dynamic> personalisation: new Dictionary<String, dynamic>
 
 You can leave out this argument if a template does not have any placeholder fields for personalised information.
 
+You can personalise the bullet points in your template. For example:
+
+```csharp
+Introduce bullet points with a lead-in line ending in a colon:
+((mybullets))
+Leave one empty line space before the next paragraph.
+```
+
+Make an API call pass in a list of strings for the value of the  mybullets placeholder instead of just a single string. This will automatically format the list as bullet points:
+
+```csharp
+"personalisation": {
+  "mybullets": ["item 1", "item 2", "item 3"],
+}
+```
+
 ##### reference (optional)
 
 A unique identifier you can create if you need to. This reference identifies a single unique notification or a batch of notifications. It must not contain any personal information such as name or postal address. For example:
@@ -540,6 +556,22 @@ personalisation: {
   "address_line_5": "SW14 6BF",
   "name": "John Smith",
   "application_id": "4134325"
+}
+```
+
+You can personalise the bullet points in your template. For example:
+
+```csharp
+Introduce bullet points with a lead-in line ending in a colon:
+((mybullets))
+Leave one empty line space before the next paragraph.
+```
+
+Make an API call pass in a list of strings for the value of the  mybullets placeholder instead of just a single string. This will automatically format the list as bullet points:
+
+```csharp
+"personalisation": {
+  "mybullets": ["item 1", "item 2", "item 3"],
 }
 ```
 
