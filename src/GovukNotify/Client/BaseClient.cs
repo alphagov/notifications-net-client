@@ -7,6 +7,7 @@ using System;
 using System.Net.Http;
 using System.Reflection;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace Notify.Client
@@ -34,55 +35,71 @@ namespace Notify.Client
             this.client.BaseAddress = ValidateBaseUri(BaseUrl);
             this.client.AddContentHeader("application/json");
 
-            var productVersion = typeof(BaseClient).GetTypeInfo().Assembly.GetName().Version.ToString();
+            var productVersion = typeof(BaseClient).GetTypeInfo().Assembly.GetName().Version?.ToString();
             this.client.AddUserAgent(NOTIFY_CLIENT_NAME + productVersion);
         }
 
-        public async Task<string> GET(string url)
+        public async Task<string> GET(string url, CancellationToken cancellationToken = default)
         {
-            return await MakeRequest(url, HttpMethod.Get).ConfigureAwait(false);
+            return await MakeRequest(url, HttpMethod.Get, cancellationToken: cancellationToken)
+                .ConfigureAwait(false);
         }
 
-        public async Task<string> POST(string url, string json)
+        public async Task<string> POST(string url, string json, CancellationToken cancellationToken = default)
         {
-            var content = new StringContent(json, Encoding.UTF8, "application/json");
-            return await MakeRequest(url, HttpMethod.Post, content).ConfigureAwait(false);
+            using var content = new StringContent(json, Encoding.UTF8, "application/json");
+            return await MakeRequest(url, HttpMethod.Post, content, cancellationToken: cancellationToken)
+                .ConfigureAwait(false);
         }
 
-        public async Task<byte[]> GETBytes(string url)
+        public async Task<byte[]> GETBytes(string url, CancellationToken cancellationToken = default)
         {
-            return await MakeRequestBytes(url, HttpMethod.Get).ConfigureAwait(false);
+            return await MakeRequestBytes(url, HttpMethod.Get, cancellationToken: cancellationToken)
+                .ConfigureAwait(false);
         }
 
-        public async Task<byte[]> MakeRequestBytes(string url, HttpMethod method, HttpContent content = null) {
-            var response = SendRequest(url, method, content).Result;
+        public async Task<byte[]> MakeRequestBytes(string url, HttpMethod method, HttpContent content = null, CancellationToken cancellationToken = default) {
+            var response = await SendRequest(url, method, content, cancellationToken);
 
-            var responseContent = await response.Content.ReadAsByteArrayAsync().ConfigureAwait(false);
+#if NET6_0_OR_GREATER
+            var responseContent = await response.Content.ReadAsByteArrayAsync(cancellationToken)
+                .ConfigureAwait(false);
+#else
+            var responseContent = await response.Content.ReadAsByteArrayAsync()
+                .ConfigureAwait(false);
+#endif
 
             if (!response.IsSuccessStatusCode)
             {
                 // if there was an error, rather than a binary pdf, the http body will be a json error message, so
                 // encode the bytes as UTF8
-                HandleHTTPErrors(response, Encoding.UTF8.GetString(responseContent));
+                BaseClient.HandleHTTPErrors(response, Encoding.UTF8.GetString(responseContent));
             }
-            return responseContent;
 
+            return responseContent;
         }
 
-        public async Task<string> MakeRequest(string url, HttpMethod method, HttpContent content = null)
+        public async Task<string> MakeRequest(string url, HttpMethod method, HttpContent content = null, CancellationToken cancellationToken = default)
         {
-            var response = SendRequest(url, method, content).Result;
+            var response = await SendRequest(url, method, content, cancellationToken);
 
-            var responseContent = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
+#if NET6_0_OR_GREATER
+            var responseContent = await response.Content.ReadAsStringAsync(cancellationToken)
+                .ConfigureAwait(false);
+#else
+            var responseContent = await response.Content.ReadAsStringAsync()
+                .ConfigureAwait(false);
+#endif
 
             if (!response.IsSuccessStatusCode)
             {
                 HandleHTTPErrors(response, responseContent);
             }
+
             return responseContent;
         }
 
-        private async Task<HttpResponseMessage> SendRequest(string url, HttpMethod method, HttpContent content)
+        private async Task<HttpResponseMessage> SendRequest(string url, HttpMethod method, HttpContent content, CancellationToken cancellationToken = default)
         {
             var request = new HttpRequestMessage(method, url);
 
@@ -98,7 +115,7 @@ namespace Notify.Client
 
             try
             {
-                response = await this.client.SendAsync(request).ConfigureAwait(false);
+                response = await this.client.SendAsync(request, cancellationToken).ConfigureAwait(false);
             }
             catch (AggregateException ae)
             {
@@ -106,7 +123,7 @@ namespace Notify.Client
                 {
                     if (x is HttpRequestException)
                     {
-                        throw new NotifyClientException(x.InnerException.Message);
+                        throw new NotifyClientException(x.InnerException?.Message ?? x.Message);
                     }
                     throw x;
                 });
@@ -115,7 +132,7 @@ namespace Notify.Client
             return response;
         }
 
-        private void HandleHTTPErrors(HttpResponseMessage response, string errorResponseContent)
+        private static void HandleHTTPErrors(HttpResponseMessage response, string errorResponseContent)
         {
             try
             {
@@ -130,7 +147,11 @@ namespace Notify.Client
 
         public Tuple<string, string> ExtractServiceIdAndApiKey(string fromApiKey)
         {
-            if (fromApiKey.Length < 74 || string.IsNullOrWhiteSpace(fromApiKey) || fromApiKey.Contains(" "))
+#if NET6_0_OR_GREATER
+            if (string.IsNullOrWhiteSpace(fromApiKey) || fromApiKey.Length < 74 || fromApiKey.Contains(' '))
+#else
+            if (string.IsNullOrWhiteSpace(fromApiKey) || fromApiKey.Length < 74 || fromApiKey.Contains(" "))
+#endif
             {
                 throw new NotifyAuthException("The API Key provided is invalid. Please ensure you are using a v2 API Key that is not empty or null");
             }
@@ -144,7 +165,7 @@ namespace Notify.Client
         public Uri ValidateBaseUri(string baseUrl)
         {
             var result = Uri.TryCreate(baseUrl, UriKind.Absolute, out var uriResult)
-                && (uriResult.Scheme == "http" || uriResult.Scheme == "https");
+                && uriResult.Scheme is "http" or "https";
 
             if (!result)
             {
@@ -152,7 +173,6 @@ namespace Notify.Client
             }
 
             return uriResult;
-
         }
 
         public string GetUserAgent()

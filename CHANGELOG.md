@@ -1,3 +1,7 @@
+## [6.2.0] - 
+
+* Added support for cancellation of async requests using a `CancellationToken`.
+
 ## [6.1.0] - 2022-09-27
 
 * Add support for new security features when sending a file by email:
