@@ -1,3 +1,8 @@
+## [6.2.0] - 2023-06-14
+
+* Updated Packages to the latest versions.
+	JWT dependency Bumped from 7.x or 8.x to include 9.x or 10.x
+
 ## [6.1.0] - 2022-09-27
 
 * Add support for new security features when sending a file by email:
