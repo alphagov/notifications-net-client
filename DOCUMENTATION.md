@@ -375,9 +375,15 @@ Dictionary<String, dynamic> personalisation = new Dictionary<String, dynamic>
 };
 ```
 
-##### CSV files
+#### Set the filename
 
-Uploads for CSV files should use the `isCsv` parameter on the `PrepareUpload()` function. For example:
+You can provide a filename to set when the recipient downloads the file. If this is not provided, a random filename will be generated.
+
+Choosing a sensible filename can help users understand what the file contains, and find it again later.
+
+You do not have to set this, but we strongly recommend it.
+
+The filename must include the correct file extension, such as `.csv` for a CSV file. If you include the wrong file extension, users may not be able to open your file.
 
 ```csharp
 
@@ -386,7 +392,7 @@ byte[] documentContents = File.ReadAllBytes("<file path>");
 Dictionary<String, dynamic> personalisation = new Dictionary<String, dynamic>
 {
     { "name", "Foo" },
-    { "link_to_file", NotificationClient.PrepareUpload(documentContents, isCsv = true)}
+    { "link_to_file", NotificationClient.PrepareUpload(documentContents, filename = "2023-12-25-daily-report.csv")}
 };
 ```
 
