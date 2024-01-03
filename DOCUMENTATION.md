@@ -377,13 +377,20 @@ Dictionary<String, dynamic> personalisation = new Dictionary<String, dynamic>
 
 #### Set the filename
 
-You can provide a filename to set when the recipient downloads the file. If this is not provided, a random filename will be generated.
+To do this you will need version 7.0.0 of the .NET client library, or a more recent version.
 
-Choosing a sensible filename can help users understand what the file contains, and find it again later.
+You should provide a filename when you upload your file.
 
-You do not have to set this, but we strongly recommend it.
+The filename should tell the recipient what the file contains. A memorable filename can help the recipient to find the file again later.
 
-The filename must include the correct file extension, such as `.csv` for a CSV file. If you include the wrong file extension, users may not be able to open your file.
+The filename must end with a file extension. For example, `.csv` for a CSV file. If you include the wrong file extension, recipients may not be able to open your file.
+
+If you do not provide a filename for your file, Notify will:
+
+* generate a random filename
+* try to add the correct file extension
+
+If Notify cannot add the correct file extension, recipients may not be able to open your file.
 
 ```csharp
 
