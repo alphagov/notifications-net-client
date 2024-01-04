@@ -9,6 +9,6 @@
 - [x] I’ve used the pull request template
 - [ ] I’ve written unit tests for these changes
 - [ ] I’ve updated the documentation in
-  - [ ] `notifications-tech-docs` repository
+  - [ ] [notifications-tech-docs repository](https://github.com/alphagov/notifications-tech-docs/blob/main/source/documentation/client_docs/_net.md)
   - [ ] `CHANGELOG.md`
 - [ ] I’ve bumped the version number (in `src/GovukNotify/GovukNotify.csproj`)
