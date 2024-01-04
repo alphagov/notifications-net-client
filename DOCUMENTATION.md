@@ -376,9 +376,22 @@ Dictionary<String, dynamic> personalisation = new Dictionary<String, dynamic>
 };
 ```
 
-##### CSV files
+#### Set the filename
 
-Uploads for CSV files should use the `isCsv` parameter on the `PrepareUpload()` function. For example:
+To do this you will need version 7.0.0 of the .NET client library, or a more recent version.
+
+You should provide a filename when you upload your file.
+
+The filename should tell the recipient what the file contains. A memorable filename can help the recipient to find the file again later.
+
+The filename must end with a file extension. For example, `.csv` for a CSV file. If you include the wrong file extension, recipients may not be able to open your file.
+
+If you do not provide a filename for your file, Notify will:
+
+* generate a random filename
+* try to add the correct file extension
+
+If Notify cannot add the correct file extension, recipients may not be able to open your file.
 
 ```csharp
 
@@ -387,7 +400,7 @@ byte[] documentContents = File.ReadAllBytes("<file path>");
 Dictionary<String, dynamic> personalisation = new Dictionary<String, dynamic>
 {
     { "name", "Foo" },
-    { "link_to_file", NotificationClient.PrepareUpload(documentContents, isCsv = true)}
+    { "link_to_file", NotificationClient.PrepareUpload(documentContents, filename = "2023-12-25-daily-report.csv")}
 };
 ```
 

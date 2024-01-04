@@ -1,3 +1,8 @@
+## [7.0.0] - 2023-12-27
+
+* Removes the `isCsv` parameter from `PrepareUpload`
+* Adds a `filename` parameter to `PrepareUpload`; see documentation for more details.
+
 ## [6.1.0] - 2022-09-27
 
 * Add support for new security features when sending a file by email:

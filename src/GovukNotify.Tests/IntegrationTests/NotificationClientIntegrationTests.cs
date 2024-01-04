@@ -172,15 +172,15 @@ namespace Notify.Tests.IntegrationTests
 
 			string reference = System.Guid.NewGuid().ToString();
 			string postage = "first";
-                        byte[] pdfContents;
-                        try
-                        {
-                            pdfContents = File.ReadAllBytes("../../../IntegrationTests/test_files/one_page_pdf.pdf");
-                        }
-                        catch (DirectoryNotFoundException)
-                        {
-                            pdfContents = File.ReadAllBytes("IntegrationTests/test_files/one_page_pdf.pdf");
-                        }
+			byte[] pdfContents;
+			try
+			{
+				pdfContents = File.ReadAllBytes("../../../IntegrationTests/test_files/one_page_pdf.pdf");
+			}
+			catch (DirectoryNotFoundException)
+			{
+				pdfContents = File.ReadAllBytes("IntegrationTests/test_files/one_page_pdf.pdf");
+			}
 
 			LetterNotificationResponse response = this.client.SendPrecompiledLetter(reference, pdfContents, postage);
 
@@ -246,7 +246,7 @@ namespace Notify.Tests.IntegrationTests
 
 			Dictionary<String, dynamic> personalisation = new Dictionary<String, dynamic>
 			{
-				{ "name", NotificationClient.PrepareUpload(pdfContents, true, true, "4 weeks") }
+				{ "name", NotificationClient.PrepareUpload(pdfContents, "report.csv", true, "4 weeks") }
 			};
 
 			EmailNotificationResponse response =
@@ -524,13 +524,19 @@ namespace Notify.Tests.IntegrationTests
 			byte[] pdfData = null;
 			for (int i = 0; i < 15; i++)
 			{
-				try {
+				try
+				{
 					pdfData = this.client.GetPdfForLetter(this.letterNotificationId);
 					break;
-				} catch (NotifyClientException e) {
-					if (!e.Message.Contains("PDFNotReadyError")) {
+				}
+				catch (NotifyClientException e)
+				{
+					if (!e.Message.Contains("PDFNotReadyError"))
+					{
 						throw e;
-					} else {
+					}
+					else
+					{
 						Thread.Sleep(3000);
 					}
 				}

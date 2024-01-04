@@ -285,7 +285,7 @@ namespace Notify.Tests.UnitTests
         {
             const string type = "sms";
             MockRequest(Constants.fakeTemplateSmsListResponseJson,
-                         client.GET_ALL_TEMPLATES_URL+ client.TYPE_PARAM + type, AssertValidRequest);
+                         client.GET_ALL_TEMPLATES_URL + client.TYPE_PARAM + type, AssertValidRequest);
 
             client.GetAllTemplates(type);
         }
@@ -296,7 +296,7 @@ namespace Notify.Tests.UnitTests
             const string type = "email";
 
             MockRequest(Constants.fakeTemplateEmailListResponseJson,
-                         client.GET_ALL_TEMPLATES_URL+ client.TYPE_PARAM + type, AssertValidRequest);
+                         client.GET_ALL_TEMPLATES_URL + client.TYPE_PARAM + type, AssertValidRequest);
 
             client.GetAllTemplates(type);
         }
@@ -306,7 +306,7 @@ namespace Notify.Tests.UnitTests
         {
             var expectedResponse = JsonConvert.DeserializeObject<TemplateList>(Constants.fakeTemplateEmptyListResponseJson);
 
-               MockRequest(Constants.fakeTemplateEmptyListResponseJson);
+            MockRequest(Constants.fakeTemplateEmptyListResponseJson);
 
             TemplateList templateList = client.GetAllTemplates();
 
@@ -488,7 +488,7 @@ namespace Notify.Tests.UnitTests
                     {"document", new JObject
                       {
                         {"file", "JVBERi0xLjUgdGVzdHBkZg=="},
-                        {"is_csv", false},
+                        {"filename", null},
                         {"confirm_email_before_download", null},
                         {"retention_period", null}
                       }
@@ -508,11 +508,11 @@ namespace Notify.Tests.UnitTests
         }
 
         [Test, Category("Unit"), Category("Unit/NotificationClient")]
-        public void SendEmailNotificationWithCSVDocumentGeneratesExpectedRequest()
+        public void SendEmailNotificationWithFilenameDocumentGeneratesExpectedRequest()
         {
             Dictionary<string, dynamic> personalisation = new Dictionary<string, dynamic>
                 {
-                    { "document", NotificationClient.PrepareUpload(Encoding.UTF8.GetBytes("%PDF-1.5 testpdf"), true) }
+                    { "document", NotificationClient.PrepareUpload(Encoding.UTF8.GetBytes("%PDF-1.5 testpdf"), "report.csv") }
                 };
             JObject expected = new JObject
             {
@@ -523,7 +523,7 @@ namespace Notify.Tests.UnitTests
                     {"document", new JObject
                       {
                         {"file", "JVBERi0xLjUgdGVzdHBkZg=="},
-                        {"is_csv", true},
+                        {"filename", "report.csv"},
                         {"confirm_email_before_download", null},
                         {"retention_period", null}
                       }
@@ -546,7 +546,7 @@ namespace Notify.Tests.UnitTests
         public void PrepareUploadWithLargeDocumentGeneratesAnError()
         {
             Assert.That(
-                    () => { NotificationClient.PrepareUpload(new byte[3*1024*1024]); },
+                    () => { NotificationClient.PrepareUpload(new byte[3 * 1024 * 1024]); },
                     Throws.ArgumentException
                     );
         }
@@ -554,12 +554,12 @@ namespace Notify.Tests.UnitTests
         [Test, Category("Unit"), Category("Unit/NotificationClient")]
         public void PrepareUploadCanSetConfirmEmailBeforeDownloadAndRetentionPeriod()
         {
-            var fileData = new byte[1*1024*1024];
-            var actual = NotificationClient.PrepareUpload(fileData, false, false, "1 weeks");
+            var fileData = new byte[1 * 1024 * 1024];
+            var actual = NotificationClient.PrepareUpload(fileData, "report.csv", false, "1 weeks");
             var expected = new JObject
             {
                 {"file", System.Convert.ToBase64String(fileData)},
-                {"is_csv", false},
+                {"filename", "report.csv"},
                 {"confirm_email_before_download", false},
                 {"retention_period", "1 weeks"}
             };

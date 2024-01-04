@@ -274,7 +274,7 @@ namespace Notify.Tests.UnitTests
         {
             const string type = "sms";
             MockRequest(Constants.fakeTemplateSmsListResponseJson,
-                         client.GET_ALL_TEMPLATES_URL+ client.TYPE_PARAM + type, AssertValidRequest);
+                         client.GET_ALL_TEMPLATES_URL + client.TYPE_PARAM + type, AssertValidRequest);
 
             await client.GetAllTemplatesAsync(type);
         }
@@ -285,7 +285,7 @@ namespace Notify.Tests.UnitTests
             const string type = "email";
 
             MockRequest(Constants.fakeTemplateEmailListResponseJson,
-                         client.GET_ALL_TEMPLATES_URL+ client.TYPE_PARAM + type, AssertValidRequest);
+                         client.GET_ALL_TEMPLATES_URL + client.TYPE_PARAM + type, AssertValidRequest);
 
             await client.GetAllTemplatesAsync(type);
         }
@@ -295,7 +295,7 @@ namespace Notify.Tests.UnitTests
         {
             var expectedResponse = JsonConvert.DeserializeObject<TemplateList>(Constants.fakeTemplateEmptyListResponseJson);
 
-               MockRequest(Constants.fakeTemplateEmptyListResponseJson);
+            MockRequest(Constants.fakeTemplateEmptyListResponseJson);
 
             TemplateList templateList = await client.GetAllTemplatesAsync();
 
@@ -477,7 +477,7 @@ namespace Notify.Tests.UnitTests
                     {"document", new JObject
                       {
                         {"file", "JVBERi0xLjUgdGVzdHBkZg=="},
-                        {"is_csv", false},
+                        {"filename", null},
                         {"confirm_email_before_download", null},
                         {"retention_period", null}
                       }
@@ -501,7 +501,7 @@ namespace Notify.Tests.UnitTests
         {
             Dictionary<string, dynamic> personalisation = new Dictionary<string, dynamic>
                 {
-                    { "document", NotificationClient.PrepareUpload(Encoding.UTF8.GetBytes("%PDF-1.5 testpdf"), true) }
+                    { "document", NotificationClient.PrepareUpload(Encoding.UTF8.GetBytes("%PDF-1.5 testpdf"), "report.csv") }
                 };
             JObject expected = new JObject
             {
@@ -512,9 +512,44 @@ namespace Notify.Tests.UnitTests
                     {"document", new JObject
                       {
                         {"file", "JVBERi0xLjUgdGVzdHBkZg=="},
-                        {"is_csv", true},
+                        {"filename", "report.csv"},
                         {"confirm_email_before_download", null},
                         {"retention_period", null}
+                      }
+                    }
+                  }
+                },
+                { "reference", Constants.fakeNotificationReference }
+            };
+
+            MockRequest(Constants.fakeTemplatePreviewResponseJson,
+                client.SEND_EMAIL_NOTIFICATION_URL,
+                AssertValidRequest,
+                HttpMethod.Post,
+                AssertGetExpectedContent, expected.ToString(Formatting.None));
+
+            EmailNotificationResponse response = await client.SendEmailAsync(Constants.fakeEmail, Constants.fakeTemplateId, personalisation, Constants.fakeNotificationReference);
+        }
+
+        [Test, Category("Unit"), Category("Unit/NotificationClientAsync")]
+        public async Task SendEmailNotificationCanSetConfirmEmailBeforeDownloadAndRetentionPeriod()
+        {
+            Dictionary<string, dynamic> personalisation = new Dictionary<string, dynamic>
+                {
+                    { "document", NotificationClient.PrepareUpload(Encoding.UTF8.GetBytes("%PDF-1.5 testpdf"), "report.csv", false, "1 weeks") }
+                };
+            JObject expected = new JObject
+            {
+                { "email_address", Constants.fakeEmail },
+                { "template_id", Constants.fakeTemplateId },
+                { "personalisation", new JObject
+                  {
+                    {"document", new JObject
+                      {
+                        {"file", "JVBERi0xLjUgdGVzdHBkZg=="},
+                        {"filename", "report.csv"},
+                        {"confirm_email_before_download", false},
+                        {"retention_period", "1 weeks"}
                       }
                     }
                   }
@@ -535,7 +570,7 @@ namespace Notify.Tests.UnitTests
         public void PrepareUploadWithLargeDocumentGeneratesAnError()
         {
             Assert.That(
-                    () => { NotificationClient.PrepareUpload(new byte[3*1024*1024]); },
+                    () => { NotificationClient.PrepareUpload(new byte[3 * 1024 * 1024]); },
                     Throws.ArgumentException
                     );
         }

@@ -245,29 +245,46 @@ namespace Notify.Client
             return response;
         }
 
-        public static JObject PrepareUpload(byte[] documentContents, bool isCsv, bool confirmEmailBeforeDownload, string retentionPeriod)
+        public static JObject PrepareUpload(byte[] documentContents, string filename, bool confirmEmailBeforeDownload, string retentionPeriod)
         {
-            if (documentContents.Length > 2 * 1024 * 1024) {
+            if (documentContents.Length > 2 * 1024 * 1024)
+            {
                 throw new System.ArgumentException("File is larger than 2MB");
             }
             return new JObject
             {
                 {"file", System.Convert.ToBase64String(documentContents)},
-                {"is_csv", isCsv},
+                {"filename", filename},
                 {"confirm_email_before_download", confirmEmailBeforeDownload},
                 {"retention_period", retentionPeriod}
             };
         }
 
-        public static JObject PrepareUpload(byte[] documentContents, bool isCsv = false)
+        public static JObject PrepareUpload(byte[] documentContents, string filename)
         {
-            if (documentContents.Length > 2 * 1024 * 1024) {
+            if (documentContents.Length > 2 * 1024 * 1024)
+            {
                 throw new System.ArgumentException("File is larger than 2MB");
             }
             return new JObject
             {
                 {"file", System.Convert.ToBase64String(documentContents)},
-                {"is_csv", isCsv},
+                {"filename", filename},
+                {"confirm_email_before_download", null},
+                {"retention_period", null}
+            };
+        }
+
+        public static JObject PrepareUpload(byte[] documentContents)
+        {
+            if (documentContents.Length > 2 * 1024 * 1024)
+            {
+                throw new System.ArgumentException("File is larger than 2MB");
+            }
+            return new JObject
+            {
+                {"file", System.Convert.ToBase64String(documentContents)},
+                {"filename", null},
                 {"confirm_email_before_download", null},
                 {"retention_period", null}
             };
