@@ -1,3 +1,13 @@
+using Moq;
+using Moq.Protected;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
+using Notify.Client;
+using Notify.Exceptions;
+using Notify.Models;
+using Notify.Models.Responses;
+using NUnit.Framework;
+using NUnit.Framework.Legacy;
 using System;
 using System.Collections.Generic;
 using System.Net;
@@ -5,16 +15,6 @@ using System.Net.Http;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
-using Moq;
-using Moq.Protected;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
-using Notify.Client;
-using Notify.Exceptions;
-using Notify.Interfaces;
-using Notify.Models;
-using Notify.Models.Responses;
-using NUnit.Framework;
 
 namespace Notify.Tests.UnitTests
 {
@@ -183,7 +183,7 @@ namespace Notify.Tests.UnitTests
             MockRequest(Constants.fakeNotificationJson);
 
             var responseNotification = await client.GetNotificationByIdAsync(Constants.fakeNotificationId);
-            Assert.AreEqual(expectedResponse, responseNotification);
+            ClassicAssert.AreEqual(expectedResponse, responseNotification);
         }
 
         [Test, Category("Unit"), Category("Unit/NotificationClient")]
@@ -195,7 +195,7 @@ namespace Notify.Tests.UnitTests
             MockRequest(responseAsString);
 
             var actualResponse = await client.GetPdfForLetterAsync(Constants.fakeNotificationId);
-            Assert.AreEqual(expectedResponse, actualResponse);
+            ClassicAssert.AreEqual(expectedResponse, actualResponse);
         }
 
         [Test, Category("Unit"), Category("Unit/NotificationClientAsync")]
@@ -206,7 +206,7 @@ namespace Notify.Tests.UnitTests
             MockRequest(Constants.fakeTemplateResponseJson);
 
             var responseTemplate = await client.GetTemplateByIdAsync(Constants.fakeTemplateId);
-            Assert.AreEqual(expectedResponse, responseTemplate);
+            ClassicAssert.AreEqual(expectedResponse, responseTemplate);
         }
 
         [Test, Category("Unit"), Category("Unit/NotificationClientAsync")]
@@ -218,7 +218,7 @@ namespace Notify.Tests.UnitTests
             MockRequest(Constants.fakeTemplateResponseJson);
 
             var responseTemplate = await client.GetTemplateByIdAndVersionAsync(Constants.fakeTemplateId, 2);
-            Assert.AreEqual(expectedResponse, responseTemplate);
+            ClassicAssert.AreEqual(expectedResponse, responseTemplate);
         }
 
         [Test, Category("Unit"), Category("Unit/NotificationClientAsync")]
@@ -301,7 +301,7 @@ namespace Notify.Tests.UnitTests
 
             List<TemplateResponse> templates = templateList.templates;
 
-            Assert.AreEqual(templates.Count, 0);
+            ClassicAssert.AreEqual(templates.Count, 0);
         }
 
         [Test, Category("Unit"), Category("Unit/NotificationClientAsync")]
@@ -315,10 +315,10 @@ namespace Notify.Tests.UnitTests
 
             List<TemplateResponse> templates = templateList.templates;
 
-            Assert.AreEqual(templates.Count, expectedResponse.templates.Count);
+            ClassicAssert.AreEqual(templates.Count, expectedResponse.templates.Count);
             for (int i = 0; i < templates.Count; i++)
             {
-                Assert.AreEqual(expectedResponse.templates[i], templates[i]);
+                ClassicAssert.AreEqual(expectedResponse.templates[i], templates[i]);
             }
         }
 
@@ -337,10 +337,10 @@ namespace Notify.Tests.UnitTests
 
             List<TemplateResponse> templates = templateList.templates;
 
-            Assert.AreEqual(templates.Count, expectedResponse.templates.Count);
+            ClassicAssert.AreEqual(templates.Count, expectedResponse.templates.Count);
             for (int i = 0; i < templates.Count; i++)
             {
-                Assert.AreEqual(expectedResponse.templates[i], templates[i]);
+                ClassicAssert.AreEqual(expectedResponse.templates[i], templates[i]);
             }
         }
 
@@ -359,10 +359,10 @@ namespace Notify.Tests.UnitTests
 
             List<TemplateResponse> templates = templateList.templates;
 
-            Assert.AreEqual(templates.Count, expectedResponse.templates.Count);
+            ClassicAssert.AreEqual(templates.Count, expectedResponse.templates.Count);
             for (int i = 0; i < templates.Count; i++)
             {
-                Assert.AreEqual(expectedResponse.templates[i], templates[i]);
+                ClassicAssert.AreEqual(expectedResponse.templates[i], templates[i]);
             }
         }
 
@@ -391,10 +391,10 @@ namespace Notify.Tests.UnitTests
 
             List<ReceivedTextResponse> receivedTexts = receivedTextList.receivedTexts;
 
-            Assert.AreEqual(receivedTexts.Count, expectedResponse.receivedTexts.Count);
+            ClassicAssert.AreEqual(receivedTexts.Count, expectedResponse.receivedTexts.Count);
             for (int i = 0; i < receivedTexts.Count; i++)
             {
-                Assert.AreEqual(expectedResponse.receivedTexts[i], receivedTexts[i]);
+                ClassicAssert.AreEqual(expectedResponse.receivedTexts[i], receivedTexts[i]);
             }
         }
 
@@ -434,7 +434,7 @@ namespace Notify.Tests.UnitTests
 
             SmsNotificationResponse actualResponse = await client.SendSmsAsync(Constants.fakePhoneNumber, Constants.fakeTemplateId, personalisation);
 
-            Assert.AreEqual(expectedResponse, actualResponse);
+            ClassicAssert.AreEqual(expectedResponse, actualResponse);
         }
 
         [Test, Category("Unit"), Category("Unit/NotificationClientAsync")]
@@ -588,7 +588,7 @@ namespace Notify.Tests.UnitTests
 
             EmailNotificationResponse actualResponse = await client.SendEmailAsync(Constants.fakeEmail, Constants.fakeTemplateId, personalisation, Constants.fakeNotificationReference);
 
-            Assert.AreEqual(expectedResponse, actualResponse);
+            ClassicAssert.AreEqual(expectedResponse, actualResponse);
 
         }
 
@@ -632,7 +632,7 @@ namespace Notify.Tests.UnitTests
 
             LetterNotificationResponse actualResponse = await client.SendLetterAsync(Constants.fakeTemplateId, personalisation, Constants.fakeNotificationReference);
 
-            Assert.AreEqual(expectedResponse, actualResponse);
+            ClassicAssert.AreEqual(expectedResponse, actualResponse);
 
         }
 
@@ -666,17 +666,17 @@ namespace Notify.Tests.UnitTests
 
             LetterNotificationResponse actualResponse = await client.SendPrecompiledLetterAsync(Constants.fakeNotificationReference, Encoding.UTF8.GetBytes("%PDF-1.5 testpdf"));
 
-            Assert.IsNotNull(expectedResponse.id);
-            Assert.IsNotNull(expectedResponse.reference);
-            Assert.IsNull(expectedResponse.content);
-            Assert.AreEqual(expectedResponse, actualResponse);
+            ClassicAssert.IsNotNull(expectedResponse.id);
+            ClassicAssert.IsNotNull(expectedResponse.reference);
+            ClassicAssert.IsNull(expectedResponse.content);
+            ClassicAssert.AreEqual(expectedResponse, actualResponse);
 
         }
 
         private static void AssertGetExpectedContent(string expected, string content)
         {
-            Assert.IsNotNull(content);
-            Assert.AreEqual(expected, content);
+            ClassicAssert.IsNotNull(content);
+            ClassicAssert.AreEqual(expected, content);
         }
 
         private void AssertValidRequest(string uri, HttpRequestMessage r, HttpMethod method = null)
@@ -686,12 +686,12 @@ namespace Notify.Tests.UnitTests
                 method = HttpMethod.Get;
             }
 
-            Assert.AreEqual(r.Method, method);
-            Assert.AreEqual(r.RequestUri.ToString(), client.BaseUrl + uri);
-            Assert.IsNotNull(r.Headers.Authorization);
-            Assert.IsNotNull(r.Headers.UserAgent);
-            Assert.AreEqual(r.Headers.UserAgent.ToString(), client.GetUserAgent());
-            Assert.AreEqual(r.Headers.Accept.ToString(), "application/json");
+            ClassicAssert.AreEqual(r.Method, method);
+            ClassicAssert.AreEqual(r.RequestUri.ToString(), client.BaseUrl + uri);
+            ClassicAssert.IsNotNull(r.Headers.Authorization);
+            ClassicAssert.IsNotNull(r.Headers.UserAgent);
+            ClassicAssert.AreEqual(r.Headers.UserAgent.ToString(), client.GetUserAgent());
+            ClassicAssert.AreEqual(r.Headers.Accept.ToString(), "application/json");
         }
 
         private void MockRequest(string content, string uri,
@@ -772,7 +772,7 @@ namespace Notify.Tests.UnitTests
 
             var actualResponse = await client.SendEmailAsync(Constants.fakeEmail, Constants.fakeTemplateId, personalisation, Constants.fakeNotificationReference, Constants.fakeReplyToId);
 
-            Assert.AreEqual(expectedResponse, actualResponse);
+            ClassicAssert.AreEqual(expectedResponse, actualResponse);
         }
 
         [Test, Category("Unit"), Category("Unit/NotificationClientAsync")]

@@ -1,8 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using Notify.Authentication;
+﻿using Notify.Authentication;
 using Notify.Exceptions;
 using NUnit.Framework;
+using NUnit.Framework.Legacy;
+using System;
+using System.Collections.Generic;
 
 namespace Notify.Tests.UnitTests
 {
@@ -16,36 +17,36 @@ namespace Notify.Tests.UnitTests
         [Test, Category("Unit"), Category("Unit/AuthenticationTests")]
         public void CreateTokenWithInvalidSecretThrowsAuthException()
         {
-			var ex = Assert.Throws<NotifyAuthException>(() => Authenticator.CreateToken("invalidsecret", NOTIFY_SERVICE_ID));
+            var ex = Assert.Throws<NotifyAuthException>(() => Authenticator.CreateToken("invalidsecret", NOTIFY_SERVICE_ID));
             Assert.That(ex.Message, Does.Contain("Invalid secret or serviceId. Please check that your API Key is correct"));
         }
 
-		[Test, Category("Unit"), Category("Unit/AuthenticationTests")]
+        [Test, Category("Unit"), Category("Unit/AuthenticationTests")]
         public void CreateTokenWithInvalidServiceIdThrowsAuthException()
         {
-			var ex = Assert.Throws<NotifyAuthException>(() => Authenticator.CreateToken(NOTIFY_SECRET_ID, "invalid service id"));
+            var ex = Assert.Throws<NotifyAuthException>(() => Authenticator.CreateToken(NOTIFY_SECRET_ID, "invalid service id"));
             Assert.That(ex.Message, Does.Contain("Invalid secret or serviceId. Please check that your API Key is correct"));
         }
 
-		[Test, Category("Unit"), Category("Unit/AuthenticationTests")]
+        [Test, Category("Unit"), Category("Unit/AuthenticationTests")]
         public void CreateTokenWithCredentialsShouldGenerateValidJWT()
         {
             String token = Authenticator.CreateToken(NOTIFY_SECRET_ID, NOTIFY_SERVICE_ID);
 
             // Is correct string
-            if(String.IsNullOrWhiteSpace(token) || token.Contains(" "))
+            if (String.IsNullOrWhiteSpace(token) || token.Contains(" "))
             {
                 Assert.Fail();
             }
 
             // Validate can decode and payload matches
             IDictionary<String, Object> jsonPayload = Authenticator.DecodeToken(token, NOTIFY_SECRET_ID);
-            Assert.AreEqual(jsonPayload["iss"], NOTIFY_SERVICE_ID);
+            ClassicAssert.AreEqual(jsonPayload["iss"], NOTIFY_SERVICE_ID);
 
             // Validate token issed time is within reasonable time
             Double currentTimeAsSeconds = Authenticator.GetCurrentTimeAsSeconds();
             Double tokenIssuedAt = Convert.ToDouble(jsonPayload["iat"]);
-            if(tokenIssuedAt < (currentTimeAsSeconds - 15) ||
+            if (tokenIssuedAt < (currentTimeAsSeconds - 15) ||
                 tokenIssuedAt > (currentTimeAsSeconds + 15))
             {
                 Assert.Fail();
@@ -53,17 +54,17 @@ namespace Notify.Tests.UnitTests
 
         }
 
-		[Test, Category("Unit"), Category("Unit/AuthenticationTests")]
+        [Test, Category("Unit"), Category("Unit/AuthenticationTests")]
         public void DecodeInvalidTokenWithNoDotsShouldThrowAuthException()
         {
-			var ex = Assert.Throws<NotifyAuthException>(() => Authenticator.DecodeToken("tokenwithnodots", NOTIFY_SECRET_ID));
+            var ex = Assert.Throws<NotifyAuthException>(() => Authenticator.DecodeToken("tokenwithnodots", NOTIFY_SECRET_ID));
             Assert.That(ex.Message, Does.Contain("Token must consist of 3 delimited by dot parts"));
         }
 
-		[Test, Category("Unit"), Category("Unit/AuthenticationTests")]
+        [Test, Category("Unit"), Category("Unit/AuthenticationTests")]
         public void DecodeInvalidTokenShouldThrowAuthException()
         {
-		    var ex = Assert.Throws<NotifyAuthException>(() => Authenticator.DecodeToken(INVALID_TOKEN, NOTIFY_SECRET_ID));
+            var ex = Assert.Throws<NotifyAuthException>(() => Authenticator.DecodeToken(INVALID_TOKEN, NOTIFY_SECRET_ID));
             Assert.That(ex.Message, Does.Contain("Invalid signature"));
         }
     }

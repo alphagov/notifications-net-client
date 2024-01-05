@@ -1,3 +1,21 @@
+Update Fork
+--------------------
+'Open Git Bash Here' from 'C:\LocalDevGit\GovUk\Notify\1' in 'Explorer'
+git remote add upstream https://github.com/alphagov/notifications-net-client.git
+git merge upstream/main
+
+
+
+
+
+
+
+Publish to Local Nuget Server
+-----------------------------
+Ensure 'Project properties' -> 'Package' -> 'General' -> 'Produce a package....' is ticked
+Build Release
+
+
 Open Explorer
 Goto C:\LocalDevGit\GovUk\Notify\1\src\GovukNotify\bin\Release
 open powershell (Alt-f)
