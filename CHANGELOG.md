@@ -1,3 +1,8 @@
+## [7.0.0] - 2023-12-27
+
+* Removes the `isCsv` parameter from `PrepareUpload`
+* Adds a `filename` parameter to `PrepareUpload`; see documentation for more details.
+
 ## [6.2.0] - 2023-06-14
 
 * Updated Packages to the latest versions.

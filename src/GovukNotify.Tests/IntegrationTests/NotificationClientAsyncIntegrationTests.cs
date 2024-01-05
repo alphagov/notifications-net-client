@@ -44,7 +44,7 @@ namespace Notify.Tests.IntegrationTests
 		const String TEST_LETTER_BODY = "Hello Foo";
 		const String TEST_LETTER_SUBJECT = "Main heading";
 
-        [SetUp]
+		[SetUp]
 		[Test, Category("Integration"), Category("Integration/NotificationClientAsync")]
 		public void SetUp()
 		{
@@ -169,15 +169,15 @@ namespace Notify.Tests.IntegrationTests
 
 			string reference = System.Guid.NewGuid().ToString();
 			string postage = "first";
-                        byte[] pdfContents;
-                        try
-                        {
-                            pdfContents = File.ReadAllBytes("../../../IntegrationTests/test_files/one_page_pdf.pdf");
-                        }
-                        catch (DirectoryNotFoundException)
-                        {
-                            pdfContents = File.ReadAllBytes("IntegrationTests/test_files/one_page_pdf.pdf");
-                        }
+			byte[] pdfContents;
+			try
+			{
+				pdfContents = File.ReadAllBytes("../../../IntegrationTests/test_files/one_page_pdf.pdf");
+			}
+			catch (DirectoryNotFoundException)
+			{
+				pdfContents = File.ReadAllBytes("IntegrationTests/test_files/one_page_pdf.pdf");
+			}
 
 			LetterNotificationResponse response = await this.client.SendPrecompiledLetterAsync(reference, pdfContents, postage);
 
@@ -243,7 +243,7 @@ namespace Notify.Tests.IntegrationTests
 
 			Dictionary<String, dynamic> personalisation = new Dictionary<String, dynamic>
 			{
-				{ "name", NotificationClient.PrepareUpload(pdfContents, true, true, "4 weeks") }
+				{ "name", NotificationClient.PrepareUpload(pdfContents, "report.csv", true, "4 weeks") }
 			};
 
 			EmailNotificationResponse response =
