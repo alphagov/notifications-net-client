@@ -1,6 +1,3 @@
-Build Release
-Publish on kieron@denecottage.net personal -> https://marketplace.visualstudio.com/items?itemName=KieronMatthews-Rocktime.VSBuildTools
-
 Open Explorer
 Goto C:\LocalDevGit\GovUk\Notify\1\src\GovukNotify\bin\Release
 open powershell (Alt-f)
