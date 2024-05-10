@@ -21,6 +21,7 @@ namespace Notify.Tests.UnitTests
                 return @"{
                             ""completed_at"": null,
                             ""created_at"": ""2016-11-22T11:21:13.133522Z"",
+                            ""created_by_name"": ""A. Sender"",
                             ""email_address"": null,
                             ""id"": ""902e4312-bc4a-4c87-8c3e-9f4144ca36fd"",
                             ""line_1"": null,
@@ -40,7 +41,6 @@ namespace Notify.Tests.UnitTests
                                 ""uri"": ""/service/fd29e421-24b6-4f45-ac5c-e642a1d68641/template/323e9fa6-9cbb-44ad-8f64-38487dccfd43"",
                                 ""version"": 2  },
                             ""type"": ""sms"",
-                            ""created_by_name"": ""A. Sender""
                         }";
             }
         }
@@ -54,6 +54,7 @@ namespace Notify.Tests.UnitTests
                         {
                             ""completed_at"": null,
                             ""created_at"": ""2016-11-22T11:21:13.133522Z"",
+                            ""created_by_name"": null,
                             ""email_address"": null,
                             ""id"": ""902e4312-bc4a-4c87-8c3e-9f4144ca36fd"",
                             ""line_1"": null,
@@ -73,11 +74,11 @@ namespace Notify.Tests.UnitTests
                                 ""uri"": ""/service/fd29e421-24b6-4f45-ac5c-e642a1d68641/template/323e9fa6-9cbb-44ad-8f64-38487dccfd43"",
                                 ""version"": 2  },
                             ""type"": ""sms"",
-                            ""created_by_name"": null
                         },
                         {
                             ""completed_at"": null,
                             ""created_at"": ""2016-11-23T11:21:13.133522Z"",
+                            ""created_by_name"": null,
                             ""email_address"": ""someone@example.com"",
                             ""id"": ""902e4312-bc4a-4c87-8c3e-9f4144ca36fd"",
                             ""line_1"": null,
@@ -97,7 +98,6 @@ namespace Notify.Tests.UnitTests
                                 ""uri"": ""/service/fd29e421-24b6-4f45-ac5c-e642a1d68641/template/323e9fa6-9cbb-44ad-8f64-38487dccfd43"",
                                 ""version"": 2  },
                             ""type"": ""email"",
-                            ""created_by_name"": null
                         }
                     ]
                 }";
@@ -112,6 +112,7 @@ namespace Notify.Tests.UnitTests
                         {
                             ""completed_at"": null,
                             ""created_at"": ""2016-11-22T11:21:13.133522Z"",
+                            ""created_by_name"": null,
                             ""email_address"": null,
                             ""id"": ""902e4312-bc4a-4c87-8c3e-9f4144ca36fd"",
                             ""line_1"": null,
@@ -131,11 +132,11 @@ namespace Notify.Tests.UnitTests
                                 ""uri"": ""/service/fd29e421-24b6-4f45-ac5c-e642a1d68641/template/323e9fa6-9cbb-44ad-8f64-38487dccfd43"",
                                 ""version"": 2  },
                             ""type"": ""sms"",
-                            ""created_by_name"": null
                         },
                         {
                             ""completed_at"": null,
                             ""created_at"": ""2016-11-24T11:21:13.133522Z"",
+                            ""created_by_name"": null,
                             ""email_address"": null,
                             ""id"": ""902e4312-bc4a-4c87-8c3e-9f4144ca36fd"",
                             ""line_1"": null,
@@ -155,7 +156,6 @@ namespace Notify.Tests.UnitTests
                                 ""uri"": ""/service/fd29e421-24b6-4f45-ac5c-e642a1d68641/template/323e9fa6-9cbb-44ad-8f64-38487dccfd43"",
                                 ""version"": 2  },
                             ""type"": ""sms"",
-                            ""created_by_name"": null
                         }
                     ]
                 }";
@@ -171,6 +171,7 @@ namespace Notify.Tests.UnitTests
                         {
                             ""completed_at"": null,
                             ""created_at"": ""2016-11-22T11:21:13.133522Z"",
+                            ""created_by_name"": null,
                             ""email_address"": ""someone@example.com"",
                             ""id"": ""902e4312-bc4a-4c87-8c3e-9f4144ca36fd"",
                             ""line_1"": null,
@@ -190,11 +191,11 @@ namespace Notify.Tests.UnitTests
                                 ""uri"": ""/service/fd29e421-24b6-4f45-ac5c-e642a1d68641/template/323e9fa6-9cbb-44ad-8f64-38487dccfd43"",
                                 ""version"": 2  },
                             ""type"": ""email"",
-                            ""thing"": null
                         },
                         {
                             ""completed_at"": null,
                             ""created_at"": ""2016-11-24T11:21:13.133522Z"",
+                            ""created_by_name"": null,
                             ""email_address"": ""someone2@example.com"",
                             ""id"": ""902e4312-bc4a-4c87-8c3e-9f4144ca36fd"",
                             ""line_1"": null,
@@ -214,7 +215,6 @@ namespace Notify.Tests.UnitTests
                                 ""uri"": ""/service/fd29e421-24b6-4f45-ac5c-e642a1d68641/template/323e9fa6-9cbb-44ad-8f64-38487dccfd43"",
                                 ""version"": 2  },
                             ""type"": ""email"",
-                            ""created_by_name"": null
                         }
                     ]
                 }";
@@ -229,6 +229,7 @@ namespace Notify.Tests.UnitTests
                         {
                             ""completed_at"": null,
                             ""created_at"": ""2016-11-22T11:21:13.133522Z"",
+                            ""created_by_name"": null,
                             ""email_address"": null,
                             ""id"": ""902e4312-bc4a-4c87-8c3e-9f4144ca36fd"",
                             ""line_1"": ""Mr Someone"",
@@ -248,11 +249,11 @@ namespace Notify.Tests.UnitTests
                                 ""uri"": ""/service/fd29e421-24b6-4f45-ac5c-e642a1d68641/template/323e9fa6-9cbb-44ad-8f64-38487dccfd43"",
                                 ""version"": 2  },
                             ""type"": ""letter"",
-                            ""created_by_name"": null
                         },
                         {
                             ""completed_at"": null,
                             ""created_at"": ""2016-11-24T11:21:13.133522Z"",
+                            ""created_by_name"": null,
                             ""email_address"": null,
                             ""id"": ""902e4312-bc4a-4c87-8c3e-9f4144ca36fd"",
                             ""line_1"": ""Mrs Somebody"",
@@ -272,7 +273,6 @@ namespace Notify.Tests.UnitTests
                                 ""uri"": ""/service/fd29e421-24b6-4f45-ac5c-e642a1d68641/template/323e9fa6-9cbb-44ad-8f64-38487dccfd43"",
                                 ""version"": 2  },
                             ""type"": ""letter"",
-                            ""created_by_name"": null
                         }
                     ]
                 }";
