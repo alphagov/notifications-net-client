@@ -247,7 +247,7 @@ namespace Notify.Tests.UnitTests
             MockRequest(Constants.fakeTemplatePreviewResponseJson,
                 client.GET_TEMPLATE_URL + Constants.fakeTemplateId + "/preview", AssertValidRequest, HttpMethod.Post);
 
-            var response = client.GenerateTemplatePreview(Constants.fakeTemplateId, personalisation);
+            client.GenerateTemplatePreview(Constants.fakeTemplateId, personalisation);
         }
 
         [Test, Category("Unit"), Category("Unit/NotificationClient")]
@@ -429,7 +429,7 @@ namespace Notify.Tests.UnitTests
                 HttpMethod.Post,
                 AssertGetExpectedContent, expected.ToString(Formatting.None));
 
-            SmsNotificationResponse response = client.SendSms(Constants.fakePhoneNumber, Constants.fakeTemplateId, personalisation);
+            client.SendSms(Constants.fakePhoneNumber, Constants.fakeTemplateId, personalisation);
         }
 
         [Test, Category("Unit"), Category("Unit/NotificationClient")]
@@ -453,7 +453,7 @@ namespace Notify.Tests.UnitTests
                 HttpMethod.Post,
                 AssertGetExpectedContent, expected.ToString(Formatting.None));
 
-            var response = client.SendSms(
+            client.SendSms(
                 Constants.fakePhoneNumber, Constants.fakeTemplateId, personalisation: personalisation, smsSenderId: Constants.fakeSMSSenderId);
         }
 
@@ -494,7 +494,7 @@ namespace Notify.Tests.UnitTests
                 HttpMethod.Post,
                 AssertGetExpectedContent, expected.ToString(Formatting.None));
 
-            EmailNotificationResponse response = client.SendEmail(Constants.fakeEmail, Constants.fakeTemplateId, personalisation, Constants.fakeNotificationReference);
+            client.SendEmail(Constants.fakeEmail, Constants.fakeTemplateId, personalisation, Constants.fakeNotificationReference);
         }
 
         [Test, Category("Unit"), Category("Unit/NotificationClient")]
@@ -538,7 +538,7 @@ namespace Notify.Tests.UnitTests
                 AssertGetExpectedContent,
                 expected.ToString(Formatting.None));
 
-            var response = client.SendEmail(Constants.fakeEmail, Constants.fakeTemplateId, personalisation, Constants.fakeNotificationReference, Constants.fakeReplyToId);
+            client.SendEmail(Constants.fakeEmail, Constants.fakeTemplateId, personalisation, Constants.fakeNotificationReference, Constants.fakeReplyToId);
         }
 
         [Test, Category("Unit"), Category("Unit/NotificationClient")]
@@ -582,7 +582,7 @@ namespace Notify.Tests.UnitTests
                 expected.ToString(Formatting.None)
             );
 
-            var response = client.SendEmail(Constants.fakeEmail, Constants.fakeTemplateId, personalisation, unsubscribeLink: Constants.fakeUnsubscribeLink);
+            client.SendEmail(Constants.fakeEmail, Constants.fakeTemplateId, personalisation, unsubscribeLink: Constants.fakeUnsubscribeLink);
         }
 
         [Test, Category("Unit"), Category("Unit/NotificationClient")]
@@ -617,7 +617,7 @@ namespace Notify.Tests.UnitTests
                 HttpMethod.Post,
                 AssertGetExpectedContent, expected.ToString(Formatting.None));
 
-            EmailNotificationResponse response = client.SendEmail(Constants.fakeEmail, Constants.fakeTemplateId, personalisation, Constants.fakeNotificationReference);
+            client.SendEmail(Constants.fakeEmail, Constants.fakeTemplateId, personalisation, Constants.fakeNotificationReference);
         }
 
         [Test, Category("Unit"), Category("Unit/NotificationClient")]
@@ -652,7 +652,7 @@ namespace Notify.Tests.UnitTests
                 HttpMethod.Post,
                 AssertGetExpectedContent, expected.ToString(Formatting.None));
 
-            EmailNotificationResponse response = client.SendEmail(Constants.fakeEmail, Constants.fakeTemplateId, personalisation, Constants.fakeNotificationReference);
+            client.SendEmail(Constants.fakeEmail, Constants.fakeTemplateId, personalisation, Constants.fakeNotificationReference);
         }
 
         [Test, Category("Unit"), Category("Unit/NotificationClient")]
@@ -701,7 +701,7 @@ namespace Notify.Tests.UnitTests
                 HttpMethod.Post,
                 AssertGetExpectedContent, expected.ToString(Formatting.None));
 
-            LetterNotificationResponse response = client.SendLetter(Constants.fakeTemplateId, personalisation, Constants.fakeNotificationReference);
+            client.SendLetter(Constants.fakeTemplateId, personalisation, Constants.fakeNotificationReference);
         }
 
         [Test, Category("Unit"), Category("Unit/NotificationClient")]
@@ -738,7 +738,7 @@ namespace Notify.Tests.UnitTests
                 HttpMethod.Post,
                 AssertGetExpectedContent, expected.ToString(Formatting.None));
 
-            LetterNotificationResponse response = client.SendPrecompiledLetter(
+            client.SendPrecompiledLetter(
                     Constants.fakeNotificationReference,
                     Encoding.UTF8.GetBytes("%PDF-1.5 testpdf")
             );
@@ -760,7 +760,7 @@ namespace Notify.Tests.UnitTests
                 HttpMethod.Post,
                 AssertGetExpectedContent, expected.ToString(Formatting.None));
 
-            LetterNotificationResponse response = client.SendPrecompiledLetter(
+            client.SendPrecompiledLetter(
                     Constants.fakeNotificationReference,
                     Encoding.UTF8.GetBytes("%PDF-1.5 testpdf"),
                     "first"
