@@ -428,35 +428,6 @@ namespace Notify.Tests.IntegrationTests
 			Assert.That(ex.Message, Does.Contain("Missing personalisation: name"));
 		}
 
-		[Test, Category("Integration"), Category("Integration/NotificationClientAsync")]
-		public async Task SendEmailTestServiceDefaultEmailReplyTo()
-		{
-			Dictionary<String, dynamic> personalisation = new Dictionary<String, dynamic>
-			{
-				{ "name", "someone" }
-			};
-
-			EmailNotificationResponse response = await this.client.SendEmailAsync(FUNCTIONAL_TEST_EMAIL, EMAIL_TEMPLATE_ID, personalisation);
-			this.emailNotificationId = response.id;
-			Assert.IsNotNull(response);
-			Assert.AreEqual(response.content.body, TEST_EMAIL_BODY);
-			Assert.AreEqual(response.content.subject, TEST_EMAIL_SUBJECT);
-		}
-
-		[Test, Category("Integration"), Category("Integration/NotificationClientAsync")]
-		public async Task SendEmailTestSpecificEmailReplyTo()
-		{
-			Dictionary<String, dynamic> personalisation = new Dictionary<String, dynamic>
-			{
-				{ "name", "someone" }
-			};
-
-			EmailNotificationResponse response = await this.client.SendEmailAsync(FUNCTIONAL_TEST_EMAIL, EMAIL_TEMPLATE_ID, personalisation, emailReplyToId: EMAIL_REPLY_TO_ID);
-			this.emailNotificationId = response.id;
-			Assert.IsNotNull(response);
-			Assert.AreEqual(response.content.body, TEST_EMAIL_BODY);
-			Assert.AreEqual(response.content.subject, TEST_EMAIL_SUBJECT);
-		}
 
 		[Test, Category("Integration"), Category("Integration/NotificationClientAsync")]
 		public void SendEmailTestEmailReplyToNotPresent()

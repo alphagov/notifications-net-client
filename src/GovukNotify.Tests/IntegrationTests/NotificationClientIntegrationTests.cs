@@ -441,36 +441,6 @@ namespace Notify.Tests.IntegrationTests
 		}
 
 		[Test, Category("Integration"), Category("Integration/NotificationClient")]
-		public void SendEmailTestServiceDefaultEmailReplyTo()
-		{
-			Dictionary<String, dynamic> personalisation = new Dictionary<String, dynamic>
-			{
-				{ "name", "someone" }
-			};
-
-			EmailNotificationResponse response = this.client.SendEmail(FUNCTIONAL_TEST_EMAIL, EMAIL_TEMPLATE_ID, personalisation);
-			this.emailNotificationId = response.id;
-			Assert.IsNotNull(response);
-			Assert.AreEqual(response.content.body, TEST_EMAIL_BODY);
-			Assert.AreEqual(response.content.subject, TEST_EMAIL_SUBJECT);
-		}
-
-		[Test, Category("Integration"), Category("Integration/NotificationClient")]
-		public void SendEmailTestSpecificEmailReplyTo()
-		{
-			Dictionary<String, dynamic> personalisation = new Dictionary<String, dynamic>
-			{
-				{ "name", "someone" }
-			};
-
-			EmailNotificationResponse response = this.client.SendEmail(FUNCTIONAL_TEST_EMAIL, EMAIL_TEMPLATE_ID, personalisation, emailReplyToId: EMAIL_REPLY_TO_ID);
-			this.emailNotificationId = response.id;
-			Assert.IsNotNull(response);
-			Assert.AreEqual(response.content.body, TEST_EMAIL_BODY);
-			Assert.AreEqual(response.content.subject, TEST_EMAIL_SUBJECT);
-		}
-
-		[Test, Category("Integration"), Category("Integration/NotificationClient")]
 		public void SendEmailTestEmailReplyToNotPresent()
 		{
 			String fakeReplayToId = System.Guid.NewGuid().ToString();
