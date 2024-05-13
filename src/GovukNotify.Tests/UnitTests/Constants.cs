@@ -4,7 +4,10 @@ namespace Notify.Tests.UnitTests
 {
     public static class Constants
     {
-        public static String fakeApiKey { get {
+        public static String fakeApiKey
+        {
+            get
+            {
                 return @"FAKEKEY-fd29e561-24b6-4f32-be5c-e642a1d68641-57bdfd56-ac07-409b-8307-71419d85bb9c";
             }
         }
@@ -18,7 +21,10 @@ namespace Notify.Tests.UnitTests
         public static String fakeTemplateId { get { return "913e9fa6-9cbb-44ad-8f58-38487dccfd82"; } }
         public static String fakeReplyToId { get { return "78ded4ad-e915-4a89-a314-2940ed141d40"; } }
         public static String fakeSMSSenderId { get { return "88ded4ad-e915-4a89-a314-2940ed141d41"; } }
-        public static String fakeNotificationJson { get {
+        public static String fakeNotificationJson
+        {
+            get
+            {
                 return @"{
                             ""completed_at"": null,
                             ""created_at"": ""2016-11-22T11:21:13.133522Z"",
@@ -288,7 +294,10 @@ namespace Notify.Tests.UnitTests
                 }";
             }
         }
-        public static String fakeTemplateResponseJson { get {
+        public static String fakeTemplateResponseJson
+        {
+            get
+            {
                 return @"{
                             ""updated_at"": null,
                             ""created_at"": ""2016-11-22T11:21:13.133522Z"",
@@ -302,7 +311,10 @@ namespace Notify.Tests.UnitTests
             }
         }
 
-        public static String fakeTemplateListResponseJson { get {
+        public static String fakeTemplateListResponseJson
+        {
+            get
+            {
                 return @"{ ""templates"": [
 						{
                             ""updated_at"": null,
@@ -329,7 +341,10 @@ namespace Notify.Tests.UnitTests
             }
         }
 
-        public static String fakeReceivedTextListResponseJson { get {
+        public static String fakeReceivedTextListResponseJson
+        {
+            get
+            {
                 return @"{ ""received_text_messages"": [
                         {
                             ""user_number"": ""447700900111"",
@@ -354,13 +369,16 @@ namespace Notify.Tests.UnitTests
 
         public static String fakeTemplateEmptyListResponseJson
         {
-        	get
-        	{
-        		return @"{ ""templates"": [] }";
-        	}
+            get
+            {
+                return @"{ ""templates"": [] }";
+            }
         }
 
-        public static String fakeTemplateSmsListResponseJson { get {
+        public static String fakeTemplateSmsListResponseJson
+        {
+            get
+            {
                 return @"{ ""templates"": [{
                             ""updated_at"": null,
                             ""created_at"": ""2016-11-22T11:21:13.133522Z"",
@@ -374,7 +392,10 @@ namespace Notify.Tests.UnitTests
             }
         }
 
-        public static String fakeTemplateEmailListResponseJson { get {
+        public static String fakeTemplateEmailListResponseJson
+        {
+            get
+            {
                 return @"{ ""templates"": [{
                             ""updated_at"": ""2016-12-23T11:21:13.133522Z"",
                             ""created_at"": ""2016-12-22T11:21:13.133522Z"",
@@ -388,7 +409,10 @@ namespace Notify.Tests.UnitTests
             }
         }
 
-        public static String fakeTemplatePreviewResponseJson { get {
+        public static String fakeTemplatePreviewResponseJson
+        {
+            get
+            {
                 return @"{
                             ""id"": ""d683f7f9-df04-4b9c-8019-15092c4674fd"",
                             ""type"": ""sms"",
@@ -399,7 +423,10 @@ namespace Notify.Tests.UnitTests
             }
         }
 
-        public static String fakeSmsNotificationResponseJson { get {
+        public static String fakeSmsNotificationResponseJson
+        {
+            get
+            {
                 return @"{
                             ""content"": {
                                 ""body"": ""test"",
@@ -415,7 +442,10 @@ namespace Notify.Tests.UnitTests
             }
         }
 
-        public static String fakeSmsNotificationWithSMSSenderIdResponseJson { get {
+        public static String fakeSmsNotificationWithSMSSenderIdResponseJson
+        {
+            get
+            {
                 return @"{
                             ""content"": {
                                 ""body"": ""test"",
@@ -431,7 +461,10 @@ namespace Notify.Tests.UnitTests
             }
         }
 
-        public static String fakeEmailNotificationResponseJson { get {
+        public static String fakeEmailNotificationResponseJson
+        {
+            get
+            {
                 return @"{
                             ""content"": {
                                 ""body"": ""Hello someone\n\nFake"",
@@ -451,11 +484,11 @@ namespace Notify.Tests.UnitTests
             }
         }
 
-		public static String fakeLetterNotificationResponseJson
-		{
-			get
-			{
-				return @"{
+        public static String fakeLetterNotificationResponseJson
+        {
+            get
+            {
+                return @"{
                             ""content"": {
                                 ""body"": ""Hello someone\n\nFake"",
                                 ""subject"": ""Test""
@@ -469,10 +502,13 @@ namespace Notify.Tests.UnitTests
                             },
                             ""uri"": ""https://someurl//v2/notifications/321b9c43-563f-4c59-sac5-87e9ca325833""
                         }";
-			}
-		}
+            }
+        }
 
-        public static String fakePrecompiledLetterNotificationResponseJson { get {
+        public static String fakePrecompiledLetterNotificationResponseJson
+        {
+            get
+            {
                 return @"{
                             ""id"": ""731b9c83-563f-4b59-afc5-87e9ca717833"",
                             ""reference"":  ""some-client-ref"",

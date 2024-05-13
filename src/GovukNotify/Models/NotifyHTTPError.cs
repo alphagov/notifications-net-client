@@ -4,7 +4,7 @@ namespace Notify.Models
 {
     public class NotifyHTTPError
     {
-        #pragma warning disable 169
+#pragma warning disable 169
         [JsonProperty("error")]
         private string error;
 

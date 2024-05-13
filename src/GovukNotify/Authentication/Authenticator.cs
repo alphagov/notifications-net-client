@@ -12,7 +12,7 @@ namespace Notify.Authentication
     {
         public static string CreateToken(string secret, string serviceId)
         {
-            ValidateGuids(new [] { secret, serviceId });
+            ValidateGuids(new[] { secret, serviceId });
 
             var payload = new Dictionary<string, object>
             {
