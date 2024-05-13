@@ -558,6 +558,33 @@ namespace Notify.Tests.UnitTests
             Assert.AreEqual(expectedResponse, actualResponse);
         }
 
+        [Test, Category("Unit"), Category("Unit/NotificationClientAsync")]
+        public void SendEmailNotificationWithUnsubscribeLinkGeneratesExpectedRequest()
+        {
+            var personalisation = new Dictionary<string, dynamic>
+                {
+                    { "name", "someone" }
+                };
+            var expected = new JObject
+            {
+                { "email_address", Constants.fakeEmail },
+                { "template_id", Constants.fakeTemplateId },
+                { "personalisation", JObject.FromObject(personalisation) },
+                { "unsubscribe_link", Constants.fakeUnsubscribeLink },
+            };
+
+            MockRequest(
+                Constants.fakeEmailNotificationResponseJson,
+                client.SEND_EMAIL_NOTIFICATION_URL,
+                AssertValidRequest,
+                HttpMethod.Post,
+                AssertGetExpectedContent,
+                expected.ToString(Formatting.None)
+            );
+
+            var response = client.SendEmail(Constants.fakeEmail, Constants.fakeTemplateId, personalisation, unsubscribeLink: Constants.fakeUnsubscribeLink);
+        }
+
         [Test, Category("Unit"), Category("Unit/NotificationClient")]
         public void SendEmailNotificationWithDocumentGeneratesExpectedRequest()
         {

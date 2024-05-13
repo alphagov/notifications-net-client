@@ -156,7 +156,7 @@ namespace Notify.Client
 
         public async Task<EmailNotificationResponse> SendEmailAsync(string emailAddress, string templateId,
             Dictionary<string, dynamic> personalisation = null, string clientReference = null,
-            string emailReplyToId = null)
+            string emailReplyToId = null, string unsubscribeLink = null)
         {
             var o = CreateRequestParams(templateId, personalisation, clientReference);
             o.AddFirst(new JProperty("email_address", emailAddress));
@@ -164,6 +164,11 @@ namespace Notify.Client
             if (emailReplyToId != null)
             {
                 o.Add(new JProperty("email_reply_to_id", emailReplyToId));
+            }
+
+            if (unsubscribeLink != null)
+            {
+                o.Add(new JProperty("unsubscribe_link", unsubscribeLink));
             }
 
             var response = await POST(SEND_EMAIL_NOTIFICATION_URL, o.ToString(Formatting.None)).ConfigureAwait(false);
@@ -442,11 +447,11 @@ namespace Notify.Client
             }
         }
 
-        public EmailNotificationResponse SendEmail(string emailAddress, string templateId, Dictionary<string, dynamic> personalisation = null, string clientReference = null, string emailReplyToId = null)
+        public EmailNotificationResponse SendEmail(string emailAddress, string templateId, Dictionary<string, dynamic> personalisation = null, string clientReference = null, string emailReplyToId = null, string unsubscribeLink = null)
         {
             try
             {
-                return SendEmailAsync(emailAddress, templateId, personalisation, clientReference, emailReplyToId).Result;
+                return SendEmailAsync(emailAddress, templateId, personalisation, clientReference, emailReplyToId, unsubscribeLink).Result;
             }
             catch (AggregateException ex)
             {

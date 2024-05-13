@@ -13,6 +13,8 @@ namespace Notify.Models
         public string emailAddress;
         public string body;
         public string subject;
+        [JsonProperty("unsubscribe_link")]
+        public string unsubscribeLink;
         [JsonProperty("line_1")]
         public string line1;
         [JsonProperty("line_2")]
@@ -67,7 +69,8 @@ namespace Notify.Models
                 template.uri == note.template.uri &&
                 template.version == note.template.version &&
                 type == note.type &&
-                createdByName == note.createdByName;
+                createdByName == note.createdByName &&
+                unsubscribeLink == note.unsubscribeLink;
         }
 
         public override int GetHashCode()

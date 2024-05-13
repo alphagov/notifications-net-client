@@ -491,11 +491,20 @@ namespace Notify.Tests.IntegrationTests
 				{ "name", "someone" }
 			};
 
-			EmailNotificationResponse response = this.client.SendEmail(FUNCTIONAL_TEST_EMAIL, EMAIL_TEMPLATE_ID, personalisation, clientReference: "TestReference", emailReplyToId: EMAIL_REPLY_TO_ID);
+			EmailNotificationResponse response = this.client.SendEmail(
+				FUNCTIONAL_TEST_EMAIL,
+				EMAIL_TEMPLATE_ID,
+				personalisation,
+				clientReference: "TestReference",
+				emailReplyToId: EMAIL_REPLY_TO_ID,
+				unsubscribeLink: "https://www.example.com/unsubscribe"
+			);
 			this.emailNotificationId = response.id;
 			Assert.IsNotNull(response);
 			Assert.AreEqual(response.content.body, TEST_EMAIL_BODY);
 			Assert.AreEqual(response.content.subject, TEST_EMAIL_SUBJECT);
+			Assert.AreEqual(response.reference, "TestReference");
+			Assert.AreEqual(response.content.unsubscribeLink, "https://www.example.com/unsubscribe");
 		}
 
 		[Test, Category("Integration"), Category("Integration/NotificationClient")]
