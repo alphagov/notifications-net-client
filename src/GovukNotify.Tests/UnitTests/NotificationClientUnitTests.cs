@@ -559,7 +559,7 @@ namespace Notify.Tests.UnitTests
         }
 
         [Test, Category("Unit"), Category("Unit/NotificationClientAsync")]
-        public void SendEmailNotificationWithUnsubscribeLinkGeneratesExpectedRequest()
+        public void SendEmailNotificationWithoneClickUnsubscribeURLGeneratesExpectedRequest()
         {
             var personalisation = new Dictionary<string, dynamic>
                 {
@@ -570,7 +570,7 @@ namespace Notify.Tests.UnitTests
                 { "email_address", Constants.fakeEmail },
                 { "template_id", Constants.fakeTemplateId },
                 { "personalisation", JObject.FromObject(personalisation) },
-                { "unsubscribe_link", Constants.fakeUnsubscribeLink },
+                { "one_click_unsubscribe_url", Constants.fakeoneClickUnsubscribeURL },
             };
 
             MockRequest(
@@ -582,7 +582,7 @@ namespace Notify.Tests.UnitTests
                 expected.ToString(Formatting.None)
             );
 
-            client.SendEmail(Constants.fakeEmail, Constants.fakeTemplateId, personalisation, unsubscribeLink: Constants.fakeUnsubscribeLink);
+            client.SendEmail(Constants.fakeEmail, Constants.fakeTemplateId, personalisation, oneClickUnsubscribeURL: Constants.fakeoneClickUnsubscribeURL);
         }
 
         [Test, Category("Unit"), Category("Unit/NotificationClient")]

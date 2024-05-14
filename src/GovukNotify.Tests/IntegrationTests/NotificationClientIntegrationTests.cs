@@ -467,14 +467,14 @@ namespace Notify.Tests.IntegrationTests
                 personalisation,
                 clientReference: "TestReference",
                 emailReplyToId: EMAIL_REPLY_TO_ID,
-                unsubscribeLink: "https://www.example.com/unsubscribe"
+                oneClickUnsubscribeURL: "https://www.example.com/unsubscribe"
             );
             this.emailNotificationId = response.id;
             Assert.IsNotNull(response);
             Assert.AreEqual(response.content.body, TEST_EMAIL_BODY);
             Assert.AreEqual(response.content.subject, TEST_EMAIL_SUBJECT);
             Assert.AreEqual(response.reference, "TestReference");
-            Assert.AreEqual(response.content.unsubscribeLink, "https://www.example.com/unsubscribe");
+            Assert.AreEqual(response.content.oneClickUnsubscribeURL, "https://www.example.com/unsubscribe");
         }
 
         [Test, Category("Integration"), Category("Integration/NotificationClient")]

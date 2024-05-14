@@ -1,6 +1,6 @@
 ## [7.1.0] - 2023-12-27
 
-* Adds `unsubscribeLink` parameter to `SendEmailNotification`
+* Adds `oneClickUnsubscribeURL` parameter to `SendEmailNotification`
 
 ## [7.0.0] - 2023-12-27
 

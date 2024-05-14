@@ -17,7 +17,7 @@ namespace Notify.Models.Responses
                 content.fromEmail == resp.content.fromEmail &&
                 content.body == resp.content.body &&
                 content.subject == resp.content.subject &&
-                content.unsubscribeLink == resp.content.unsubscribeLink &&
+                content.oneClickUnsubscribeURL == resp.content.oneClickUnsubscribeURL &&
                 base.Equals(resp);
 
         }
@@ -35,8 +35,8 @@ namespace Notify.Models.Responses
         public string fromEmail;
         public string body;
         public string subject;
-        [JsonProperty("unsubscribe_link")]
-        public string unsubscribeLink;
+        [JsonProperty("one_click_unsubscribe_url")]
+        public string oneClickUnsubscribeURL;
     }
 
 }

@@ -17,7 +17,7 @@ namespace Notify.Tests.UnitTests
 
         public static String fakeNotificationId { get { return "902e6534-bc4a-4c87-8c3e-9f4144ca36fd"; } }
         public static String fakeNotificationReference { get { return "some-client-ref"; } }
-        public static String fakeUnsubscribeLink { get { return "https://unsubscribelink.com/unsubscribe"; } }
+        public static String fakeoneClickUnsubscribeURL { get { return "https://oneClickUnsubscribeURL.com/unsubscribe"; } }
         public static String fakeTemplateId { get { return "913e9fa6-9cbb-44ad-8f58-38487dccfd82"; } }
         public static String fakeReplyToId { get { return "78ded4ad-e915-4a89-a314-2940ed141d40"; } }
         public static String fakeSMSSenderId { get { return "88ded4ad-e915-4a89-a314-2940ed141d41"; } }
@@ -48,7 +48,7 @@ namespace Notify.Tests.UnitTests
                                 ""uri"": ""/service/fd29e421-24b6-4f45-ac5c-e642a1d68641/template/323e9fa6-9cbb-44ad-8f64-38487dccfd43"",
                                 ""version"": 2  },
                             ""type"": ""sms"",
-                            ""unsubscribe_link"": null,
+                            ""one_click_unsubscribe_url"": null,
                         }";
             }
         }
@@ -82,7 +82,7 @@ namespace Notify.Tests.UnitTests
                                 ""uri"": ""/service/fd29e421-24b6-4f45-ac5c-e642a1d68641/template/323e9fa6-9cbb-44ad-8f64-38487dccfd43"",
                                 ""version"": 2  },
                             ""type"": ""sms"",
-                            ""unsubscribe_link"": null,
+                            ""one_click_unsubscribe_url"": null,
                         },
                         {
                             ""completed_at"": null,
@@ -107,7 +107,7 @@ namespace Notify.Tests.UnitTests
                                 ""uri"": ""/service/fd29e421-24b6-4f45-ac5c-e642a1d68641/template/323e9fa6-9cbb-44ad-8f64-38487dccfd43"",
                                 ""version"": 2  },
                             ""type"": ""email"",
-                            ""unsubscribe_link"": ""https://www.example.com/unsubscribe"",
+                            ""one_click_unsubscribe_url"": ""https://www.example.com/unsubscribe"",
                         }
                     ]
                 }";
@@ -142,7 +142,7 @@ namespace Notify.Tests.UnitTests
                                 ""uri"": ""/service/fd29e421-24b6-4f45-ac5c-e642a1d68641/template/323e9fa6-9cbb-44ad-8f64-38487dccfd43"",
                                 ""version"": 2  },
                             ""type"": ""sms"",
-                            ""unsubscribe_link"": null,
+                            ""one_click_unsubscribe_url"": null,
                         },
                         {
                             ""completed_at"": null,
@@ -167,7 +167,7 @@ namespace Notify.Tests.UnitTests
                                 ""uri"": ""/service/fd29e421-24b6-4f45-ac5c-e642a1d68641/template/323e9fa6-9cbb-44ad-8f64-38487dccfd43"",
                                 ""version"": 2  },
                             ""type"": ""sms"",
-                            ""unsubscribe_link"": null,
+                            ""one_click_unsubscribe_url"": null,
                         }
                     ]
                 }";
@@ -203,7 +203,7 @@ namespace Notify.Tests.UnitTests
                                 ""uri"": ""/service/fd29e421-24b6-4f45-ac5c-e642a1d68641/template/323e9fa6-9cbb-44ad-8f64-38487dccfd43"",
                                 ""version"": 2  },
                             ""type"": ""email"",
-                            ""unsubscribe_link"": ""https://www.example.com/unsubscribe"",
+                            ""one_click_unsubscribe_url"": ""https://www.example.com/unsubscribe"",
                         },
                         {
                             ""completed_at"": null,
@@ -228,7 +228,7 @@ namespace Notify.Tests.UnitTests
                                 ""uri"": ""/service/fd29e421-24b6-4f45-ac5c-e642a1d68641/template/323e9fa6-9cbb-44ad-8f64-38487dccfd43"",
                                 ""version"": 2  },
                             ""type"": ""email"",
-                            ""unsubscribe_link"": ""https://www.example.com/unsubscribe"",
+                            ""one_click_unsubscribe_url"": ""https://www.example.com/unsubscribe"",
                         }
                     ]
                 }";
@@ -263,7 +263,7 @@ namespace Notify.Tests.UnitTests
                                 ""uri"": ""/service/fd29e421-24b6-4f45-ac5c-e642a1d68641/template/323e9fa6-9cbb-44ad-8f64-38487dccfd43"",
                                 ""version"": 2  },
                             ""type"": ""letter"",
-                            ""unsubscribe_link"": null,
+                            ""one_click_unsubscribe_url"": null,
                         },
                         {
                             ""completed_at"": null,
@@ -288,7 +288,7 @@ namespace Notify.Tests.UnitTests
                                 ""uri"": ""/service/fd29e421-24b6-4f45-ac5c-e642a1d68641/template/323e9fa6-9cbb-44ad-8f64-38487dccfd43"",
                                 ""version"": 2  },
                             ""type"": ""letter"",
-                            ""unsubscribe_link"": null,
+                            ""one_click_unsubscribe_url"": null,
                         }
                     ]
                 }";
@@ -470,7 +470,7 @@ namespace Notify.Tests.UnitTests
                                 ""body"": ""Hello someone\n\nFake"",
                                 ""from_email"": ""someone@mail.com"",
                                 ""subject"": ""Test"",
-                                ""unsubscribe_link"": ""https://www.example.com/unsubscribe"",
+                                ""one_click_unsubscribe_url"": ""https://www.example.com/unsubscribe"",
                             },
                             ""id"": ""731b9c83-563f-4b59-afc5-87e9ca717833"",
                             ""reference"":  ""some-client-ref"",
