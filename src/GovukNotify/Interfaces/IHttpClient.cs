@@ -15,5 +15,5 @@ namespace Notify.Interfaces
         void AddContentHeader(string header);
 
         void AddUserAgent(string userAgent);
-	}
+    }
 }

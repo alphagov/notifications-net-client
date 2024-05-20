@@ -16,6 +16,6 @@ namespace Notify.Interfaces
 
         Uri ValidateBaseUri(string baseUrl);
 
-		string GetUserAgent();
+        string GetUserAgent();
     }
 }
