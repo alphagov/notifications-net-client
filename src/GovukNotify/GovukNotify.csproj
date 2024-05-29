@@ -3,7 +3,7 @@
     <PropertyGroup>
         <RestoreProjectStyle>PackageReference</RestoreProjectStyle>
         <TargetFrameworks>netstandard2.0;net6;net462;net48</TargetFrameworks>
-        <Version>7.0.0.3</Version>
+        <Version>7.1.0.1</Version>
         <Authors>GOV.UK Notify</Authors>
         <Description>GOV.UK .NET Notify Client</Description>
         <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>

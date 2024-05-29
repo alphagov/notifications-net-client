@@ -1,11 +1,14 @@
 Update Fork
 --------------------
-'Open Git Bash Here' from 'C:\LocalDevGit\GovUk\Notify\1' in 'Explorer'
+'Open Git Bash Here' from 'C:\LocalDevGit\GovUk\Notify\1' in 'Explorer' right click
 git remote add upstream https://github.com/alphagov/notifications-net-client.git
 git merge upstream/main
 
 
+Our Fork
+https://github.com/RocktimeLtd/notifications-net-client
 
+Merge to Main from site. Contribute -> 'Open pull request'
 
 
 
