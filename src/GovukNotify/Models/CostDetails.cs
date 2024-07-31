@@ -1,5 +1,3 @@
-#nullable enable
-
 using Newtonsoft.Json;
 
 namespace Notify.Models
@@ -7,18 +5,18 @@ namespace Notify.Models
     public class CostDetails
     {
         [JsonProperty("billable_sms_fragments")]
-        public int? billableSmsFragments;
+        public int? billableSmsFragments { get; set; }
 
         [JsonProperty("international_rate_multiplier")]
-        public double? internationalRateMultiplier;
+        public double? internationalRateMultiplier { get; set; }
 
         [JsonProperty("sms_rate")]
-        public double? smsRate;
+        public double? smsRate { get; set; }
 
         [JsonProperty("billable_sheets_of_paper")]
-        public int? billableSheetsOfPaper;
+        public int? billableSheetsOfPaper { get; set; }
 
-        public string? postage;
+        public string postage { get; set; }
 
         public override bool Equals(object costDetail)
         {
