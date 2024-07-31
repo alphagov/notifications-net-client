@@ -1,3 +1,5 @@
+#nullable enable
+
 using Newtonsoft.Json;
 
 namespace Notify.Models
