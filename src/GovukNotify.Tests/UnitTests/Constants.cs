@@ -49,6 +49,13 @@ namespace Notify.Tests.UnitTests
                                 ""version"": 2  },
                             ""type"": ""sms"",
                             ""one_click_unsubscribe_url"": null,
+                            ""is_cost_data_ready"": true,
+                            ""cost_in_pounds"": 0.5,
+                            ""cost_details"": {
+                                ""billable_sms_fragments"": 1,
+                                ""international_rate_multiplier"": 0.05,
+                                ""sms_rate"": 0.5
+                            }
                         }";
             }
         }
@@ -83,6 +90,13 @@ namespace Notify.Tests.UnitTests
                                 ""version"": 2  },
                             ""type"": ""sms"",
                             ""one_click_unsubscribe_url"": null,
+                            ""is_cost_data_ready"": true,
+                            ""cost_in_pounds"": 0.5,
+                            ""cost_details"": {
+                                ""billable_sms_fragments"": 1,
+                                ""international_rate_multiplier"": 0.05,
+                                ""sms_rate"": 0.5
+                            }
                         },
                         {
                             ""completed_at"": null,
@@ -108,6 +122,9 @@ namespace Notify.Tests.UnitTests
                                 ""version"": 2  },
                             ""type"": ""email"",
                             ""one_click_unsubscribe_url"": ""https://www.example.com/unsubscribe"",
+                            ""is_cost_data_ready"": true,
+                            ""cost_in_pounds"": 0.5,
+                            ""cost_details"": {}
                         }
                     ]
                 }";
@@ -143,6 +160,13 @@ namespace Notify.Tests.UnitTests
                                 ""version"": 2  },
                             ""type"": ""sms"",
                             ""one_click_unsubscribe_url"": null,
+                            ""is_cost_data_ready"": true,
+                            ""cost_in_pounds"": 0.5,
+                            ""cost_details"": {
+                                ""billable_sms_fragments"": 1,
+                                ""international_rate_multiplier"": 0.05,
+                                ""sms_rate"": 0.5
+                            }
                         },
                         {
                             ""completed_at"": null,
@@ -168,6 +192,13 @@ namespace Notify.Tests.UnitTests
                                 ""version"": 2  },
                             ""type"": ""sms"",
                             ""one_click_unsubscribe_url"": null,
+                            ""is_cost_data_ready"": true,
+                            ""cost_in_pounds"": 0.5,
+                            ""cost_details"": {
+                                ""billable_sms_fragments"": 1,
+                                ""international_rate_multiplier"": 0.05,
+                                ""sms_rate"": 0.5
+                            }
                         }
                     ]
                 }";
@@ -204,6 +235,9 @@ namespace Notify.Tests.UnitTests
                                 ""version"": 2  },
                             ""type"": ""email"",
                             ""one_click_unsubscribe_url"": ""https://www.example.com/unsubscribe"",
+                            ""is_cost_data_ready"": true,
+                            ""cost_in_pounds"": 0.0,
+                            ""cost_details"": {}
                         },
                         {
                             ""completed_at"": null,
@@ -229,6 +263,9 @@ namespace Notify.Tests.UnitTests
                                 ""version"": 2  },
                             ""type"": ""email"",
                             ""one_click_unsubscribe_url"": ""https://www.example.com/unsubscribe"",
+                            ""is_cost_data_ready"": true,
+                            ""cost_in_pounds"": 0.0,
+                            ""cost_details"": {}
                         }
                     ]
                 }";
@@ -264,6 +301,12 @@ namespace Notify.Tests.UnitTests
                                 ""version"": 2  },
                             ""type"": ""letter"",
                             ""one_click_unsubscribe_url"": null,
+                            ""is_cost_data_ready"": true,
+                            ""cost_in_pounds"": 0.5,
+                            ""cost_details"": {
+                                ""billable_sheets_of_paper"": 1,
+                                ""postage"": ""first""
+                            }
                         },
                         {
                             ""completed_at"": null,
@@ -289,6 +332,12 @@ namespace Notify.Tests.UnitTests
                                 ""version"": 2  },
                             ""type"": ""letter"",
                             ""one_click_unsubscribe_url"": null,
+                            ""is_cost_data_ready"": true,
+                            ""cost_in_pounds"": 0.5,
+                            ""cost_details"": {
+                                ""billable_sheets_of_paper"": 1,
+                                ""postage"": ""first""
+                            }
                         }
                     ]
                 }";

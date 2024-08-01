@@ -85,6 +85,10 @@ namespace Notify.Tests.IntegrationTests
             Assert.IsNotNull(notification.reference);
             Assert.AreEqual(notification.reference, "sample-test-ref");
 
+            Assert.IsNotNull(notification.costDetails.smsRate);
+            Assert.IsNotNull(notification.costDetails.billableSmsFragments);
+            Assert.IsNotNull(notification.costDetails.internationalRateMultiplier);
+
             NotifyAssertions.AssertNotification(notification);
         }
 
@@ -118,6 +122,12 @@ namespace Notify.Tests.IntegrationTests
             Assert.AreEqual(notification.body, TEST_EMAIL_BODY);
             Assert.IsNotNull(notification.subject);
             Assert.AreEqual(notification.subject, TEST_EMAIL_SUBJECT);
+
+            Assert.IsNull(notification.costDetails.smsRate);
+            Assert.IsNull(notification.costDetails.billableSmsFragments);
+            Assert.IsNull(notification.costDetails.internationalRateMultiplier);
+            Assert.IsNull(notification.costDetails.postage);
+            Assert.IsNull(notification.costDetails.billableSheetsOfPaper);
 
             NotifyAssertions.AssertNotification(notification);
         }
@@ -159,6 +169,9 @@ namespace Notify.Tests.IntegrationTests
 
             Assert.IsNotNull(notification.subject);
             Assert.AreEqual(notification.subject, TEST_LETTER_SUBJECT);
+
+            Assert.IsNotNull(notification.costDetails.postage);
+            Assert.IsNotNull(notification.costDetails.billableSheetsOfPaper);
 
             NotifyAssertions.AssertNotification(notification);
         }
