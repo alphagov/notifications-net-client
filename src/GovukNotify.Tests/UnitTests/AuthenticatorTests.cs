@@ -1,8 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using Notify.Authentication;
+﻿using Notify.Authentication;
 using Notify.Exceptions;
 using NUnit.Framework;
+using NUnit.Framework.Legacy;
+using System;
+using System.Collections.Generic;
 
 namespace Notify.Tests.UnitTests
 {
@@ -40,7 +41,7 @@ namespace Notify.Tests.UnitTests
 
             // Validate can decode and payload matches
             IDictionary<String, Object> jsonPayload = Authenticator.DecodeToken(token, NOTIFY_SECRET_ID);
-            Assert.AreEqual(jsonPayload["iss"], NOTIFY_SERVICE_ID);
+            ClassicAssert.AreEqual(jsonPayload["iss"], NOTIFY_SERVICE_ID);
 
             // Validate token issed time is within reasonable time
             Double currentTimeAsSeconds = Authenticator.GetCurrentTimeAsSeconds();
