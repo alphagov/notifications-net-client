@@ -8,6 +8,10 @@ help:
 build: ## Build project
 	dotnet build -f=net6
 
+.PHONY: format
+format:
+	dotnet format
+
 .PHONY: integration-test
 integration-test: test=TestCategory=Integration ## Run integration tests
 integration-test: single-test
@@ -43,3 +47,7 @@ test-with-docker: build-with-docker ## Test with Docker
 .PHONY: integration-test-with-docker
 integration-test-with-docker: build-with-docker ## Integration test with Docker
 	./scripts/run_with_docker.sh make integration-test
+
+.PHONY: format-with-docker
+format-with-docker: ## Run dotnet format to format the code
+	./scripts/run_with_docker.sh make format

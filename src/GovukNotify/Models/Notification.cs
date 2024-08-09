@@ -13,6 +13,8 @@ namespace Notify.Models
         public string emailAddress;
         public string body;
         public string subject;
+        [JsonProperty("one_click_unsubscribe_url")]
+        public string oneClickUnsubscribeURL;
         [JsonProperty("line_1")]
         public string line1;
         [JsonProperty("line_2")]
@@ -37,6 +39,12 @@ namespace Notify.Models
         public string type;
         [JsonProperty("created_by_name")]
         public string createdByName;
+        [JsonProperty("is_cost_data_ready")]
+        public bool isCostDataReady;
+        [JsonProperty("cost_in_pounds")]
+        public double? costInPounds;
+        [JsonProperty("cost_details")]
+        public CostDetails costDetails;
 
 
         public override bool Equals(object notification)
@@ -67,7 +75,15 @@ namespace Notify.Models
                 template.uri == note.template.uri &&
                 template.version == note.template.version &&
                 type == note.type &&
-                createdByName == note.createdByName;
+                createdByName == note.createdByName &&
+                oneClickUnsubscribeURL == note.oneClickUnsubscribeURL &&
+                isCostDataReady == note.isCostDataReady &&
+                costInPounds == note.costInPounds &&
+                costDetails.billableSmsFragments == note.costDetails.billableSmsFragments &&
+                costDetails.internationalRateMultiplier == note.costDetails.internationalRateMultiplier &&
+                costDetails.smsRate == note.costDetails.smsRate &&
+                costDetails.billableSheetsOfPaper == note.costDetails.billableSheetsOfPaper &&
+                costDetails.postage == note.costDetails.postage;
         }
 
         public override int GetHashCode()

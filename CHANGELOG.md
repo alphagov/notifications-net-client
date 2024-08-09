@@ -1,3 +1,17 @@
+## [7.2.0] - 2024-07-31
+* Added fields related to cost data in response:
+  * `is_cost_data_ready`: This field is true if cost data is ready, and false if it isn't (Boolean).
+  * `cost_in_pounds`: Cost of the notification in pounds. The cost does not take free allowance into account (Float).
+  * `cost_details.billable_sms_fragments`: Number of billable SMS fragments in your text message (SMS only) (Integer).
+  * `cost_details.international_rate_multiplier`: For international SMS rate is multiplied by this value (SMS only) (Integer).
+  * `cost_details.sms_rate`: Cost of 1 SMS fragment (SMS only) (Float).
+  * `cost_details.billable_sheets_of_paper`: Number of sheets of paper in the letter you sent, that you will be charged for (letter only) (Integer).
+  * `cost_details.postage`: Postage class of the notification sent (letter only) (String).
+
+## [7.1.0] - 2023-12-27
+
+* Adds `oneClickUnsubscribeURL` parameter to `SendEmailNotification`
+
 ## [7.0.0] - 2023-12-27
 
 * Removes the `isCsv` parameter from `PrepareUpload`

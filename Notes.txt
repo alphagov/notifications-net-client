@@ -2,8 +2,9 @@ Update Fork
 --------------------
 'Open Git Bash Here' from 'C:\LocalDevGit\GovUk\Notify\1' in 'Explorer' right click
 git remote add upstream https://github.com/alphagov/notifications-net-client.git
+git fetch -p upstream
 git merge upstream/main
-
+In file explorer, right click 'C:\LocalDevGit\GovUk\Notify\1' -> 'TortoiseGit' -> 'Resolve'
 
 Our Fork
 https://github.com/RocktimeLtd/notifications-net-client

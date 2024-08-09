@@ -54,7 +54,8 @@ namespace Notify.Client
             return await MakeRequestBytes(url, HttpMethod.Get).ConfigureAwait(false);
         }
 
-        public async Task<byte[]> MakeRequestBytes(string url, HttpMethod method, HttpContent content = null) {
+        public async Task<byte[]> MakeRequestBytes(string url, HttpMethod method, HttpContent content = null)
+        {
             var response = SendRequest(url, method, content).Result;
 
             var responseContent = await response.Content.ReadAsByteArrayAsync().ConfigureAwait(false);
