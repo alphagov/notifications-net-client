@@ -510,7 +510,7 @@ namespace Notify.Tests.UnitTests
 
             EmailNotificationResponse actualResponse = client.SendEmail(Constants.fakeEmail, Constants.fakeTemplateId, personalisation, Constants.fakeNotificationReference);
 
-            Assert.AreEqual(expectedResponse, actualResponse);
+            ClassicAssert.AreEqual(expectedResponse, actualResponse);
 
         }
 
@@ -555,7 +555,7 @@ namespace Notify.Tests.UnitTests
 
             var actualResponse = client.SendEmail(Constants.fakeEmail, Constants.fakeTemplateId, personalisation, Constants.fakeNotificationReference, Constants.fakeReplyToId);
 
-            Assert.AreEqual(expectedResponse, actualResponse);
+            ClassicAssert.AreEqual(expectedResponse, actualResponse);
         }
 
         [Test, Category("Unit"), Category("Unit/NotificationClientAsync")]
