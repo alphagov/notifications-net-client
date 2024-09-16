@@ -78,6 +78,19 @@ namespace Notify.Tests.IntegrationTests
             SendSmsTestWithPersonalisation();
             Notification notification = this.client.GetNotificationById(this.smsNotificationId);
 
+            for (int i = 0; i < 15; i++)
+            {
+                if (notification.isCostDataReady)
+                {
+                    break;
+                }
+                else
+                {
+                    Thread.Sleep(3000);
+                    notification = this.client.GetNotificationById(this.smsNotificationId);
+                }
+            }
+
             Assert.IsNotNull(notification);
             Assert.IsNotNull(notification.id);
             Assert.AreEqual(notification.id, this.smsNotificationId);

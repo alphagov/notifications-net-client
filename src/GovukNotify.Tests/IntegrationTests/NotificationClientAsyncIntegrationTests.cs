@@ -75,6 +75,19 @@ namespace Notify.Tests.IntegrationTests
             await SendSmsTestWithPersonalisation();
             Notification notification = await this.client.GetNotificationByIdAsync(this.smsNotificationId);
 
+            for (int i = 0; i < 15; i++)
+            {
+                if (notification.isCostDataReady)
+                {
+                    break;
+                }
+                else
+                {
+                    await Task.Delay(3000);
+                    notification = await this.client.GetNotificationByIdAsync(this.smsNotificationId);
+                }
+            }
+
             Assert.IsNotNull(notification);
             Assert.IsNotNull(notification.id);
             Assert.AreEqual(notification.id, this.smsNotificationId);
