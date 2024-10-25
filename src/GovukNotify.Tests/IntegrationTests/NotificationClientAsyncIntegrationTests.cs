@@ -16,19 +16,19 @@ namespace Notify.Tests.IntegrationTests
     {
         private NotificationClient client;
 
-        private readonly String NOTIFY_API_URL = Environment.GetEnvironmentVariable("NOTIFY_API_URL");
-        private readonly String API_KEY = Environment.GetEnvironmentVariable("API_KEY");
-        private readonly String API_SENDING_KEY = Environment.GetEnvironmentVariable("API_SENDING_KEY");
+        private readonly String NOTIFY_API_URL = Environment.GetEnvironmentVariable("API_CLIENT_INTEGRATION_TESTS_NOTIFY_API_URL");
+        private readonly String API_KEY = Environment.GetEnvironmentVariable("API_CLIENT_INTEGRATION_TESTS_TEST_API_KEY");
+        private readonly String API_SENDING_KEY = Environment.GetEnvironmentVariable("API_CLIENT_INTEGRATION_TESTS_TEAM_API_KEY");
 
-        private readonly String FUNCTIONAL_TEST_NUMBER = Environment.GetEnvironmentVariable("FUNCTIONAL_TEST_NUMBER");
-        private readonly String FUNCTIONAL_TEST_EMAIL = Environment.GetEnvironmentVariable("FUNCTIONAL_TEST_EMAIL");
+        private readonly String FUNCTIONAL_TEST_NUMBER = Environment.GetEnvironmentVariable("API_CLIENT_INTEGRATION_TESTS_NUMBER");
+        private readonly String FUNCTIONAL_TEST_EMAIL = Environment.GetEnvironmentVariable("API_CLIENT_INTEGRATION_TESTS_EMAIL");
 
-        private readonly String EMAIL_TEMPLATE_ID = Environment.GetEnvironmentVariable("EMAIL_TEMPLATE_ID");
-        private readonly String SMS_TEMPLATE_ID = Environment.GetEnvironmentVariable("SMS_TEMPLATE_ID");
-        private readonly String LETTER_TEMPLATE_ID = Environment.GetEnvironmentVariable("LETTER_TEMPLATE_ID");
-        private readonly String EMAIL_REPLY_TO_ID = Environment.GetEnvironmentVariable("EMAIL_REPLY_TO_ID");
-        private readonly String SMS_SENDER_ID = Environment.GetEnvironmentVariable("SMS_SENDER_ID");
-        private readonly String INBOUND_SMS_QUERY_KEY = Environment.GetEnvironmentVariable("INBOUND_SMS_QUERY_KEY");
+        private readonly String EMAIL_TEMPLATE_ID = Environment.GetEnvironmentVariable("API_CLIENT_INTEGRATION_TESTS_EMAIL_TEMPLATE_ID");
+        private readonly String SMS_TEMPLATE_ID = Environment.GetEnvironmentVariable("API_CLIENT_INTEGRATION_TESTS_SMS_TEMPLATE_ID");
+        private readonly String LETTER_TEMPLATE_ID = Environment.GetEnvironmentVariable("API_CLIENT_INTEGRATION_TESTS_LETTER_TEMPLATE_ID");
+        private readonly String EMAIL_REPLY_TO_ID = Environment.GetEnvironmentVariable("API_CLIENT_INTEGRATION_TESTS_EMAIL_REPLY_TO_ID");
+        private readonly String SMS_SENDER_ID = Environment.GetEnvironmentVariable("API_CLIENT_INTEGRATION_TESTS_SMS_SENDER_ID");
+        private readonly String INBOUND_SMS_QUERY_KEY = Environment.GetEnvironmentVariable("API_CLIENT_INTEGRATION_TESTS_INBOUND_SMS_API_KEY");
 
         private String smsNotificationId;
         private String emailNotificationId;
