@@ -22,7 +22,7 @@ test: single-test
 
 .PHONY: single-test
 single-test: build ## run a single test. usage: "make single-test test=[test name]"
-	dotnet test ./src/GovukNotify.Tests/GovukNotify.Tests.csproj -f=net6 --no-build -v=n --filter $(test)
+	dotnet test ./src/GovukNotify.Tests/GovukNotify.Tests.csproj -f=net6 --no-build -l "console;verbosity=detailed" --filter $(test)
 
 .PHONY: build-release
 build-release: ## Build release version
