@@ -67,6 +67,7 @@ namespace Notify.Tests.IntegrationTests
             this.smsNotificationId = response.id;
             Assert.IsNotNull(response);
             Assert.AreEqual(response.content.body, TEST_SMS_BODY);
+            Console.WriteLine("Test is doing SMS to this number: {FUNCTIONAL_TEST_NUMBER}");
 
             Assert.IsNotNull(response.reference);
             Assert.AreEqual(response.reference, "sample-test-ref");
@@ -248,6 +249,7 @@ namespace Notify.Tests.IntegrationTests
             EmailNotificationResponse response =
                 this.client.SendEmail(FUNCTIONAL_TEST_EMAIL, EMAIL_TEMPLATE_ID, personalisation);
 
+            Console.WriteLine("Test is doing email to this email: {FUNCTIONAL_TEST_EMAIL}");
             Assert.IsNotNull(response.id);
             Assert.IsNotNull(response.template.id);
             Assert.IsNotNull(response.template.uri);
