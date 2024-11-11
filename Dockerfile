@@ -5,6 +5,8 @@ RUN \
     echo "Install base packages" \
     && apt-get update \
     && apt-get install -y --no-install-recommends \
+    awscli \
+    jq \
     gnupg \
     make \
     jq
