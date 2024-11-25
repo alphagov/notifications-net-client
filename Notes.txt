@@ -20,7 +20,6 @@ Ensure 'Project properties' -> 'Package' -> 'General' -> 'Produce a package....'
 Build Release
 
 
-Open Explorer
-Goto C:\LocalDevGit\GovUk\Notify\1\src\GovukNotify\bin\Release
-open powershell (Alt-f)
+open powershell 
+Goto CD C:\LocalDevGit\GovUk\Notify\1\src\GovukNotify\bin\Release
 dotnet nuget push -s https://nuget.rocktime.net/v3/index.json GovukNotify.*.nupkg
