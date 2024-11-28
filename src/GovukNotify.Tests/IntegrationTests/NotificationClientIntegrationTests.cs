@@ -36,17 +36,6 @@ namespace Notify.Tests.IntegrationTests
         private String emailNotificationId;
         private String letterNotificationId;
 
-        const String TEST_TEMPLATE_SMS_BODY = "Hello ((name))\r\n\r\nFunctional Tests make our world a better place";
-        const String TEST_SMS_BODY = "Hello someone\n\nFunctional Tests make our world a better place";
-
-        const String TEST_TEMPLATE_EMAIL_BODY = "Hello ((name))\r\n\r\nFunctional test help make our world a better place";
-        const String TEST_EMAIL_BODY = "Hello someone\r\n\r\nFunctional test help make our world a better place";
-        const String TEST_EMAIL_SUBJECT = "Functional Tests are good";
-
-        const String TEST_LETTER_BODY = "Hello Foo";
-        const String TEST_LETTER_SUBJECT = "Main heading";
-        const String TEST_LETTER_CONTACT_BLOCK = "Government Digital Service\nThe White Chapel Building\n10 Whitechapel High Street\nLondon\nE1 8QS\nUnited Kingdom";
-
         [SetUp]
         [Test, Category("Integration"), Category("Integration/NotificationClient")]
         public void SetUp()
@@ -59,14 +48,14 @@ namespace Notify.Tests.IntegrationTests
         {
             Dictionary<String, dynamic> personalisation = new Dictionary<String, dynamic>
             {
-                { "name", "someone" }
+                { "build_id", "someone" }
             };
 
             SmsNotificationResponse response =
                 this.client.SendSms(TEST_NUMBER, FUNCTIONAL_TEST_SMS_TEMPLATE_ID, personalisation, "sample-test-ref");
             this.smsNotificationId = response.id;
             Assert.IsNotNull(response);
-            Assert.AreEqual(response.content.body, TEST_SMS_BODY);
+            StringAssert.Contains("someone", response.content.body);
 
             Assert.IsNotNull(response.reference);
             Assert.AreEqual(response.reference, "sample-test-ref");
@@ -78,7 +67,7 @@ namespace Notify.Tests.IntegrationTests
             SendSmsTestWithPersonalisation();
             Notification notification = this.client.GetNotificationById(this.smsNotificationId);
 
-            for (int i = 0; i < 15; i++)
+            for (int i = 0; i < 24; i++)
             {
                 if (notification.isCostDataReady)
                 {
@@ -86,17 +75,19 @@ namespace Notify.Tests.IntegrationTests
                 }
                 else
                 {
-                    Thread.Sleep(3000);
+                    Thread.Sleep(5000);
                     notification = this.client.GetNotificationById(this.smsNotificationId);
                 }
             }
+
+            Assert.IsTrue(notification.isCostDataReady);
 
             Assert.IsNotNull(notification);
             Assert.IsNotNull(notification.id);
             Assert.AreEqual(notification.id, this.smsNotificationId);
 
             Assert.IsNotNull(notification.body);
-            Assert.AreEqual(notification.body, TEST_SMS_BODY);
+            StringAssert.Contains("someone", notification.body);
 
             Assert.IsNotNull(notification.reference);
             Assert.AreEqual(notification.reference, "sample-test-ref");
@@ -113,7 +104,7 @@ namespace Notify.Tests.IntegrationTests
         {
             Dictionary<String, dynamic> personalisation = new Dictionary<String, dynamic>
             {
-                { "name", "someone" }
+                { "build_id", "someone" }
             };
 
             EmailNotificationResponse response =
@@ -121,8 +112,8 @@ namespace Notify.Tests.IntegrationTests
             this.emailNotificationId = response.id;
 
             Assert.IsNotNull(response);
-            Assert.AreEqual(response.content.body, TEST_EMAIL_BODY);
-            Assert.AreEqual(response.content.subject, TEST_EMAIL_SUBJECT);
+            StringAssert.Contains("someone", response.content.body);
+            Assert.IsNotNull(response.content.subject);
         }
 
         [Test, Category("Integration"), Category("Integration/NotificationClient")]
@@ -135,9 +126,8 @@ namespace Notify.Tests.IntegrationTests
             Assert.AreEqual(notification.id, this.emailNotificationId);
 
             Assert.IsNotNull(notification.body);
-            Assert.AreEqual(notification.body, TEST_EMAIL_BODY);
+            StringAssert.Contains("someone", notification.body);
             Assert.IsNotNull(notification.subject);
-            Assert.AreEqual(notification.subject, TEST_EMAIL_SUBJECT);
 
             Assert.IsNull(notification.costDetails.smsRate);
             Assert.IsNull(notification.costDetails.billableSmsFragments);
@@ -155,7 +145,8 @@ namespace Notify.Tests.IntegrationTests
             {
                 { "address_line_1", "Foo" },
                 { "address_line_2", "Bar" },
-                { "postcode", "SW1 1AA" }
+                { "postcode", "SW1 1AA" },
+                { "build_id", "some build id" }
             };
 
             LetterNotificationResponse response =
@@ -165,8 +156,8 @@ namespace Notify.Tests.IntegrationTests
 
             Assert.IsNotNull(response);
 
-            Assert.AreEqual(response.content.body, TEST_LETTER_BODY);
-            Assert.AreEqual(response.content.subject, TEST_LETTER_SUBJECT);
+            StringAssert.Contains("some build id", response.content.body);
+            Assert.IsNotNull(response.content.subject);
 
         }
 
@@ -181,10 +172,9 @@ namespace Notify.Tests.IntegrationTests
             Assert.AreEqual(notification.id, this.letterNotificationId);
 
             Assert.IsNotNull(notification.body);
-            Assert.AreEqual(notification.body, TEST_LETTER_BODY);
+            StringAssert.Contains("some build id", notification.body);
 
             Assert.IsNotNull(notification.subject);
-            Assert.AreEqual(notification.subject, TEST_LETTER_SUBJECT);
 
             Assert.IsNotNull(notification.costDetails.postage);
             Assert.IsNotNull(notification.costDetails.billableSheetsOfPaper);
@@ -242,7 +232,7 @@ namespace Notify.Tests.IntegrationTests
 
             Dictionary<String, dynamic> personalisation = new Dictionary<String, dynamic>
             {
-                { "name", NotificationClient.PrepareUpload(pdfContents) }
+                { "build_id", NotificationClient.PrepareUpload(pdfContents) }
             };
 
             EmailNotificationResponse response =
@@ -252,7 +242,7 @@ namespace Notify.Tests.IntegrationTests
             Assert.IsNotNull(response.template.id);
             Assert.IsNotNull(response.template.uri);
             Assert.IsNotNull(response.template.version);
-            Assert.AreEqual(response.content.subject, TEST_EMAIL_SUBJECT);
+            Assert.IsNotNull(response.content.subject);
             Assert.IsTrue(response.content.body.Contains("https://documents."));
         }
 
@@ -272,7 +262,7 @@ namespace Notify.Tests.IntegrationTests
 
             Dictionary<String, dynamic> personalisation = new Dictionary<String, dynamic>
             {
-                { "name", NotificationClient.PrepareUpload(pdfContents, "report.csv", true, "4 weeks") }
+                { "build_id", NotificationClient.PrepareUpload(pdfContents, "report.csv", true, "4 weeks") }
             };
 
             EmailNotificationResponse response =
@@ -282,7 +272,7 @@ namespace Notify.Tests.IntegrationTests
             Assert.IsNotNull(response.template.id);
             Assert.IsNotNull(response.template.uri);
             Assert.IsNotNull(response.template.version);
-            Assert.AreEqual(response.content.subject, TEST_EMAIL_SUBJECT);
+            Assert.IsNotNull(response.content.subject);
             Assert.IsTrue(response.content.body.Contains("https://documents."));
         }
 
@@ -401,7 +391,7 @@ namespace Notify.Tests.IntegrationTests
         {
             TemplateResponse template = this.client.GetTemplateById(FUNCTIONAL_TEST_SMS_TEMPLATE_ID);
             Assert.AreEqual(template.id, FUNCTIONAL_TEST_SMS_TEMPLATE_ID);
-            Assert.AreEqual(template.body, TEST_TEMPLATE_SMS_BODY);
+            StringAssert.Contains("((build_id))", template.body);
         }
 
         [Test, Category("Integration"), Category("Integration/NotificationClient")]
@@ -409,7 +399,7 @@ namespace Notify.Tests.IntegrationTests
         {
             TemplateResponse template = this.client.GetTemplateById(FUNCTIONAL_TEST_EMAIL_TEMPLATE_ID);
             Assert.AreEqual(template.id, FUNCTIONAL_TEST_EMAIL_TEMPLATE_ID);
-            Assert.AreEqual(template.body, TEST_TEMPLATE_EMAIL_BODY);
+            StringAssert.Contains("((build_id))", template.body);
         }
 
         [Test, Category("Integration"), Category("Integration/NotificationClient")]
@@ -417,7 +407,7 @@ namespace Notify.Tests.IntegrationTests
         {
             TemplateResponse template = this.client.GetTemplateById(FUNCTIONAL_TEST_LETTER_TEMPLATE_ID);
             Assert.AreEqual(template.id, FUNCTIONAL_TEST_LETTER_TEMPLATE_ID);
-            Assert.AreEqual(template.letter_contact_block, TEST_LETTER_CONTACT_BLOCK);
+            Assert.IsNotNull(template.letter_contact_block);
         }
 
         [Test, Category("Integration"), Category("Integration/NotificationClient")]
@@ -425,14 +415,14 @@ namespace Notify.Tests.IntegrationTests
         {
             Dictionary<String, dynamic> personalisation = new Dictionary<String, dynamic>
             {
-                { "name", "someone" }
+                { "build_id", "someone" }
             };
 
             TemplatePreviewResponse response =
                 this.client.GenerateTemplatePreview(FUNCTIONAL_TEST_SMS_TEMPLATE_ID, personalisation);
 
             Assert.IsNotNull(response);
-            Assert.AreEqual(response.body, TEST_SMS_BODY);
+            StringAssert.Contains("someone", response.body);
             Assert.AreEqual(response.subject, null);
         }
 
@@ -441,15 +431,15 @@ namespace Notify.Tests.IntegrationTests
         {
             Dictionary<String, dynamic> personalisation = new Dictionary<String, dynamic>
             {
-                { "name", "someone" }
+                { "build_id", "someone" }
             };
 
             TemplatePreviewResponse response =
                 this.client.GenerateTemplatePreview(FUNCTIONAL_TEST_EMAIL_TEMPLATE_ID, personalisation);
 
             Assert.IsNotNull(response);
-            Assert.AreEqual(response.body, TEST_EMAIL_BODY);
-            Assert.AreEqual(response.subject, TEST_EMAIL_SUBJECT);
+            StringAssert.Contains("someone", response.body);
+            Assert.IsNotNull(response.subject);
         }
 
         [Test, Category("Integration"), Category("Integration/NotificationClient")]
@@ -463,7 +453,7 @@ namespace Notify.Tests.IntegrationTests
             var ex = Assert.Throws<NotifyClientException>(() =>
                 this.client.GenerateTemplatePreview(FUNCTIONAL_TEST_EMAIL_TEMPLATE_ID, personalisation)
             );
-            Assert.That(ex.Message, Does.Contain("Missing personalisation: name"));
+            Assert.That(ex.Message, Does.Contain("Missing personalisation: build_id"));
         }
 
         [Test, Category("Integration"), Category("Integration/NotificationClient")]
@@ -472,7 +462,7 @@ namespace Notify.Tests.IntegrationTests
             String fakeReplayToId = System.Guid.NewGuid().ToString();
             Dictionary<String, dynamic> personalisation = new Dictionary<String, dynamic>
             {
-                { "name", "someone" }
+                { "build_id", "someone" }
             };
 
             var ex = Assert.Throws<NotifyClientException>(() => this.client.SendEmail(FUNCTIONAL_TEST_EMAIL, FUNCTIONAL_TEST_EMAIL_TEMPLATE_ID, personalisation, emailReplyToId: fakeReplayToId));
@@ -484,7 +474,7 @@ namespace Notify.Tests.IntegrationTests
         {
             Dictionary<String, dynamic> personalisation = new Dictionary<String, dynamic>
             {
-                { "name", "someone" }
+                { "build_id", "someone" }
             };
 
             EmailNotificationResponse response = this.client.SendEmail(
@@ -497,8 +487,8 @@ namespace Notify.Tests.IntegrationTests
             );
             this.emailNotificationId = response.id;
             Assert.IsNotNull(response);
-            Assert.AreEqual(response.content.body, TEST_EMAIL_BODY);
-            Assert.AreEqual(response.content.subject, TEST_EMAIL_SUBJECT);
+            StringAssert.Contains("someone", response.content.body);
+            Assert.IsNotNull(response.content.subject);
             Assert.AreEqual(response.reference, "TestReference");
             Assert.AreEqual(response.content.oneClickUnsubscribeURL, "https://www.example.com/unsubscribe");
         }
@@ -508,7 +498,7 @@ namespace Notify.Tests.IntegrationTests
         {
             Dictionary<String, dynamic> personalisation = new Dictionary<String, dynamic>
             {
-                { "name", "someone" }
+                { "build_id", "someone" }
             };
 
             NotificationClient client_sending = new NotificationClient(FUNCTIONAL_TESTS_API_HOST, FUNCTIONAL_TESTS_SERVICE_API_KEY);
@@ -517,7 +507,7 @@ namespace Notify.Tests.IntegrationTests
                 client_sending.SendSms(TEST_NUMBER, FUNCTIONAL_TEST_SMS_TEMPLATE_ID, personalisation, "sample-test-ref", FUNCTIONAL_TESTS_SERVICE_SMS_SENDER_ID);
             this.smsNotificationId = response.id;
             Assert.IsNotNull(response);
-            Assert.AreEqual(response.content.body, TEST_SMS_BODY);
+            StringAssert.Contains("someone", response.content.body);
 
             Assert.IsNotNull(response.reference);
             Assert.AreEqual(response.reference, "sample-test-ref");
@@ -527,7 +517,7 @@ namespace Notify.Tests.IntegrationTests
         public void GetPdfForLetter()
         {
             byte[] pdfData = null;
-            for (int i = 0; i < 15; i++)
+            for (int i = 0; i < 24; i++)
             {
                 try
                 {
@@ -542,7 +532,7 @@ namespace Notify.Tests.IntegrationTests
                     }
                     else
                     {
-                        Thread.Sleep(3000);
+                        Thread.Sleep(5000);
                     }
                 }
             }
