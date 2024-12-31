@@ -78,7 +78,7 @@ namespace Notify.Tests.IntegrationTests
             SendSmsTestWithPersonalisation();
             Notification notification = this.client.GetNotificationById(this.smsNotificationId);
 
-            for (int i = 0; i < 15; i++)
+            for (int i = 0; i < 24; i++)
             {
                 if (notification.isCostDataReady)
                 {
@@ -86,10 +86,12 @@ namespace Notify.Tests.IntegrationTests
                 }
                 else
                 {
-                    Thread.Sleep(3000);
+                    Thread.Sleep(5000);
                     notification = this.client.GetNotificationById(this.smsNotificationId);
                 }
             }
+
+            Assert.IsTrue(notification.isCostDataReady);
 
             Assert.IsNotNull(notification);
             Assert.IsNotNull(notification.id);
@@ -527,7 +529,7 @@ namespace Notify.Tests.IntegrationTests
         public void GetPdfForLetter()
         {
             byte[] pdfData = null;
-            for (int i = 0; i < 15; i++)
+            for (int i = 0; i < 24; i++)
             {
                 try
                 {
@@ -542,7 +544,7 @@ namespace Notify.Tests.IntegrationTests
                     }
                     else
                     {
-                        Thread.Sleep(3000);
+                        Thread.Sleep(5000);
                     }
                 }
             }
