@@ -27,7 +27,7 @@ environment:
   SMS_SENDER_ID:
     secure: /e26eqAWnfu9m/ysZdTsYaP3ySpsuLaoABQXHHB+M+0Q39OkOxWp7UJ1T5+OAwFP
   NUGET_API_KEY:
-    secure: VeHOxqEjmjckDRnVP/tMmGoYFogKRgmkV2DMsf7YTZcot4C0l8d3GFIXQ66W06Ri
+    secure: 3GijLIQNCspbul/A1WJGQep2SbT+TRDAMMywrh2aNO4Omd0pWavyYJUj4mSvfGXM
   pullId: 0
 build: off
 image: Visual Studio 2022
