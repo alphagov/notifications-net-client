@@ -2,8 +2,8 @@
 
   <PropertyGroup>
     <RestoreProjectStyle>PackageReference</RestoreProjectStyle>
-    <TargetFrameworks>netstandard2.0;net6;net462</TargetFrameworks>
-    <Version>7.2.0</Version>
+    <TargetFrameworks>net10.0;net9.0;netstandard2.0;net6;net462</TargetFrameworks>
+    <Version>7.2.1</Version>
     <Authors>GOV.UK Notify</Authors>
     <Description>GOV.UK .NET Notify Client</Description>
     <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
@@ -17,7 +17,7 @@
 
   <ItemGroup>
     <PackageReference Include="JWT" Version="[7.1,9)" />
-    <PackageReference Include="Newtonsoft.Json" Version="[10.0.3,14)" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.4" />
     <PackageReference Include="System.Collections.Specialized" Version="4.3.0" />
     <PackageReference Include="System.Reflection" Version="4.3.0" />
     <PackageReference Include="System.Runtime.Extensions" Version="4.3.0" />
