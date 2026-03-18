@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <RestoreProjectStyle>PackageReference</RestoreProjectStyle>
-    <TargetFrameworks>net10.0;net9.0;netstandard2.0;net6;net462</TargetFrameworks>
+    <TargetFrameworks>net10.0</TargetFrameworks>
     <Version>7.2.1</Version>
     <Authors>GOV.UK Notify</Authors>
     <Description>GOV.UK .NET Notify Client</Description>
@@ -16,11 +16,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="JWT" Version="[7.1,9)" />
-    <PackageReference Include="Newtonsoft.Json" Version="13.0.4" />
-    <PackageReference Include="System.Collections.Specialized" Version="4.3.0" />
-    <PackageReference Include="System.Reflection" Version="4.3.0" />
-    <PackageReference Include="System.Runtime.Extensions" Version="4.3.0" />
+    <PackageReference Include="JWT" Version="[11,12]" />
+    <PackageReference Include="Newtonsoft.Json" Version="[13.0.4,14]" />
   </ItemGroup>
 
   <ItemGroup Condition=" '$(TargetFramework)' == 'net462' ">
