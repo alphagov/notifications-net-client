@@ -1,3 +1,9 @@
+## [8.0.0] - 2026-03-19
+
+* Updates versions of JWT and Newtonsoft.JSON dependencies
+* Drops support for .NET Core version 9.0 or earlier
+* Drops support for .NET Framework 
+
 ## [7.2.0] - 2024-07-31
 * Added fields related to cost data in response:
   * `is_cost_data_ready`: This field is true if cost data is ready, and false if it isn't (Boolean).
