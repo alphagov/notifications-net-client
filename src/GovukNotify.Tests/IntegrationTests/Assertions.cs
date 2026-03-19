@@ -12,7 +12,7 @@ namespace Notify.Tests.IntegrationTests
             Assert.IsNotNull(notification.type);
             String notificationType = notification.type;
             String[] allowedNotificationTypes = { "email", "sms", "letter" };
-            CollectionAssert.Contains(allowedNotificationTypes, notificationType);
+            Assert.That(allowedNotificationTypes, Does.Contain(notificationType));
             if (notificationType.Equals("sms"))
             {
                 Assert.IsNotNull(notification.phoneNumber);
@@ -45,7 +45,7 @@ namespace Notify.Tests.IntegrationTests
                 "virus-scan-failed",
                 "validation-failed"
             };
-            CollectionAssert.Contains(allowedStatusTypes, notificationStatus);
+            Assert.That(allowedStatusTypes, Does.Contain(notificationStatus));
 
             if (notificationStatus.Equals("delivered"))
             {
