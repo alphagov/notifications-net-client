@@ -1,8 +1,12 @@
-## [8.0.0] - 2026-03-19
+## [9.0.0] - 2026-03-20
+
+* Restore support for .NET Core version 9.0 (supported versions are now 9.0 and 10.0)
+
+## [8.0.0] - (unreleased)
 
 * Updates versions of JWT and Newtonsoft.JSON dependencies
 * Drops support for .NET Core version 9.0 or earlier
-* Drops support for .NET Framework 
+* Drops support for .NET Framework
 
 ## [7.2.0] - 2024-07-31
 * Added fields related to cost data in response:
