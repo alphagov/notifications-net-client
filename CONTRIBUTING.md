@@ -17,7 +17,7 @@ make bootstrap-with-docker
 In the root directory of the repo, run:
 
 ```
-notify-pass credentials/client-integration-tests > environment.sh
+notify-pass credentials/staging/ssm/api_client_integration_tests_environment > environment.sh
 ```
 
 Unless you're part of the GOV.UK Notify team, you won't be able to run this command or the Integration Tests. However, the file still needs to exist - run `touch environment.sh` instead.
