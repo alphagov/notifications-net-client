@@ -1,3 +1,7 @@
+install:
+- ps: |
+    Invoke-WebRequest -Uri 'https://dot.net/v1/dotnet-install.ps1' -UseBasicParsing -OutFile "$env:temp\dotnet-install.ps1"
+    & $env:temp\dotnet-install.ps1 -Architecture x64 -Version '10.0.100' -InstallDir "$env:ProgramFiles\dotnet"
 clone_script:
 - cmd: >-
     git clone -q --branch=main https://github.com/alphagov/notifications-net-client.git C:\projects\notifications-net-client
@@ -31,6 +35,8 @@ environment:
   pullId: 0
 build: off
 image: Visual Studio 2022
+before_test:
+  - cmd: dotnet --version
 test_script: dotnet test C:\projects\notifications-net-client\src\GovukNotify.Tests -c=Release
 on_success:
 - publish.cmd
