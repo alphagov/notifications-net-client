@@ -520,6 +520,7 @@ namespace Notify.Tests.UnitTests
                                 ""from_email"": ""someone@mail.com"",
                                 ""subject"": ""Test"",
                                 ""one_click_unsubscribe_url"": ""https://www.example.com/unsubscribe"",
+                                ""sanitisedContent"": {}
                             },
                             ""id"": ""731b9c83-563f-4b59-afc5-87e9ca717833"",
                             ""reference"":  ""some-client-ref"",

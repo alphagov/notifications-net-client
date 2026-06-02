@@ -23,7 +23,15 @@ namespace Notify.Interfaces
 
         Task<SmsNotificationResponse> SendSmsAsync(string mobileNumber, string templateId, Dictionary<string, dynamic> personalisation = null, string clientReference = null, string smsSenderId = null);
 
-        Task<EmailNotificationResponse> SendEmailAsync(string emailAddress, string templateId, Dictionary<string, dynamic> personalisation = null, string clientReference = null, string emailReplyToId = null, string oneClickUnsubscribeURL = null);
+        Task<EmailNotificationResponse> SendEmailAsync(
+            string emailAddress,
+            string templateId,
+            Dictionary<string, dynamic> personalisation = null,
+            string clientReference = null,
+            string emailReplyToId = null,
+            string oneClickUnsubscribeURL = null,
+            List<string> sanitiseContentFor = null
+        );
 
         Task<LetterNotificationResponse> SendLetterAsync(string templateId, Dictionary<string, dynamic> personalisation, string clientReference = null);
 

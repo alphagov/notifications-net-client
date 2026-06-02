@@ -475,8 +475,9 @@ namespace Notify.Tests.IntegrationTests
         {
             Dictionary<String, dynamic> personalisation = new Dictionary<String, dynamic>
             {
-                { "name", "someone" }
+                { "name", "Anna, [click here](https://evil.link)" }
             };
+            List<string> sanitiseContentFor = new List<string> {"name"};
 
             EmailNotificationResponse response = await this.client.SendEmailAsync(
                 FUNCTIONAL_TEST_EMAIL,
@@ -484,14 +485,17 @@ namespace Notify.Tests.IntegrationTests
                 personalisation,
                 clientReference: "TestReference",
                 emailReplyToId: EMAIL_REPLY_TO_ID,
-                oneClickUnsubscribeURL: "https://www.example.com/unsubscribe"
+                oneClickUnsubscribeURL: "https://www.example.com/unsubscribe",
+                sanitiseContentFor: sanitiseContentFor
             );
             this.emailNotificationId = response.id;
             Assert.IsNotNull(response);
-            Assert.AreEqual(response.content.body, TEST_EMAIL_BODY);
+            Assert.AreEqual(response.content.body, "Hello Anna, \\[click here\\]\\(\\)\r\n\r\nFunctional test help make our world a better place");
             Assert.AreEqual(response.content.subject, TEST_EMAIL_SUBJECT);
             Assert.AreEqual(response.reference, "TestReference");
             Assert.AreEqual(response.content.oneClickUnsubscribeURL, "https://www.example.com/unsubscribe");
+            Assert.AreEqual(response.sanitisedContent["name"]["unsanitised"], "Anna, [click here](https://evil.link)");
+            Assert.AreEqual(response.sanitisedContent["name"]["sanitised"], "Anna, \\[click here\\]\\(\\)");
         }
 
         [Test, Category("Integration"), Category("Integration/NotificationClientAsync")]

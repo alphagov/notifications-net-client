@@ -154,9 +154,15 @@ namespace Notify.Client
             return JsonConvert.DeserializeObject<SmsNotificationResponse>(response);
         }
 
-        public async Task<EmailNotificationResponse> SendEmailAsync(string emailAddress, string templateId,
-            Dictionary<string, dynamic> personalisation = null, string clientReference = null,
-            string emailReplyToId = null, string oneClickUnsubscribeURL = null)
+        public async Task<EmailNotificationResponse> SendEmailAsync(
+            string emailAddress,
+            string templateId,
+            Dictionary<string, dynamic> personalisation = null,
+            string clientReference = null,
+            string emailReplyToId = null,
+            string oneClickUnsubscribeURL = null,
+            List<string> sanitiseContentFor = null
+        )
         {
             var o = CreateRequestParams(templateId, personalisation, clientReference);
             o.AddFirst(new JProperty("email_address", emailAddress));
@@ -169,6 +175,11 @@ namespace Notify.Client
             if (oneClickUnsubscribeURL != null)
             {
                 o.Add(new JProperty("one_click_unsubscribe_url", oneClickUnsubscribeURL));
+            }
+
+            if (sanitiseContentFor != null)
+            {
+                o.Add(new JProperty("sanitise_content_for", sanitiseContentFor));
             }
 
             var response = await POST(SEND_EMAIL_NOTIFICATION_URL, o.ToString(Formatting.None)).ConfigureAwait(false);
@@ -447,11 +458,19 @@ namespace Notify.Client
             }
         }
 
-        public EmailNotificationResponse SendEmail(string emailAddress, string templateId, Dictionary<string, dynamic> personalisation = null, string clientReference = null, string emailReplyToId = null, string oneClickUnsubscribeURL = null)
+        public EmailNotificationResponse SendEmail(
+            string emailAddress,
+            string templateId,
+            Dictionary<string, dynamic> personalisation = null,
+            string clientReference = null,
+            string emailReplyToId = null,
+            string oneClickUnsubscribeURL = null,
+            List<string> sanitiseContentFor = null
+        )
         {
             try
             {
-                return SendEmailAsync(emailAddress, templateId, personalisation, clientReference, emailReplyToId, oneClickUnsubscribeURL).Result;
+                return SendEmailAsync(emailAddress, templateId, personalisation, clientReference, emailReplyToId, oneClickUnsubscribeURL, sanitiseContentFor).Result;
             }
             catch (AggregateException ex)
             {
