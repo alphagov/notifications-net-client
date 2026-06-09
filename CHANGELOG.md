@@ -1,3 +1,9 @@
+## [8.1.0] - 2026-06-03
+* Adds `sanitiseContentFor` parameter to `sendEmail` enpdpoint. 
+* Adds `sanitisedContent` field to the response object for `sendEmail` enpdpoint.
+
+See [our documentation](https://docs.notifications.service.gov.uk/net.html#reducing-the-risk-of-malicious-content-injection-in-placeholders) for guidance on how to use this.
+
 ## [8.0.0] - 2026-03-19
 
 * Updates versions of JWT and Newtonsoft.JSON dependencies

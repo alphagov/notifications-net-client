@@ -1,10 +1,14 @@
 ﻿using Newtonsoft.Json;
+using System.Collections.Generic;
 
 namespace Notify.Models.Responses
 {
     public class EmailNotificationResponse : NotificationResponse
     {
         public EmailResponseContent content;
+
+        [JsonProperty("sanitised_content")]
+        public Dictionary<string, Dictionary<string, string>> sanitisedContent;
 
         public override bool Equals(object response)
         {
@@ -38,5 +42,4 @@ namespace Notify.Models.Responses
         [JsonProperty("one_click_unsubscribe_url")]
         public string oneClickUnsubscribeURL;
     }
-
 }

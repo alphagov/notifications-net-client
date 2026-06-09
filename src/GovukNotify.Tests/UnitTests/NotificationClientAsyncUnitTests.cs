@@ -575,6 +575,39 @@ namespace Notify.Tests.UnitTests
         }
 
         [Test, Category("Unit"), Category("Unit/NotificationClientAsync")]
+        public async Task SendEmailNotificationWithSanitiseContentForGeneratesExpectedRequest()
+        {
+            var personalisation = new Dictionary<string, dynamic>
+                {
+                    { "name", "someone" }
+                };
+            var sanitiseContentFor = new List<string> {"name"};
+            var expected = new JObject
+            {
+                { "email_address", Constants.fakeEmail },
+                { "template_id", Constants.fakeTemplateId },
+                { "personalisation", JObject.FromObject(personalisation) },
+                { new JProperty("sanitise_content_for", sanitiseContentFor) },
+            };
+
+            MockRequest(
+                Constants.fakeEmailNotificationResponseJson,
+                client.SEND_EMAIL_NOTIFICATION_URL,
+                AssertValidRequest,
+                HttpMethod.Post,
+                AssertGetExpectedContent,
+                expected.ToString(Formatting.None)
+            );
+
+            await client.SendEmailAsync(
+                Constants.fakeEmail,
+                Constants.fakeTemplateId,
+                personalisation,
+                sanitiseContentFor: sanitiseContentFor
+            );
+        }
+
+        [Test, Category("Unit"), Category("Unit/NotificationClientAsync")]
         public async Task SendEmailNotificationWithDocumentGeneratesExpectedRequest()
         {
             Dictionary<string, dynamic> personalisation = new Dictionary<string, dynamic>

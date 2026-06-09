@@ -22,7 +22,15 @@ namespace Notify.Interfaces
 
         SmsNotificationResponse SendSms(string mobileNumber, string templateId, Dictionary<string, dynamic> personalisation = null, string clientReference = null, string smsSenderId = null);
 
-        EmailNotificationResponse SendEmail(string emailAddress, string templateId, Dictionary<string, dynamic> personalisation = null, string clientReference = null, string emailReplyToId = null, string oneClickUnsubscribeURL = null);
+        EmailNotificationResponse SendEmail(
+            string emailAddress,
+            string templateId,
+            Dictionary<string, dynamic> personalisation = null,
+            string clientReference = null,
+            string emailReplyToId = null,
+            string oneClickUnsubscribeURL = null,
+            List<string> sanitiseContentFor = null
+        );
 
         LetterNotificationResponse SendLetter(string templateId, Dictionary<string, dynamic> personalisation, string clientReference = null);
 

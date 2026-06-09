@@ -585,6 +585,34 @@ namespace Notify.Tests.UnitTests
             client.SendEmail(Constants.fakeEmail, Constants.fakeTemplateId, personalisation, oneClickUnsubscribeURL: Constants.fakeoneClickUnsubscribeURL);
         }
 
+        [Test, Category("Unit"), Category("Unit/NotificationClientAsync")]
+        public void SendEmailNotificationWithSanitiseContentForGeneratesExpectedRequest()
+        {
+            var personalisation = new Dictionary<string, dynamic>
+                {
+                    { "name", "someone" }
+                };
+            var sanitiseContentFor = new List<string> {"name"};
+            var expected = new JObject
+            {
+                { "email_address", Constants.fakeEmail },
+                { "template_id", Constants.fakeTemplateId },
+                { "personalisation", JObject.FromObject(personalisation) },
+                { new JProperty("sanitise_content_for", sanitiseContentFor) },
+            };
+
+            MockRequest(
+                Constants.fakeEmailNotificationResponseJson,
+                client.SEND_EMAIL_NOTIFICATION_URL,
+                AssertValidRequest,
+                HttpMethod.Post,
+                AssertGetExpectedContent,
+                expected.ToString(Formatting.None)
+            );
+
+            client.SendEmail(Constants.fakeEmail, Constants.fakeTemplateId, personalisation, sanitiseContentFor: sanitiseContentFor);
+        }
+
         [Test, Category("Unit"), Category("Unit/NotificationClient")]
         public void SendEmailNotificationWithDocumentGeneratesExpectedRequest()
         {
