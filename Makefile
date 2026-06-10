@@ -30,7 +30,7 @@ build-release: ## Build release version
 
 .PHONY: build-package
 build-package: build-release ## Build and package NuGet
-	dotnet pack -c=Release ./src/GovukNotify/GovukNotify.csproj /p:TargetFrameworks=net8,net9,net10 -o=publish
+	dotnet pack -c=Release ./src/GovukNotify/GovukNotify.csproj -o=publish
 
 .PHONY: bootstrap-with-docker
 bootstrap-with-docker:  ## Prepare the Docker builder image
