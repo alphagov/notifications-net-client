@@ -400,6 +400,7 @@ namespace Notify.Tests.IntegrationTests
             TemplateResponse template = await this.client.GetTemplateByIdAsync(SMS_TEMPLATE_ID);
             Assert.AreEqual(template.id, SMS_TEMPLATE_ID);
             Assert.AreEqual(template.body, TEST_TEMPLATE_SMS_BODY);
+            Assert.That(template.personalisation["name"]["required"], Is.True);
         }
 
         [Test, Category("Integration"), Category("Integration/NotificationClientAsync")]
@@ -408,6 +409,7 @@ namespace Notify.Tests.IntegrationTests
             TemplateResponse template = await this.client.GetTemplateByIdAsync(EMAIL_TEMPLATE_ID);
             Assert.AreEqual(template.id, EMAIL_TEMPLATE_ID);
             Assert.AreEqual(template.body, TEST_TEMPLATE_EMAIL_BODY);
+            Assert.That(template.personalisation["name"]["required"], Is.True);
         }
 
         [Test, Category("Integration"), Category("Integration/NotificationClientAsync")]

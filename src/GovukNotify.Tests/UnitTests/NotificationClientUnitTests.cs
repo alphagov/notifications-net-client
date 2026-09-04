@@ -218,6 +218,7 @@ namespace Notify.Tests.UnitTests
 
             var responseTemplate = client.GetTemplateById(Constants.fakeTemplateId);
             Assert.AreEqual(expectedResponse, responseTemplate);
+            Assert.That(responseTemplate.personalisation["name"]["required"], Is.True);
         }
 
         [Test, Category("Unit"), Category("Unit/NotificationClient")]

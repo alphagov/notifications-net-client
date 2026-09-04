@@ -82,6 +82,7 @@ namespace Notify.Tests.IntegrationTests
             Assert.IsNotNull(template.created_at);
             Assert.IsNotNull(template.created_by);
             Assert.IsNotNull(template.body);
+            Assert.IsNotNull(template.personalisation);
         }
     }
 }

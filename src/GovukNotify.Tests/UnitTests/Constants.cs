@@ -355,7 +355,8 @@ namespace Notify.Tests.UnitTests
                             ""body"": ""test body"",
                             ""subject"": null,
                             ""type"": ""sms"",
-                            ""version"": 2
+                            ""version"": 2,
+                            ""personalisation"": {""name"": {""required"": true}}
                         }";
             }
         }
@@ -373,7 +374,8 @@ namespace Notify.Tests.UnitTests
                             ""body"": ""test body"",
                             ""subject"": null,
                             ""type"": ""sms"",
-                            ""version"": 2
+                            ""version"": 2,
+                            ""personalisation"": {""name"": {""required"": true}}
                         },
                         {
                             ""updated_at"": ""2016-12-23T11:21:13.133522Z"",
@@ -383,7 +385,8 @@ namespace Notify.Tests.UnitTests
                             ""body"": ""test body 2"",
                             ""subject"": ""test subject 1"",
                             ""type"": ""email"",
-                            ""version"": 3
+                            ""version"": 3,
+                            ""personalisation"": {}
                         }
 					]
 				}";

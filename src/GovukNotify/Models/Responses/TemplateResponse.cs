@@ -1,4 +1,6 @@
 using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace Notify.Models.Responses
 {
@@ -14,6 +16,7 @@ namespace Notify.Models.Responses
         public string body;
         public string subject;
         public string letter_contact_block;
+        public Dictionary<string, Dictionary<string, bool>> personalisation;
 
         public override bool Equals(object response)
         {
@@ -32,7 +35,29 @@ namespace Notify.Models.Responses
                 version == resp.version &&
                 body == resp.body &&
                 subject == resp.subject &&
-                letter_contact_block == resp.letter_contact_block;
+                letter_contact_block == resp.letter_contact_block &&
+                PersonalisationEquals(resp.personalisation);
+        }
+
+        private bool PersonalisationEquals(Dictionary<string, Dictionary<string, bool>> other)
+        {
+            if (personalisation == null && other == null)
+            {
+                return true;
+            }
+            if (personalisation == null || other == null || personalisation.Count != other.Count)
+            {
+                return false;
+            }
+
+            return personalisation.All(item =>
+                other.ContainsKey(item.Key) &&
+                item.Value != null &&
+                other[item.Key] != null &&
+                item.Value.Count == other[item.Key].Count &&
+                item.Value.All(inner =>
+                    other[item.Key].ContainsKey(inner.Key) &&
+                    other[item.Key][inner.Key] == inner.Value));
         }
 
         public override int GetHashCode()

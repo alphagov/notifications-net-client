@@ -1,3 +1,6 @@
+## [8.2.0] - 2026-09-04
+* Adds `personalisation` to `TemplateResponse` for `GetTemplateById`, `GetTemplateByIdAndVersion` and `GetAllTemplates`. This is an object of placeholder names, for example `{"name": {"required": true}}`.
+
 ## [8.1.0] - 2026-06-03
 * Adds `sanitiseContentFor` parameter to `sendEmail` enpdpoint. 
 * Adds `sanitisedContent` field to the response object for `sendEmail` enpdpoint.
